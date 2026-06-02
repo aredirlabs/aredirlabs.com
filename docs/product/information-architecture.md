@@ -1,41 +1,53 @@
 # Information Architecture
 
-Planned structure for aredirlabs.com. Update as pages ship.
+Implemented structure for aredirlabs.com (Prompt 001B).
 
-## Primary navigation (planned)
+## Primary navigation
 
-| Page | Slug | Purpose |
-|------|------|---------|
-| Home | `/` | Company overview, hero, primary CTA |
-| Products | `/products` | Portfolio overview |
-| About | `/about` | Team, mission, story |
-| Contact | `/contact` | Inquiry form or contact details |
+| Page | Slug | Status |
+|------|------|--------|
+| Home | `/` | Live |
+| About | `/about` | Live |
+| Projects | `/projects` | Live |
+| Contact | `/contact` | Live |
 
-## Secondary / footer
+Header nav: About, Projects, Contact (+ logo home, theme toggle, Contact CTA on desktop).
 
-- Privacy policy (`/privacy`)
-- Terms of service (`/terms`) — if required
-- Social / GitHub links (when applicable)
+## Project detail routes
 
-## Product deep links
+| Product | Slug | Status label |
+|---------|------|----------------|
+| AlignFit | `/projects/alignfit` | Active Build |
+| ClassForge | `/projects/classforge` | In Development |
+| LeagueOS | `/projects/leagueos` | Concept |
 
-Individual products may link out to their own domains or subpaths as defined in [project catalog](./project-catalog.md).
+## Home page sections
 
-## Content types
+1. Hero — headline, supporting copy, View Projects / Contact
+2. Projects preview — three project cards
+3. About preview — founder-led bullets + link to About
+4. Contact CTA — link to Contact
 
-| Type | Source (planned) |
-|------|------------------|
-| Marketing copy | MDX or Sanity |
-| Product entries | Structured list / CMS |
-| Legal | Static MDX pages |
+## Footer
+
+- Logo + tagline
+- Nav links (About, Projects, Contact, Projects)
+- Copyright + email
 
 ## SEO
 
-- Unique `title` and `description` per route
-- Open Graph and Twitter card metadata in root or per-page layout
-- Semantic heading hierarchy per page
+- Root metadata: `src/lib/metadata.ts` + `layout.tsx`
+- Per-page titles via `pageMetadata()` template: `%s · Aredir Labs`
+- `src/app/icon.svg` — favicon
+- `src/app/opengraph-image.tsx` — OG image
+
+## Future (not in v1)
+
+- Privacy / terms pages
+- External product URLs when live
+- Blog or changelog
 
 ## Related
 
 - [Site brief](./site-brief.md)
-- [UI patterns](../architecture/ui-patterns.md)
+- [Project catalog](./project-catalog.md)

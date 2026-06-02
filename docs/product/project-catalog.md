@@ -1,49 +1,39 @@
 # Project Catalog
 
-Aredir Labs product portfolio reference for the company site and cross-project standards.
+Products displayed on aredirlabs.com. Source of truth for copy: `src/lib/site-config.ts`.
 
 ## Products
 
 ### AlignFit
 
-- **Focus:** Fitness and alignment tooling
-- **Status:** Active product (reference implementation for several workflows)
-- **Site:** TBD — link when public URL is confirmed
+- **Focus:** AI-assisted training, nutrition, and wellness
+- **Status:** Active Build
+- **Route:** `/projects/alignfit`
+- **Description:** AI-assisted training, nutrition, and wellness platform.
 
 ### ClassForge
 
-- **Focus:** Class and training management
-- **Status:** Active / in development
-- **Site:** TBD
+- **Focus:** Educator workflow and lesson planning
+- **Status:** In Development
+- **Route:** `/projects/classforge`
+- **Description:** Educator workflow and lesson-planning toolkit.
 
 ### LeagueOS
 
-- **Focus:** League and competition operations
-- **Status:** Active / in development
-- **Site:** TBD
+- **Focus:** Fantasy sports operations and league management
+- **Status:** Concept
+- **Route:** `/projects/leagueos`
+- **Description:** Fantasy sports operations and league management platform.
 
-### aredirlabs.com
+## Adding or updating a product
 
-- **Focus:** Company marketing and engineering template
-- **Status:** This repository
-- **Site:** https://aredirlabs.com (when live)
+1. Edit `projects` array in `src/lib/site-config.ts`.
+2. Add route under `src/app/projects/[slug]/` via `generateStaticParams` (automatic from config).
+3. Update this catalog and [information architecture](./information-architecture.md) if IA changes.
 
 ## Shared standards
 
-All products should align with:
-
-- `docs/agent/coding-agent-operating-standard.md`
-- Architecture docs in `docs/architecture/`
-- Bug and QA processes in `docs/bugs/` and `docs/qa/`
-
-Product-specific overrides belong in each product’s `docs/product/` directory.
-
-## Adding a new product
-
-1. Add entry to this catalog.
-2. Create or fork from Aredir Labs template.
-3. Run foundation prompt if starting fresh.
-4. Document IA and brand in product repo.
+All products align with `docs/agent/` and `docs/architecture/`. Product-specific sites live in their own repositories when launched.
 
 ## Related
 

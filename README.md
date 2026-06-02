@@ -8,6 +8,18 @@ Company marketing site and **standard template repository** for Aredir Labs Next
 - **Stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui
 - **Hosting:** Vercel (preview deployments on PRs, production on `main`)
 
+### Site (v1)
+
+| Route | Description |
+|-------|-------------|
+| `/` | Home — hero, projects preview, about preview, contact CTA |
+| `/about` | Company mission and approach |
+| `/projects` | Product portfolio |
+| `/projects/[slug]` | AlignFit, ClassForge, LeagueOS detail pages |
+| `/contact` | Email contact (placeholder inbox) |
+
+Brand tokens and copy live in `src/app/globals.css` and `src/lib/site-config.ts`.
+
 ## Local development
 
 ### Prerequisites

@@ -2,41 +2,53 @@
 
 ## Project
 
-**aredirlabs.com** — Public-facing company website for Aredir Labs.
+**aredirlabs.com** — Public company website for Aredir Labs (v1 implemented).
 
 ## Purpose
 
-- Present Aredir Labs as a credible software company.
-- Introduce the product portfolio (AlignFit, ClassForge, LeagueOS, future products).
-- Provide a path for contact and partnership inquiries.
-- Serve as the **template repository** for Aredir Labs development standards and workflow.
+- Present Aredir Labs as an independent, founder-led software lab.
+- Showcase the product portfolio with honest status.
+- Provide a simple contact path (email placeholder).
+- Serve as the template repository for Aredir Labs standards.
 
 ## Audience
 
 - Potential customers and partners
 - Candidates and collaborators
-- Internal team (reference for standards)
+- Internal team (standards reference)
 
-## Goals (initial)
+## Implemented routes (v1)
 
-1. Clear company positioning and product catalog.
-2. Fast, accessible, maintainable marketing site.
-3. Documented workflow for agents and humans building on the same stack.
+| Route | Purpose |
+|-------|---------|
+| `/` | Home: hero, projects preview, about preview, contact CTA |
+| `/about` | Mission, founder-led approach, philosophy, validation |
+| `/projects` | Full project grid |
+| `/projects/alignfit` | AlignFit portfolio detail |
+| `/projects/classforge` | ClassForge portfolio detail |
+| `/projects/leagueos` | LeagueOS portfolio detail |
+| `/contact` | Email contact (no form/backend) |
 
-## Non-goals (initial)
+## Stack (this site)
 
-- Full CMS-driven blog (unless scoped in a later prompt)
-- Authenticated user areas
-- E-commerce
+Next.js App Router, React, TypeScript, Tailwind CSS 4, shadcn/ui button, Geist fonts.
 
-## Success metrics (to refine)
+## Non-goals (v1)
 
-- Lighthouse performance and accessibility baselines met
-- Clear IA documented in [information architecture](./information-architecture.md)
-- Zero Blocker bugs open at launch
+- Contact form backend
+- Email integration
+- CMS-driven content
+- Authenticated areas
+
+## Success criteria (v1)
+
+- [x] Responsive marketing shell
+- [x] Semantic HTML and skip link
+- [x] Metadata + Open Graph
+- [x] Light/dark theme toggle
+- [x] Lint and build pass
 
 ## Related
 
 - [Information architecture](./information-architecture.md)
 - [Project catalog](./project-catalog.md)
-- [Brand guide](../brand/brand-guide.md)

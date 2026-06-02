@@ -1,34 +1,36 @@
 # Voice and Tone
 
-How Aredir Labs communicates in copy across the company site and product touchpoints.
+How Aredir Labs communicates on aredirlabs.com (implemented in v1 copy).
 
 ## Voice attributes
 
 | Attribute | We are | We are not |
 |-----------|--------|------------|
-| Clear | Direct, plain language | Jargon-heavy or vague |
-| Confident | Assured about what we ship | Arrogant or hyperbolic |
-| Helpful | Oriented toward user outcomes | Salesy or manipulative |
-| Human | Conversational but professional | Overly casual or meme-driven |
+| Calm | Measured, clear | Hype-driven or urgent |
+| Capable | Confident in craft | Arrogant |
+| Technical | Precise when needed | Jargon-heavy |
+| Founder-led | Direct, accountable | Corporate or vague |
+| Practical | Workflow-focused | Feature-list fluff |
+| Trustworthy | Honest about status | Overpromising |
 
-## Tone by context
+## Site copy patterns
 
-- **Marketing pages:** Inspiring but grounded; lead with outcomes.
-- **Product UI:** Short labels; instructions in active voice.
-- **Errors:** Apologetic, specific, actionable—no blame on the user.
-- **Legal / privacy:** Formal and precise; still readable.
+- **Hero:** Outcome-first headline; supporting line explains the lab.
+- **Products:** Name, one-line description, honest status badge.
+- **About:** Mission, approach, philosophy, validation — short sections.
+- **Contact:** Plain email CTA; no form until explicitly scoped.
 
 ## Writing rules
 
-- Prefer short sentences and scannable headings.
-- Use “you” for the audience; “we” for Aredir Labs.
-- Avoid empty superlatives (“best-in-class”, “revolutionary”) unless substantiated.
-- Button labels: verb-first (`Contact us`, `View products`).
+- Short sentences; scannable headings.
+- “We” for Aredir Labs; address visitors as “you” where natural.
+- Button labels: verb-first (`View Projects`, `Get in touch`).
+- Status labels: `Active Build`, `In Development`, `Concept`.
 
 ## Inclusive language
 
-- Avoid idioms that don’t translate well.
-- Write alt text and link text that makes sense out of context.
+- Meaningful link text and alt text for non-decorative elements.
+- Avoid idioms that do not translate well.
 
 ## Related
 
