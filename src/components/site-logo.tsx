@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Sigil } from "@/components/sigil";
 import { cn } from "@/lib/utils";
 
 type SiteLogoProps = {
@@ -16,16 +17,13 @@ export function SiteLogo({ className }: SiteLogoProps) {
       )}
       aria-label="Aredir Labs home"
     >
-      <span
-        className="flex size-8 shrink-0 items-center justify-center rounded-md bg-brand-navy text-sm font-semibold text-white"
-        aria-hidden
-      >
-        A
-      </span>
+      <Sigil className="h-8 w-8 transition-colors group-hover:text-primary" />
       <span className="flex flex-col leading-tight">
-        <span className="text-sm font-semibold tracking-tight">Aredir Labs</span>
-        <span className="hidden text-xs text-muted-foreground sm:block">
-          Software lab
+        <span className="font-heading text-sm font-semibold tracking-tight">
+          Aredir Labs
+        </span>
+        <span className="hidden font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground sm:block">
+          The Forge
         </span>
       </span>
     </Link>

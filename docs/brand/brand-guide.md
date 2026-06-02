@@ -23,21 +23,24 @@ Independent software lab building focused SaaS products.
 
 ## Color palette (implemented)
 
+Techno-mythic system: a technical "command-center" base with mythic accents. Tokens live in `src/app/globals.css` (light `:root` + `.dark`), exposed as Tailwind utilities.
+
 | Token | Role | Usage |
 |-------|------|--------|
-| Deep Navy (`--brand-navy`) | Primary brand, headings, logo mark | Headers, primary buttons (light mode) |
-| Charcoal (`--brand-charcoal`) | Depth, dark surfaces | Dark mode backgrounds |
-| Slate (`--brand-slate`) | Secondary text | Muted copy, metadata |
-| White / near-white | Backgrounds | Light mode canvas |
-| Subtle Orange (`--brand-accent`) | Accent, CTAs, links | Related to AlignFit family but distinct (`oklch` hue ~45–48) |
+| Arcane Blue (`--primary`) | Primary brand, links, active states | Buttons, active nav, signal accents |
+| Emerald (`--success`) | Growth / healthy status | `Active Build` status, positive states |
+| Forge Ember (`--ember`) | Warm highlight | Sigil apex star, special CTA, `Concept` status |
+| Arcane Violet (`--arcane`) | Rare accent (reserved) | Future gaming/portfolio dialects (e.g. LeagueOS) |
+| Charcoal "void" (`--background` dark) | Canvas | Dark-mode base; the showcase experience |
+| Ghost border (`--border`) / grid (`--grid-line`) | Structure, "blueprint" depth | 1px borders, subtle grid textures |
 
-CSS variables live in `src/app/globals.css`. Tailwind utilities: `bg-brand-navy`, `text-brand-accent`, etc.
+The legacy `--brand-*` aliases remain; `--brand-accent` now points to `--primary` (arcane blue), not orange.
 
 ## Typography
 
-- **UI / body:** Geist Sans (via `next/font`)
-- **Monospace:** Geist Mono (code or technical labels when needed)
-- Headings: semibold, tight tracking
+- **Headings:** Geist (via `next/font`) — semibold, tight tracking
+- **UI / body:** Inter (via `next/font`)
+- **Labels / metadata:** JetBrains Mono — uppercase, letter-spaced (the "schematic" voice)
 
 ## Design reference
 
@@ -45,7 +48,7 @@ Inspired by modern SaaS (Vercel, Linear, Stripe) — clean layout, generous whit
 
 ## Logo
 
-- Text + “A” mark in `SiteLogo` component (`src/components/site-logo.tsx`)
+- Original **sigil** (A-rune in a hex seal, ember apex star) in `Sigil` (`src/components/sigil.tsx`), used by `SiteLogo`; standalone asset at `public/logo-mark.svg`
 - Favicon: `src/app/icon.svg`
 - See [logo direction](./logo-direction.md) for asset checklist
 
