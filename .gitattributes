@@ -1,0 +1,16 @@
+# Aredir Labs repository line-ending and text normalization standards
+
+* text=auto eol=lf
+
+*.{cmd,bat} text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

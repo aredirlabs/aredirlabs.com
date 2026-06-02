@@ -1,0 +1,8 @@
+# Aredir Labs default code owners
+# Replace @aredirlabs placeholders with real GitHub usernames or teams.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @aredirlabs
+
+/docs/ @aredirlabs
+/.github/ @aredirlabs

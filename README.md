@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aredir Labs — aredirlabs.com
 
-## Getting Started
+Company marketing site and **standard template repository** for Aredir Labs Next.js projects. This repo defines development workflow, documentation structure, coding standards, bug and QA processes, architecture standards, and GitHub guardrails used across AlignFit, ClassForge, LeagueOS, and future products.
 
-First, run the development server:
+## Overview
+
+- **Purpose:** Public company presence and shared engineering standards
+- **Stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui
+- **Hosting:** Vercel (preview deployments on PRs, production on `main`)
+
+## Local development
+
+### Prerequisites
+
+- Node.js LTS
+- npm
+
+### Setup
 
 ```bash
+git clone <repository-url>
+cd aredirlabs-com
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Serve production build locally |
+| `npm run lint` | Run ESLint |
 
-## Learn More
+## Workflow
 
-To learn more about Next.js, take a look at the following resources:
+```
+Local → Feature Branch → PR → Preview Deployment → Manual QA → Merge → Production
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Branch from `main` (`feature/*`, `fix/*`, `docs/*`).
+2. Follow [coding agent operating standard](docs/agent/coding-agent-operating-standard.md) for all implementation work.
+3. Run `npm run lint` and `npm run build` before opening a PR.
+4. Complete [manual QA](docs/qa/manual-qa-checklist.md) on the Vercel preview URL.
+5. Merge after review; validate production per [release checklist](docs/qa/release-checklist.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Agent-driven development
 
-## Deploy on Vercel
+All implementation prompts must start with the required prefix defined in:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**[docs/agent/coding-agent-operating-standard.md](docs/agent/coding-agent-operating-standard.md)**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.md) for new prompts. Implementation order: [docs/prompts/implementation-index.md](docs/prompts/implementation-index.md).
+
+## Documentation map
+
+| Area | Path |
+|------|------|
+| Agent standards | [docs/agent/](docs/agent/) |
+| Architecture | [docs/architecture/](docs/architecture/) |
+| Brand | [docs/brand/](docs/brand/) |
+| Engineering | [docs/engineering/](docs/engineering/) |
+| Product | [docs/product/](docs/product/) |
+| Bugs | [docs/bugs/](docs/bugs/) |
+| QA | [docs/qa/](docs/qa/) |
+| Prompts | [docs/prompts/](docs/prompts/) |
+
+### Key documents
+
+- [Coding agent operating standard](docs/agent/coding-agent-operating-standard.md)
+- [Repository standards](docs/engineering/repository-standards.md) — UTF-8, LF, final newline, trim trailing whitespace
+- [Deployment workflow](docs/engineering/deployment-workflow.md)
+- [Bug triage process](docs/bugs/bug-triage-process.md)
+- [Manual QA checklist](docs/qa/manual-qa-checklist.md)
+
+## Repository standards
+
+Text files use **UTF-8**, **LF** line endings, a **final newline**, and **trimmed trailing whitespace** (enforced via `.editorconfig` and `.gitattributes`). Details: [docs/engineering/repository-standards.md](docs/engineering/repository-standards.md).
+
+## GitHub
+
+- [Bug report](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature request](.github/ISSUE_TEMPLATE/feature_request.md)
+- [Pull request template](.github/PULL_REQUEST_TEMPLATE.md)
+
+Update [.github/CODEOWNERS](.github/CODEOWNERS) with real GitHub handles before relying on review routing.
+
+## Product portfolio
+
+See [docs/product/project-catalog.md](docs/product/project-catalog.md) for AlignFit, ClassForge, LeagueOS, and this site.
+
+## License
+
+Private repository — Aredir Labs. All rights reserved unless otherwise specified.
