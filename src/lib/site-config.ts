@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "Aredir Labs",
-  tagline: "Independent software lab building focused SaaS products.",
+  tagline:
+    "Building intelligent software that helps people learn, perform, and make better decisions.",
   url: "https://aredirlabs.com",
   contactEmail: "hello@aredirlabs.com",
 } as const;
@@ -26,27 +27,28 @@ export const projects: Project[] = [
     slug: "alignfit",
     name: "AlignFit",
     description:
-      "AI-assisted training, nutrition, and wellness platform.",
+      "AI-powered fitness, nutrition, recovery, and coaching platform.",
     status: "Active Build",
     summary:
-      "Practical tools for training, nutrition, and wellness workflows with AI-assisted guidance.",
+      "An AI-powered platform for fitness, nutrition, recovery, and coaching—currently in active development and user acceptance testing.",
   },
   {
     slug: "classforge",
     name: "ClassForge",
-    description: "Educator workflow and lesson-planning toolkit.",
+    description:
+      "AI-assisted education platform for lesson planning and educator productivity.",
     status: "In Development",
     summary:
-      "Lesson planning and classroom workflow tools built for educators who need clarity, not clutter.",
+      "AI-assisted lesson planning, educator productivity, and classroom preparation—built for educators who need clarity, not clutter.",
   },
   {
     slug: "leagueos",
     name: "LeagueOS",
     description:
-      "Fantasy sports operations and league management platform.",
+      "Fantasy sports franchise management platform.",
     status: "Concept",
     summary:
-      "League operations and fantasy sports management for organizers who run real competitions.",
+      "A fantasy sports franchise management platform, currently in early-stage design and development.",
   },
 ];
 

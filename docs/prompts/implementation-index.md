@@ -6,7 +6,8 @@ Ordered prompts for building aredirlabs.com.
 |----|--------|--------|------------|
 | 001A | [Foundation, standards & workflow](./prompt-001A-foundation.md) | Complete | — |
 | 001B | [Branding, site shell & company website](./prompt-001B-branding-site.md) | Complete | 001A |
-| 001C+ | _(future prompts)_ | Planned | 001B |
+| 001C | [Techno-mythic design system & desktop-first site](./prompt-001C-design-system-uplift.md) | Complete | 001B |
+| 001D+ | _(future prompts)_ | Planned | 001C |
 
 ## Rules
 
