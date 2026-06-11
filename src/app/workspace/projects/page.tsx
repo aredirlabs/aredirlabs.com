@@ -2,6 +2,11 @@ import Link from "next/link";
 import { getDb } from "@/lib/db";
 import { workspaceProjects } from "@/lib/db/schema";
 import { Eyebrow } from "@/components/eyebrow";
+import {
+  ProjectStageBadge,
+  ProjectStatusBadge,
+} from "@/components/workspace/project-status-badge";
+import { formatDate } from "@/lib/workspace/format-date";
 import { AlertTriangle, FolderOpen } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -46,23 +51,33 @@ export default async function WorkspaceProjectsPage() {
           <FolderOpen className="mx-auto size-8 text-muted-foreground" />
           <h2 className="mt-4 font-semibold">No projects found</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Run <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">npm run db:seed</code> to populate the registry.
+            Run{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+              npm run db:seed
+            </code>{" "}
+            to populate the registry.
           </p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-border">
-          <table className="w-full text-left text-sm">
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <table className="w-full min-w-[960px] text-left text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/50 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
                 <th className="px-4 py-3 font-medium">Name</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Category</th>
+                <th className="px-4 py-3 font-medium">Stage</th>
+                <th className="px-4 py-3 font-medium">Current focus</th>
+                <th className="px-4 py-3 font-medium">Next step</th>
+                <th className="px-4 py-3 font-medium">Target</th>
                 <th className="px-4 py-3 font-medium">Repo</th>
               </tr>
             </thead>
             <tbody>
               {projects.map((project) => (
-                <tr key={project.id} className="border-b border-border last:border-0">
+                <tr
+                  key={project.id}
+                  className="border-b border-border last:border-0"
+                >
                   <td className="px-4 py-3">
                     <Link
                       href={`/workspace/projects/${project.slug}`}
@@ -70,14 +85,30 @@ export default async function WorkspaceProjectsPage() {
                     >
                       {project.name}
                     </Link>
+                    {project.category ? (
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {project.category}
+                      </p>
+                    ) : null}
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full bg-muted px-2.5 py-0.5 font-mono text-xs">
-                      {project.status}
+                    <ProjectStatusBadge status={project.status} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <ProjectStageBadge stage={project.stage} />
+                  </td>
+                  <td className="max-w-[220px] px-4 py-3 text-muted-foreground">
+                    <span className="line-clamp-2">
+                      {project.currentFocus ?? "—"}
+                    </span>
+                  </td>
+                  <td className="max-w-[220px] px-4 py-3 text-muted-foreground">
+                    <span className="line-clamp-2">
+                      {project.nextStep ?? "—"}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
-                    {project.category ?? "—"}
+                    {formatDate(project.targetDate)}
                   </td>
                   <td className="px-4 py-3">
                     {project.repoUrl ? (

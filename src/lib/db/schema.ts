@@ -1,6 +1,36 @@
-import { pgTable, text, timestamp, boolean, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  pgEnum,
+  integer,
+} from "drizzle-orm/pg-core";
 
-export const projectStatusEnum = pgEnum("project_status", ["Active Build", "In Development", "Concept"]);
+export const projectStatusEnum = pgEnum("project_status", [
+  "active",
+  "testing",
+  "paused",
+  "planning",
+  "archived",
+]);
+
+export const projectStageEnum = pgEnum("project_stage", [
+  "concept",
+  "prototype",
+  "mvp",
+  "uat",
+  "production",
+  "maintenance",
+]);
+
+export const milestoneStatusEnum = pgEnum("milestone_status", [
+  "planned",
+  "active",
+  "blocked",
+  "completed",
+  "deferred",
+]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -14,7 +44,9 @@ export const user = pgTable("user", {
 
 export const session = pgTable("session", {
   id: text("id").primaryKey(),
-  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   expiresAt: timestamp("expires_at").notNull(),
   token: text("token").notNull().unique(),
   ipAddress: text("ip_address"),
@@ -25,7 +57,9 @@ export const session = pgTable("session", {
 
 export const account = pgTable("account", {
   id: text("id").primaryKey(),
-  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   providerId: text("provider_id").notNull(),
   accountId: text("account_id").notNull(),
   accessToken: text("access_token"),
@@ -52,7 +86,11 @@ export const workspaceProjects = pgTable("workspace_projects", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
-  status: projectStatusEnum("status").notNull().default("Concept"),
+  status: projectStatusEnum("status").notNull().default("planning"),
+  stage: projectStageEnum("stage").notNull().default("concept"),
+  currentFocus: text("current_focus"),
+  nextStep: text("next_step"),
+  targetDate: timestamp("target_date"),
   category: text("category"),
   description: text("description"),
   repoUrl: text("repo_url"),
@@ -85,6 +123,21 @@ export const workspaceProjectNotes = pgTable("workspace_project_notes", {
   type: workspaceProjectNoteTypeEnum("type").notNull().default("note"),
   title: text("title").notNull(),
   body: text("body").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const workspaceProjectMilestones = pgTable("workspace_project_milestones", {
+  id: text("id").primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  description: text("description"),
+  status: milestoneStatusEnum("status").notNull().default("planned"),
+  targetDate: timestamp("target_date"),
+  completedAt: timestamp("completed_at"),
+  sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

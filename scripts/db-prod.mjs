@@ -30,8 +30,12 @@ if (!existsSync(envFile)) {
 
 const commands = {
   push: {
-    bin: "node_modules/drizzle-kit/bin.cjs",
-    args: ["push"],
+    bin: "node",
+    args: ["scripts/migrate-workspace-006.mjs"],
+    then: {
+      bin: "node_modules/drizzle-kit/bin.cjs",
+      args: ["push"],
+    },
   },
   seed: {
     bin: "node_modules/tsx/dist/cli.mjs",
@@ -45,10 +49,18 @@ if (!target) {
   fail(`Unknown production database command "${command ?? ""}".`);
 }
 
-const result = spawnSync(
-  process.execPath,
-  ["--env-file=.env.production.local", target.bin, ...target.args],
-  { stdio: "inherit", shell: false },
-);
+function runStep(step) {
+  return spawnSync(
+    process.execPath,
+    ["--env-file=.env.production.local", step.bin, ...step.args],
+    { stdio: "inherit", shell: false },
+  );
+}
+
+let result = runStep(target);
+
+if ((result.status ?? 1) === 0 && target.then) {
+  result = runStep(target.then);
+}
 
 process.exit(result.status ?? 1);

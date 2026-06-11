@@ -1,29 +1,33 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { desc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ArrowLeft, ExternalLink } from "lucide-react";
 
 import { Eyebrow } from "@/components/eyebrow";
-import { ProjectDetailSections } from "@/components/workspace/project-detail-sections";
+import { ProjectMilestonesSection } from "@/components/workspace/project-milestones-section";
+import {
+  ProjectCurrentFocusSection,
+  ProjectOverviewSection,
+} from "@/components/workspace/project-overview-section";
 import { ProjectNotesSection } from "@/components/workspace/project-notes-section";
+import {
+  ProjectStageBadge,
+  ProjectStatusBadge,
+} from "@/components/workspace/project-status-badge";
 import { getDb } from "@/lib/db";
-import { workspaceProjectNotes, workspaceProjects } from "@/lib/db/schema";
+import {
+  workspaceProjectMilestones,
+  workspaceProjectNotes,
+  workspaceProjects,
+} from "@/lib/db/schema";
+import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
 
 export const dynamic = "force-dynamic";
 
 type ProjectDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
-
-function formatTimestamp(value: Date | null) {
-  if (!value) return "—";
-
-  return new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(value);
-}
 
 function DetailField({
   label,
@@ -53,8 +57,10 @@ export default async function WorkspaceProjectDetailPage({
 
   let project: typeof workspaceProjects.$inferSelect | null = null;
   let notes: Array<typeof workspaceProjectNotes.$inferSelect> = [];
+  let milestones: Array<typeof workspaceProjectMilestones.$inferSelect> = [];
   let error: string | null = null;
   let notesError: string | null = null;
+  let milestonesError: string | null = null;
 
   try {
     const db = getDb();
@@ -75,6 +81,17 @@ export default async function WorkspaceProjectDetailPage({
       } catch (e) {
         notesError =
           e instanceof Error ? e.message : "Failed to load project notes";
+      }
+
+      try {
+        milestones = await db
+          .select()
+          .from(workspaceProjectMilestones)
+          .where(eq(workspaceProjectMilestones.projectId, project.id))
+          .orderBy(asc(workspaceProjectMilestones.sortOrder));
+      } catch (e) {
+        milestonesError =
+          e instanceof Error ? e.message : "Failed to load milestones";
       }
     }
   } catch (e) {
@@ -129,81 +146,91 @@ export default async function WorkspaceProjectDetailPage({
           <h1 className="text-2xl font-semibold tracking-tight">
             {project.name}
           </h1>
-          <span className="rounded-full bg-muted px-2.5 py-0.5 font-mono text-xs">
-            {project.status}
-          </span>
+          <ProjectStatusBadge status={project.status} />
+          <ProjectStageBadge stage={project.stage} />
         </div>
         {project.category ? (
-          <p className="mt-2 text-sm text-muted-foreground">{project.category}</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {project.category}
+          </p>
         ) : null}
       </div>
 
-      <section className="mb-8 rounded-lg border border-border bg-card p-6">
-        <h2 className="font-heading text-base font-semibold">Registry record</h2>
-        <dl className="mt-4 grid gap-4 sm:grid-cols-2">
-          <DetailField label="Name" value={project.name} />
-          <DetailField label="Status" value={project.status} />
-          <DetailField label="Category" value={project.category ?? "—"} />
-          <DetailField
-            label="Description"
-            value={project.description ?? "—"}
-          />
-          <DetailField
-            label="Repo URL"
-            value={
-              project.repoUrl ? (
-                <Link
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
-                >
-                  {project.repoUrl}
-                  <ExternalLink className="size-3.5" />
-                </Link>
-              ) : (
-                "—"
-              )
-            }
-          />
-          <DetailField
-            label="Public URL"
-            value={
-              project.publicUrl ? (
-                <Link
-                  href={project.publicUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
-                >
-                  {project.publicUrl}
-                  <ExternalLink className="size-3.5" />
-                </Link>
-              ) : (
-                "—"
-              )
-            }
-          />
-          <DetailField
-            label="Created"
-            value={formatTimestamp(project.createdAt)}
-          />
-          <DetailField
-            label="Updated"
-            value={formatTimestamp(project.updatedAt)}
-          />
-        </dl>
-      </section>
+      <div className="space-y-4">
+        <ProjectOverviewSection project={project} />
 
-      <div className="mb-4">
+        <section className="rounded-lg border border-border bg-card p-6">
+          <h2 className="font-heading text-base font-semibold">
+            Registry record
+          </h2>
+          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+            <DetailField label="Name" value={project.name} />
+            <DetailField label="Slug" value={project.slug} />
+            <DetailField
+              label="Repo URL"
+              value={
+                project.repoUrl ? (
+                  <Link
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
+                  >
+                    {project.repoUrl}
+                    <ExternalLink className="size-3.5" />
+                  </Link>
+                ) : (
+                  "—"
+                )
+              }
+            />
+            <DetailField
+              label="Public URL"
+              value={
+                project.publicUrl ? (
+                  <Link
+                    href={project.publicUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
+                  >
+                    {project.publicUrl}
+                    <ExternalLink className="size-3.5" />
+                  </Link>
+                ) : (
+                  "—"
+                )
+              }
+            />
+            <DetailField
+              label="Target date"
+              value={formatDate(project.targetDate)}
+            />
+            <DetailField
+              label="Created"
+              value={formatTimestamp(project.createdAt)}
+            />
+            <DetailField
+              label="Updated"
+              value={formatTimestamp(project.updatedAt)}
+            />
+          </dl>
+        </section>
+
+        <ProjectCurrentFocusSection project={project} />
+
+        <ProjectMilestonesSection
+          projectSlug={project.slug}
+          milestones={milestones}
+          milestonesError={milestonesError}
+        />
+
         <ProjectNotesSection
           projectSlug={project.slug}
           notes={notes}
           notesError={notesError}
         />
       </div>
-
-      <ProjectDetailSections />
     </div>
   );
 }

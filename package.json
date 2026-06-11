@@ -9,7 +9,7 @@
     "lint": "eslint",
     "db:generate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs generate",
     "db:migrate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs migrate",
-    "db:push": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
+    "db:push": "node --env-file=.env.local scripts/migrate-workspace-006.mjs && node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
     "db:seed": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs src/lib/db/seed.ts",
     "db:push:prod": "node scripts/db-prod.mjs push",
     "db:seed:prod": "node scripts/db-prod.mjs seed"

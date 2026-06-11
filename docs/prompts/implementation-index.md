@@ -18,6 +18,7 @@ Ordered prompts for building aredirlabs.com.
 | [003](../plan/docs/AREDIR-WORKSPACE-003-PROJECT-DETAILS.md) | Project detail pages — registry-backed internal product views | Complete | 002A |
 | [004](../plan/docs/AREDIR-WORKSPACE-004-PROJECT-NOTES.md) | Project notes and decision log — lightweight project memory | Complete | 003 |
 | [005](../plan/docs/VERCEL-PRODUCTION-DEPLOYMENT.md) | Vercel production setup — safe prod DB scripts and deployment checklist | Complete | 004 |
+| [006](../plan/docs/AREDIR-WORKSPACE-006-PROJECT-STATUS-MILESTONES.md) | Project status and milestones — lightweight operational visibility | Complete | 005 |
 
 Verification docs live under `plan/docs/`.
 
