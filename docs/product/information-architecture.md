@@ -32,7 +32,7 @@ Header nav: About, Projects, Contact (+ logo home, theme toggle, Contact CTA on 
 
 - Logo + tagline
 - Nav links (About, Projects, Contact, Projects)
-- Copyright + email
+- Copyright + email (`info@aredirlabs.com`)
 
 ## SEO
 

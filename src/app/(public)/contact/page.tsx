@@ -40,8 +40,8 @@ export default function ContactPage() {
               </a>
             </p>
             <p className="mt-6 text-sm text-muted-foreground">
-              Placeholder contact address—update when a production inbox is
-              configured. No form or backend integration in this version.
+              No contact form in this version—email is the fastest way to reach
+              us.
             </p>
           </div>
         </div>

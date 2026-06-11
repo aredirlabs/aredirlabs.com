@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline:
     "Building intelligent software that helps people learn, perform, and make better decisions.",
   url: "https://aredirlabs.com",
-  contactEmail: "hello@aredirlabs.com",
+  contactEmail: "info@aredirlabs.com",
 } as const;
 
 export const navItems = [

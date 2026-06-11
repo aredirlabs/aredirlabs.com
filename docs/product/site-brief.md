@@ -8,7 +8,7 @@
 
 - Present Aredir Labs as an independent, founder-led software lab.
 - Showcase the product portfolio with honest status.
-- Provide a simple contact path (email placeholder).
+- Provide a simple contact path via email at info@aredirlabs.com.
 - Serve as the template repository for Aredir Labs standards.
 
 ## Audience
@@ -27,7 +27,7 @@
 | `/projects/alignfit` | AlignFit portfolio detail |
 | `/projects/classforge` | ClassForge portfolio detail |
 | `/projects/leagueos` | LeagueOS portfolio detail |
-| `/contact` | Email contact (no form/backend) |
+| `/contact` | Email contact at info@aredirlabs.com (no form/backend) |
 
 ## Stack (this site)
 
