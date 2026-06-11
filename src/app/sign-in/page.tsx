@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import { authClient } from "@/lib/auth-client";
 import { runAuthAction } from "@/lib/auth-form";
@@ -58,6 +57,9 @@ export default function SignInPage() {
           <h1 className="mt-6 text-xl font-semibold tracking-tight">
             Sign in to Workspace
           </h1>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Workspace access is limited to approved Aredir Labs users.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -110,13 +112,7 @@ export default function SignInPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          No account?{" "}
-          <Link
-            href="/sign-up"
-            className="text-primary underline-offset-4 hover:underline"
-          >
-            Sign up
-          </Link>
+          Registration is invite-only.
         </p>
       </div>
     </div>

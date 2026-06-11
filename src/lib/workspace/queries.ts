@@ -1,9 +1,10 @@
-import { and, asc, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, or, sql, type SQL } from "drizzle-orm";
 
 import { getDb } from "@/lib/db";
 import {
   workspaceProjectDocuments,
   workspaceProjectMilestones,
+  workspaceProjectPrompts,
   workspaceProjects,
 } from "@/lib/db/schema";
 import {
@@ -11,6 +12,14 @@ import {
   WORKSPACE_PROJECT_DOCUMENT_CATEGORY_LABELS,
   type WorkspaceProjectDocumentCategory,
 } from "@/lib/workspace/document-categories";
+import {
+  WORKSPACE_PROJECT_PROMPT_STATUSES,
+  type WorkspaceProjectPromptStatus,
+} from "@/lib/workspace/prompt-status";
+import {
+  WORKSPACE_PROJECT_PROMPT_TYPES,
+  type WorkspaceProjectPromptType,
+} from "@/lib/workspace/prompt-types";
 
 export type OperatingSnapshot = {
   activeCount: number;
@@ -119,6 +128,8 @@ export function groupMilestonesByStatus<
 export type WorkspaceProjectDocument =
   typeof workspaceProjectDocuments.$inferSelect;
 
+export type WorkspaceProjectPrompt = typeof workspaceProjectPrompts.$inferSelect;
+
 export type WorkspaceDocumentSearchResult = WorkspaceProjectDocument & {
   projectName: string;
   projectSlug: string;
@@ -135,6 +146,19 @@ export async function getProjectDocuments(projectId: string) {
       asc(workspaceProjectDocuments.category),
       desc(workspaceProjectDocuments.updatedAt),
       asc(workspaceProjectDocuments.title),
+    );
+}
+
+export async function getProjectPrompts(projectId: string) {
+  const db = getDb();
+
+  return db
+    .select()
+    .from(workspaceProjectPrompts)
+    .where(eq(workspaceProjectPrompts.projectId, projectId))
+    .orderBy(
+      desc(workspaceProjectPrompts.updatedAt),
+      asc(workspaceProjectPrompts.title),
     );
 }
 
@@ -165,6 +189,44 @@ export async function getProjectDocumentBySlugs(
       and(
         eq(workspaceProjects.slug, projectSlug),
         eq(workspaceProjectDocuments.slug, documentSlug),
+      ),
+    )
+    .limit(1);
+
+  return rows[0] ?? null;
+}
+
+export async function getProjectPromptById(
+  projectSlug: string,
+  promptId: string,
+) {
+  const db = getDb();
+  const rows = await db
+    .select({
+      id: workspaceProjectPrompts.id,
+      projectId: workspaceProjectPrompts.projectId,
+      title: workspaceProjectPrompts.title,
+      promptType: workspaceProjectPrompts.promptType,
+      promptBody: workspaceProjectPrompts.promptBody,
+      resultSummary: workspaceProjectPrompts.resultSummary,
+      filesChanged: workspaceProjectPrompts.filesChanged,
+      verification: workspaceProjectPrompts.verification,
+      followUps: workspaceProjectPrompts.followUps,
+      status: workspaceProjectPrompts.status,
+      createdAt: workspaceProjectPrompts.createdAt,
+      updatedAt: workspaceProjectPrompts.updatedAt,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+    .from(workspaceProjectPrompts)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceProjectPrompts.projectId, workspaceProjects.id),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceProjectPrompts.id, promptId),
       ),
     )
     .limit(1);
@@ -218,6 +280,105 @@ export async function searchWorkspaceDocuments(query: string) {
       asc(workspaceProjectDocuments.category),
       asc(workspaceProjectDocuments.title),
     );
+}
+
+type SearchWorkspacePromptsFilters = {
+  project?: string;
+  type?: string;
+  status?: string;
+  q?: string;
+};
+
+export async function searchWorkspacePrompts({
+  project,
+  type,
+  status,
+  q,
+}: SearchWorkspacePromptsFilters) {
+  const db = getDb();
+  const conditions: SQL[] = [];
+  const normalizedProject = project?.trim();
+  const normalizedType = type?.trim();
+  const normalizedStatus = status?.trim();
+  const normalizedQuery = q?.trim();
+
+  if (normalizedProject) {
+    conditions.push(eq(workspaceProjects.slug, normalizedProject));
+  }
+
+  if (
+    normalizedType &&
+    WORKSPACE_PROJECT_PROMPT_TYPES.includes(
+      normalizedType as WorkspaceProjectPromptType,
+    )
+  ) {
+    conditions.push(
+      eq(
+        workspaceProjectPrompts.promptType,
+        normalizedType as WorkspaceProjectPromptType,
+      ),
+    );
+  }
+
+  if (
+    normalizedStatus &&
+    WORKSPACE_PROJECT_PROMPT_STATUSES.includes(
+      normalizedStatus as WorkspaceProjectPromptStatus,
+    )
+  ) {
+    conditions.push(
+      eq(
+        workspaceProjectPrompts.status,
+        normalizedStatus as WorkspaceProjectPromptStatus,
+      ),
+    );
+  }
+
+  if (normalizedQuery) {
+    conditions.push(
+      ilike(workspaceProjectPrompts.title, `%${normalizedQuery}%`),
+    );
+  }
+
+  return db
+    .select({
+      id: workspaceProjectPrompts.id,
+      projectId: workspaceProjectPrompts.projectId,
+      title: workspaceProjectPrompts.title,
+      promptType: workspaceProjectPrompts.promptType,
+      promptBody: workspaceProjectPrompts.promptBody,
+      resultSummary: workspaceProjectPrompts.resultSummary,
+      filesChanged: workspaceProjectPrompts.filesChanged,
+      verification: workspaceProjectPrompts.verification,
+      followUps: workspaceProjectPrompts.followUps,
+      status: workspaceProjectPrompts.status,
+      createdAt: workspaceProjectPrompts.createdAt,
+      updatedAt: workspaceProjectPrompts.updatedAt,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+    .from(workspaceProjectPrompts)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceProjectPrompts.projectId, workspaceProjects.id),
+    )
+    .where(conditions.length > 0 ? and(...conditions) : undefined)
+    .orderBy(
+      desc(workspaceProjectPrompts.updatedAt),
+      asc(workspaceProjects.name),
+    );
+}
+
+export async function getWorkspacePromptProjects() {
+  const db = getDb();
+
+  return db
+    .select({
+      name: workspaceProjects.name,
+      slug: workspaceProjects.slug,
+    })
+    .from(workspaceProjects)
+    .orderBy(asc(workspaceProjects.name));
 }
 
 export function groupDocumentsByCategory<T extends { category: string }>(

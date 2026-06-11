@@ -4,6 +4,7 @@ import {
   workspaceProjectDocuments,
   workspaceProjectMilestones,
   workspaceProjectNotes,
+  workspaceProjectPrompts,
   workspaceProjects,
   workspaceSettings,
 } from "./schema";
@@ -260,6 +261,93 @@ const documents = [
   },
 ];
 
+const prompts = [
+  {
+    id: "prompt_alignfit_migration_verification",
+    projectId: "proj_01",
+    title: "Supabase/Neon migration verification",
+    promptType: "qa" as const,
+    promptBody:
+      "Verify auth, migrations, and persistent dashboard data after the Supabase to Neon database move.",
+    resultSummary:
+      "Migration path reviewed with environment parity and tester-data preservation as the main checks.",
+    filesChanged: "Database config, auth integration notes, QA checklist",
+    verification: "Run migrations, seed data, and dashboard smoke tests.",
+    followUps: "Recheck production env vars before the next release cut.",
+    status: "needs_followup" as const,
+  },
+  {
+    id: "prompt_alignfit_dashboard_ui_refinement",
+    projectId: "proj_01",
+    title: "Dashboard UI refinement",
+    promptType: "ui" as const,
+    promptBody:
+      "Tighten dashboard hierarchy, empty states, and status surfaces for UAT testers.",
+    resultSummary:
+      "Dashboard polish focused on scannability and clearer next actions.",
+    filesChanged: "Dashboard cards, status panels, empty states",
+    verification: "Manual viewport pass on mobile and desktop.",
+    followUps: "Collect tester confusion points after first UAT pass.",
+    status: "run" as const,
+  },
+  {
+    id: "prompt_alignfit_nutrition_qa_stabilization",
+    projectId: "proj_01",
+    title: "Nutrition QA stabilization",
+    promptType: "bugfix" as const,
+    promptBody:
+      "Audit nutrition flows for persistence regressions and confusing validation states.",
+    resultSummary:
+      "Identified QA focus areas for food logging, generated plans, and saved preferences.",
+    filesChanged: "Nutrition QA notes",
+    verification: "Repeat nutrition entry and refresh persistence checks.",
+    followUps: "Promote any reproduced failures into bug reports.",
+    status: "drafted" as const,
+  },
+  {
+    id: "prompt_aredir_workspace_foundation",
+    projectId: "proj_04",
+    title: "Workspace foundation",
+    promptType: "implementation" as const,
+    promptBody:
+      "Build the protected workspace shell with project registry and detail pages.",
+    resultSummary:
+      "Workspace foundation shipped with protected navigation and project memory surfaces.",
+    filesChanged: "Workspace layout, registry routes, project detail components",
+    verification: "Sign-in flow and project registry smoke tested.",
+    followUps: "Continue layering lightweight project memory features.",
+    status: "verified" as const,
+  },
+  {
+    id: "prompt_aredir_documentation_hub",
+    projectId: "proj_04",
+    title: "Documentation hub implementation",
+    promptType: "documentation" as const,
+    promptBody:
+      "Add a searchable project documentation hub with categories and project detail links.",
+    resultSummary:
+      "Documentation hub added for architecture, decisions, QA, prompts, research, and releases.",
+    filesChanged: "Docs route, document table, document project section",
+    verification: "Seeded docs display in hub and project detail pages.",
+    followUps: "Keep docs concise and project-attached.",
+    status: "verified" as const,
+  },
+  {
+    id: "prompt_aredir_branding_asset_cleanup",
+    projectId: "proj_04",
+    title: "Branding asset cleanup",
+    promptType: "ui" as const,
+    promptBody:
+      "Clean up brand marks, favicon exports, and public site asset references.",
+    resultSummary:
+      "Brand asset system clarified for light/dark logo and mark usage.",
+    filesChanged: "Public brand assets, logo components, brand scripts",
+    verification: "Check favicon and header mark rendering in both themes.",
+    followUps: "Document any future export naming changes.",
+    status: "run" as const,
+  },
+];
+
 async function seed() {
   console.log("Seeding workspace_settings...");
   const settingsResult = await db
@@ -376,6 +464,30 @@ async function seed() {
 
   console.log(
     `Done. ${documentsInserted} documents inserted, ${documentsSkipped} skipped.`,
+  );
+
+  console.log("Seeding workspace_project_prompts...");
+  let promptsInserted = 0;
+  let promptsSkipped = 0;
+
+  for (const prompt of prompts) {
+    const result = await db
+      .insert(workspaceProjectPrompts)
+      .values(prompt)
+      .onConflictDoNothing({ target: workspaceProjectPrompts.id })
+      .returning({ id: workspaceProjectPrompts.id });
+
+    if (result.length > 0) {
+      console.log(`  + ${prompt.title}`);
+      promptsInserted++;
+    } else {
+      console.log(`  - ${prompt.title} (already exists)`);
+      promptsSkipped++;
+    }
+  }
+
+  console.log(
+    `Done. ${promptsInserted} prompts inserted, ${promptsSkipped} skipped.`,
   );
   process.exit(0);
 }

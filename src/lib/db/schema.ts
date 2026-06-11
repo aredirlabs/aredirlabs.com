@@ -129,6 +129,25 @@ export const workspaceProjectDocumentCategoryEnum = pgEnum(
   ],
 );
 
+export const workspaceProjectPromptTypeEnum = pgEnum(
+  "workspace_project_prompt_type",
+  [
+    "implementation",
+    "audit",
+    "bugfix",
+    "ui",
+    "qa",
+    "documentation",
+    "deployment",
+    "research",
+  ],
+);
+
+export const workspaceProjectPromptStatusEnum = pgEnum(
+  "workspace_project_prompt_status",
+  ["drafted", "run", "verified", "needs_followup", "superseded"],
+);
+
 export const workspaceProjectNotes = pgTable("workspace_project_notes", {
   id: text("id").primaryKey(),
   projectId: text("project_id")
@@ -177,3 +196,22 @@ export const workspaceProjectDocuments = pgTable(
     ),
   ],
 );
+
+export const workspaceProjectPrompts = pgTable("workspace_project_prompts", {
+  id: text("id").primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  promptType: workspaceProjectPromptTypeEnum("prompt_type").notNull(),
+  promptBody: text("prompt_body").notNull(),
+  resultSummary: text("result_summary"),
+  filesChanged: text("files_changed"),
+  verification: text("verification"),
+  followUps: text("follow_ups"),
+  status: workspaceProjectPromptStatusEnum("status")
+    .notNull()
+    .default("drafted"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});

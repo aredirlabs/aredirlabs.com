@@ -10,11 +10,14 @@ import {
   workspaceProjectDocuments,
   workspaceProjectMilestones,
   workspaceProjectNotes,
+  workspaceProjectPrompts,
   workspaceProjects,
 } from "@/lib/db/schema";
 import { isWorkspaceProjectDocumentCategory } from "@/lib/workspace/document-categories";
 import { isWorkspaceMilestoneStatus } from "@/lib/workspace/milestone-status";
 import { isWorkspaceProjectNoteType } from "@/lib/workspace/note-types";
+import { isWorkspaceProjectPromptStatus } from "@/lib/workspace/prompt-status";
+import { isWorkspaceProjectPromptType } from "@/lib/workspace/prompt-types";
 
 export type CreateProjectMilestoneState = {
   error?: string;
@@ -260,6 +263,91 @@ export async function createProjectDocument(
   } catch (e) {
     return {
       error: e instanceof Error ? e.message : "Failed to create document.",
+    };
+  }
+}
+
+export type CreateProjectPromptState = {
+  error?: string;
+  success?: boolean;
+};
+
+function optionalText(value: FormDataEntryValue | null) {
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+export async function createProjectPrompt(
+  projectSlug: string,
+  _prevState: CreateProjectPromptState,
+  formData: FormData,
+): Promise<CreateProjectPromptState> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    return { error: "You must be signed in to add prompts." };
+  }
+
+  const title = formData.get("title");
+  const promptType = formData.get("prompt_type");
+  const promptBody = formData.get("prompt_body");
+  const resultSummary = formData.get("result_summary");
+  const filesChanged = formData.get("files_changed");
+  const verification = formData.get("verification");
+  const followUps = formData.get("follow_ups");
+  const status = formData.get("status");
+
+  if (typeof title !== "string" || !title.trim()) {
+    return { error: "Title is required." };
+  }
+
+  if (
+    typeof promptType !== "string" ||
+    !isWorkspaceProjectPromptType(promptType)
+  ) {
+    return { error: "Select a valid prompt type." };
+  }
+
+  if (typeof promptBody !== "string" || !promptBody.trim()) {
+    return { error: "Prompt body is required." };
+  }
+
+  if (typeof status !== "string" || !isWorkspaceProjectPromptStatus(status)) {
+    return { error: "Select a valid prompt status." };
+  }
+
+  try {
+    const db = getDb();
+    const [project] = await db
+      .select({ id: workspaceProjects.id })
+      .from(workspaceProjects)
+      .where(eq(workspaceProjects.slug, projectSlug))
+      .limit(1);
+
+    if (!project) {
+      return { error: "Project not found." };
+    }
+
+    await db.insert(workspaceProjectPrompts).values({
+      id: `prompt_${crypto.randomUUID()}`,
+      projectId: project.id,
+      title: title.trim(),
+      promptType,
+      promptBody: promptBody.trim(),
+      resultSummary: optionalText(resultSummary),
+      filesChanged: optionalText(filesChanged),
+      verification: optionalText(verification),
+      followUps: optionalText(followUps),
+      status,
+    });
+
+    revalidatePath("/workspace/prompts");
+    revalidatePath(`/workspace/projects/${projectSlug}`);
+    return { success: true };
+  } catch (e) {
+    return {
+      error: e instanceof Error ? e.message : "Failed to create prompt.",
     };
   }
 }

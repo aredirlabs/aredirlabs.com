@@ -52,6 +52,7 @@ Copy `.env.example` to `.env.local` and fill in your values. Next.js loads `.env
 | `BETTER_AUTH_SECRET` | Random string ≥32 characters for auth tokens |
 | `BETTER_AUTH_URL` | Base URL for auth callbacks (`http://localhost:3000` in dev) |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL (`http://localhost:3000` in dev) |
+| `WORKSPACE_ALLOWED_EMAILS` | Comma-separated list of emails allowed to create workspace accounts |
 
 Production deployment on Vercel uses the `aredirlabs-prod` Neon instance. Set these in the Vercel project **Production** environment:
 
@@ -61,6 +62,7 @@ Production deployment on Vercel uses the `aredirlabs-prod` Neon instance. Set th
 | `BETTER_AUTH_SECRET` | Random string ≥32 characters (distinct from dev) |
 | `BETTER_AUTH_URL` | `https://aredirlabs.com` |
 | `NEXT_PUBLIC_SITE_URL` | `https://aredirlabs.com` |
+| `WORKSPACE_ALLOWED_EMAILS` | Approved internal workspace emails, comma-separated |
 
 Never commit real secrets. These files are gitignored: `.env`, `.env.local`, `.env.production.local`. Only `.env.example` (placeholders) is tracked.
 
@@ -102,11 +104,13 @@ This project uses [Better Auth](https://www.better-auth.com/) with email/passwor
 | Route | Description |
 |-------|-------------|
 | `/sign-in` | Sign in to the workspace |
-| `/sign-up` | Create an account |
+| `/sign-up` | Invite-only registration notice |
 | `/workspace/*` | Protected — requires authentication (redirects to `/sign-in`) |
 
-- New users sign up at `/sign-up` with name, email, and password (min 8 characters)
-- After sign-up or sign-in, users are redirected to `/workspace`
+- Workspace registration is invite-only. Public visitors cannot create accounts.
+- New workspace accounts can only be created when the submitted email is listed in the server-only `WORKSPACE_ALLOWED_EMAILS` env var.
+- To approve a user, add their email to `WORKSPACE_ALLOWED_EMAILS` in the relevant environment, redeploy/restart, then have them complete sign-up through an approved registration path.
+- Existing users can sign in normally with email and password.
 - Use the **Sign Out** button in the workspace sidebar to end the session
 
 ## Workflow

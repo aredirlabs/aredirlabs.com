@@ -43,8 +43,10 @@ Set in Vercel → Project → Settings → Environment Variables → **Productio
 | `BETTER_AUTH_SECRET` | Random string ≥32 characters (unique to production) |
 | `BETTER_AUTH_URL` | `https://aredirlabs.com` |
 | `NEXT_PUBLIC_SITE_URL` | `https://aredirlabs.com` |
+| `WORKSPACE_ALLOWED_EMAILS` | Comma-separated approved workspace emails |
 
 Do **not** use development secrets or the `aredirlabs-dev` database URL in Production.
+Do **not** expose `WORKSPACE_ALLOWED_EMAILS` with a `NEXT_PUBLIC_` prefix.
 
 Optional: configure Preview environment with a separate database or dev instance if preview workspace testing is required.
 
@@ -60,6 +62,7 @@ Apply schema and seed data to `aredirlabs-prod` before or immediately after firs
 2. Set `DATABASE_URL` to the **aredirlabs-prod** Neon connection string
 3. Set `BETTER_AUTH_URL` and `NEXT_PUBLIC_SITE_URL` to `https://aredirlabs.com`
 4. Set a production `BETTER_AUTH_SECRET` (can match Vercel Production value)
+5. Set `WORKSPACE_ALLOWED_EMAILS` to the approved internal account emails
 
 ### Safe prod commands
 
@@ -83,6 +86,14 @@ If `aredirlabs.com` DNS still points to GoDaddy (or another non-Vercel host), br
 The auth client uses **same-origin** requests (`window.location.origin`), so auth works on the Vercel URL even before custom DNS is cut over. Server-side Better Auth uses dynamic `baseURL` allowed hosts (`*.vercel.app`, `aredirlabs.com`) with `BETTER_AUTH_URL` as fallback.
 
 Workspace route protection checks both production and development session cookie names (`__Secure-better-auth.session_token` and `better-auth.session_token`).
+
+Workspace registration is invite-only. `/sign-up` shows an invite-only notice, and direct Better Auth email signup requests are rejected unless the submitted email is present in `WORKSPACE_ALLOWED_EMAILS`.
+
+To add an approved workspace user:
+
+1. Add their email address to `WORKSPACE_ALLOWED_EMAILS` in Vercel Production.
+2. Redeploy or restart the runtime so the env var is loaded.
+3. Have the user complete account creation through an approved registration path.
 
 ### Expected prod tables
 
@@ -136,7 +147,9 @@ Run `db:seed:prod` twice — second run should report 0 milestones inserted, 9 s
 
 ### Workspace auth
 
-- [ ] `/sign-up` creates an account
+- [ ] `/sign-up` shows invite-only registration notice
+- [ ] Unapproved email cannot sign up
+- [ ] Approved email can sign up
 - [ ] `/sign-in` signs in successfully
 - [ ] `/workspace` redirects to sign-in when logged out
 - [ ] Sign out works

@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { authClient } from "@/lib/auth-client";
-import { runAuthAction } from "@/lib/auth-form";
 import { SiteLogo } from "@/components/site-logo";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
+import { runAuthAction } from "@/lib/auth-form";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function SignUpPage() {
           }),
         {
           fallbackMessage:
-            "Sign up failed. Check your connection and try again.",
+            "Workspace registration is invite-only.",
         },
       );
 
@@ -58,8 +58,11 @@ export default function SignUpPage() {
             className="mx-auto justify-center"
           />
           <h1 className="mt-6 text-xl font-semibold tracking-tight">
-            Create an account
+            Registration is invite-only
           </h1>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Workspace account creation is limited to approved Aredir Labs users.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -120,19 +123,19 @@ export default function SignUpPage() {
             />
           </div>
 
-          {error && (
+          {error ? (
             <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
               {error}
             </div>
-          )}
+          ) : null}
 
           <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? "Creating account…" : "Create account"}
+            {submitting ? "Creating account..." : "Create approved account"}
           </Button>
         </form>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          Already approved?{" "}
           <Link
             href="/sign-in"
             className="text-primary underline-offset-4 hover:underline"

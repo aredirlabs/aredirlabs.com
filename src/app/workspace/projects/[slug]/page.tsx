@@ -7,6 +7,7 @@ import { AlertTriangle, ArrowLeft, ExternalLink } from "lucide-react";
 import { Eyebrow } from "@/components/eyebrow";
 import { ProjectMilestonesSection } from "@/components/workspace/project-milestones-section";
 import { ProjectDocumentsSection } from "@/components/workspace/project-documents-section";
+import { ProjectPromptsSection } from "@/components/workspace/project-prompts-section";
 import {
   ProjectCurrentFocusSection,
   ProjectOverviewSection,
@@ -21,10 +22,11 @@ import {
   workspaceProjectMilestones,
   workspaceProjectDocuments,
   workspaceProjectNotes,
+  workspaceProjectPrompts,
   workspaceProjects,
 } from "@/lib/db/schema";
 import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
-import { getProjectDocuments } from "@/lib/workspace/queries";
+import { getProjectDocuments, getProjectPrompts } from "@/lib/workspace/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -62,10 +64,12 @@ export default async function WorkspaceProjectDetailPage({
   let notes: Array<typeof workspaceProjectNotes.$inferSelect> = [];
   let milestones: Array<typeof workspaceProjectMilestones.$inferSelect> = [];
   let documents: Array<typeof workspaceProjectDocuments.$inferSelect> = [];
+  let prompts: Array<typeof workspaceProjectPrompts.$inferSelect> = [];
   let error: string | null = null;
   let notesError: string | null = null;
   let milestonesError: string | null = null;
   let documentsError: string | null = null;
+  let promptsError: string | null = null;
 
   try {
     const db = getDb();
@@ -93,6 +97,13 @@ export default async function WorkspaceProjectDetailPage({
       } catch (e) {
         documentsError =
           e instanceof Error ? e.message : "Failed to load documents";
+      }
+
+      try {
+        prompts = await getProjectPrompts(project.id);
+      } catch (e) {
+        promptsError =
+          e instanceof Error ? e.message : "Failed to load prompts";
       }
 
       try {
@@ -241,6 +252,12 @@ export default async function WorkspaceProjectDetailPage({
           projectSlug={project.slug}
           documents={documents}
           documentsError={documentsError}
+        />
+
+        <ProjectPromptsSection
+          projectSlug={project.slug}
+          prompts={prompts}
+          promptsError={promptsError}
         />
 
         <ProjectNotesSection
