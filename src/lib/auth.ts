@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
+import { authBaseURL, authTrustedOrigins } from "@/lib/auth-config";
 import { db } from "@/lib/db";
 import * as schema from "@/lib/db/schema";
 
@@ -14,5 +15,6 @@ export const auth = betterAuth({
     enabled: true,
   },
   secret: process.env.BETTER_AUTH_SECRET,
-  baseURL: process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_SITE_URL,
+  baseURL: authBaseURL,
+  trustedOrigins: authTrustedOrigins,
 });

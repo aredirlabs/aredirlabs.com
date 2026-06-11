@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { authClient } from "@/lib/auth-client";
+import { runAuthAction } from "@/lib/auth-form";
 import { Button } from "@/components/ui/button";
 import { LogoGlyph } from "@/components/logo-glyph";
 
@@ -19,15 +20,29 @@ export default function SignInPage() {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
-    const { error: err } = await authClient.signIn.email({
-      email,
-      password,
-    });
-    setSubmitting(false);
-    if (err) {
-      setError(err.message ?? "Sign in failed");
-    } else {
+
+    try {
+      const result = await runAuthAction(
+        () =>
+          authClient.signIn.email({
+            email,
+            password,
+          }),
+        {
+          fallbackMessage:
+            "Sign in failed. Check your email, password, and connection.",
+        },
+      );
+
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+
       router.push("/workspace");
+      router.refresh();
+    } finally {
+      setSubmitting(false);
     }
   }
 

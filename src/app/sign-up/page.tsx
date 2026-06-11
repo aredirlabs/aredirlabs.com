@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { authClient } from "@/lib/auth-client";
+import { runAuthAction } from "@/lib/auth-form";
 import { Button } from "@/components/ui/button";
 import { LogoGlyph } from "@/components/logo-glyph";
 
@@ -20,16 +21,30 @@ export default function SignUpPage() {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
-    const { error: err } = await authClient.signUp.email({
-      name,
-      email,
-      password,
-    });
-    setSubmitting(false);
-    if (err) {
-      setError(err.message ?? "Sign up failed");
-    } else {
+
+    try {
+      const result = await runAuthAction(
+        () =>
+          authClient.signUp.email({
+            name,
+            email,
+            password,
+          }),
+        {
+          fallbackMessage:
+            "Sign up failed. Check your connection and try again.",
+        },
+      );
+
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+
       router.push("/workspace");
+      router.refresh();
+    } finally {
+      setSubmitting(false);
     }
   }
 

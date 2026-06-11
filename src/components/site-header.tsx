@@ -1,16 +1,23 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 
 import { MainNav } from "@/components/main-nav";
 import { SiteLogo } from "@/components/site-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { WorkspaceAccessNav } from "@/components/workspace-access-nav";
+import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
   className?: string;
 };
 
-export function SiteHeader({ className }: SiteHeaderProps) {
+export async function SiteHeader({ className }: SiteHeaderProps) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   return (
     <header
       className={cn(
@@ -25,9 +32,14 @@ export function SiteHeader({ className }: SiteHeaderProps) {
             <MainNav />
           </div>
           <ThemeToggle />
-          <Button asChild size="sm" className="ml-1 hidden font-mono text-xs uppercase tracking-[0.1em] sm:inline-flex">
+          <Button
+            asChild
+            size="sm"
+            className="ml-1 hidden font-mono text-xs uppercase tracking-[0.1em] sm:inline-flex"
+          >
             <Link href="/contact">Contact</Link>
           </Button>
+          <WorkspaceAccessNav isAuthenticated={!!session} />
         </nav>
       </div>
       {/* Compact nav for small screens */}

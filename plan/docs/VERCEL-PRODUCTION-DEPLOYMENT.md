@@ -72,6 +72,18 @@ CONFIRM_PROD_DB=true npm run db:seed:prod
 
 If `CONFIRM_PROD_DB=true` is missing, commands fail with a warning and exit without touching the database.
 
+### Custom domain and auth
+
+The Next.js app deploys to Vercel (e.g. `aredirlabs-com.vercel.app`). Auth API calls must reach that deployment — **not** a placeholder host on the apex domain.
+
+If `aredirlabs.com` DNS still points to GoDaddy (or another non-Vercel host), browser auth requests to `https://aredirlabs.com/api/auth/*` return HTML 404 pages and signup/sign-in appear to hang or fail silently.
+
+**Fix:** Point `aredirlabs.com` (and `www` if used) DNS to Vercel before relying on the custom domain for auth.
+
+The auth client uses **same-origin** requests (`window.location.origin`), so auth works on the Vercel URL even before custom DNS is cut over. Server-side Better Auth uses dynamic `baseURL` allowed hosts (`*.vercel.app`, `aredirlabs.com`) with `BETTER_AUTH_URL` as fallback.
+
+Workspace route protection checks both production and development session cookie names (`__Secure-better-auth.session_token` and `better-auth.session_token`).
+
 ### Expected prod tables
 
 After push/seed, verify these tables exist:
