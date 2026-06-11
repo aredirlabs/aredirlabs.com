@@ -26,17 +26,34 @@ Brand tokens and copy live in `src/app/globals.css` and `src/lib/site-config.ts`
 
 - Node.js LTS
 - npm
+- A [Neon](https://neon.tech) PostgreSQL database (free tier works)
 
-### Setup
+### Database setup (Neon)
+
+1. Create a free Neon project at [neon.tech](https://neon.tech)
+2. Copy your connection string from the Neon dashboard
+3. Configure your environment (see [Environment variables](#environment-variables) below)
+4. Push the schema and seed the database:
 
 ```bash
-git clone <repository-url>
-cd aredirlabs-com
-npm install
-npm run dev
+npm run db:push
+npm run db:seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+> `npm run db:seed` is idempotent — running it multiple times will not duplicate seeded workspace settings or projects.
+
+### Environment variables
+
+Copy `.env.example` to `.env.local` and fill in your values. Next.js loads `.env.local` for local development (it overrides `.env` if present).
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Neon PostgreSQL connection string (`aredirlabs-dev` locally) |
+| `BETTER_AUTH_SECRET` | Random string ≥32 characters for auth tokens |
+| `BETTER_AUTH_URL` | Base URL for auth callbacks (`http://localhost:3000` in dev) |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL (`http://localhost:3000` in dev) |
+
+Production deployment on Vercel uses the `aredirlabs-prod` Neon instance — set `DATABASE_URL` and the auth variables in the Vercel project **Production** environment. Never commit real secrets; `.env.local` is gitignored.
 
 ### Scripts
 
@@ -46,6 +63,24 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run build` | Production build |
 | `npm run start` | Serve production build locally |
 | `npm run lint` | Run ESLint |
+| `npm run db:push` | Push Drizzle schema to the database |
+| `npm run db:migrate` | Run Drizzle migrations |
+| `npm run db:generate` | Generate Drizzle migrations |
+| `npm run db:seed` | Seed workspace settings and initial workspace projects |
+
+### Authentication
+
+This project uses [Better Auth](https://www.better-auth.com/) with email/password authentication.
+
+| Route | Description |
+|-------|-------------|
+| `/sign-in` | Sign in to the workspace |
+| `/sign-up` | Create an account |
+| `/workspace/*` | Protected — requires authentication (redirects to `/sign-in`) |
+
+- New users sign up at `/sign-up` with name, email, and password (min 8 characters)
+- After sign-up or sign-in, users are redirected to `/workspace`
+- Use the **Sign Out** button in the workspace sidebar to end the session
 
 ## Workflow
 

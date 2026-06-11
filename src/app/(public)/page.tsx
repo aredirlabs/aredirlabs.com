@@ -1,22 +1,21 @@
 import Link from "next/link";
 
 import { BentoGrid } from "@/components/bento-grid";
-import { Constellation } from "@/components/constellation";
+import { CelestialBackdrop } from "@/components/celestial-backdrop";
 import { Eyebrow } from "@/components/eyebrow";
+import { LogoLuminous } from "@/components/logo-luminous";
 import { ProjectCard } from "@/components/project-card";
 import { RuneDivider } from "@/components/rune-divider";
 import { SectionShell } from "@/components/section-shell";
-import { Sigil } from "@/components/sigil";
 import { Button } from "@/components/ui/button";
 import { projects } from "@/lib/site-config";
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-grid-line">
-        <div className="bg-grid mask-radial pointer-events-none absolute inset-0 opacity-60" aria-hidden />
-        <Constellation className="mask-radial opacity-70" />
+      {/* Hero — always "night sky" in both light and dark themes */}
+      <section className="dark relative overflow-hidden border-b border-grid-line text-foreground">
+        <CelestialBackdrop />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-24 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:py-32">
           <div className="max-w-2xl">
             <Eyebrow>Independent Software Lab</Eyebrow>
@@ -37,17 +36,14 @@ export default function HomePage() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="font-mono text-xs uppercase tracking-[0.1em]"
+                className="border-white/20 bg-transparent font-mono text-xs uppercase tracking-[0.1em] hover:bg-white/5"
               >
                 <Link href="/contact">Get in Touch</Link>
               </Button>
             </div>
           </div>
           <div className="hidden justify-center lg:flex" aria-hidden>
-            <div className="relative">
-              <div className="absolute inset-0 -z-10 rounded-full bg-primary/15 blur-3xl" />
-              <Sigil className="h-56 w-56 text-foreground/90" />
-            </div>
+            <LogoLuminous className="h-72 w-72" />
           </div>
         </div>
       </section>

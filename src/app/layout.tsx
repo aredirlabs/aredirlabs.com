@@ -1,12 +1,9 @@
 import { Geist, Inter, JetBrains_Mono } from "next/font/google";
 
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
 import { baseMetadata } from "@/lib/metadata";
 
 import "./globals.css";
 
-// Geist = headings, Inter = body/UI, JetBrains Mono = labels & technical metadata
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
@@ -45,11 +42,9 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <SiteHeader />
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <SiteFooter />
       </body>
     </html>
   );

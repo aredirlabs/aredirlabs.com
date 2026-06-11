@@ -12,8 +12,9 @@
 
 ### Local
 
-- Copy `.env.example` to `.env.local` when example file exists.
-- Never commit `.env`, `.env.local`, or secrets.
+- Copy `.env.example` to `.env.local` and fill in values.
+- Use the **`aredirlabs-dev`** Neon database (`DATABASE_URL` in `.env.local`).
+- Never commit `.env`, `.env.local`, or secrets. Only `.env.example` (placeholders) is committed.
 
 ### Naming
 
@@ -27,9 +28,30 @@
 
 | Variable | Environments | Description |
 |----------|--------------|-------------|
-| _(none yet)_ | — | Add rows as integrations are added |
+| `DATABASE_URL` | Local, Production | Neon PostgreSQL connection string. Local: `aredirlabs-dev`. Production (Vercel): `aredirlabs-prod`. |
+| `BETTER_AUTH_SECRET` | Local, Production | Random string ≥32 characters for Better Auth session tokens. Use distinct values per environment. |
+| `BETTER_AUTH_URL` | Local, Production | Auth callback base URL. Local: `http://localhost:3000`. Production: `https://aredirlabs.com` (or configured domain). |
+| `NEXT_PUBLIC_SITE_URL` | Local, Production | Public site URL exposed to the browser. Local: `http://localhost:3000`. Production: live site URL. |
 
-## Sanity (when integrated)
+## Database (Neon + Drizzle)
+
+| Instance | Environment | Purpose |
+|----------|-------------|---------|
+| `aredirlabs-dev` | Local (`.env.local`) | Development database |
+| `aredirlabs-prod` | Vercel Production | Live site database |
+
+Schema is defined in `src/lib/db/schema.ts` and applied with `npm run db:push`. Local CLI commands load `.env.local` automatically.
+
+### Seeded tables
+
+| Table | Idempotency key | Initial record |
+|-------|-----------------|----------------|
+| `workspace_settings` | `company_slug` | `Aredir Labs` / `aredir-labs` |
+| `workspace_projects` | `slug` | AlignFit, ClassForge, LeagueOS, AredirLabs.com |
+
+Run `npm run db:seed` after pushing schema. Safe to run multiple times.
+
+Verification checklist: [plan/docs/NEON-ENVIRONMENT-VERIFICATION.md](../../plan/docs/NEON-ENVIRONMENT-VERIFICATION.md)
 
 - Separate datasets or tokens per environment if required by project policy.
 - Preview may use draft content; production uses published content only.

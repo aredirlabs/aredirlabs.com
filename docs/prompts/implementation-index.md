@@ -9,6 +9,17 @@ Ordered prompts for building aredirlabs.com.
 | 001C | [Techno-mythic design system & desktop-first site](./prompt-001C-design-system-uplift.md) | Complete | 001B |
 | 001D+ | _(future prompts)_ | Planned | 001C |
 
+## Workspace (internal)
+
+| ID | Prompt | Status | Depends on |
+|----|--------|--------|------------|
+| [001](../plan/docs/AREDIR-WORKSPACE-001-VERIFICATION.md) | Workspace foundation — auth, protected routes, dashboard, project registry | Complete | 001C |
+| [002A](../plan/docs/NEON-ENVIRONMENT-VERIFICATION.md) | Neon environment finalization — dev/prod split, Drizzle, seed baseline | Complete | 001 |
+| [003](../plan/docs/AREDIR-WORKSPACE-003-PROJECT-DETAILS.md) | Project detail pages — registry-backed internal product views | Complete | 002A |
+| [004](../plan/docs/AREDIR-WORKSPACE-004-PROJECT-NOTES.md) | Project notes and decision log — lightweight project memory | Complete | 003 |
+
+Verification docs live under `plan/docs/`.
+
 ## Rules
 
 1. **001A** must be committed before feature prompts.
@@ -21,9 +32,11 @@ Ordered prompts for building aredirlabs.com.
 ```bash
 npm run lint
 npm run build
+npm run db:push
+npm run db:seed
 ```
 
-Plus manual QA when user-facing behavior changes.
+Plus manual QA when user-facing behavior changes. Workspace milestones also verify idempotent seeding (`npm run db:seed` twice).
 
 ## Related
 

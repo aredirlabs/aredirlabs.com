@@ -46,7 +46,7 @@ export function Constellation({ className }: ConstellationProps) {
       viewBox="0 0 800 400"
       preserveAspectRatio="xMidYMid slice"
       aria-hidden
-      className={cn("pointer-events-none absolute inset-0 h-full w-full text-primary", className)}
+      className={cn("pointer-events-none absolute inset-0 h-full w-full", className)}
     >
       <g stroke="currentColor" strokeWidth="0.75" opacity="0.18">
         {LINKS.map(([a, b], i) => (

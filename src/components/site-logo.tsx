@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Sigil } from "@/components/sigil";
+import { LogoGlyph } from "@/components/logo-glyph";
 import { cn } from "@/lib/utils";
 
 type SiteLogoProps = {
@@ -17,7 +17,7 @@ export function SiteLogo({ className }: SiteLogoProps) {
       )}
       aria-label="Aredir Labs home"
     >
-      <Sigil className="h-8 w-8 transition-colors group-hover:text-primary" />
+      <LogoGlyph className="h-8 w-8 transition-colors group-hover:text-primary" />
       <span className="flex flex-col leading-tight">
         <span className="font-heading text-sm font-semibold tracking-tight">
           Aredir Labs
