@@ -25,8 +25,12 @@ export async function SiteHeader({ className }: SiteHeaderProps) {
         className,
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
-        <SiteLogo />
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:gap-4 sm:px-6">
+        <SiteLogo
+          variant="lockup"
+          size="md"
+          className="min-w-0 max-sm:gap-1.5"
+        />
         <nav className="flex items-center gap-1 sm:gap-2" aria-label="Main">
           <div className="hidden sm:block">
             <MainNav />

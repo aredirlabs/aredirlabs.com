@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { brandAssets } from "@/lib/brand";
 import { siteConfig } from "@/lib/site-config";
 
 const defaultTitle = siteConfig.name;
@@ -12,6 +13,15 @@ export const baseMetadata: Metadata = {
     template: `%s · ${defaultTitle}`,
   },
   description: defaultDescription,
+  icons: {
+    icon: [
+      { url: brandAssets.favicon32, sizes: "32x32", type: "image/png" },
+      { url: brandAssets.favicon64, sizes: "64x64", type: "image/png" },
+    ],
+    apple: [
+      { url: brandAssets.favicon180, sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

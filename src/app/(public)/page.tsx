@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BentoGrid } from "@/components/bento-grid";
 import { CelestialBackdrop } from "@/components/celestial-backdrop";
 import { Eyebrow } from "@/components/eyebrow";
-import { LogoLuminous } from "@/components/logo-luminous";
+import { HeroBrandMark } from "@/components/hero-brand-mark";
 import { ProjectCard } from "@/components/project-card";
 import { RuneDivider } from "@/components/rune-divider";
 import { SectionShell } from "@/components/section-shell";
@@ -14,9 +14,13 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — always "night sky" in both light and dark themes */}
-      <section className="dark relative overflow-hidden border-b border-grid-line text-foreground">
+      <section className="dark relative isolate overflow-hidden bg-[#0a0c14] text-foreground">
         <CelestialBackdrop />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-24 sm:py-28 lg:grid-cols-[1.4fr_1fr] lg:py-32">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-gradient-to-b from-transparent to-background"
+          aria-hidden
+        />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:gap-12 sm:py-28 lg:grid-cols-[1.35fr_1fr] lg:gap-16 lg:py-32">
           <div className="max-w-2xl">
             <Eyebrow>Independent Software Lab</Eyebrow>
             <h1 className="mt-4 font-heading text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.05]">
@@ -42,14 +46,18 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="hidden justify-center lg:flex" aria-hidden>
-            <LogoLuminous className="h-72 w-72" />
+          <div className="flex justify-center lg:justify-end">
+            <HeroBrandMark className="max-sm:scale-90" />
           </div>
         </div>
       </section>
 
       {/* Portfolio */}
-      <SectionShell id="projects" aria-labelledby="projects-heading">
+      <SectionShell
+        id="projects"
+        aria-labelledby="projects-heading"
+        className="bg-background"
+      >
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Eyebrow>Portfolio</Eyebrow>
@@ -78,12 +86,12 @@ export default function HomePage() {
         </BentoGrid>
       </SectionShell>
 
-      <div className="mx-auto max-w-6xl px-6">
-        <RuneDivider />
-      </div>
-
       {/* Mission / approach */}
-      <SectionShell aria-labelledby="about-heading">
+      <SectionShell
+        aria-labelledby="about-heading"
+        className="border-t border-grid-line bg-muted/35 dark:bg-muted/20"
+      >
+        <RuneDivider className="mb-10 sm:mb-12" />
         <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div>
             <Eyebrow>Mission</Eyebrow>
@@ -129,7 +137,10 @@ export default function HomePage() {
       </SectionShell>
 
       {/* CTA */}
-      <SectionShell aria-labelledby="cta-heading">
+      <SectionShell
+        aria-labelledby="cta-heading"
+        className="border-t border-grid-line bg-background"
+      >
         <div className="relative overflow-hidden rounded-xl border border-border bg-card px-8 py-12 sm:px-12">
           <div className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-50" aria-hidden />
           <div className="relative">

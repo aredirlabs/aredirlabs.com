@@ -6,8 +6,8 @@ import Link from "next/link";
 
 import { authClient } from "@/lib/auth-client";
 import { runAuthAction } from "@/lib/auth-form";
+import { SiteLogo } from "@/components/site-logo";
 import { Button } from "@/components/ui/button";
-import { LogoGlyph } from "@/components/logo-glyph";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -50,21 +50,11 @@ export default function SignInPage() {
     <div className="flex min-h-[80dvh] items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2.5"
-            aria-label="Aredir Labs home"
-          >
-            <LogoGlyph className="h-8 w-8" />
-            <span className="flex flex-col items-start leading-tight">
-              <span className="font-heading text-sm font-semibold tracking-tight">
-                Aredir Labs
-              </span>
-              <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
-                The Forge
-              </span>
-            </span>
-          </Link>
+          <SiteLogo
+            variant="lockup"
+            size="md"
+            className="mx-auto justify-center"
+          />
           <h1 className="mt-6 text-xl font-semibold tracking-tight">
             Sign in to Workspace
           </h1>

@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 import { siteConfig } from "@/lib/site-config";
@@ -6,7 +9,12 @@ export const alt = siteConfig.name;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const markBuffer = await readFile(
+    join(process.cwd(), "public/brand/aredir-mark-dark.png"),
+  );
+  const markSrc = `data:image/png;base64,${markBuffer.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -17,12 +25,11 @@ export default function OpenGraphImage() {
           width: "100%",
           height: "100%",
           padding: 80,
-          background: "#14161c",
+          background: "#0a0c14",
           color: "#e8ebf2",
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        {/* top accent bar */}
         <div
           style={{
             position: "absolute",
@@ -30,35 +37,20 @@ export default function OpenGraphImage() {
             left: 0,
             right: 0,
             height: 6,
-            background: "linear-gradient(90deg, #14161c, #4b8eff, #14161c)",
+            background: "linear-gradient(90deg, #0a0c14, #007aff, #0a0c14)",
           }}
         />
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 18,
+            gap: 28,
             marginBottom: 36,
           }}
         >
-          <div
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 14,
-              background: "#1d2740",
-              border: "1px solid #39435c",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 30,
-              fontWeight: 700,
-              color: "#cdddff",
-            }}
-          >
-            A
-          </div>
-          <span style={{ fontSize: 36, fontWeight: 600 }}>{siteConfig.name}</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={markSrc} alt="" width={112} height={112} />
+          <span style={{ fontSize: 40, fontWeight: 600 }}>{siteConfig.name}</span>
         </div>
         <p style={{ fontSize: 46, fontWeight: 600, lineHeight: 1.15, maxWidth: 960 }}>
           Building intelligent software that helps people learn, perform, and
@@ -76,18 +68,6 @@ export default function OpenGraphImage() {
         >
           AI-powered SaaS · Quality engineering · Product development
         </p>
-        {/* ember apex dot */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 80,
-            right: 80,
-            width: 14,
-            height: 14,
-            borderRadius: "50%",
-            background: "#ffb95f",
-          }}
-        />
       </div>
     ),
     { ...size },

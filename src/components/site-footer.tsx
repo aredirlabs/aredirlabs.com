@@ -13,14 +13,17 @@ export function SiteFooter({ className }: SiteFooterProps) {
 
   return (
     <footer
-      className={cn("relative border-t border-grid-line bg-card/40", className)}
+      className={cn(
+        "dark relative border-t border-grid-line bg-[#0a0c14] text-foreground",
+        className,
+      )}
       role="contentinfo"
     >
-      <div className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-50" aria-hidden />
+      <div className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-30" aria-hidden />
       <div className="relative mx-auto max-w-6xl px-6 py-14">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-3">
-            <SiteLogo />
+            <SiteLogo variant="lockup" size="lg" />
             <p className="max-w-xs text-sm text-muted-foreground">
               {siteConfig.tagline}
             </p>
