@@ -30,8 +30,8 @@ if (!existsSync(envFile)) {
 
 const commands = {
   push: {
-    bin: "node",
-    args: ["scripts/migrate-workspace-006.mjs"],
+    bin: "scripts/migrate-workspace-006.mjs",
+    args: [],
     then: {
       bin: "node_modules/drizzle-kit/bin.cjs",
       args: ["push"],

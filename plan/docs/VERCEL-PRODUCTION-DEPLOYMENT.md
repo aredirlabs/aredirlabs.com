@@ -77,13 +77,31 @@ If `CONFIRM_PROD_DB=true` is missing, commands fail with a warning and exit with
 After push/seed, verify these tables exist:
 
 - Better Auth: `user`, `session`, `account`, `verification`
-- Workspace: `workspace_projects`, `workspace_settings`, `workspace_project_notes`
+- Workspace: `workspace_projects`, `workspace_settings`, `workspace_project_notes`, `workspace_project_milestones`
+
+`workspace_projects` includes 006 columns: `status`, `stage`, `current_focus`, `next_step`, `target_date`.
 
 Seed baseline:
 
 - 1 workspace settings record (`Aredir Labs`)
-- 4 workspace projects
+- 4 workspace projects (status/stage/focus upserted on re-seed)
 - 4 sample project notes
+- 9 project milestones (idempotent on fixed `id`; second seed run inserts 0)
+
+### 006 production migration
+
+`db:push:prod` runs `scripts/migrate-workspace-006.mjs` before Drizzle push to map legacy `project_status` values on existing databases. On first prod apply (2026-06), migration converted the old enum (`Active Build`, `In Development`, `Concept`) to text, updated row values, dropped the old type, then Drizzle applied the new schema.
+
+Verify locally without exposing secrets:
+
+```bash
+node --env-file=.env.production.local scripts/verify-prod-env.mjs
+CONFIRM_PROD_DB=true npm run db:push:prod
+CONFIRM_PROD_DB=true npm run db:seed:prod
+node --env-file=.env.production.local scripts/verify-prod-006.mjs
+```
+
+Run `db:seed:prod` twice — second run should report 0 milestones inserted, 9 skipped.
 
 ---
 
@@ -113,9 +131,10 @@ Seed baseline:
 
 ### Workspace data
 
-- [ ] Dashboard shows 4 seeded projects
-- [ ] `/workspace/projects` registry loads
-- [ ] Each project detail page loads with seeded note
+- [ ] Dashboard shows operating snapshot and 4 seeded projects
+- [ ] `/workspace/projects` registry loads with status/stage columns
+- [ ] Each project detail page loads with milestones and seeded note
+- [ ] Creating a new milestone persists after refresh
 - [ ] Creating a new note persists after refresh
 
 ### Errors
