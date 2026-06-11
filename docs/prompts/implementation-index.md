@@ -17,6 +17,7 @@ Ordered prompts for building aredirlabs.com.
 | [002A](../plan/docs/NEON-ENVIRONMENT-VERIFICATION.md) | Neon environment finalization — dev/prod split, Drizzle, seed baseline | Complete | 001 |
 | [003](../plan/docs/AREDIR-WORKSPACE-003-PROJECT-DETAILS.md) | Project detail pages — registry-backed internal product views | Complete | 002A |
 | [004](../plan/docs/AREDIR-WORKSPACE-004-PROJECT-NOTES.md) | Project notes and decision log — lightweight project memory | Complete | 003 |
+| [005](../plan/docs/VERCEL-PRODUCTION-DEPLOYMENT.md) | Vercel production setup — safe prod DB scripts and deployment checklist | Complete | 004 |
 
 Verification docs live under `plan/docs/`.
 

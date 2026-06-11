@@ -53,7 +53,32 @@ Copy `.env.example` to `.env.local` and fill in your values. Next.js loads `.env
 | `BETTER_AUTH_URL` | Base URL for auth callbacks (`http://localhost:3000` in dev) |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL (`http://localhost:3000` in dev) |
 
-Production deployment on Vercel uses the `aredirlabs-prod` Neon instance — set `DATABASE_URL` and the auth variables in the Vercel project **Production** environment. Never commit real secrets; `.env.local` is gitignored.
+Production deployment on Vercel uses the `aredirlabs-prod` Neon instance. Set these in the Vercel project **Production** environment:
+
+| Variable | Production value |
+|----------|------------------|
+| `DATABASE_URL` | `aredirlabs-prod` Neon connection string |
+| `BETTER_AUTH_SECRET` | Random string ≥32 characters (distinct from dev) |
+| `BETTER_AUTH_URL` | `https://aredirlabs.com` |
+| `NEXT_PUBLIC_SITE_URL` | `https://aredirlabs.com` |
+
+Never commit real secrets. These files are gitignored: `.env`, `.env.local`, `.env.production.local`. Only `.env.example` (placeholders) is tracked.
+
+#### One-time production database setup (local)
+
+For applying schema/seed to `aredirlabs-prod` from your machine:
+
+1. Copy `.env.example` to `.env.production.local`
+2. Set `DATABASE_URL` to the **aredirlabs-prod** connection string
+3. Set production auth URLs (`https://aredirlabs.com`)
+4. Run with explicit confirmation:
+
+```bash
+CONFIRM_PROD_DB=true npm run db:push:prod
+CONFIRM_PROD_DB=true npm run db:seed:prod
+```
+
+Without `CONFIRM_PROD_DB=true`, production DB scripts fail immediately. See [Vercel production deployment checklist](plan/docs/VERCEL-PRODUCTION-DEPLOYMENT.md).
 
 ### Scripts
 
@@ -66,7 +91,9 @@ Production deployment on Vercel uses the `aredirlabs-prod` Neon instance — set
 | `npm run db:push` | Push Drizzle schema to the database |
 | `npm run db:migrate` | Run Drizzle migrations |
 | `npm run db:generate` | Generate Drizzle migrations |
-| `npm run db:seed` | Seed workspace settings and initial workspace projects |
+| `npm run db:seed` | Seed workspace settings, projects, and notes (dev) |
+| `npm run db:push:prod` | Push schema to production DB (requires `CONFIRM_PROD_DB=true`, loads `.env.production.local`) |
+| `npm run db:seed:prod` | Seed production DB (requires `CONFIRM_PROD_DB=true`, loads `.env.production.local`) |
 
 ### Authentication
 
