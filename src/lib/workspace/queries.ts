@@ -1,10 +1,16 @@
-import { asc, eq, inArray, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 
 import { getDb } from "@/lib/db";
 import {
+  workspaceProjectDocuments,
   workspaceProjectMilestones,
   workspaceProjects,
 } from "@/lib/db/schema";
+import {
+  WORKSPACE_PROJECT_DOCUMENT_CATEGORIES,
+  WORKSPACE_PROJECT_DOCUMENT_CATEGORY_LABELS,
+  type WorkspaceProjectDocumentCategory,
+} from "@/lib/workspace/document-categories";
 
 export type OperatingSnapshot = {
   activeCount: number;
@@ -108,4 +114,121 @@ export function groupMilestonesByStatus<
   }
 
   return groups.filter((group) => group.items.length > 0);
+}
+
+export type WorkspaceProjectDocument =
+  typeof workspaceProjectDocuments.$inferSelect;
+
+export type WorkspaceDocumentSearchResult = WorkspaceProjectDocument & {
+  projectName: string;
+  projectSlug: string;
+};
+
+export async function getProjectDocuments(projectId: string) {
+  const db = getDb();
+
+  return db
+    .select()
+    .from(workspaceProjectDocuments)
+    .where(eq(workspaceProjectDocuments.projectId, projectId))
+    .orderBy(
+      asc(workspaceProjectDocuments.category),
+      desc(workspaceProjectDocuments.updatedAt),
+      asc(workspaceProjectDocuments.title),
+    );
+}
+
+export async function getProjectDocumentBySlugs(
+  projectSlug: string,
+  documentSlug: string,
+) {
+  const db = getDb();
+  const rows = await db
+    .select({
+      id: workspaceProjectDocuments.id,
+      projectId: workspaceProjectDocuments.projectId,
+      category: workspaceProjectDocuments.category,
+      title: workspaceProjectDocuments.title,
+      slug: workspaceProjectDocuments.slug,
+      content: workspaceProjectDocuments.content,
+      createdAt: workspaceProjectDocuments.createdAt,
+      updatedAt: workspaceProjectDocuments.updatedAt,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+    .from(workspaceProjectDocuments)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceProjectDocuments.projectId, workspaceProjects.id),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceProjectDocuments.slug, documentSlug),
+      ),
+    )
+    .limit(1);
+
+  return rows[0] ?? null;
+}
+
+export async function searchWorkspaceDocuments(query: string) {
+  const db = getDb();
+  const normalizedQuery = query.trim();
+  const matchingCategories = WORKSPACE_PROJECT_DOCUMENT_CATEGORIES.filter(
+    (category) => {
+      const label = WORKSPACE_PROJECT_DOCUMENT_CATEGORY_LABELS[category];
+      const haystacks = [category, label].map((value) => value.toLowerCase());
+      return haystacks.some((value) =>
+        value.includes(normalizedQuery.toLowerCase()),
+      );
+    },
+  );
+
+  return db
+    .select({
+      id: workspaceProjectDocuments.id,
+      projectId: workspaceProjectDocuments.projectId,
+      category: workspaceProjectDocuments.category,
+      title: workspaceProjectDocuments.title,
+      slug: workspaceProjectDocuments.slug,
+      content: workspaceProjectDocuments.content,
+      createdAt: workspaceProjectDocuments.createdAt,
+      updatedAt: workspaceProjectDocuments.updatedAt,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+    .from(workspaceProjectDocuments)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceProjectDocuments.projectId, workspaceProjects.id),
+    )
+    .where(
+      normalizedQuery
+        ? or(
+            ilike(workspaceProjectDocuments.title, `%${normalizedQuery}%`),
+            matchingCategories.length > 0
+              ? inArray(workspaceProjectDocuments.category, matchingCategories)
+              : undefined,
+          )
+        : undefined,
+    )
+    .orderBy(
+      asc(workspaceProjects.name),
+      asc(workspaceProjectDocuments.category),
+      asc(workspaceProjectDocuments.title),
+    );
+}
+
+export function groupDocumentsByCategory<T extends { category: string }>(
+  documents: T[],
+) {
+  return WORKSPACE_PROJECT_DOCUMENT_CATEGORIES.map((category) => ({
+    key: category,
+    label:
+      WORKSPACE_PROJECT_DOCUMENT_CATEGORY_LABELS[
+        category as WorkspaceProjectDocumentCategory
+      ],
+    items: documents.filter((document) => document.category === category),
+  })).filter((group) => group.items.length > 0);
 }

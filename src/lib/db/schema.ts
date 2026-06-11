@@ -5,6 +5,7 @@ import {
   boolean,
   pgEnum,
   integer,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 export const projectStatusEnum = pgEnum("project_status", [
@@ -115,6 +116,19 @@ export const workspaceProjectNoteTypeEnum = pgEnum("workspace_project_note_type"
   "release",
 ]);
 
+export const workspaceProjectDocumentCategoryEnum = pgEnum(
+  "workspace_project_document_category",
+  [
+    "architecture",
+    "decision",
+    "qa",
+    "release",
+    "prompt",
+    "research",
+    "reference",
+  ],
+);
+
 export const workspaceProjectNotes = pgTable("workspace_project_notes", {
   id: text("id").primaryKey(),
   projectId: text("project_id")
@@ -141,3 +155,25 @@ export const workspaceProjectMilestones = pgTable("workspace_project_milestones"
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const workspaceProjectDocuments = pgTable(
+  "workspace_project_documents",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+    category: workspaceProjectDocumentCategoryEnum("category").notNull(),
+    title: text("title").notNull(),
+    slug: text("slug").notNull(),
+    content: text("content").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("workspace_project_documents_project_slug_idx").on(
+      table.projectId,
+      table.slug,
+    ),
+  ],
+);

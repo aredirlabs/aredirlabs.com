@@ -1,6 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import {
+  workspaceProjectDocuments,
   workspaceProjectMilestones,
   workspaceProjectNotes,
   workspaceProjects,
@@ -202,6 +203,63 @@ const notes = [
   },
 ];
 
+const documents = [
+  {
+    id: "doc_alignfit_architecture_platform_overview",
+    projectId: "proj_01",
+    category: "architecture" as const,
+    title: "Platform overview",
+    slug: "platform-overview",
+    content:
+      "AlignFit combines fitness planning, nutrition guidance, recovery tracking, and coaching workflows into a single authenticated product surface.\n\nThe platform is organized around durable user state, dashboard summaries, and QA-visible release checkpoints. Database changes should preserve tester data and keep environment parity visible during UAT.",
+  },
+  {
+    id: "doc_alignfit_decision_neon_better_auth",
+    projectId: "proj_01",
+    category: "decision" as const,
+    title: "Neon + Better Auth architecture",
+    slug: "neon-better-auth-architecture",
+    content:
+      "Decision: keep authentication on Better Auth and use Neon Postgres for the persistent application database.\n\nThis gives the product a Postgres-native foundation, repeatable migrations, and a clean authentication boundary while avoiding a larger platform migration during UAT.",
+  },
+  {
+    id: "doc_alignfit_qa_uat_testing_cycle_notes",
+    projectId: "proj_01",
+    category: "qa" as const,
+    title: "UAT testing cycle notes",
+    slug: "uat-testing-cycle-notes",
+    content:
+      "The current UAT cycle should focus on onboarding clarity, dashboard stability, auth/session reliability, and database-backed persistence.\n\nRecord regressions with reproduction steps, expected behavior, actual behavior, and release impact. Separate blocker findings from polish notes so release readiness remains clear.",
+  },
+  {
+    id: "doc_classforge_research_product_direction",
+    projectId: "proj_02",
+    category: "research" as const,
+    title: "Product direction",
+    slug: "product-direction",
+    content:
+      "ClassForge is paused while the educator workflow is narrowed to a practical lesson-planning MVP.\n\nResearch should validate which planning artifacts save teachers the most time, how much editing control educators expect, and which exports or classroom systems matter for the first useful release.",
+  },
+  {
+    id: "doc_leagueos_decision_football_first_launch_strategy",
+    projectId: "proj_03",
+    category: "decision" as const,
+    title: "Football-first launch strategy",
+    slug: "football-first-launch-strategy",
+    content:
+      "Decision: LeagueOS should launch with football as the first modeled sport.\n\nFootball gives the initial product a clear roster structure, season rhythm, and strategy vocabulary. Other sports should wait until franchise management, progression, and simulation loops are validated.",
+  },
+  {
+    id: "doc_aredirlabs_architecture_workspace_foundation",
+    projectId: "proj_04",
+    category: "architecture" as const,
+    title: "Workspace foundation",
+    slug: "workspace-foundation",
+    content:
+      "AredirLabs.com includes a protected workspace for project registry, operating status, milestones, notes, and now project documentation.\n\nThe workspace is intentionally lightweight: durable project memory belongs in Postgres, operational views stay searchable and simple, and richer collaboration features should remain outside the current scope.",
+  },
+];
+
 async function seed() {
   console.log("Seeding workspace_settings...");
   const settingsResult = await db
@@ -294,6 +352,30 @@ async function seed() {
 
   console.log(
     `Done. ${notesInserted} notes inserted, ${notesSkipped} skipped.`,
+  );
+
+  console.log("Seeding workspace_project_documents...");
+  let documentsInserted = 0;
+  let documentsSkipped = 0;
+
+  for (const document of documents) {
+    const result = await db
+      .insert(workspaceProjectDocuments)
+      .values(document)
+      .onConflictDoNothing({ target: workspaceProjectDocuments.id })
+      .returning({ id: workspaceProjectDocuments.id });
+
+    if (result.length > 0) {
+      console.log(`  + ${document.title}`);
+      documentsInserted++;
+    } else {
+      console.log(`  - ${document.title} (already exists)`);
+      documentsSkipped++;
+    }
+  }
+
+  console.log(
+    `Done. ${documentsInserted} documents inserted, ${documentsSkipped} skipped.`,
   );
   process.exit(0);
 }

@@ -6,6 +6,7 @@ import { AlertTriangle, ArrowLeft, ExternalLink } from "lucide-react";
 
 import { Eyebrow } from "@/components/eyebrow";
 import { ProjectMilestonesSection } from "@/components/workspace/project-milestones-section";
+import { ProjectDocumentsSection } from "@/components/workspace/project-documents-section";
 import {
   ProjectCurrentFocusSection,
   ProjectOverviewSection,
@@ -18,10 +19,12 @@ import {
 import { getDb } from "@/lib/db";
 import {
   workspaceProjectMilestones,
+  workspaceProjectDocuments,
   workspaceProjectNotes,
   workspaceProjects,
 } from "@/lib/db/schema";
 import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
+import { getProjectDocuments } from "@/lib/workspace/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -58,9 +61,11 @@ export default async function WorkspaceProjectDetailPage({
   let project: typeof workspaceProjects.$inferSelect | null = null;
   let notes: Array<typeof workspaceProjectNotes.$inferSelect> = [];
   let milestones: Array<typeof workspaceProjectMilestones.$inferSelect> = [];
+  let documents: Array<typeof workspaceProjectDocuments.$inferSelect> = [];
   let error: string | null = null;
   let notesError: string | null = null;
   let milestonesError: string | null = null;
+  let documentsError: string | null = null;
 
   try {
     const db = getDb();
@@ -81,6 +86,13 @@ export default async function WorkspaceProjectDetailPage({
       } catch (e) {
         notesError =
           e instanceof Error ? e.message : "Failed to load project notes";
+      }
+
+      try {
+        documents = await getProjectDocuments(project.id);
+      } catch (e) {
+        documentsError =
+          e instanceof Error ? e.message : "Failed to load documents";
       }
 
       try {
@@ -223,6 +235,12 @@ export default async function WorkspaceProjectDetailPage({
           projectSlug={project.slug}
           milestones={milestones}
           milestonesError={milestonesError}
+        />
+
+        <ProjectDocumentsSection
+          projectSlug={project.slug}
+          documents={documents}
+          documentsError={documentsError}
         />
 
         <ProjectNotesSection

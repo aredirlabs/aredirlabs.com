@@ -2,11 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db";
-import { workspaceProjectMilestones, workspaceProjectNotes, workspaceProjects } from "@/lib/db/schema";
+import {
+  workspaceProjectDocuments,
+  workspaceProjectMilestones,
+  workspaceProjectNotes,
+  workspaceProjects,
+} from "@/lib/db/schema";
+import { isWorkspaceProjectDocumentCategory } from "@/lib/workspace/document-categories";
 import { isWorkspaceMilestoneStatus } from "@/lib/workspace/milestone-status";
 import { isWorkspaceProjectNoteType } from "@/lib/workspace/note-types";
 
@@ -155,6 +161,105 @@ export async function createProjectNote(
   } catch (e) {
     return {
       error: e instanceof Error ? e.message : "Failed to create note.",
+    };
+  }
+}
+
+export type CreateProjectDocumentState = {
+  error?: string;
+  success?: boolean;
+};
+
+function slugifyDocumentTitle(title: string) {
+  return title
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export async function createProjectDocument(
+  projectSlug: string,
+  _prevState: CreateProjectDocumentState,
+  formData: FormData,
+): Promise<CreateProjectDocumentState> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    return { error: "You must be signed in to add documents." };
+  }
+
+  const category = formData.get("category");
+  const title = formData.get("title");
+  const content = formData.get("content");
+
+  if (
+    typeof category !== "string" ||
+    !isWorkspaceProjectDocumentCategory(category)
+  ) {
+    return { error: "Select a valid document category." };
+  }
+
+  if (typeof title !== "string" || !title.trim()) {
+    return { error: "Title is required." };
+  }
+
+  if (typeof content !== "string" || !content.trim()) {
+    return { error: "Content is required." };
+  }
+
+  const slug = slugifyDocumentTitle(title);
+  if (!slug) {
+    return { error: "Title must include at least one letter or number." };
+  }
+
+  try {
+    const db = getDb();
+    const [project] = await db
+      .select({ id: workspaceProjects.id })
+      .from(workspaceProjects)
+      .where(eq(workspaceProjects.slug, projectSlug))
+      .limit(1);
+
+    if (!project) {
+      return { error: "Project not found." };
+    }
+
+    const [existingDocument] = await db
+      .select({ id: workspaceProjectDocuments.id })
+      .from(workspaceProjectDocuments)
+      .where(
+        and(
+          eq(workspaceProjectDocuments.projectId, project.id),
+          eq(workspaceProjectDocuments.slug, slug),
+        ),
+      )
+      .limit(1);
+
+    if (existingDocument) {
+      return {
+        error:
+          "A document with this generated slug already exists. Change the title and try again.",
+      };
+    }
+
+    await db.insert(workspaceProjectDocuments).values({
+      id: `doc_${crypto.randomUUID()}`,
+      projectId: project.id,
+      category,
+      title: title.trim(),
+      slug,
+      content: content.trim(),
+    });
+
+    revalidatePath("/workspace/docs");
+    revalidatePath(`/workspace/projects/${projectSlug}`);
+    return { success: true };
+  } catch (e) {
+    return {
+      error: e instanceof Error ? e.message : "Failed to create document.",
     };
   }
 }
