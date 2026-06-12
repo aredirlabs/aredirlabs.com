@@ -145,6 +145,15 @@ Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.m
 | Bugs | [docs/bugs/](docs/bugs/) |
 | QA | [docs/qa/](docs/qa/) |
 | Prompts | [docs/prompts/](docs/prompts/) |
+| **Knowledge Base (canonical)** | [docs/company/](docs/company/) |
+
+## Knowledge Base
+
+Canonical company standards and playbooks live under **`docs/company/`**. Operational docs in `docs/agent/`, `docs/qa/`, and elsewhere implement these standards.
+
+- [Knowledge Base Index](docs/company/KNOWLEDGE_BASE_INDEX.md) — promoted assets by category
+- [Promotion Process](docs/company/PROMOTION_PROCESS.md) — governance and asset lifecycle
+- [Knowledge Base Roadmap](docs/company/KNOWLEDGE_BASE_ROADMAP.md) — priorities and registry readiness
 
 ### Key documents
 
@@ -152,6 +161,7 @@ Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.m
 - [Repository standards](docs/engineering/repository-standards.md) — UTF-8, LF, final newline, trim trailing whitespace
 - [Deployment workflow](docs/engineering/deployment-workflow.md)
 - [Bug triage process](docs/bugs/bug-triage-process.md)
+- [Documentation Maintenance Standard](docs/company/documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Manual QA checklist](docs/qa/manual-qa-checklist.md)
 
 ## Repository standards

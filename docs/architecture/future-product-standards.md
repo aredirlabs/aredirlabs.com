@@ -11,11 +11,20 @@ Guidelines when spinning up new Aredir Labs products from this template.
 
 ## Must carry forward
 
-- `docs/agent/coding-agent-operating-standard.md` and guarded prompt prefix
+- `docs/agent/coding-agent-operating-standard.md` and guarded prompt prefix — operational entry point; canonical standard: [Coding Agent Operating Standard](../company/engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
 - `.editorconfig` and `.gitattributes`
 - GitHub issue and PR templates
 - Bug severity levels and QA workflow
 - Naming and component conventions
+
+## Company Knowledge Base
+
+**Canonical company standards** live under [`docs/company/`](../company/). Clone or sync this tree when spinning up products from the template.
+
+- [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) — architecture patterns, engineering/QA standards, AI patterns, playbooks
+- [Promotion Process](../company/PROMOTION_PROCESS.md) — governance, adoption model (Adopt / Extend / Deviate), review cadence
+
+Operational docs (`docs/agent/`, `docs/qa/`, `docs/architecture/`) implement Knowledge Base standards. If guidance conflicts, **canonical `docs/company/` wins** unless a documented Deviate decision exists.
 
 ## Product-specific overrides
 
@@ -51,4 +60,5 @@ Document overrides in the product repo under `docs/product/`:
 ## Related
 
 - [Project conventions](./project-conventions.md)
+- [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md)
 - [Deployment workflow](../engineering/deployment-workflow.md)
