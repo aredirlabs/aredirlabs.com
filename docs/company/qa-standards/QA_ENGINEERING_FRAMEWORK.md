@@ -9,7 +9,7 @@
 | **Owner** | Aredir Labs |
 | **Origin Projects** | AlignFit, Aredir Labs |
 | **Origin Artifacts** | `docs/qa/manual-qa-checklist.md`, `docs/qa/release-checklist.md`, `docs/qa/uat-checklist.md`, `docs/bugs/bug-triage-process.md`, `docs/bugs/bug-report-template.md`, `docs/engineering/deployment-workflow.md`, AREDIR-WORKSPACE-004 (project notes / UAT), AREDIR-WORKSPACE-005 (Vercel production deployment), AlignFit UAT testing cycle |
-| **Linked Projects** | Aredir Labs, AlignFit, ClassForge, LeagueOS |
+| **Linked Projects** | Aredir Labs, AlignFit |
 | **Reusability** | High |
 | **Last Reviewed** | 2026-06-12 |
 | **Next Review Due** | 2026-09-12 |
@@ -500,7 +500,7 @@ Likely future promotions — **not created in this work item**:
 | **Bug Investigation Framework** | Expanded standalone if investigation process grows |
 | **Production Verification Playbook** | Incident-oriented post-deploy runbook for on-call use |
 
-**Recommended next promotion:** AREDIR-KB-011 — **AI Evaluation Framework** (per [Knowledge Base Roadmap](../KNOWLEDGE_BASE_ROADMAP.md)).
+**Recommended next work item:** AREDIR-WORKSPACE-008 — **Knowledge Asset Registry** (Governance Registry scope; per [Knowledge Asset Registry Roadmap](../KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)).
 
 ---
 

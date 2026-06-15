@@ -9,7 +9,7 @@
 | **Owner** | Aredir Labs |
 | **Origin Projects** | AlignFit |
 | **Origin Artifacts** | COACH-ARCH-001, COACH-INTEL-001, COACH-INTEL-002, COACH-INTEL-003 |
-| **Linked Projects** | AlignFit, ClassForge, LeagueOS, Aredir Labs |
+| **Linked Projects** | AlignFit |
 | **Reusability** | High |
 | **Last Reviewed** | 2026-06-12 |
 | **Next Review Due** | 2026-09-12 |

@@ -9,7 +9,7 @@
 | **Owner** | Aredir Labs |
 | **Origin Projects** | AlignFit, Aredir Labs |
 | **Origin Artifacts** | prompt-001A through prompt-001C, AREDIR-WORKSPACE-001 through AREDIR-WORKSPACE-006, AlignFit UAT delivery cycles, `docs/engineering/deployment-workflow.md`, `docs/prompts/implementation-index.md`, AREDIR-KB-001 through AREDIR-KB-008 |
-| **Linked Projects** | AlignFit, ClassForge, LeagueOS, Aredir Labs |
+| **Linked Projects** | Aredir Labs, AlignFit |
 | **Reusability** | High |
 | **Last Reviewed** | 2026-06-12 |
 | **Next Review Due** | 2026-09-12 |
@@ -384,7 +384,7 @@ Likely future promotions — **not created in this work item**:
 | **Product Discovery Playbook** | Upstream of Idea — validation before build |
 | **Roadmap Planning Playbook** | Portfolio prioritization across AlignFit, ClassForge, LeagueOS |
 
-**Recommended next promotion:** AREDIR-KB-011 — **AI Evaluation Framework** (per [Knowledge Base Roadmap](../KNOWLEDGE_BASE_ROADMAP.md)).
+**Recommended next work item:** AREDIR-WORKSPACE-008 — **Knowledge Asset Registry** (Governance Registry scope; per [Knowledge Asset Registry Roadmap](../KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)).
 
 ---
 

@@ -9,7 +9,7 @@
 | **Owner** | Aredir Labs |
 | **Origin Projects** | AlignFit, Aredir Labs |
 | **Origin Artifacts** | COACH-ARCH-001, COACH-INTEL-001, COACH-INTEL-002, COACH-INTEL-003, AREDIR-KB-001 through AREDIR-KB-005, AlignFit coach architecture evolution, `docs/architecture/` template reviews, workspace foundation audits (AREDIR-WORKSPACE-001 through AREDIR-WORKSPACE-006) |
-| **Linked Projects** | AlignFit, ClassForge, LeagueOS, Aredir Labs |
+| **Linked Projects** | AlignFit, Aredir Labs |
 | **Reusability** | High |
 | **Last Reviewed** | 2026-06-12 |
 | **Next Review Due** | 2026-09-12 |
@@ -451,7 +451,7 @@ Likely future promotions — **not created in this work item**:
 | **Knowledge Capture Standard** | Project artifact → candidate asset workflow |
 | **Release Documentation Standard** | Required docs per release type |
 
-**Recommended next promotion:** AREDIR-KB-011 — **AI Evaluation Framework** (per [Knowledge Base Roadmap](../KNOWLEDGE_BASE_ROADMAP.md)).
+**Recommended next work item:** AREDIR-WORKSPACE-008 — **Knowledge Asset Registry** (Governance Registry scope; per [Knowledge Asset Registry Roadmap](../KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)).
 
 ---
 

@@ -27,6 +27,7 @@ Ordered prompts for building aredirlabs.com.
 | AREDIR-KB-010 | Promote Root Cause Analysis Framework | Complete | [Root Cause Analysis Framework](../company/qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (QA Standards) |
 | AREDIR-KB-011 | Promote AI Evaluation Framework | Complete | [AI Evaluation Framework](../company/ai-patterns/AI_EVALUATION_FRAMEWORK.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns) |
 | AREDIR-KB-012 | Knowledge Asset Registry readiness review | Complete | [Knowledge Asset Registry Readiness Review](../company/reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [Knowledge Asset Registry Roadmap](../company/KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — **Conditionally Ready** for WORKSPACE-008; prerequisites in AREDIR-KB-013 |
+| AREDIR-KB-013 | Registry prerequisite cleanup | Complete | [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [Knowledge Base Roadmap](../company/KNOWLEDGE_BASE_ROADMAP.md) — adoption validation, metadata cleanup, **Ready** for WORKSPACE-008 |
 
 ## Workspace (internal)
 
@@ -78,3 +79,4 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [KB Review 2026 Q2](../company/reviews/KB_REVIEW_2026_Q2.md)
 - [Knowledge Asset Registry Readiness Review](../company/reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)
 - [Knowledge Asset Registry Roadmap](../company/KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)
+- [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md)

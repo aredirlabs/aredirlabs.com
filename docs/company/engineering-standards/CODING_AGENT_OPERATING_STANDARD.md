@@ -368,4 +368,4 @@ Likely future promotions from existing project documentation. **Not created in t
 | [Root Cause Analysis Framework](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md) | QA Standard | Promoted — evidence-based investigation |
 | **AI Evaluation Framework** | AI Pattern | Regression and quality measurement for AI features |
 
-**Recommended next promotion:** AREDIR-KB-011 — **AI Evaluation Framework** (per [Knowledge Base Roadmap](../KNOWLEDGE_BASE_ROADMAP.md)).
+**Recommended next work item:** AREDIR-WORKSPACE-008 — **Knowledge Asset Registry** (Governance Registry scope; per [Knowledge Asset Registry Roadmap](../KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)).

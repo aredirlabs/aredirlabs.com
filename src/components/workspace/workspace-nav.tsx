@@ -7,6 +7,7 @@ import {
   FolderKanban,
   FileText,
   MessageSquareText,
+  BookOpen,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -18,8 +19,13 @@ import { authClient } from "@/lib/auth-client";
 const navItems = [
   { href: "/workspace", label: "Dashboard", icon: LayoutDashboard },
   { href: "/workspace/projects", label: "Projects", icon: FolderKanban },
+  { href: "/workspace/docs", label: "Documents", icon: FileText },
   { href: "/workspace/prompts", label: "Prompts", icon: MessageSquareText },
-  { href: "/workspace/docs", label: "Docs", icon: FileText },
+  {
+    href: "/workspace/knowledge-assets",
+    label: "Knowledge Assets",
+    icon: BookOpen,
+  },
   { href: "/workspace/settings", label: "Settings", icon: Settings },
 ] as const;
 

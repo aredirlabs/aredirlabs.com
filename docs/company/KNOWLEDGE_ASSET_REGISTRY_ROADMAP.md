@@ -24,15 +24,13 @@ A **Knowledge Asset Registry** in the workspace makes company intellectual prope
 
 ## Readiness Status
 
-**Conditionally Ready** for AREDIR-WORKSPACE-008 (per [Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)).
+**Ready** for AREDIR-WORKSPACE-008 (per [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md)).
 
-### Prerequisites (AREDIR-KB-013)
+### Prerequisites (AREDIR-KB-013) — complete
 
-Complete before registry implementation:
-
-1. AlignFit adoption confirmation — validate AI pattern adoption; update `linked_projects`
-2. Stale footer refresh — update seven assets still recommending AREDIR-KB-011
-3. Roadmap sync — align asset counts and promotion status with index
+1. AlignFit adoption confirmation — validated; `linked_projects` updated
+2. Stale footer refresh — eight assets updated (seven KB-011 footers + AI Evaluation KB-012 footer)
+3. Roadmap sync — 10 assets, KB-011/012/013 status aligned with index
 
 ### Implementation work item
 

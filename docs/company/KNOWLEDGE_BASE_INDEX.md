@@ -305,13 +305,15 @@ Formal audit and readiness records for the Knowledge Base.
 ```
 Reviews
 ├─ KB Review 2026 Q2
-└─ Knowledge Asset Registry Readiness Review
+├─ Knowledge Asset Registry Readiness Review
+└─ KB 013 Registry Prerequisite Cleanup
 ```
 
 ### Examples
 
 - [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) — first quarterly adoption and governance audit (AREDIR-KB-008)
 - [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md) — registry readiness assessment (AREDIR-KB-012)
+- [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) — adoption validation and metadata cleanup (AREDIR-KB-013)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — proposed registry scope and phases (AREDIR-KB-012)
 
 ---
@@ -341,7 +343,7 @@ Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -381,6 +383,7 @@ Knowledge Base
 - [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md)
 - [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md)
 - [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)
+- [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)
 - [Implementation index](../prompts/implementation-index.md)
 - [Future product standards](../architecture/future-product-standards.md)
