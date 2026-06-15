@@ -25,12 +25,12 @@ const projects = [
     slug: "alignfit",
     status: "testing" as const,
     stage: "uat" as const,
-    currentFocus: "Dashboard stabilization and Supabase/Neon QA",
-    nextStep: "Initial external tester readiness",
+    currentFocus: "UAT stabilization and coach intelligence hardening",
+    nextStep: "External tester onboarding and production-readiness planning",
     targetDate: new Date("2026-07-15T00:00:00.000Z"),
     category: "Fitness",
     description:
-      "AI-powered fitness, nutrition, recovery, and coaching platform. Currently in active development and user acceptance testing.",
+      "AI-powered fitness, nutrition, recovery, and coaching platform. Stack: Neon Postgres, Drizzle ORM, Better Auth, Cloudflare R2, and Vercel. Currently in user acceptance testing.",
     repoUrl: "https://github.com/aredirlabs/alignfit",
   },
   {
@@ -66,12 +66,12 @@ const projects = [
     slug: "aredirlabs-com",
     status: "active" as const,
     stage: "mvp" as const,
-    currentFocus: "Internal workspace foundation",
-    nextStep: "Project milestones and status dashboard",
-    targetDate: new Date("2026-06-30T00:00:00.000Z"),
+    currentFocus: "Workspace governance and operational accuracy",
+    nextStep: "Q3 Knowledge Base quarterly review preparation",
+    targetDate: new Date("2026-09-12T00:00:00.000Z"),
     category: "Web",
     description:
-      "The Aredir Labs public website and internal workspace.",
+      "The Aredir Labs public website and internal workspace. Platform includes project registry, documentation hub, prompt library, and Knowledge Asset Registry on Neon Postgres, Drizzle, and Better Auth.",
     repoUrl: "https://github.com/aredirlabs/aredirlabs-com",
     publicUrl: "https://aredirlabs.com",
   },
@@ -83,28 +83,28 @@ const milestones = [
     projectId: "proj_01",
     title: "Dashboard stabilization",
     description:
-      "Stabilize the AlignFit dashboard flows, fix regressions, and align UI state with backend data.",
-    status: "active" as const,
-    targetDate: new Date("2026-06-20T00:00:00.000Z"),
+      "Stabilize AlignFit dashboard flows, fix regressions, and align UI state with backend data during UAT.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-10T00:00:00.000Z"),
     sortOrder: 1,
   },
   {
     id: "ms_alignfit_02",
     projectId: "proj_01",
-    title: "Supabase/Neon QA",
+    title: "Neon + Better Auth platform validation",
     description:
-      "Validate database migration paths, auth flows, and environment parity between Supabase and Neon.",
-    status: "active" as const,
-    targetDate: new Date("2026-06-25T00:00:00.000Z"),
+      "Validate Neon Postgres persistence, Better Auth sessions, Drizzle migrations, and environment parity across dev and production.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-08T00:00:00.000Z"),
     sortOrder: 2,
   },
   {
     id: "ms_alignfit_03",
     projectId: "proj_01",
-    title: "Initial external tester readiness",
+    title: "External tester readiness",
     description:
-      "Prepare onboarding, feedback capture, and release notes for the first external tester cohort.",
-    status: "planned" as const,
+      "Prepare onboarding, feedback capture, coach intelligence validation, and release notes for the first external tester cohort.",
+    status: "active" as const,
     targetDate: new Date("2026-07-15T00:00:00.000Z"),
     sortOrder: 3,
   },
@@ -162,10 +162,50 @@ const milestones = [
     projectId: "proj_04",
     title: "Project milestones and status dashboard",
     description:
-      "Add operational status fields, milestone tracking, and company operating snapshot.",
-    status: "active" as const,
-    targetDate: new Date("2026-06-30T00:00:00.000Z"),
+      "Operational status fields, milestone tracking, and company operating snapshot.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-08T00:00:00.000Z"),
     sortOrder: 2,
+  },
+  {
+    id: "ms_aredir_03",
+    projectId: "proj_04",
+    title: "Documentation hub",
+    description:
+      "Searchable project documentation hub with categories and project detail links.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-10T00:00:00.000Z"),
+    sortOrder: 3,
+  },
+  {
+    id: "ms_aredir_04",
+    projectId: "proj_04",
+    title: "Prompt library",
+    description:
+      "Cross-project prompt library with filters and project-attached prompt history.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-11T00:00:00.000Z"),
+    sortOrder: 4,
+  },
+  {
+    id: "ms_aredir_05",
+    projectId: "proj_04",
+    title: "Knowledge Asset Registry",
+    description:
+      "Governance registry for promoted Knowledge Base assets with adoption matrix and review visibility.",
+    status: "completed" as const,
+    completedAt: new Date("2026-06-14T00:00:00.000Z"),
+    sortOrder: 5,
+  },
+  {
+    id: "ms_aredir_06",
+    projectId: "proj_04",
+    title: "Q3 Knowledge Base quarterly review",
+    description:
+      "First registry-backed quarterly review: validate seeded adoption data, refresh asset metadata, and update review dates.",
+    status: "active" as const,
+    targetDate: new Date("2026-09-12T00:00:00.000Z"),
+    sortOrder: 6,
   },
 ];
 
@@ -176,7 +216,7 @@ const notes = [
     type: "qa" as const,
     title: "UAT testing cycle in progress",
     body:
-      "Current focus is the AlignFit user acceptance testing cycle. Track regressions, onboarding feedback, and release blockers here until the next production cut.",
+      "AlignFit is in user acceptance testing on Neon Postgres, Better Auth, Cloudflare R2, and Vercel. Current priorities: UAT regression tracking, coach intelligence hardening, and external tester onboarding. Record blockers with reproduction steps and release impact.",
   },
   {
     id: "note_classforge_01",
@@ -200,7 +240,7 @@ const notes = [
     type: "release" as const,
     title: "Workspace foundation shipped",
     body:
-      "AredirLabs.com now includes the protected workspace shell, project registry, and detail pages. Use this project for internal platform work and release notes.",
+      "AredirLabs.com workspace now includes project registry, milestones, notes, documentation hub, prompt library, and Knowledge Asset Registry. Use this project for internal platform work, governance tooling, and release notes.",
   },
 ];
 
@@ -212,7 +252,7 @@ const documents = [
     title: "Platform overview",
     slug: "platform-overview",
     content:
-      "AlignFit combines fitness planning, nutrition guidance, recovery tracking, and coaching workflows into a single authenticated product surface.\n\nThe platform is organized around durable user state, dashboard summaries, and QA-visible release checkpoints. Database changes should preserve tester data and keep environment parity visible during UAT.",
+      "AlignFit combines fitness planning, nutrition guidance, recovery tracking, and coaching workflows into a single authenticated product surface.\n\nThe platform runs on Neon Postgres, Drizzle ORM, Better Auth, Cloudflare R2, and Vercel. Architecture follows the promoted AI Intelligence, Context Builder, and Response Contract patterns from coach evolution work.",
   },
   {
     id: "doc_alignfit_decision_neon_better_auth",
@@ -221,7 +261,7 @@ const documents = [
     title: "Neon + Better Auth architecture",
     slug: "neon-better-auth-architecture",
     content:
-      "Decision: keep authentication on Better Auth and use Neon Postgres for the persistent application database.\n\nThis gives the product a Postgres-native foundation, repeatable migrations, and a clean authentication boundary while avoiding a larger platform migration during UAT.",
+      "Decision: AlignFit uses Better Auth for authentication and Neon Postgres for the persistent application database.\n\nThis provides a Postgres-native foundation with Drizzle migrations and a clean authentication boundary. Supabase is no longer part of the platform stack.",
   },
   {
     id: "doc_alignfit_qa_uat_testing_cycle_notes",
@@ -230,7 +270,7 @@ const documents = [
     title: "UAT testing cycle notes",
     slug: "uat-testing-cycle-notes",
     content:
-      "The current UAT cycle should focus on onboarding clarity, dashboard stability, auth/session reliability, and database-backed persistence.\n\nRecord regressions with reproduction steps, expected behavior, actual behavior, and release impact. Separate blocker findings from polish notes so release readiness remains clear.",
+      "The current UAT cycle should focus on onboarding clarity, dashboard stability, auth/session reliability, coach intelligence outputs, and database-backed persistence.\n\nRecord regressions with reproduction steps, expected behavior, actual behavior, and release impact. Separate blocker findings from polish notes so release readiness remains clear.",
   },
   {
     id: "doc_classforge_research_product_direction",
@@ -257,7 +297,7 @@ const documents = [
     title: "Workspace foundation",
     slug: "workspace-foundation",
     content:
-      "AredirLabs.com includes a protected workspace for project registry, operating status, milestones, notes, and now project documentation.\n\nThe workspace is intentionally lightweight: durable project memory belongs in Postgres, operational views stay searchable and simple, and richer collaboration features should remain outside the current scope.",
+      "AredirLabs.com includes a protected workspace for project registry, operating status, milestones, notes, documentation hub, prompt library, and Knowledge Asset Registry.\n\nThe workspace is intentionally lightweight: durable project memory belongs in Postgres, operational views stay searchable and simple, and richer collaboration features remain outside the current scope.",
   },
 ];
 
@@ -265,16 +305,16 @@ const prompts = [
   {
     id: "prompt_alignfit_migration_verification",
     projectId: "proj_01",
-    title: "Supabase/Neon migration verification",
+    title: "Neon stack platform validation",
     promptType: "qa" as const,
     promptBody:
-      "Verify auth, migrations, and persistent dashboard data after the Supabase to Neon database move.",
+      "Validate Neon Postgres persistence, Better Auth sessions, Drizzle migrations, and dashboard data integrity on the current platform stack.",
     resultSummary:
-      "Migration path reviewed with environment parity and tester-data preservation as the main checks.",
-    filesChanged: "Database config, auth integration notes, QA checklist",
-    verification: "Run migrations, seed data, and dashboard smoke tests.",
-    followUps: "Recheck production env vars before the next release cut.",
-    status: "needs_followup" as const,
+      "Neon + Better Auth stack validated. Supabase migration complete; environment parity confirmed across dev and production.",
+    filesChanged: "Database config, auth integration, QA checklist",
+    verification: "Migrations, seed data, and dashboard smoke tests passed.",
+    followUps: "Monitor auth and persistence during external tester onboarding.",
+    status: "verified" as const,
   },
   {
     id: "prompt_alignfit_dashboard_ui_refinement",
@@ -346,6 +386,21 @@ const prompts = [
     followUps: "Document any future export naming changes.",
     status: "run" as const,
   },
+  {
+    id: "prompt_aredir_knowledge_asset_registry",
+    projectId: "proj_04",
+    title: "Knowledge Asset Registry",
+    promptType: "implementation" as const,
+    promptBody:
+      "Build a read-only Knowledge Asset Registry for promoted Knowledge Base assets with adoption matrix and review visibility.",
+    resultSummary:
+      "Governance registry shipped with 10 seeded assets, filters, adoption matrix, and review dashboard.",
+    filesChanged:
+      "Knowledge assets routes, registry seed, workspace navigation, WORKSPACE_008 documentation",
+    verification: "Lint, build, and manual QA of list and detail pages.",
+    followUps: "Sync registry seed on future KB promotions and quarterly reviews.",
+    status: "verified" as const,
+  },
 ];
 
 async function seed() {
@@ -396,99 +451,116 @@ async function seed() {
 
   console.log("Seeding workspace_project_milestones...");
   let milestonesInserted = 0;
-  let milestonesSkipped = 0;
 
   for (const milestone of milestones) {
     const result = await db
       .insert(workspaceProjectMilestones)
       .values(milestone)
-      .onConflictDoNothing({ target: workspaceProjectMilestones.id })
+      .onConflictDoUpdate({
+        target: workspaceProjectMilestones.id,
+        set: {
+          title: milestone.title,
+          description: milestone.description ?? null,
+          status: milestone.status,
+          targetDate: milestone.targetDate ?? null,
+          completedAt: milestone.completedAt ?? null,
+          sortOrder: milestone.sortOrder,
+          updatedAt: new Date(),
+        },
+      })
       .returning({ id: workspaceProjectMilestones.id });
 
     if (result.length > 0) {
       console.log(`  ✓ ${milestone.title}`);
       milestonesInserted++;
-    } else {
-      console.log(`  − ${milestone.title} (already exists)`);
-      milestonesSkipped++;
     }
   }
 
-  console.log(
-    `Done. ${milestonesInserted} milestones inserted, ${milestonesSkipped} skipped.`,
-  );
+  console.log(`Done. ${milestonesInserted} milestones upserted.`);
 
   console.log("Seeding workspace_project_notes...");
   let notesInserted = 0;
-  let notesSkipped = 0;
 
   for (const note of notes) {
     const result = await db
       .insert(workspaceProjectNotes)
       .values(note)
-      .onConflictDoNothing({ target: workspaceProjectNotes.id })
+      .onConflictDoUpdate({
+        target: workspaceProjectNotes.id,
+        set: {
+          type: note.type,
+          title: note.title,
+          body: note.body,
+          updatedAt: new Date(),
+        },
+      })
       .returning({ id: workspaceProjectNotes.id });
 
     if (result.length > 0) {
       console.log(`  ✓ ${note.title}`);
       notesInserted++;
-    } else {
-      console.log(`  − ${note.title} (already exists)`);
-      notesSkipped++;
     }
   }
 
-  console.log(
-    `Done. ${notesInserted} notes inserted, ${notesSkipped} skipped.`,
-  );
+  console.log(`Done. ${notesInserted} notes upserted.`);
 
   console.log("Seeding workspace_project_documents...");
   let documentsInserted = 0;
-  let documentsSkipped = 0;
 
   for (const document of documents) {
     const result = await db
       .insert(workspaceProjectDocuments)
       .values(document)
-      .onConflictDoNothing({ target: workspaceProjectDocuments.id })
+      .onConflictDoUpdate({
+        target: workspaceProjectDocuments.id,
+        set: {
+          category: document.category,
+          title: document.title,
+          slug: document.slug,
+          content: document.content,
+          updatedAt: new Date(),
+        },
+      })
       .returning({ id: workspaceProjectDocuments.id });
 
     if (result.length > 0) {
       console.log(`  + ${document.title}`);
       documentsInserted++;
-    } else {
-      console.log(`  - ${document.title} (already exists)`);
-      documentsSkipped++;
     }
   }
 
-  console.log(
-    `Done. ${documentsInserted} documents inserted, ${documentsSkipped} skipped.`,
-  );
+  console.log(`Done. ${documentsInserted} documents upserted.`);
 
   console.log("Seeding workspace_project_prompts...");
   let promptsInserted = 0;
-  let promptsSkipped = 0;
 
   for (const prompt of prompts) {
     const result = await db
       .insert(workspaceProjectPrompts)
       .values(prompt)
-      .onConflictDoNothing({ target: workspaceProjectPrompts.id })
+      .onConflictDoUpdate({
+        target: workspaceProjectPrompts.id,
+        set: {
+          title: prompt.title,
+          promptType: prompt.promptType,
+          promptBody: prompt.promptBody,
+          resultSummary: prompt.resultSummary ?? null,
+          filesChanged: prompt.filesChanged ?? null,
+          verification: prompt.verification ?? null,
+          followUps: prompt.followUps ?? null,
+          status: prompt.status,
+          updatedAt: new Date(),
+        },
+      })
       .returning({ id: workspaceProjectPrompts.id });
 
     if (result.length > 0) {
       console.log(`  + ${prompt.title}`);
       promptsInserted++;
-    } else {
-      console.log(`  - ${prompt.title} (already exists)`);
-      promptsSkipped++;
     }
   }
 
-  console.log(
-    `Done. ${promptsInserted} prompts inserted, ${promptsSkipped} skipped.`,
-  );
+  console.log(`Done. ${promptsInserted} prompts upserted.`);
   process.exit(0);
 }
 
