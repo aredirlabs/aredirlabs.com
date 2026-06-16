@@ -394,7 +394,7 @@ const prompts = [
     promptBody:
       "Build a read-only Knowledge Asset Registry for promoted Knowledge Base assets with adoption matrix and review visibility.",
     resultSummary:
-      "Governance registry shipped with 10 seeded assets, filters, adoption matrix, and review dashboard.",
+      "Governance registry shipped with 12 seeded assets, filters, adoption matrix, and review dashboard.",
     filesChanged:
       "Knowledge assets routes, registry seed, workspace navigation, WORKSPACE_008 documentation",
     verification: "Lint, build, and manual QA of list and detail pages.",

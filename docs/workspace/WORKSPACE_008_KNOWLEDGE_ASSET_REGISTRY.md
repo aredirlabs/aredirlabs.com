@@ -130,7 +130,7 @@ Adoption data seeded from [KB-012 adoption matrix](../company/reviews/KNOWLEDGE_
 
 | Capability | Implementation |
 |------------|----------------|
-| Asset catalog | 10 promoted assets |
+| Asset catalog | 12 promoted assets |
 | Category / status / project filters | GET form on list page |
 | Registry table | Asset, Category, Status, Version, Owner, Review Due, Projects |
 | Asset detail page | Metadata, relationships, governance, source link |
@@ -138,14 +138,14 @@ Adoption data seeded from [KB-012 adoption matrix](../company/reviews/KNOWLEDGE_
 | Review dashboard | Overdue / Due Soon / Upcoming based on `nextReviewDue` |
 | Source of truth notice | Displayed on list and detail pages |
 
-### Seeded assets (10)
+### Seeded assets (12)
 
 | Category | Asset |
 |----------|-------|
-| Architecture Pattern | AI Intelligence Architecture Pattern |
+| Architecture Pattern | AI Intelligence Architecture Pattern, Workspace-First AI Experience Pattern |
 | Engineering Standard | Coding Agent Operating Standard |
 | QA Standard | QA Engineering Framework, Root Cause Analysis Framework |
-| AI Pattern | Context Builder Pattern, Response Contract Pattern, AI Evaluation Framework |
+| AI Pattern | Context Builder Pattern, Response Contract Pattern, AI Evaluation Framework, Human + AI Advisor Workspace Pattern |
 | Documentation Standard | Architecture Audit Standard, Documentation Maintenance Standard |
 | Playbook | Feature Delivery Standard |
 
@@ -171,7 +171,7 @@ These belong to future phases per [Knowledge Asset Registry Roadmap](../company/
 
 1. **Canonical ownership stays in markdown** — The Knowledge Base promotion process, quarterly reviews, and document edits remain in `docs/company/`. The registry surfaces what already exists; it does not author content.
 
-2. **Manual seed is sufficient at 10 assets** — KB-012 concluded that automated sync is premature. Promotion PRs already update asset metadata; adding a registry seed sync step is lower risk than building a parser or CMS.
+2. **Manual seed is sufficient at current scale** — KB-012 concluded that automated sync is premature. Promotion PRs already update asset metadata; adding a registry seed sync step is lower risk than building a parser or CMS. Sync registry seed on each KB promotion (see AREDIR-KB-014/015).
 
 3. **Governance visibility is the primary value** — Review due dates and adoption honesty were the highest-pain gaps (stale footers, inflated `linked_projects`, invisible Q3 cadence). A full knowledge system would add complexity without solving those problems first.
 

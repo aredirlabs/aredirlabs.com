@@ -4,13 +4,13 @@
 |-------|-------|
 | **Document** | Knowledge Asset Registry Roadmap |
 | **Owner** | Aredir Labs |
-| **Last updated** | 2026-06-12 |
+| **Last updated** | 2026-06-15 |
 | **Source review** | [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md) (AREDIR-KB-012) |
 | **Next review** | 2026-09-12 |
 
 ## Why a Registry Exists
 
-The Aredir Labs Knowledge Base has reached **10 promoted assets** across six categories with formal governance (Promotion Process, quarterly review cadence, adoption model). Manual maintenance via markdown indexes and per-asset metadata tables is **no longer sufficient**:
+The Aredir Labs Knowledge Base has reached **12 promoted assets** across six categories with formal governance (Promotion Process, quarterly review cadence, adoption model). Manual maintenance via markdown indexes and per-asset metadata tables requires registry seed sync on each promotion — see AREDIR-KB-014/015 drift remediation:
 
 - `KNOWLEDGE_BASE_ROADMAP.md` drifted behind the index (9 vs 10 assets)
 - Seven promoted assets retain stale "recommended next" footers referencing completed work
@@ -176,7 +176,7 @@ Per [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION
 - Asset detail: metadata, review dates, path link
 - Adoption matrix per project
 - Overdue review indicator
-- Manual seed from 10 promoted assets + governance doc
+- Manual seed from 12 promoted assets + governance doc
 
 ### Phase 2 — Governance enrichment (post-008)
 
@@ -218,7 +218,7 @@ Documentation only — not committed work:
 
 | Criterion | Measure |
 |-----------|---------|
-| All 10 promoted assets visible | Catalog complete |
+| All 12 promoted assets visible | Catalog complete |
 | Category browse works | Six categories filterable |
 | Review dates visible | Every record shows last/next review |
 | Overdue flagging works | Past-due assets highlighted |
