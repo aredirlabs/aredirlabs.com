@@ -28,6 +28,8 @@ Ordered prompts for building aredirlabs.com.
 | AREDIR-KB-011 | Promote AI Evaluation Framework | Complete | [AI Evaluation Framework](../company/ai-patterns/AI_EVALUATION_FRAMEWORK.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns) |
 | AREDIR-KB-012 | Knowledge Asset Registry readiness review | Complete | [Knowledge Asset Registry Readiness Review](../company/reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [Knowledge Asset Registry Roadmap](../company/KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — **Conditionally Ready** for WORKSPACE-008; prerequisites in AREDIR-KB-013 |
 | AREDIR-KB-013 | Registry prerequisite cleanup | Complete | [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [Knowledge Base Roadmap](../company/KNOWLEDGE_BASE_ROADMAP.md) — adoption validation, metadata cleanup, **Ready** for WORKSPACE-008 |
+| AREDIR-KB-014 | Promote Workspace-First AI Experience Pattern | Complete | [Workspace-First AI Experience Pattern](../company/architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Architecture Patterns) |
+| AREDIR-KB-015 | Promote Human + AI Advisor Workspace Pattern | Complete | [Human + AI Advisor Workspace Pattern](../company/ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns), [AI Intelligence Architecture Pattern](../company/architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) v1.1 (Application-Owned Intelligence Pipeline merge) |
 
 ## Workspace (internal)
 
@@ -71,6 +73,9 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [Context Builder Pattern (KB)](../company/ai-patterns/CONTEXT_BUILDER_PATTERN.md)
 - [Response Contract Pattern (KB)](../company/ai-patterns/RESPONSE_CONTRACT_PATTERN.md)
 - [AI Evaluation Framework (KB)](../company/ai-patterns/AI_EVALUATION_FRAMEWORK.md)
+- [AI Intelligence Architecture Pattern (KB)](../company/architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
+- [Workspace-First AI Experience Pattern (KB)](../company/architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
+- [Human + AI Advisor Workspace Pattern (KB)](../company/ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Architecture Audit Standard (KB)](../company/documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Documentation Maintenance Standard (KB)](../company/documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Root Cause Analysis Framework (KB)](../company/qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md)

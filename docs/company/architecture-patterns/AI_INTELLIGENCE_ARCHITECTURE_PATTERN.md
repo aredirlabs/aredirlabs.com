@@ -5,13 +5,13 @@
 | **Name** | AI Intelligence Architecture Pattern |
 | **Status** | Promoted Standard |
 | **Category** | Architecture Pattern |
-| **Version** | 1.0 |
+| **Version** | 1.1 |
 | **Owner** | Aredir Labs |
 | **Origin Projects** | AlignFit |
 | **Origin Artifacts** | COACH-ARCH-001, COACH-INTEL-001, COACH-INTEL-002, COACH-INTEL-003 |
 | **Linked Projects** | AlignFit, Aredir Labs |
 | **Reusability** | High |
-| **Last Reviewed** | 2026-06-12 |
+| **Last Reviewed** | 2026-06-15 |
 | **Next Review Due** | 2026-09-12 |
 
 ## Purpose
@@ -53,6 +53,51 @@ These issues appeared repeatedly during AlignFit coach evolution: monolithic “
 - The **LLM** owns natural-language synthesis: tone, clarity, and user-facing narrative—within a strict response contract.
 
 The model should not be the system of record for facts, assessments, or final recommendations.
+
+This separation is formalized as the **Application-Owned Intelligence Pipeline** (promoted refinement per ALIGNFIT-GOV-002 Promotion Candidate Review). The pipeline runs entirely in application code from context through recommendations and response contract assembly. The LLM participates only at the narrative layer.
+
+---
+
+## Application-Owned Intelligence Pipeline
+
+Evolution of this pattern (v1.1): intelligence from raw data through structured recommendations is **application-owned end to end**. No layer delegates fact discovery, assessment, insight derivation, or recommendation ranking to the model.
+
+```
+User Data
+    ↓
+Context Builder          ← application
+    ↓
+Facts Layer              ← application
+    ↓
+Assessment Layer         ← application
+    ↓
+Insights Layer           ← application
+    ↓
+Recommendation Layer     ← application
+    ↓
+Response Contract        ← application (includes confidence)
+    ↓
+Narrative Layer          ← LLM
+    ↓
+User / Workspace
+```
+
+### Pipeline ownership rules
+
+| Stage | Owner | Must not delegate to LLM |
+|-------|--------|--------------------------|
+| Context construction | Application | Data selection, normalization, prioritization |
+| Facts | Application | Fact discovery or inference from raw data |
+| Assessments | Application | Policy evaluation or scoring |
+| Insights | Application | Observational reasoning over facts and assessments |
+| Recommendations | Application | Action generation, ranking, or prioritization |
+| Confidence | Application | Certainty scoring on assessments and recommendations |
+| Response contract | Application | Schema assembly and closed-world boundary |
+| Narrative | LLM | Explanation, education, personalization of tone |
+
+**Confidence** is application-owned: the pipeline attaches certainty scores to assessments and recommendations before narrative generation. The model may explain confidence levels but must not recalculate or override them.
+
+Outputs from this pipeline feed [Workspace-First AI Experience](./WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) surfaces and the [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) shared record. This document defines computation; those patterns define presentation and collaboration.
 
 ---
 
@@ -103,7 +148,30 @@ Data flows **downstream only** for decision logic. The narrative layer receives 
 | Assessments | Application |
 | Insights | Application |
 | Recommendations | Application |
+| Confidence | Application |
+| Response contracts | Application |
 | Narrative | LLM |
+| Explanation | LLM |
+| Education | LLM |
+| Personalization (tone, reading level) | LLM |
+
+### Application owns
+
+- Facts
+- Assessments
+- Insights
+- Recommendations
+- Confidence
+- Response contracts
+
+### LLM owns
+
+- Explanation
+- Narrative
+- Education
+- Personalization
+
+The model explains application-owned decisions within the closed-world [Response Contract Pattern](../ai-patterns/RESPONSE_CONTRACT_PATTERN.md). It does not create, alter, or reprioritize intelligence.
 
 ### Context Builder
 
@@ -235,8 +303,11 @@ These learnings are **architectural**, extracted from AlignFit coach work (COACH
 
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../PROMOTION_PROCESS.md)
+- [Workspace-First AI Experience Pattern](./WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
+- [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Context Builder Pattern](../ai-patterns/CONTEXT_BUILDER_PATTERN.md)
 - [Response Contract Pattern](../ai-patterns/RESPONSE_CONTRACT_PATTERN.md)
+- [AI Evaluation Framework](../ai-patterns/AI_EVALUATION_FRAMEWORK.md)
 - [Architecture Audit Standard](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Feature Delivery Standard](../playbooks/FEATURE_DELIVERY_STANDARD.md)
 - [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)

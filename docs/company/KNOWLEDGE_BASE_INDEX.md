@@ -2,7 +2,7 @@
 
 **Status:** Foundation  
 **Owner:** Aredir Labs  
-**Last reviewed:** 2026-06-12  
+**Last reviewed:** 2026-06-15  
 **Next review due:** 2026-09-12
 
 ## Purpose
@@ -70,7 +70,8 @@ Capture proven system designs that solve recurring product and engineering probl
 
 ### Examples
 
-- [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) — layered AI with application-owned logic and LLM-owned narrative
+- [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) — layered AI with application-owned intelligence pipeline and LLM-owned narrative
+- [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) — organize intelligence around workspace surfaces; chat as interaction mechanism
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md) — bounded, deterministic context before AI layers _(see AI Patterns)_
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — output boundary before narrative _(see AI Patterns)_
 - [AI Evaluation Framework](./ai-patterns/AI_EVALUATION_FRAMEWORK.md) — evaluation, validation, and regression methodology for AI features _(see AI Patterns)_
@@ -168,6 +169,7 @@ Document reusable approaches to AI features: prompt structure, evaluation, safet
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md) — bounded, deterministic context assembly before assessments and narrative
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — closed-world handoff before narrative generation
 - [AI Evaluation Framework](./ai-patterns/AI_EVALUATION_FRAMEWORK.md) — how AI quality is evaluated, validated, and sustained across releases
+- [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) — shared advisor workspace as system of record for multi-advisor collaboration
 - Guarded prompt template (`docs/agent/guarded-prompt-template.md`)
 
 ### Promotion criteria
@@ -350,7 +352,8 @@ Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge 
 ```
 Knowledge Base
 ├─ Architecture Patterns
-│  └─ AI Intelligence Architecture Pattern
+│  ├─ AI Intelligence Architecture Pattern
+│  └─ Workspace-First AI Experience Pattern
 ├─ Engineering Standards
 │  └─ Coding Agent Operating Standard
 ├─ QA Standards
@@ -359,7 +362,8 @@ Knowledge Base
 ├─ AI Patterns
 │  ├─ Context Builder Pattern
 │  ├─ Response Contract Pattern
-│  └─ AI Evaluation Framework
+│  ├─ AI Evaluation Framework
+│  └─ Human + AI Advisor Workspace Pattern
 ├─ Documentation Standards
 │  ├─ Architecture Audit Standard
 │  └─ Documentation Maintenance Standard
@@ -371,12 +375,14 @@ Knowledge Base
 
 - [Promotion Process](./PROMOTION_PROCESS.md)
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
+- [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 - [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
 - [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md)
 - [Root Cause Analysis Framework](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md)
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md)
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md)
 - [AI Evaluation Framework](./ai-patterns/AI_EVALUATION_FRAMEWORK.md)
+- [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md)

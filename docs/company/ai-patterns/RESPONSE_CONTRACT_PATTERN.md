@@ -312,6 +312,8 @@ Together, **Context Builder**, **AI Intelligence Architecture**, and **Response 
 - How intelligence is generated
 - How narrative is controlled
 
+The [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) and [Human + AI Advisor Workspace Pattern](./HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) extend this methodology to **how intelligence is experienced and collaboratively maintained** across advisor types.
+
 across all Aredir Labs AI products.
 
 ---
@@ -337,6 +339,9 @@ Likely future promotions — **not created in this work item**:
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../PROMOTION_PROCESS.md)
 - [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
+- [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
+- [Human + AI Advisor Workspace Pattern](./HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Context Builder Pattern](./CONTEXT_BUILDER_PATTERN.md)
+- [AI Evaluation Framework](./AI_EVALUATION_FRAMEWORK.md)
 - [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
 - [QA Engineering Framework](../qa-standards/QA_ENGINEERING_FRAMEWORK.md)

@@ -4,23 +4,25 @@
 |-------|-------|
 | **Document** | Knowledge Base Roadmap |
 | **Owner** | Aredir Labs |
-| **Last updated** | 2026-06-12 |
-| **Source review** | [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) (AREDIR-KB-013) |
+| **Last updated** | 2026-06-15 |
+| **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) (AREDIR-KB-013) |
 | **Next review** | 2026-09-12 |
 
 ## Current State
 
-### Promoted assets (10)
+### Promoted assets (12)
 
 | Category | Asset | Version |
 |----------|-------|---------|
-| Architecture Pattern | AI Intelligence Architecture Pattern | 1.0 |
+| Architecture Pattern | AI Intelligence Architecture Pattern | 1.1 |
+| Architecture Pattern | Workspace-First AI Experience Pattern | 1.0 |
 | Engineering Standard | Coding Agent Operating Standard | 1.0 |
 | QA Standard | QA Engineering Framework | 1.0 |
 | QA Standard | Root Cause Analysis Framework | 1.0 |
 | AI Pattern | Context Builder Pattern | 1.0 |
 | AI Pattern | Response Contract Pattern | 1.0 |
 | AI Pattern | AI Evaluation Framework | 1.0 |
+| AI Pattern | Human + AI Advisor Workspace Pattern | 1.0 |
 | Documentation Standard | Architecture Audit Standard | 1.0 |
 | Documentation Standard | Documentation Maintenance Standard | 1.0 |
 | Playbook | Feature Delivery Standard | 1.0 |
@@ -39,13 +41,13 @@ The Knowledge Base provides a **complete v1 operating model**:
 Architecture Audit → Feature Delivery → Coding Agent + QA → Knowledge Capture → Promotion
 ```
 
-AI features add: Context Builder → Intelligence layers → Response Contract → AI Evaluation.
+AI features add: Context Builder → Intelligence layers → Response Contract → AI Evaluation → Workspace surfaces → Advisor collaboration.
 
 ### Health snapshot (2026 Q2–Q3)
 
 See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Summary:
 
-- **Strong:** 10 promoted assets, complete AI methodology, governance, documentation hygiene
+- **Strong:** 12 promoted assets, complete AI methodology, governance, documentation hygiene
 - **Resolved (KB-013):** stale footers, roadmap sync, honest `linked_projects`
 - **Next:** Knowledge Asset Registry (WORKSPACE-008); Q3 quarterly review (2026-09-12)
 
@@ -75,6 +77,8 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | AREDIR-KB-011 | AI Evaluation Framework | AI Pattern | Complete |
 | AREDIR-KB-012 | Knowledge Asset Registry Readiness Review | Review | Complete |
 | AREDIR-KB-013 | Registry Prerequisite Cleanup | Review | Complete |
+| AREDIR-KB-014 | Workspace-First AI Experience Pattern | Architecture Pattern | Complete |
+| AREDIR-KB-015 | Human + AI Advisor Workspace Pattern | AI Pattern | Complete |
 
 **Next work item:** AREDIR-WORKSPACE-008 — Knowledge Asset Registry.
 
@@ -82,13 +86,26 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 
 ## Candidate Future Assets
 
-From [KB Review 2026 Q2 — Gap Analysis](./reviews/KB_REVIEW_2026_Q2.md#gap-analysis). Updated after KB-011 completion.
+From [KB Review 2026 Q2 — Gap Analysis](./reviews/KB_REVIEW_2026_Q2.md#gap-analysis). Updated after AREDIR-KB-014 and AREDIR-KB-015 completion.
 
 ### High priority
 
 | ID (proposed) | Asset | Category | Status |
 |---------------|-------|----------|--------|
-| AREDIR-KB-014 | Knowledge Capture Standard | Documentation Standard | Planned |
+| AREDIR-KB-016 | Knowledge Capture Standard | Documentation Standard | Planned |
+
+### Deferred (ALIGNFIT-GOV-002)
+
+| Asset | Category | Notes |
+|-------|----------|-------|
+| Reconciliation Capability Framework | Architecture Pattern | Deferred — insufficient cross-product validation |
+| Calendar Orchestration Contract | Engineering Standard | Deferred — domain-specific; revisit when second product adopts |
+
+### Merged (ALIGNFIT-GOV-002)
+
+| Candidate | Resolution |
+|-----------|------------|
+| Application-Owned Intelligence Pipeline | Merged into [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) v1.1 — not a standalone asset |
 
 ### Medium priority
 
@@ -118,7 +135,7 @@ Per [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEAN
 | Criterion | Status |
 |-----------|--------|
 | Documentation hygiene complete | Met (KB-008A) |
-| ≥10 promoted assets | Met (10 assets) |
+| ≥10 promoted assets | Met (12 assets) |
 | `linked_projects` validated for AlignFit | Met (KB-013) |
 | Stale recommendations resolved | Met (KB-013) |
 | Roadmap synchronized | Met (KB-013) |
@@ -150,7 +167,7 @@ Knowledge Base structure, governance, Feature Delivery playbook, first quarterly
 
 ### Phase 2 — Adoption & hygiene (complete)
 
-Ten promoted assets, complete AI methodology, documentation hygiene, honest adoption metadata, registry readiness confirmed.
+Twelve promoted assets, complete AI methodology (including workspace and advisor patterns), documentation hygiene, honest adoption metadata, registry readiness confirmed.
 
 ### Phase 3 — Registry & workspace (2026 Q3–Q4)
 

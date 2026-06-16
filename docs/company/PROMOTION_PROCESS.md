@@ -385,11 +385,13 @@ When an asset is replaced:
 
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) — first promoted architecture asset
+- [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) — workspace surfaces over chat-first AI
 - [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — first promoted Engineering Standard
 - [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md) — first promoted QA Standard
 - [Root Cause Analysis Framework](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md) — investigation and permanent resolution
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md) — first promoted AI Pattern
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — AI output boundary standard
+- [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) — shared advisor workspace collaboration
 - [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — first promoted Documentation Standard
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md) — doc sync and drift prevention
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) — end-to-end delivery playbook
