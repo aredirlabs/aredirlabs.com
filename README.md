@@ -147,13 +147,15 @@ Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.m
 | Prompts | [docs/prompts/](docs/prompts/) |
 | **Knowledge Base (canonical)** | [docs/company/](docs/company/) |
 | **Engineering Operating System** | [docs/company/ENGINEERING_OPERATING_SYSTEM.md](docs/company/ENGINEERING_OPERATING_SYSTEM.md) |
+| **Engineering Capability Model** | [docs/company/ENGINEERING_CAPABILITY_MODEL.md](docs/company/ENGINEERING_CAPABILITY_MODEL.md) |
 | **Engineering governance** | [docs/company/GOVERNANCE_INDEX.md](docs/company/GOVERNANCE_INDEX.md) |
 
 ## Engineering Operating System
 
-The [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) (EOS) is the company methodology for durable, reusable, AI-assisted software delivery. Governance is one capability within the EOS.
+The [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) (EOS) is the company methodology for durable, reusable, AI-assisted software delivery. Capabilities define what the organization must do; governance orchestrates how.
 
 - [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) — **company operating model entry point** (EOS-001)
+- [Engineering Capability Model](docs/company/ENGINEERING_CAPABILITY_MODEL.md) — organizational competencies (EOS-002)
 - [Governance Index](docs/company/GOVERNANCE_INDEX.md) — eight-domain governance framework (GOVERNANCE-001)
 - [Governance Maturity Model](docs/company/governance/GOVERNANCE_MATURITY_MODEL.md) — project maturity assessment
 - [Knowledge Artifact Taxonomy](docs/company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — artifact classification

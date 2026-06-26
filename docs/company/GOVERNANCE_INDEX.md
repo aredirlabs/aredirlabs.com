@@ -10,7 +10,7 @@
 
 This index is the **authoritative entry point for governance** within the [Aredir Labs Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md). It defines how all products — AlignFit, ClassForge, LeagueOS, and future repositories — are designed, documented, implemented, reviewed, tested, and evolved.
 
-**Governance is one capability inside the EOS** — not the entire operating system. For the full lifecycle model, start at [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md).
+**Governance is one capability area inside the EOS** — implemented across multiple [Engineering Capabilities](./ENGINEERING_CAPABILITY_MODEL.md), not the entire operating system. For the full lifecycle model, start at [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md).
 
 Governance lives in two layers:
 
@@ -29,6 +29,8 @@ Governance lives in two layers:
 ```
 Engineering Operating System              ← company methodology
          │
+         ├── Engineering Capabilities      ← EOS-002
+         │
          └── Governance Framework          ← you are here (GOVERNANCE-001)
                    │
                    └── Domain Governance (8 domains)
@@ -44,8 +46,22 @@ Supporting EOS artifacts:
 
 | Artifact | Document |
 |----------|----------|
+| **Capability model** | [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) |
 | **Maturity model** | [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) |
 | **Artifact taxonomy** | [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) |
+
+### Governance → capability mapping
+
+| Governance domain | Primary capability |
+|-------------------|-------------------|
+| [Knowledge Governance](./governance/KNOWLEDGE_GOVERNANCE.md) | Knowledge Management |
+| [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md) | Architecture |
+| [AI Governance](./governance/AI_GOVERNANCE.md) | AI Engineering |
+| [Engineering Governance](./governance/ENGINEERING_GOVERNANCE.md) | Quality Engineering, Delivery |
+| [Documentation Governance](./governance/DOCUMENTATION_GOVERNANCE.md) | Documentation |
+| [Design Governance](./governance/DESIGN_GOVERNANCE.md) | Design |
+| [Company Governance](./governance/COMPANY_GOVERNANCE.md) | Delivery, Product Strategy |
+| [Project Governance](./governance/PROJECT_GOVERNANCE.md) | Delivery, Documentation |
 
 ---
 
@@ -140,13 +156,14 @@ Classify artifacts: [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT
 | Registry seed sync | Author of promotion PR | On each asset promotion or metadata change |
 | Adoption confirmation | Product leads | Quarterly for linked projects |
 
-Formal review records: [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md).
+Formal review records: [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002](./reviews/EOS_002_CAPABILITY_MODEL.md).
 
 ---
 
 ## Related
 
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
+- [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)

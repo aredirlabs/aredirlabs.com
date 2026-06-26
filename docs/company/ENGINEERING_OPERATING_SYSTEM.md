@@ -2,7 +2,7 @@
 
 **Status:** Company Standard  
 **Owner:** Aredir Labs  
-**Work item:** EOS-001  
+| **Work item:** EOS-001  
 **Last reviewed:** 2026-06-25  
 **Next review due:** 2026-09-12
 
@@ -15,6 +15,7 @@ This is not a product feature. It is the **operating model** that AlignFit, Clas
 **Entry points:**
 
 - **Operating system (this document)** — full lifecycle model and artifact layers
+- **[Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)** — organizational competencies (EOS-002)
 - **[Governance Index](./GOVERNANCE_INDEX.md)** — eight-domain governance framework (GOVERNANCE-001)
 - **[Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)** — promoted reusable intellectual property
 
@@ -22,12 +23,13 @@ This is not a product feature. It is the **operating model** that AlignFit, Clas
 
 ## What the EOS is
 
-The EOS connects vision, principles, frameworks, standards, patterns, playbooks, and the Knowledge Base into one coherent delivery methodology. Products do not invent their own engineering culture — they **Adopt**, **Extend**, or **Deviate** from company practice with documented rationale.
+The EOS connects vision, principles, **capabilities**, frameworks, standards, patterns, playbooks, and the Knowledge Base into one coherent delivery methodology. Products do not invent their own engineering culture — they **Adopt**, **Extend**, or **Deviate** from company practice with documented rationale.
 
 | EOS layer | Role | Location |
 |-----------|------|----------|
 | **Vision** | Why Aredir Labs builds this way | This document — Vision |
 | **Principles** | Non-negotiable engineering values | Principles; [Company Governance](./governance/COMPANY_GOVERNANCE.md) |
+| **Capabilities** | What the organization must consistently do | [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) |
 | **Frameworks** | How systems and methodologies work | Governance framework, AI pipeline, maturity model |
 | **Standards** | Required practices | Promoted KB assets + operational docs |
 | **Patterns** | Reusable solutions to recurring problems | `docs/company/architecture-patterns/`, `ai-patterns/` |
@@ -36,7 +38,7 @@ The EOS connects vision, principles, frameworks, standards, patterns, playbooks,
 | **Reference Architectures** | Reusable architecture models | Architecture patterns + [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md) |
 | **Product Implementations** | Domain-specific code and docs | Product repositories |
 
-**Governance is a capability within the EOS** — not the entire system. GOVERNANCE-001 established the governance layer; EOS-001 places it inside the broader operating model.
+**Governance supports capabilities** — it is not the entire system. GOVERNANCE-001 established the governance layer; EOS-001 placed it inside the operating model; EOS-002 added explicit capabilities between principles and artifacts.
 
 ---
 
@@ -47,9 +49,21 @@ Aredir Labs Engineering Operating System
 │
 ├── Vision                          ← durable, reusable, AI-assisted delivery
 ├── Principles                      ← evidence-based, incremental, canonical-first
+├── Engineering Capabilities        ← EOS-002: what we must consistently do
+│   ├── Product Strategy
+│   ├── Architecture
+│   ├── Knowledge Management
+│   ├── AI Engineering
+│   ├── Quality Engineering
+│   ├── Documentation
+│   ├── Design
+│   ├── Delivery
+│   ├── Operations
+│   └── Security
 ├── Frameworks
 │   ├── Engineering Operating System (this document)
-│   ├── Governance Framework        ← GOVERNANCE-001
+│   ├── Engineering Capability Model
+│   ├── Governance Framework          ← GOVERNANCE-001
 │   ├── Governance Maturity Model
 │   └── Knowledge Artifact Taxonomy
 ├── Standards                       ← promoted KB + operational implementation
@@ -155,7 +169,9 @@ See [AI Governance](./governance/AI_GOVERNANCE.md) and [Architecture Governance]
 ```
 Engineering Operating System          ← company methodology (this document)
          │
-         └── Governance Framework     ← GOVERNANCE-001
+         ├── Engineering Capabilities  ← EOS-002
+         │
+         └── Governance Framework     ← GOVERNANCE-001 (supports capabilities)
                    │
                    └── Domain Governance (8 domains)
                              │
@@ -166,7 +182,7 @@ Engineering Operating System          ← company methodology (this document)
                                                  └── Project Implementations
 ```
 
-The [Governance Index](./GOVERNANCE_INDEX.md) is the entry point for governance domains. This document is the entry point for the full operating model.
+The [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) defines ten active capabilities. The [Governance Index](./GOVERNANCE_INDEX.md) orchestrates domain governance that supports them.
 
 Evaluate project maturity: [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md).
 
@@ -180,6 +196,7 @@ The Knowledge Base is the **canonical store of promoted company intellectual pro
 
 | EOS concept | Knowledge Base expression |
 |-------------|---------------------------|
+| Capabilities | [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) — not promoted KB assets |
 | Patterns | `architecture-patterns/`, `ai-patterns/` |
 | Standards | `engineering-standards/`, `qa-standards/`, `documentation-standards/` |
 | Playbooks | `playbooks/` |
@@ -252,12 +269,13 @@ Projects progress through five maturity levels defined in [Governance Maturity M
 | Taxonomy updates | Engineering lead | When new artifact types emerge |
 | Promotion and registry sync | Asset owner | On promotion PR |
 
-Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md).
+Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Review](./reviews/EOS_002_CAPABILITY_MODEL.md).
 
 ---
 
 ## Related
 
+- [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md)
