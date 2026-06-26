@@ -2,7 +2,7 @@
 
 Guidelines when spinning up new Aredir Labs products from this template.
 
-**Canonical onboarding methodology:** [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md) (EOS-003).
+**Canonical onboarding methodology:** [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md) (EOS-003). **Structural contract:** [Engineering Blueprint Specification](../company/ENGINEERING_BLUEPRINT_SPECIFICATION.md) (EOS-004). **Engineering platform:** [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md) (IMPLEMENTATION-001).
 
 ## Starting a new product
 
@@ -66,6 +66,8 @@ Document overrides in the product repo under `docs/product/`:
 ## Related
 
 - [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md)
+- [Engineering Blueprint Specification](../company/ENGINEERING_BLUEPRINT_SPECIFICATION.md)
+- [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md)
 - [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
 - [Governance Index](../company/GOVERNANCE_INDEX.md)
 - [Project conventions](./project-conventions.md)

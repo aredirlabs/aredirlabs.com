@@ -18,6 +18,8 @@ Projects **consume** the EOS. They do not recreate it. Product-specific work liv
 
 Part of the [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md). Completed by [EOS-003 Review](./reviews/EOS_003_PROJECT_INHERITANCE.md).
 
+Structural requirements for what a repository must contain: [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md) (EOS-004). Executable platform specification: [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) (IMPLEMENTATION-001). Inheritance defines **how** to consume the EOS; the blueprint defines **what** must exist; the reference repository defines **exactly what is shipped**.
+
 ---
 
 ## What inheritance means
@@ -73,7 +75,7 @@ Engineering Operating System  ──→  Future Projects
 | **Idea** | Product lead / sponsor | [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) — Idea |
 | **Project Proposal** | Scope, sponsor, rough sizing | [Company Governance](./governance/COMPANY_GOVERNANCE.md) — SDLC |
 | **Repository Creation** | Clone or generate from template | This document — Bootstrap |
-| **Repository Bootstrap** | Docs, indexes, CI baseline | This document — Bootstrap checklist |
+| **Repository Bootstrap** | Docs, indexes, CI baseline | [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md); this document — Bootstrap checklist |
 | **EOS Inheritance** | Sync `docs/company/`; Adopt defaults | [Future product standards](../architecture/future-product-standards.md) |
 | **Architecture** | Domain design; audit when required | [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md) |
 | **Implementation** | Agent-driven delivery within standards | [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) |
@@ -118,7 +120,7 @@ Development Ready
 
 | Step | Action | Reference |
 |------|--------|-----------|
-| 1 | Clone [Aredir Labs template](https://github.com/aredirlabs/aredirlabs-com) or generate from it | [Future product standards](../architecture/future-product-standards.md) |
+| 1 | Clone [Aredir Labs Reference Repository](https://github.com/aredirlabs/aredirlabs-com) or generate from it | [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) |
 | 2 | Update README with product name, purpose, and workflow | [Project Governance](./governance/PROJECT_GOVERNANCE.md) |
 | 3 | Confirm `docs/` tree matches template layout | [Project conventions](../architecture/project-conventions.md) |
 | 4 | Create or reset implementation index | [Implementation index](../prompts/implementation-index.md) (template example) |
@@ -153,7 +155,7 @@ These remain authoritative in Aredir Labs (`aredirlabs-com`). Projects **referen
 | Patterns | `docs/company/architecture-patterns/`, `ai-patterns/` |
 | Playbooks | `docs/company/playbooks/` |
 | Reference Architectures | Promoted architecture and AI patterns |
-| Template repository | `aredirlabs-com` |
+| Template repository | `aredirlabs-com` — [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) |
 | Engineering methodology | EOS lifecycle and capabilities |
 
 Update path: pull or sync from Aredir Labs template — not parallel maintenance in product repos.
@@ -312,6 +314,8 @@ Products do not maintain parallel copies of company standards.
 | [Knowledge Governance](./governance/KNOWLEDGE_GOVERNANCE.md) | Promotion and registry lifecycle |
 | [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) | Classify repo vs company assets |
 | [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) | Assess inheritance completeness |
+| [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md) | Structural contract for compliant repositories |
+| [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) | Executable platform all projects inherit from |
 | [Future product standards](../architecture/future-product-standards.md) | Quick-start bootstrap guide |
 | [Project Governance](./governance/PROJECT_GOVERNANCE.md) | Repo organization detail |
 
@@ -333,5 +337,8 @@ Products do not maintain parallel copies of company standards.
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
+- [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)
+- [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md)
 - [Future product standards](../architecture/future-product-standards.md)
 - [EOS-003 Project Inheritance Review](./reviews/EOS_003_PROJECT_INHERITANCE.md)
+- [EOS-004 Engineering Blueprint Review](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md)

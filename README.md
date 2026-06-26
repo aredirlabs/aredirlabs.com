@@ -149,15 +149,32 @@ Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.m
 | **Engineering Operating System** | [docs/company/ENGINEERING_OPERATING_SYSTEM.md](docs/company/ENGINEERING_OPERATING_SYSTEM.md) |
 | **Engineering Capability Model** | [docs/company/ENGINEERING_CAPABILITY_MODEL.md](docs/company/ENGINEERING_CAPABILITY_MODEL.md) |
 | **Project Inheritance Model** | [docs/company/PROJECT_INHERITANCE_MODEL.md](docs/company/PROJECT_INHERITANCE_MODEL.md) |
+| **Engineering Blueprint Specification** | [docs/company/ENGINEERING_BLUEPRINT_SPECIFICATION.md](docs/company/ENGINEERING_BLUEPRINT_SPECIFICATION.md) |
+| **Reference Repository Specification** | [docs/company/REFERENCE_REPOSITORY_SPECIFICATION.md](docs/company/REFERENCE_REPOSITORY_SPECIFICATION.md) |
 | **Engineering governance** | [docs/company/GOVERNANCE_INDEX.md](docs/company/GOVERNANCE_INDEX.md) |
 
 ## Engineering Operating System
 
 The [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) (EOS) is the company methodology for durable, reusable, AI-assisted software delivery. Capabilities define what the organization must do; governance orchestrates how.
 
+**Blueprint:** v1.0 — [Engineering Blueprint Specification](docs/company/ENGINEERING_BLUEPRINT_SPECIFICATION.md)
+
+## Engineering Platform
+
+| Marker | Value |
+|--------|-------|
+| Platform | v1.0 |
+| Blueprint | v1.0 |
+| EOS | v1.0 |
+| Last sync | — (Reference Repository) |
+
+- [Reference Repository Specification](docs/company/REFERENCE_REPOSITORY_SPECIFICATION.md) — engineering platform specification (IMPLEMENTATION-001)
+
 - [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) — **company operating model entry point** (EOS-001)
 - [Engineering Capability Model](docs/company/ENGINEERING_CAPABILITY_MODEL.md) — organizational competencies (EOS-002)
 - [Project Inheritance Model](docs/company/PROJECT_INHERITANCE_MODEL.md) — repository onboarding (EOS-003)
+- [Engineering Blueprint Specification](docs/company/ENGINEERING_BLUEPRINT_SPECIFICATION.md) — repository structural contract (EOS-004)
+- [Reference Repository Specification](docs/company/REFERENCE_REPOSITORY_SPECIFICATION.md) — engineering platform (IMPLEMENTATION-001)
 - [Governance Index](docs/company/GOVERNANCE_INDEX.md) — eight-domain governance framework (GOVERNANCE-001)
 - [Governance Maturity Model](docs/company/governance/GOVERNANCE_MATURITY_MODEL.md) — project maturity assessment
 - [Knowledge Artifact Taxonomy](docs/company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — artifact classification

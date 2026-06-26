@@ -16,6 +16,8 @@ This is not a product feature. It is the **operating model** that AlignFit, Clas
 
 - **Operating system (this document)** — full lifecycle model and artifact layers
 - **[Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)** — repository onboarding methodology (EOS-003)
+- **[Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)** — repository structural contract (EOS-004)
+- **[Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md)** — engineering platform specification (IMPLEMENTATION-001)
 - **[Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)** — organizational competencies (EOS-002)
 - **[Governance Index](./GOVERNANCE_INDEX.md)** — eight-domain governance framework (GOVERNANCE-001)
 - **[Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)** — promoted reusable intellectual property
@@ -37,7 +39,7 @@ The EOS connects vision, principles, **capabilities**, frameworks, standards, pa
 | **Playbooks** | Operational procedures for delivery | `docs/company/playbooks/` + operational checklists |
 | **Knowledge Base** | Canonical promoted company IP | `docs/company/` (excluding governance orchestration) |
 | **Reference Architectures** | Reusable architecture models | Architecture patterns + [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md) |
-| **Product Implementations** | Domain-specific code and docs | Product repositories — see [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) |
+| **Product Implementations** | Domain-specific code and docs | Product repositories — see [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) and [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md) |
 
 **Governance supports capabilities** — it is not the entire system. GOVERNANCE-001 established the governance layer; EOS-001 placed it inside the operating model; EOS-002 added explicit capabilities between principles and artifacts.
 
@@ -72,6 +74,7 @@ Aredir Labs Engineering Operating System
 ├── Playbooks                       ← feature delivery, release, deployment
 ├── Knowledge Base                  ← 12 promoted assets + registry
 ├── Reference Architectures         ← intelligence pipeline, workspace-first AI
+├── Engineering Reference Repository  ← IMPLEMENTATION-001: executable platform spec
 └── Product Implementations         ← AlignFit, ClassForge, LeagueOS, …
 ```
 
@@ -211,9 +214,9 @@ The Knowledge Base is the **canonical store of promoted company intellectual pro
 
 ## How products inherit the EOS
 
-New and existing products consume the EOS by following the [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md):
+New and existing products consume the EOS by following the [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md), conforming to the [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md), and inheriting from the [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md):
 
-1. **Cloning or syncing** the Aredir Labs template repository
+1. **Cloning or syncing** the Aredir Labs Reference Repository ([aredirlabs-com](https://github.com/aredirlabs/aredirlabs-com))
 2. **Carrying forward** `docs/company/`, operational docs, and GitHub templates — see [Future product standards](../architecture/future-product-standards.md)
 3. **Adopting by default** Engineering and QA standards unless a Deviate decision is documented
 4. **Syncing `docs/company/`** when company standards update — not maintaining parallel copies
@@ -270,13 +273,15 @@ Projects progress through five maturity levels defined in [Governance Maturity M
 | Taxonomy updates | Engineering lead | When new artifact types emerge |
 | Promotion and registry sync | Asset owner | On promotion PR |
 
-Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Review](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Review](./reviews/EOS_003_PROJECT_INHERITANCE.md).
+Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Review](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Review](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Review](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Review](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md).
 
 ---
 
 ## Related
 
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
+- [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)
+- [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)

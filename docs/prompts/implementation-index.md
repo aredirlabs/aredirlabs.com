@@ -34,6 +34,8 @@ Ordered prompts for building aredirlabs.com.
 | EOS-001 | Engineering operating system establishment | Complete | [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md), [Governance Maturity Model](../company/governance/GOVERNANCE_MATURITY_MODEL.md), [Knowledge Artifact Taxonomy](../company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md), [EOS-001 Review](../company/reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) |
 | EOS-002 | Engineering capability model establishment | Complete | [Engineering Capability Model](../company/ENGINEERING_CAPABILITY_MODEL.md), [EOS-002 Review](../company/reviews/EOS_002_CAPABILITY_MODEL.md) |
 | EOS-003 | Project inheritance model establishment | Complete | [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md), [EOS-003 Review](../company/reviews/EOS_003_PROJECT_INHERITANCE.md) |
+| EOS-004 | Engineering blueprint specification establishment | Complete | [Engineering Blueprint Specification](../company/ENGINEERING_BLUEPRINT_SPECIFICATION.md), [EOS-004 Review](../company/reviews/EOS_004_ENGINEERING_BLUEPRINT.md) |
+| IMPLEMENTATION-001 | Engineering reference repository specification | Complete | [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md), [IMPLEMENTATION-001 Review](../company/reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md) |
 
 ## Workspace (internal)
 
@@ -100,3 +102,7 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [EOS-002 Review](../company/reviews/EOS_002_CAPABILITY_MODEL.md)
 - [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md)
 - [EOS-003 Review](../company/reviews/EOS_003_PROJECT_INHERITANCE.md)
+- [Engineering Blueprint Specification](../company/ENGINEERING_BLUEPRINT_SPECIFICATION.md)
+- [EOS-004 Review](../company/reviews/EOS_004_ENGINEERING_BLUEPRINT.md)
+- [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md)
+- [IMPLEMENTATION-001 Review](../company/reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md)
