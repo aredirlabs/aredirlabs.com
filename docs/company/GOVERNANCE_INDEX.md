@@ -133,7 +133,7 @@ Quick reference to promoted standards that implement this framework:
 
 | Category | Assets |
 |----------|--------|
-| Architecture Patterns | [AI Intelligence Architecture](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md), [Workspace-First AI Experience](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) |
+| Architecture Patterns | [AI Intelligence Architecture](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md), [Workspace Experience Architecture](./architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md), [Workspace-First AI Experience](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) |
 | Engineering Standards | [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) |
 | QA Standards | [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md), [Root Cause Analysis](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md) |
 | AI Patterns | [Context Builder](./ai-patterns/CONTEXT_BUILDER_PATTERN.md), [Response Contract](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md), [AI Evaluation](./ai-patterns/AI_EVALUATION_FRAMEWORK.md), [Human + AI Advisor Workspace](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) |

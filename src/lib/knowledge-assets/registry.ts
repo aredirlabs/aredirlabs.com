@@ -59,6 +59,28 @@ const registryAssets: KnowledgeAsset[] = [
     },
   },
   {
+    id: "aredir-ux-001-workspace-experience-architecture",
+    title: "Workspace Experience Architecture",
+    category: "architecture_pattern",
+    status: "promoted_standard",
+    version: "1.1",
+    owner: "Aredir Labs",
+    linkedProjects: ["AlignFit", "ClassForge", "LeagueOS", "Aredir Labs"],
+    originProject: "AlignFit",
+    originArtifacts:
+      "COACH-UX-001, COACH_EXPERIENCE_ARCHITECTURE, AlignFit workspace evolution",
+    lastReviewed: "2026-06-25",
+    nextReviewDue: "2026-09-12",
+    path: "architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md",
+    reusability: "high",
+    adoption: {
+      alignfit: "referenced",
+      classforge: "planned",
+      leagueos: "planned",
+      aredir_labs: "referenced",
+    },
+  },
+  {
     id: "coding-agent-operating-standard",
     title: "Coding Agent Operating Standard",
     category: "engineering_standard",

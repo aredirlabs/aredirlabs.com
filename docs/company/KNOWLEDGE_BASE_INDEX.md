@@ -81,6 +81,7 @@ Capture proven system designs that solve recurring product and engineering probl
 ### Examples
 
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) — layered AI with application-owned intelligence pipeline and LLM-owned narrative
+- [Workspace Experience Architecture](./architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md) — workspace experience model; mission, environment, identity, and composition philosophy (AREDIR-UX-001)
 - [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) — organize intelligence around workspace surfaces; chat as interaction mechanism
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md) — bounded, deterministic context before AI layers _(see AI Patterns)_
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — output boundary before narrative _(see AI Patterns)_
@@ -325,6 +326,7 @@ Reviews
 ├─ EOS-003 Project Inheritance Establishment
 ├─ EOS-004 Engineering Blueprint Establishment
 └─ IMPLEMENTATION-001 Reference Repository Establishment
+└─ AREDIR-UX-001 Experience Architecture Establishment
 ```
 
 ### Examples
@@ -338,6 +340,7 @@ Reviews
 - [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md) — project inheritance model (EOS-003)
 - [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md) — engineering blueprint specification (EOS-004)
 - [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md) — engineering reference repository (IMPLEMENTATION-001)
+- [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md) — first User Experience Architecture standard (AREDIR-UX-001 / AREDIR-KB-017)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — proposed registry scope and phases (AREDIR-KB-012)
 
 ---
@@ -401,7 +404,7 @@ Knowledge Asset Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md), [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -409,6 +412,7 @@ Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge 
 Knowledge Base
 ├─ Architecture Patterns
 │  ├─ AI Intelligence Architecture Pattern
+│  ├─ Workspace Experience Architecture
 │  └─ Workspace-First AI Experience Pattern
 ├─ Engineering Standards
 │  └─ Coding Agent Operating Standard
@@ -435,6 +439,7 @@ Knowledge Base
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Promotion Process](./PROMOTION_PROCESS.md)
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
+- [Workspace Experience Architecture](./architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md)
 - [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 - [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
 - [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md)

@@ -25,7 +25,9 @@ When a product includes AI or multi-step workflows, organize the experience arou
 | **Actionable context** | Every surface shows provenance — what is known, who said it, when it changed |
 | **Chat supports work** | Conversation initiates or refines workspace actions; it does not replace them |
 
-**Canonical pattern:** [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
+**Canonical experience architecture:** [Workspace Experience Architecture](../architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md) (AREDIR-UX-001) — mission, environment, identity, and composition philosophy for all workspaces.
+
+**Canonical AI surface topology:** [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 
 For multi-advisor products: [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 
@@ -163,5 +165,6 @@ Extract product-agnostic principles from product work through the [promotion pro
 - [Governance Index](../GOVERNANCE_INDEX.md)
 - [UI patterns](../../architecture/ui-patterns.md)
 - [Component guidelines](../../architecture/component-guidelines.md)
+- [Workspace Experience Architecture](../architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md)
 - [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 - [Engineering Governance](./ENGINEERING_GOVERNANCE.md)

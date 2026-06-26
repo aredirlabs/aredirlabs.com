@@ -182,6 +182,7 @@ Workspace-First AI addresses **product surfaces** after intelligence is produced
 
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../PROMOTION_PROCESS.md)
+- [Workspace Experience Architecture](./AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md)
 - [AI Intelligence Architecture Pattern](./AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Context Builder Pattern](../ai-patterns/CONTEXT_BUILDER_PATTERN.md)

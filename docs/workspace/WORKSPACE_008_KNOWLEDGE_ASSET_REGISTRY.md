@@ -130,7 +130,7 @@ Adoption data seeded from [KB-012 adoption matrix](../company/reviews/KNOWLEDGE_
 
 | Capability | Implementation |
 |------------|----------------|
-| Asset catalog | 12 promoted assets |
+| Asset catalog | 13 promoted assets |
 | Category / status / project filters | GET form on list page |
 | Registry table | Asset, Category, Status, Version, Owner, Review Due, Projects |
 | Asset detail page | Metadata, relationships, governance, source link |

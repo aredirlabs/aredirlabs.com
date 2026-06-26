@@ -10,11 +10,12 @@
 
 ## Current State
 
-### Promoted assets (12)
+### Promoted assets (13)
 
 | Category | Asset | Version |
 |----------|-------|---------|
 | Architecture Pattern | AI Intelligence Architecture Pattern | 1.1 |
+| Architecture Pattern | Workspace Experience Architecture | 1.1 |
 | Architecture Pattern | Workspace-First AI Experience Pattern | 1.0 |
 | Engineering Standard | Coding Agent Operating Standard | 1.0 |
 | QA Standard | QA Engineering Framework | 1.0 |
@@ -55,7 +56,7 @@ AI features add: Context Builder → Intelligence layers → Response Contract �
 
 See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Summary:
 
-- **Strong:** 12 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene
+- **Strong:** 13 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene, UX experience architecture
 - **Resolved (KB-013):** stale footers, roadmap sync, honest `linked_projects`
 - **Resolved (GOVERNANCE-001):** eight-domain governance framework, index updates, AlignFit scope boundaries documented
 - **Resolved (EOS-001):** engineering operating system, maturity model, artifact taxonomy
@@ -105,6 +106,7 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | EOS-003 | Project Inheritance Model | Operating Model | Complete |
 | EOS-004 | Engineering Blueprint Specification | Operating Model | Complete |
 | IMPLEMENTATION-001 | Reference Repository Specification | Platform | Complete |
+| AREDIR-KB-017 | Workspace Experience Architecture | Architecture Pattern | Complete |
 
 **Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
 
@@ -193,7 +195,7 @@ Knowledge Base structure, governance, Feature Delivery playbook, first quarterly
 
 ### Phase 2 — Adoption & hygiene (complete)
 
-Twelve promoted assets, complete AI methodology (including workspace and advisor patterns), documentation hygiene, honest adoption metadata, registry readiness confirmed.
+Thirteen promoted assets, complete AI methodology (including workspace and advisor patterns), UX experience architecture (AREDIR-UX-001), documentation hygiene, honest adoption metadata, registry readiness confirmed.
 
 ### Phase 3 — Registry & workspace (2026 Q3–Q4)
 
