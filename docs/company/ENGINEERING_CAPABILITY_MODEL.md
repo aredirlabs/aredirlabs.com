@@ -720,6 +720,7 @@ When a deferred capability matures, add it to this document via EOS review — n
 
 ## Related
 
+- [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)

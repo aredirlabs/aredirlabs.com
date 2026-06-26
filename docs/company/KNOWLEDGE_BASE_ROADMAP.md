@@ -5,7 +5,7 @@
 | **Document** | Knowledge Base Roadmap |
 | **Owner** | Aredir Labs |
 | **Last updated** | 2026-06-25 |
-| **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) (AREDIR-KB-013); [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md); [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md); [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md) |
+| **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md); [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md); [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md); [EOS-002](./reviews/EOS_002_CAPABILITY_MODEL.md); [EOS-003](./reviews/EOS_003_PROJECT_INHERITANCE.md) |
 | **Next review** | 2026-09-12 |
 
 ## Current State
@@ -31,6 +31,7 @@
 
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md) — company operating model (EOS-001)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) — organizational competencies (EOS-002)
+- [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) — repository onboarding methodology (EOS-003)
 - [Governance Index](./GOVERNANCE_INDEX.md) — eight-domain governance framework (GOVERNANCE-001)
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) — project maturity assessment (EOS-001)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — artifact classification (EOS-001)
@@ -57,6 +58,7 @@ See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisi
 - **Resolved (GOVERNANCE-001):** eight-domain governance framework, index updates, AlignFit scope boundaries documented
 - **Resolved (EOS-001):** engineering operating system, maturity model, artifact taxonomy
 - **Resolved (EOS-002):** engineering capability model (10 active + 6 deferred capabilities)
+- **Resolved (EOS-003):** project inheritance model; AlignFit as reference implementation
 - **Next:** Q3 quarterly review (2026-09-12)
 
 ---
@@ -77,7 +79,8 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | 8 | **Engineering governance framework** — GOVERNANCE-001 | Engineering | Q3 2026 | Complete (GOVERNANCE-001) |
 | 9 | **Engineering operating system** — EOS-001 | Engineering | Q3 2026 | Complete (EOS-001) |
 | 10 | **Engineering capability model** — EOS-002 | Engineering | Q3 2026 | Complete (EOS-002) |
-| 11 | **Q3 quarterly review** — repeat KB_REVIEW process | Aredir Labs | 2026-09-12 | Scheduled |
+| 11 | **Project inheritance model** — EOS-003 | Engineering | Q3 2026 | Complete (EOS-003) |
+| 12 | **Q3 quarterly review** — repeat KB_REVIEW process | Aredir Labs | 2026-09-12 | Scheduled |
 
 ### Completed KB work items
 
@@ -93,6 +96,7 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | GOVERNANCE-001 | Engineering Governance Framework | Governance | Complete |
 | EOS-001 | Engineering Operating System | Operating Model | Complete |
 | EOS-002 | Engineering Capability Model | Operating Model | Complete |
+| EOS-003 | Project Inheritance Model | Operating Model | Complete |
 
 **Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
 
@@ -185,7 +189,7 @@ Twelve promoted assets, complete AI methodology (including workspace and advisor
 
 ### Phase 3 — Registry & workspace (2026 Q3–Q4)
 
-AREDIR-WORKSPACE-008 Knowledge Asset Registry (Complete); GOVERNANCE-001 engineering governance framework (Complete); EOS-001 engineering operating system (Complete); EOS-002 capability model (Complete); review due-date visibility; adoption matrix in workspace UI.
+AREDIR-WORKSPACE-008 Knowledge Asset Registry (Complete); GOVERNANCE-001 engineering governance framework (Complete); EOS-001 engineering operating system (Complete); EOS-002 capability model (Complete); EOS-003 project inheritance model (Complete); review due-date visibility; adoption matrix in workspace UI.
 
 ### Phase 4 — Scale (25+ assets)
 

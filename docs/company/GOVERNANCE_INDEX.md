@@ -47,6 +47,7 @@ Supporting EOS artifacts:
 | Artifact | Document |
 |----------|----------|
 | **Capability model** | [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) |
+| **Inheritance model** | [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) |
 | **Maturity model** | [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) |
 | **Artifact taxonomy** | [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) |
 
@@ -156,13 +157,14 @@ Classify artifacts: [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT
 | Registry seed sync | Author of promotion PR | On each asset promotion or metadata change |
 | Adoption confirmation | Product leads | Quarterly for linked projects |
 
-Formal review records: [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002](./reviews/EOS_002_CAPABILITY_MODEL.md).
+Formal review records: [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003](./reviews/EOS_003_PROJECT_INHERITANCE.md).
 
 ---
 
 ## Related
 
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
+- [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)

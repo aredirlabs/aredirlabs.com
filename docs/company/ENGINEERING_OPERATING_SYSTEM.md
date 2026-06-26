@@ -2,7 +2,7 @@
 
 **Status:** Company Standard  
 **Owner:** Aredir Labs  
-| **Work item:** EOS-001  
+**Work item:** EOS-001  
 **Last reviewed:** 2026-06-25  
 **Next review due:** 2026-09-12
 
@@ -15,6 +15,7 @@ This is not a product feature. It is the **operating model** that AlignFit, Clas
 **Entry points:**
 
 - **Operating system (this document)** — full lifecycle model and artifact layers
+- **[Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)** — repository onboarding methodology (EOS-003)
 - **[Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)** — organizational competencies (EOS-002)
 - **[Governance Index](./GOVERNANCE_INDEX.md)** — eight-domain governance framework (GOVERNANCE-001)
 - **[Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)** — promoted reusable intellectual property
@@ -36,7 +37,7 @@ The EOS connects vision, principles, **capabilities**, frameworks, standards, pa
 | **Playbooks** | Operational procedures for delivery | `docs/company/playbooks/` + operational checklists |
 | **Knowledge Base** | Canonical promoted company IP | `docs/company/` (excluding governance orchestration) |
 | **Reference Architectures** | Reusable architecture models | Architecture patterns + [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md) |
-| **Product Implementations** | Domain-specific code and docs | Product repositories |
+| **Product Implementations** | Domain-specific code and docs | Product repositories — see [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) |
 
 **Governance supports capabilities** — it is not the entire system. GOVERNANCE-001 established the governance layer; EOS-001 placed it inside the operating model; EOS-002 added explicit capabilities between principles and artifacts.
 
@@ -210,7 +211,7 @@ The Knowledge Base is the **canonical store of promoted company intellectual pro
 
 ## How products inherit the EOS
 
-New and existing products consume the EOS by:
+New and existing products consume the EOS by following the [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md):
 
 1. **Cloning or syncing** the Aredir Labs template repository
 2. **Carrying forward** `docs/company/`, operational docs, and GitHub templates — see [Future product standards](../architecture/future-product-standards.md)
@@ -219,7 +220,7 @@ New and existing products consume the EOS by:
 5. **Keeping product-specific docs** in `docs/product/` and domain architecture in the product repo
 6. **Feeding promotion candidates** back to Aredir Labs when patterns prove reusable
 
-AlignFit, ClassForge, and LeagueOS are **product implementations** under this model. AlignFit is the primary origin project for AI methodology; it is not the owner of company governance.
+AlignFit, ClassForge, and LeagueOS are **product implementations** under this model. AlignFit is the primary reference implementation; it is not the owner of company governance.
 
 ---
 
@@ -269,12 +270,13 @@ Projects progress through five maturity levels defined in [Governance Maturity M
 | Taxonomy updates | Engineering lead | When new artifact types emerge |
 | Promotion and registry sync | Asset owner | On promotion PR |
 
-Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Review](./reviews/EOS_002_CAPABILITY_MODEL.md).
+Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Review](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Review](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Review](./reviews/EOS_003_PROJECT_INHERITANCE.md).
 
 ---
 
 ## Related
 
+- [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)

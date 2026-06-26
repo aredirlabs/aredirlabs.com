@@ -33,6 +33,7 @@ Ordered prompts for building aredirlabs.com.
 | GOVERNANCE-001 | Engineering governance framework establishment | Complete | [Governance Index](../company/GOVERNANCE_INDEX.md), [Governance Framework](../company/governance/) (8 domain docs), [GOVERNANCE-001 Review](../company/reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md) |
 | EOS-001 | Engineering operating system establishment | Complete | [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md), [Governance Maturity Model](../company/governance/GOVERNANCE_MATURITY_MODEL.md), [Knowledge Artifact Taxonomy](../company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md), [EOS-001 Review](../company/reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) |
 | EOS-002 | Engineering capability model establishment | Complete | [Engineering Capability Model](../company/ENGINEERING_CAPABILITY_MODEL.md), [EOS-002 Review](../company/reviews/EOS_002_CAPABILITY_MODEL.md) |
+| EOS-003 | Project inheritance model establishment | Complete | [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md), [EOS-003 Review](../company/reviews/EOS_003_PROJECT_INHERITANCE.md) |
 
 ## Workspace (internal)
 
@@ -97,3 +98,5 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [GOVERNANCE-001 Review](../company/reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md)
 - [EOS-001 Review](../company/reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md)
 - [EOS-002 Review](../company/reviews/EOS_002_CAPABILITY_MODEL.md)
+- [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md)
+- [EOS-003 Review](../company/reviews/EOS_003_PROJECT_INHERITANCE.md)

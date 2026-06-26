@@ -43,6 +43,7 @@ Repository layout (this repo):
 docs/company/
 ├── ENGINEERING_OPERATING_SYSTEM.md  ← EOS entry point (EOS-001)
 ├── ENGINEERING_CAPABILITY_MODEL.md  ← capability model (EOS-002)
+├── PROJECT_INHERITANCE_MODEL.md     ← project inheritance (EOS-003)
 ├── GOVERNANCE_INDEX.md              ← governance entry point (GOVERNANCE-001)
 ├── governance/                      ← domain governance + maturity model
 ├── knowledge/                       ← artifact taxonomy
@@ -318,7 +319,8 @@ Reviews
 ├─ KB 013 Registry Prerequisite Cleanup
 ├─ GOVERNANCE-001 Framework Establishment
 ├─ EOS-001 Operating System Establishment
-└─ EOS-002 Capability Model Establishment
+├─ EOS-002 Capability Model Establishment
+└─ EOS-003 Project Inheritance Establishment
 ```
 
 ### Examples
@@ -329,6 +331,7 @@ Reviews
 - [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md) — engineering governance framework (GOVERNANCE-001)
 - [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) — engineering operating system (EOS-001)
 - [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md) — engineering capability model (EOS-002)
+- [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md) — project inheritance model (EOS-003)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — proposed registry scope and phases (AREDIR-KB-012)
 
 ---
@@ -341,11 +344,12 @@ The EOS is the company methodology above the Knowledge Base. Start at [Engineeri
 |--------------|----------|
 | Operating system | [ENGINEERING_OPERATING_SYSTEM.md](./ENGINEERING_OPERATING_SYSTEM.md) |
 | Capability model | [ENGINEERING_CAPABILITY_MODEL.md](./ENGINEERING_CAPABILITY_MODEL.md) |
+| Inheritance model | [PROJECT_INHERITANCE_MODEL.md](./PROJECT_INHERITANCE_MODEL.md) |
 | Governance framework | [Governance Index](./GOVERNANCE_INDEX.md) |
 | Maturity model | [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) |
 | Artifact taxonomy | [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) |
 
-Ten engineering capabilities sit between EOS principles and implementing artifacts. See [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md).
+Ten engineering capabilities sit between EOS principles and implementing artifacts. New repositories onboard via [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md).
 
 ---
 
@@ -389,7 +393,7 @@ Knowledge Asset Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -418,6 +422,7 @@ Knowledge Base
 ## Related
 
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
+- [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Promotion Process](./PROMOTION_PROCESS.md)

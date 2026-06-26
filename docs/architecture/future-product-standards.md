@@ -2,6 +2,8 @@
 
 Guidelines when spinning up new Aredir Labs products from this template.
 
+**Canonical onboarding methodology:** [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md) (EOS-003).
+
 ## Starting a new product
 
 1. Clone or generate from the Aredir Labs template repository.
@@ -63,6 +65,7 @@ Document overrides in the product repo under `docs/product/`:
 
 ## Related
 
+- [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
 - [Governance Index](../company/GOVERNANCE_INDEX.md)
 - [Project conventions](./project-conventions.md)
