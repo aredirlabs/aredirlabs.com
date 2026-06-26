@@ -146,6 +146,17 @@ Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.m
 | QA | [docs/qa/](docs/qa/) |
 | Prompts | [docs/prompts/](docs/prompts/) |
 | **Knowledge Base (canonical)** | [docs/company/](docs/company/) |
+| **Engineering Operating System** | [docs/company/ENGINEERING_OPERATING_SYSTEM.md](docs/company/ENGINEERING_OPERATING_SYSTEM.md) |
+| **Engineering governance** | [docs/company/GOVERNANCE_INDEX.md](docs/company/GOVERNANCE_INDEX.md) |
+
+## Engineering Operating System
+
+The [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) (EOS) is the company methodology for durable, reusable, AI-assisted software delivery. Governance is one capability within the EOS.
+
+- [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) — **company operating model entry point** (EOS-001)
+- [Governance Index](docs/company/GOVERNANCE_INDEX.md) — eight-domain governance framework (GOVERNANCE-001)
+- [Governance Maturity Model](docs/company/governance/GOVERNANCE_MATURITY_MODEL.md) — project maturity assessment
+- [Knowledge Artifact Taxonomy](docs/company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — artifact classification
 
 ## Knowledge Base
 

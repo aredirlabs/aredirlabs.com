@@ -30,6 +30,8 @@ Ordered prompts for building aredirlabs.com.
 | AREDIR-KB-013 | Registry prerequisite cleanup | Complete | [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [Knowledge Base Roadmap](../company/KNOWLEDGE_BASE_ROADMAP.md) — adoption validation, metadata cleanup, **Ready** for WORKSPACE-008 |
 | AREDIR-KB-014 | Promote Workspace-First AI Experience Pattern | Complete | [Workspace-First AI Experience Pattern](../company/architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Architecture Patterns) |
 | AREDIR-KB-015 | Promote Human + AI Advisor Workspace Pattern | Complete | [Human + AI Advisor Workspace Pattern](../company/ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns), [AI Intelligence Architecture Pattern](../company/architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) v1.1 (Application-Owned Intelligence Pipeline merge) |
+| GOVERNANCE-001 | Engineering governance framework establishment | Complete | [Governance Index](../company/GOVERNANCE_INDEX.md), [Governance Framework](../company/governance/) (8 domain docs), [GOVERNANCE-001 Review](../company/reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md) |
+| EOS-001 | Engineering operating system establishment | Complete | [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md), [Governance Maturity Model](../company/governance/GOVERNANCE_MATURITY_MODEL.md), [Knowledge Artifact Taxonomy](../company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md), [EOS-001 Review](../company/reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) |
 
 ## Workspace (internal)
 
@@ -41,6 +43,9 @@ Ordered prompts for building aredirlabs.com.
 | [004](../plan/docs/AREDIR-WORKSPACE-004-PROJECT-NOTES.md) | Project notes and decision log — lightweight project memory | Complete | 003 |
 | [005](../plan/docs/VERCEL-PRODUCTION-DEPLOYMENT.md) | Vercel production setup — safe prod DB scripts and deployment checklist | Complete | 004 |
 | [006](../plan/docs/AREDIR-WORKSPACE-006-PROJECT-STATUS-MILESTONES.md) | Project status and milestones — lightweight operational visibility | Complete | 005 |
+| [007A](../plan/docs/AREDIR-WORKSPACE-007A-DOCUMENTATION-HUB.md) | Documentation hub — project document registry in workspace | Complete | 006 |
+| [007B](../plan/docs/AREDIR-WORKSPACE-007B-PROMPT-LIBRARY.md) | Prompt library — project prompt history vs company assets | Complete | 007A |
+| [008](../../docs/workspace/WORKSPACE_008_KNOWLEDGE_ASSET_REGISTRY.md) | Knowledge Asset Registry — governance view of promoted assets | Complete | 007B |
 
 Verification docs live under `plan/docs/`.
 
@@ -85,3 +90,7 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [Knowledge Asset Registry Readiness Review](../company/reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)
 - [Knowledge Asset Registry Roadmap](../company/KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)
 - [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md)
+- [Governance Index](../company/GOVERNANCE_INDEX.md)
+- [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
+- [GOVERNANCE-001 Review](../company/reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md)
+- [EOS-001 Review](../company/reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md)

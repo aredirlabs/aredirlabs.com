@@ -383,6 +383,9 @@ When an asset is replaced:
 
 ## Related
 
+- [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
+- [Governance Index](./GOVERNANCE_INDEX.md)
+- [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) — first promoted architecture asset
 - [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) — workspace surfaces over chat-first AI

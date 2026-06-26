@@ -21,8 +21,12 @@ Guidelines when spinning up new Aredir Labs products from this template.
 
 **Canonical company standards** live under [`docs/company/`](../company/). Clone or sync this tree when spinning up products from the template.
 
+- [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md) — company operating model; products inherit the full EOS
+- [Governance Index](../company/GOVERNANCE_INDEX.md) — engineering governance entry point (GOVERNANCE-001)
 - [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) — architecture patterns, engineering/QA standards, AI patterns, playbooks
 - [Promotion Process](../company/PROMOTION_PROCESS.md) — governance, adoption model (Adopt / Extend / Deviate), review cadence
+- [Governance Maturity Model](../company/governance/GOVERNANCE_MATURITY_MODEL.md) — assess and progress project maturity
+- [Knowledge Artifact Taxonomy](../company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — classify docs and promotion candidates
 
 Operational docs (`docs/agent/`, `docs/qa/`, `docs/architecture/`) implement Knowledge Base standards. If guidance conflicts, **canonical `docs/company/` wins** unless a documented Deviate decision exists.
 
@@ -59,6 +63,8 @@ Document overrides in the product repo under `docs/product/`:
 
 ## Related
 
+- [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
+- [Governance Index](../company/GOVERNANCE_INDEX.md)
 - [Project conventions](./project-conventions.md)
 - [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md)
 - [Deployment workflow](../engineering/deployment-workflow.md)

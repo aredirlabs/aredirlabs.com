@@ -11,6 +11,8 @@ The Aredir Labs Knowledge Base is the company source of truth for **reusable int
 
 Projects (AlignFit, ClassForge, LeagueOS, and future products) remain the source of truth for **implementations**. The Knowledge Base captures what has been proven, validated, and is worth reusing across products.
 
+**Company operating model:** [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md) — governance and promoted assets are layers within the EOS.
+
 ## What belongs here
 
 | Include | Exclude |
@@ -39,8 +41,12 @@ Repository layout (this repo):
 
 ```
 docs/company/
-├── KNOWLEDGE_BASE_INDEX.md      ← this file
-├── PROMOTION_PROCESS.md         ← how assets are promoted
+├── ENGINEERING_OPERATING_SYSTEM.md  ← EOS entry point (EOS-001)
+├── GOVERNANCE_INDEX.md              ← governance entry point (GOVERNANCE-001)
+├── governance/                      ← domain governance + maturity model
+├── knowledge/                       ← artifact taxonomy
+├── KNOWLEDGE_BASE_INDEX.md          ← this file
+├── PROMOTION_PROCESS.md             ← how assets are promoted
 ├── architecture-patterns/       ← promoted architecture assets
 ├── engineering-standards/         ← promoted engineering assets
 ├── qa-standards/                  ← promoted QA assets
@@ -308,7 +314,9 @@ Formal audit and readiness records for the Knowledge Base.
 Reviews
 ├─ KB Review 2026 Q2
 ├─ Knowledge Asset Registry Readiness Review
-└─ KB 013 Registry Prerequisite Cleanup
+├─ KB 013 Registry Prerequisite Cleanup
+├─ GOVERNANCE-001 Framework Establishment
+└─ EOS-001 Operating System Establishment
 ```
 
 ### Examples
@@ -316,22 +324,52 @@ Reviews
 - [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) — first quarterly adoption and governance audit (AREDIR-KB-008)
 - [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md) — registry readiness assessment (AREDIR-KB-012)
 - [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) — adoption validation and metadata cleanup (AREDIR-KB-013)
+- [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md) — engineering governance framework (GOVERNANCE-001)
+- [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) — engineering operating system (EOS-001)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md) — proposed registry scope and phases (AREDIR-KB-012)
+
+---
+
+## Engineering Operating System
+
+The EOS is the company methodology above the Knowledge Base. Start at [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md).
+
+| EOS artifact | Document |
+|--------------|----------|
+| Operating system | [ENGINEERING_OPERATING_SYSTEM.md](./ENGINEERING_OPERATING_SYSTEM.md) |
+| Governance framework | [Governance Index](./GOVERNANCE_INDEX.md) |
+| Maturity model | [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) |
+| Artifact taxonomy | [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) |
 
 ---
 
 ## Governance
 
-Governance rules live in [Promotion Process](./PROMOTION_PROCESS.md) under **Knowledge Asset Governance**.
+Engineering governance is one layer within the EOS. Start at the [Governance Index](./GOVERNANCE_INDEX.md).
 
 ```
-Governance
-├─ Promotion Process          ← promotion + Knowledge Asset Governance
-├─ Asset Lifecycle            ← Candidate → Superseded
-├─ Review Cadence             ← quarterly review cycle
-├─ Adoption Model             ← Adopt, Extend, Deviate
-├─ KB Review 2026 Q2          ← first formal review
-├─ Knowledge Asset Registry Readiness Review ← registry readiness (AREDIR-KB-012)
+Governance Framework (GOVERNANCE-001)
+├─ Governance Index             ← entry point
+├─ Company Governance           ← philosophy, SDLC, PR/release
+├─ Knowledge Governance         ← registry, promotion, lifecycle
+├─ AI Governance                ← AI engineering playbook
+├─ Project Governance           ← repo organization, docs hierarchy
+├─ Engineering Governance       ← quality, testing, DoD
+├─ Design Governance            ← product-agnostic UX principles
+├─ Documentation Governance     ← ownership, naming, archives
+└─ Architecture Governance      ← pipeline, ownership, audits
+```
+
+Asset lifecycle, metadata, and promotion detail remain in [Promotion Process](./PROMOTION_PROCESS.md) under **Knowledge Asset Governance**.
+
+```
+Knowledge Asset Governance
+├─ Promotion Process            ← promotion + Knowledge Asset Governance
+├─ Asset Lifecycle              ← Candidate → Superseded
+├─ Review Cadence               ← quarterly review cycle
+├─ Adoption Model               ← Adopt, Extend, Deviate
+├─ KB Review 2026 Q2            ← first formal review
+├─ Knowledge Asset Registry     ← WORKSPACE-008 (Complete)
 └─ Knowledge Base Roadmap       ← priorities and registry readiness
 ```
 
@@ -345,7 +383,7 @@ Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -373,6 +411,8 @@ Knowledge Base
 
 ## Related
 
+- [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
+- [Governance Index](./GOVERNANCE_INDEX.md)
 - [Promotion Process](./PROMOTION_PROCESS.md)
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)

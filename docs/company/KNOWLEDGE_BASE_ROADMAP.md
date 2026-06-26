@@ -4,8 +4,8 @@
 |-------|-------|
 | **Document** | Knowledge Base Roadmap |
 | **Owner** | Aredir Labs |
-| **Last updated** | 2026-06-15 |
-| **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) (AREDIR-KB-013) |
+| **Last updated** | 2026-06-25 |
+| **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md) (AREDIR-KB-013); [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md); [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md) |
 | **Next review** | 2026-09-12 |
 
 ## Current State
@@ -29,6 +29,10 @@
 
 ### Governance
 
+- [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md) — company operating model (EOS-001)
+- [Governance Index](./GOVERNANCE_INDEX.md) — eight-domain governance framework (GOVERNANCE-001)
+- [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md) — project maturity assessment (EOS-001)
+- [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md) — artifact classification (EOS-001)
 - [Promotion Process](./PROMOTION_PROCESS.md) — Company Standard; includes Knowledge Asset Governance
 - Asset lifecycle, metadata, quarterly review cadence, adoption model (Adopt / Extend / Deviate)
 - Documentation hierarchy: `docs/company/` canonical; operational docs implement
@@ -47,9 +51,11 @@ AI features add: Context Builder → Intelligence layers → Response Contract �
 
 See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Summary:
 
-- **Strong:** 12 promoted assets, complete AI methodology, governance, documentation hygiene
+- **Strong:** 12 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene
 - **Resolved (KB-013):** stale footers, roadmap sync, honest `linked_projects`
-- **Next:** Knowledge Asset Registry (WORKSPACE-008); Q3 quarterly review (2026-09-12)
+- **Resolved (GOVERNANCE-001):** eight-domain governance framework, index updates, AlignFit scope boundaries documented
+- **Resolved (EOS-001):** engineering operating system, maturity model, artifact taxonomy
+- **Next:** Q3 quarterly review (2026-09-12)
 
 ---
 
@@ -65,8 +71,10 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | 4 | **AlignFit adoption confirmation** — verify AI pattern adoption; update `linked_projects` | Product + Engineering | Q3 2026 | Complete (AREDIR-KB-013) |
 | 5 | **Registry readiness review** — assess WORKSPACE-008 justification | Engineering | Q3 2026 | Complete (AREDIR-KB-012) |
 | 6 | **Registry prerequisite cleanup** — adoption validation, metadata sync | Engineering | Q3 2026 | Complete (AREDIR-KB-013) |
-| 7 | **Knowledge Asset Registry** — Governance Registry scope | Engineering | Q3 2026 | **Next (AREDIR-WORKSPACE-008)** |
-| 8 | **Q3 quarterly review** — repeat KB_REVIEW process | Aredir Labs | 2026-09-12 | Scheduled |
+| 7 | **Knowledge Asset Registry** — Governance Registry scope | Engineering | Q3 2026 | Complete (AREDIR-WORKSPACE-008) |
+| 8 | **Engineering governance framework** — GOVERNANCE-001 | Engineering | Q3 2026 | Complete (GOVERNANCE-001) |
+| 9 | **Engineering operating system** — EOS-001 | Engineering | Q3 2026 | Complete (EOS-001) |
+| 10 | **Q3 quarterly review** — repeat KB_REVIEW process | Aredir Labs | 2026-09-12 | Scheduled |
 
 ### Completed KB work items
 
@@ -79,8 +87,10 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | AREDIR-KB-013 | Registry Prerequisite Cleanup | Review | Complete |
 | AREDIR-KB-014 | Workspace-First AI Experience Pattern | Architecture Pattern | Complete |
 | AREDIR-KB-015 | Human + AI Advisor Workspace Pattern | AI Pattern | Complete |
+| GOVERNANCE-001 | Engineering Governance Framework | Governance | Complete |
+| EOS-001 | Engineering Operating System | Operating Model | Complete |
 
-**Next work item:** AREDIR-WORKSPACE-008 — Knowledge Asset Registry.
+**Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
 
 ---
 
@@ -171,7 +181,7 @@ Twelve promoted assets, complete AI methodology (including workspace and advisor
 
 ### Phase 3 — Registry & workspace (2026 Q3–Q4)
 
-AREDIR-WORKSPACE-008 Knowledge Asset Registry; review due-date visibility; adoption matrix in workspace UI.
+AREDIR-WORKSPACE-008 Knowledge Asset Registry (Complete); GOVERNANCE-001 engineering governance framework (Complete); EOS-001 engineering operating system (Complete); review due-date visibility; adoption matrix in workspace UI.
 
 ### Phase 4 — Scale (25+ assets)
 
@@ -185,6 +195,7 @@ Every Aredir Labs product **Adopts**, **Extends**, or **Deviate**-documents agai
 
 ## Related
 
+- [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md)
 - [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)
 - [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)
