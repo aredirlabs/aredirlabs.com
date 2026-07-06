@@ -38,6 +38,7 @@ Ordered prompts for building aredirlabs.com.
 | IMPLEMENTATION-001 | Engineering reference repository specification | Complete | [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md), [IMPLEMENTATION-001 Review](../company/reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md) |
 | AREDIR-KB-017 | Promote Workspace Experience Architecture | Complete | [Workspace Experience Architecture](../company/architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Architecture Patterns), [AREDIR-UX-001 Review](../company/reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md) |
 | AREDIR-KB-018 | Promote Evidence-Aware AI Advisor Pattern | Complete | [Evidence-Aware AI Advisor Pattern](../company/ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns), [KB 018 Review](../company/reviews/KB_018_EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) |
+| AREDIR-KB-019 | Promote Evidence Lifecycle Pattern | Complete | [Evidence Lifecycle Pattern](../company/knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Knowledge Patterns), [KB 019 Review](../company/reviews/KB_019_EVIDENCE_LIFECYCLE_PATTERN.md) |
 
 ## Workspace (internal)
 
@@ -89,6 +90,7 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [Workspace-First AI Experience Pattern (KB)](../company/architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 - [Human + AI Advisor Workspace Pattern (KB)](../company/ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
 - [Evidence-Aware AI Advisor Pattern (KB)](../company/ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md)
+- [Evidence Lifecycle Pattern (KB)](../company/knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
 - [Architecture Audit Standard (KB)](../company/documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Documentation Maintenance Standard (KB)](../company/documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Root Cause Analysis Framework (KB)](../company/qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md)

@@ -7,7 +7,7 @@
 
 ## Purpose
 
-The Aredir Labs Knowledge Base is the company source of truth for **reusable intellectual property**: architecture patterns, engineering standards, QA frameworks, AI patterns, product playbooks, and governed prompt assets.
+The Aredir Labs Knowledge Base is the company source of truth for **reusable intellectual property**: architecture patterns, knowledge patterns, engineering standards, QA frameworks, AI patterns, product playbooks, and governed prompt assets.
 
 Projects (AlignFit, ClassForge, LeagueOS, and future products) remain the source of truth for **implementations**. The Knowledge Base captures what has been proven, validated, and is worth reusing across products.
 
@@ -28,6 +28,7 @@ Projects (AlignFit, ClassForge, LeagueOS, and future products) remain the source
 ```
 Knowledge Base
 ├─ Architecture Patterns
+├─ Knowledge Patterns
 ├─ Engineering Standards
 ├─ QA Standards
 ├─ AI Patterns
@@ -52,6 +53,7 @@ docs/company/
 ├── KNOWLEDGE_BASE_INDEX.md          ← this file
 ├── PROMOTION_PROCESS.md             ← how assets are promoted
 ├── architecture-patterns/       ← promoted architecture assets
+├── knowledge-patterns/          ← promoted knowledge lifecycle assets
 ├── engineering-standards/         ← promoted engineering assets
 ├── qa-standards/                  ← promoted QA assets
 ├── ai-patterns/                   ← promoted AI assets
@@ -96,6 +98,36 @@ An architecture pattern should be promoted when it:
 - Includes documented ownership boundaries (what the app owns vs. what the model owns)
 - Has been validated through real usage, not only design review
 - Does not embed project-specific schemas, routes, or UI details
+
+---
+
+## Knowledge Patterns
+
+### Purpose
+
+Define reusable models for how evidence becomes knowledge and how understanding evolves over time — independent of any specific technology, product domain, or AI implementation.
+
+### Scope
+
+- Observation → evidence → interpretation → knowledge → decision → outcome lifecycles
+- Historical integrity and evidence evolution
+- Uncertainty at each lifecycle stage
+- Organizational learning through closed feedback loops
+- Cross-domain decision processes (not AI-specific)
+
+### Examples
+
+- [Evidence Lifecycle Pattern](./knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md) — canonical cyclical lifecycle for evidence-driven understanding and decision-making
+
+### Promotion criteria
+
+A knowledge pattern should be promoted when it:
+
+- Applies across multiple domains without product-specific assumptions
+- Defines clear stage boundaries that prevent conflating observations, evidence, interpretation, and knowledge
+- Includes historical integrity and learning requirements
+- Complements (does not duplicate) architecture or AI patterns that implement specific lifecycle stages
+- Has been validated through real decision processes, not only theoretical design
 
 ---
 
@@ -405,7 +437,7 @@ Knowledge Asset Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md), [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md), [KB 018 Evidence-Aware AI Advisor Pattern](./reviews/KB_018_EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md), [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md), [KB 018 Evidence-Aware AI Advisor Pattern](./reviews/KB_018_EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md), [KB 019 Evidence Lifecycle Pattern](./reviews/KB_019_EVIDENCE_LIFECYCLE_PATTERN.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -415,6 +447,8 @@ Knowledge Base
 │  ├─ AI Intelligence Architecture Pattern
 │  ├─ Workspace Experience Architecture
 │  └─ Workspace-First AI Experience Pattern
+├─ Knowledge Patterns
+│  └─ Evidence Lifecycle Pattern
 ├─ Engineering Standards
 │  └─ Coding Agent Operating Standard
 ├─ QA Standards
@@ -443,6 +477,7 @@ Knowledge Base
 - [AI Intelligence Architecture Pattern](./architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [Workspace Experience Architecture](./architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md)
 - [Workspace-First AI Experience Pattern](./architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
+- [Evidence Lifecycle Pattern](./knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
 - [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
 - [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md)
 - [Root Cause Analysis Framework](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md)

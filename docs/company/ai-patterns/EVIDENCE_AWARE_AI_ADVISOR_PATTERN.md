@@ -289,6 +289,12 @@ The pattern is domain-agnostic. Implementation details vary; the transparency an
 
 This pattern governs **how an AI advisor communicates knowledge** once other patterns have produced it.
 
+### Evidence Lifecycle Pattern
+
+The [Evidence Lifecycle Pattern](../knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md) defines the **universal cyclical model** by which observations become evidence, evidence becomes knowledge, knowledge informs decisions, and outcomes generate new observations.
+
+This pattern governs **communication within that lifecycle** when AI participates as interpreter — preserving stage boundaries, historical integrity, and uncertainty visibility at the advisor layer.
+
 ### Workspace-First AI Experience Pattern
 
 The [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md) defines **where intelligence surfaces** — briefings, reviews, timelines, actions, and chat as interaction mechanisms.
@@ -335,6 +341,7 @@ The [Response Contract Pattern](./RESPONSE_CONTRACT_PATTERN.md) enforces closed-
 
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../PROMOTION_PROCESS.md)
+- [Evidence Lifecycle Pattern](../knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
 - [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [Workspace-First AI Experience Pattern](../architecture-patterns/WORKSPACE_FIRST_AI_EXPERIENCE_PATTERN.md)
 - [Human + AI Advisor Workspace Pattern](./HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)

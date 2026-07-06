@@ -186,7 +186,7 @@ Knowledge capture is the final stage of [Feature Delivery](../playbooks/FEATURE_
 
 ## Current inventory
 
-**14 promoted assets** across 6 categories. See [Knowledge Base Index — Promoted assets](../KNOWLEDGE_BASE_INDEX.md#promoted-assets-quick-reference).
+**15 promoted assets** across 7 categories. See [Knowledge Base Index — Promoted assets](../KNOWLEDGE_BASE_INDEX.md#promoted-assets-quick-reference).
 
 **Candidate future assets:** [Knowledge Base Roadmap — Candidate Future Assets](../KNOWLEDGE_BASE_ROADMAP.md#candidate-future-assets).
 

@@ -301,6 +301,28 @@ const registryAssets: KnowledgeAsset[] = [
     },
   },
   {
+    id: "evidence-lifecycle-pattern",
+    title: "Evidence Lifecycle Pattern",
+    category: "knowledge_pattern",
+    status: "promoted_standard",
+    version: "1.0",
+    owner: "Aredir Labs",
+    linkedProjects: ["Aredir Labs", "AlignFit", "ClassForge", "LeagueOS"],
+    originProject: "Aredir Labs",
+    originArtifacts:
+      "Architecture Governance, AREDIR-KB-018 Evidence-Aware AI Advisor Pattern, evidence lifecycle synthesis, PROMOTION_CANDIDATE_REVIEW_2026_Q2",
+    lastReviewed: "2026-07-06",
+    nextReviewDue: "2026-10-06",
+    path: "knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md",
+    reusability: "high",
+    adoption: {
+      alignfit: "planned",
+      classforge: "planned",
+      leagueos: "planned",
+      aredir_labs: "referenced",
+    },
+  },
+  {
     id: "feature-delivery-standard",
     title: "Feature Delivery Standard",
     category: "playbook",

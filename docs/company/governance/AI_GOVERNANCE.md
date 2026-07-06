@@ -227,6 +227,7 @@ Standard workflow for AI feature work:
 | [AI Evaluation Framework](../ai-patterns/AI_EVALUATION_FRAMEWORK.md) | Quality validation |
 | [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) | Multi-advisor collaboration |
 | [Evidence-Aware AI Advisor Pattern](../ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) | Evidence communication and knowledge evolution |
+| [Evidence Lifecycle Pattern](../knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md) | Universal observation-to-knowledge lifecycle |
 | [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) | Agent guardrails and verification |
 
 ---

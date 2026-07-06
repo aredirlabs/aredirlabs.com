@@ -1,5 +1,6 @@
 export const KNOWLEDGE_ASSET_CATEGORIES = [
   "architecture_pattern",
+  "knowledge_pattern",
   "engineering_standard",
   "qa_standard",
   "ai_pattern",

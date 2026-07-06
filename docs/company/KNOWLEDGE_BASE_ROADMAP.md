@@ -10,13 +10,14 @@
 
 ## Current State
 
-### Promoted assets (14)
+### Promoted assets (15)
 
 | Category | Asset | Version |
 |----------|-------|---------|
 | Architecture Pattern | AI Intelligence Architecture Pattern | 1.1 |
 | Architecture Pattern | Workspace Experience Architecture | 1.1 |
 | Architecture Pattern | Workspace-First AI Experience Pattern | 1.0 |
+| Knowledge Pattern | Evidence Lifecycle Pattern | 1.0 |
 | Engineering Standard | Coding Agent Operating Standard | 1.0 |
 | QA Standard | QA Engineering Framework | 1.0 |
 | QA Standard | Root Cause Analysis Framework | 1.0 |
@@ -57,7 +58,7 @@ AI features add: Context Builder → Intelligence layers → Response Contract �
 
 See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Summary:
 
-- **Strong:** 14 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene, UX experience architecture, evidence-aware advisor communication standard
+- **Strong:** 15 promoted assets across 7 categories, complete AI methodology, evidence lifecycle foundation, EOS + governance framework, documentation hygiene, UX experience architecture, evidence-aware advisor communication standard
 - **Resolved (KB-013):** stale footers, roadmap sync, honest `linked_projects`
 - **Resolved (GOVERNANCE-001):** eight-domain governance framework, index updates, AlignFit scope boundaries documented
 - **Resolved (EOS-001):** engineering operating system, maturity model, artifact taxonomy
@@ -109,6 +110,7 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | IMPLEMENTATION-001 | Reference Repository Specification | Platform | Complete |
 | AREDIR-KB-017 | Workspace Experience Architecture | Architecture Pattern | Complete |
 | AREDIR-KB-018 | Evidence-Aware AI Advisor Pattern | AI Pattern | Complete |
+| AREDIR-KB-019 | Evidence Lifecycle Pattern | Knowledge Pattern | Complete |
 
 **Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
 

@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 const categoryBadgeClasses: Record<KnowledgeAssetCategory, string> = {
   architecture_pattern:
     "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300",
+  knowledge_pattern:
+    "border-teal-500/30 bg-teal-500/10 text-teal-700 dark:text-teal-300",
   engineering_standard:
     "border-violet-500/30 bg-violet-500/10 text-violet-700 dark:text-violet-300",
   qa_standard:

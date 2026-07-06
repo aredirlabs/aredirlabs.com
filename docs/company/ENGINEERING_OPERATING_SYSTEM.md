@@ -72,7 +72,7 @@ Aredir Labs Engineering Operating System
 ├── Standards                       ← promoted KB + operational implementation
 ├── Patterns                        ← architecture and AI patterns
 ├── Playbooks                       ← feature delivery, release, deployment
-├── Knowledge Base                  ← 14 promoted assets + registry
+├── Knowledge Base                  ← 15 promoted assets + registry
 ├── Reference Architectures         ← intelligence pipeline, workspace-first AI
 ├── Engineering Reference Repository  ← IMPLEMENTATION-001: executable platform spec
 └── Product Implementations         ← AlignFit, ClassForge, LeagueOS, …
@@ -201,7 +201,7 @@ The Knowledge Base is the **canonical store of promoted company intellectual pro
 | EOS concept | Knowledge Base expression |
 |-------------|---------------------------|
 | Capabilities | [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) — not promoted KB assets |
-| Patterns | `architecture-patterns/`, `ai-patterns/` |
+| Patterns | `architecture-patterns/`, `knowledge-patterns/`, `ai-patterns/` |
 | Standards | `engineering-standards/`, `qa-standards/`, `documentation-standards/` |
 | Playbooks | `playbooks/` |
 | Governance orchestration | `governance/`, `GOVERNANCE_INDEX.md` — not promoted KB assets |
@@ -257,7 +257,7 @@ Projects progress through five maturity levels defined in [Governance Maturity M
 
 **Current mapping (2026 Q2–Q3):**
 
-- **Aredir Labs (this repo):** Level 5 — EOS established; registry live; 14 promoted assets
+- **Aredir Labs (this repo):** Level 5 — EOS established; registry live; 15 promoted assets
 - **AlignFit:** Level 4–5 — primary adopter of AI and QA standards; product domain docs remain local
 - **ClassForge / LeagueOS:** Level 2–3 — template inheritance; adoption in progress
 

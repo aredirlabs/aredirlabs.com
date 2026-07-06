@@ -186,7 +186,7 @@ Assessment based on repository state, KB adoption matrix, and GOVERNANCE-001 / E
 
 | Project | Level | Evidence summary |
 |---------|-------|------------------|
-| **Aredir Labs** (aredirlabs.com) | **5** | EOS + governance framework; 14 promoted assets; registry live (WORKSPACE-008); maturity model and taxonomy established |
+| **Aredir Labs** (aredirlabs.com) | **5** | EOS + governance framework; 15 promoted assets; registry live (WORKSPACE-008); maturity model and taxonomy established |
 | **AlignFit** | **4** (approaching 5) | Adopted AI, QA, and agent standards; origin of most KB assets; product domain docs local; direct repo sync not verified in GOVERNANCE-001 |
 | **ClassForge** | **2–3** | Template inheritance; agent standard adopted; KB adoption planned |
 | **LeagueOS** | **2–3** | Template inheritance; agent standard adopted; KB adoption planned |

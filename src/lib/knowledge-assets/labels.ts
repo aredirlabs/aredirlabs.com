@@ -10,6 +10,7 @@ export const KNOWLEDGE_ASSET_CATEGORY_LABELS: Record<
   string
 > = {
   architecture_pattern: "Architecture Pattern",
+  knowledge_pattern: "Knowledge Pattern",
   engineering_standard: "Engineering Standard",
   qa_standard: "QA Standard",
   ai_pattern: "AI Pattern",
