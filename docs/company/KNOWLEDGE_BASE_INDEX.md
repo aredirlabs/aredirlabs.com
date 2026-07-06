@@ -181,6 +181,7 @@ Document reusable approaches to AI features: prompt structure, evaluation, safet
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — closed-world handoff before narrative generation
 - [AI Evaluation Framework](./ai-patterns/AI_EVALUATION_FRAMEWORK.md) — how AI quality is evaluated, validated, and sustained across releases
 - [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) — shared advisor workspace as system of record for multi-advisor collaboration
+- [Evidence-Aware AI Advisor Pattern](./ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) — transparent evidence communication, uncertainty, and knowledge evolution for AI advisors
 - Guarded prompt template (`docs/agent/guarded-prompt-template.md`)
 
 ### Promotion criteria
@@ -404,7 +405,7 @@ Knowledge Asset Governance
 
 See [Promotion Process](./PROMOTION_PROCESS.md) for lifecycle, [required metadata](./PROMOTION_PROCESS.md#required-metadata), [review cadence](./PROMOTION_PROCESS.md#review-cadence), [adoption model](./PROMOTION_PROCESS.md#project-adoption-model), and [documentation hierarchy](./PROMOTION_PROCESS.md#documentation-hierarchy).
 
-Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md), [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
+Formal reviews: [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md), [Knowledge Asset Registry Readiness Review](./reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md), [KB 013 Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md), [GOVERNANCE-001 Framework Establishment](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md), [EOS-001 Operating System Establishment](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md), [EOS-002 Capability Model Establishment](./reviews/EOS_002_CAPABILITY_MODEL.md), [EOS-003 Project Inheritance Establishment](./reviews/EOS_003_PROJECT_INHERITANCE.md), [EOS-004 Engineering Blueprint Establishment](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md), [IMPLEMENTATION-001 Reference Repository Establishment](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md), [AREDIR-UX-001 Experience Architecture Establishment](./reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md), [KB 018 Evidence-Aware AI Advisor Pattern](./reviews/KB_018_EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md). Roadmap: [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md), [Knowledge Asset Registry Roadmap](./KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md).
 
 ## Promoted assets (quick reference)
 
@@ -423,7 +424,8 @@ Knowledge Base
 │  ├─ Context Builder Pattern
 │  ├─ Response Contract Pattern
 │  ├─ AI Evaluation Framework
-│  └─ Human + AI Advisor Workspace Pattern
+│  ├─ Human + AI Advisor Workspace Pattern
+│  └─ Evidence-Aware AI Advisor Pattern
 ├─ Documentation Standards
 │  ├─ Architecture Audit Standard
 │  └─ Documentation Maintenance Standard
@@ -448,6 +450,7 @@ Knowledge Base
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md)
 - [AI Evaluation Framework](./ai-patterns/AI_EVALUATION_FRAMEWORK.md)
 - [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md)
+- [Evidence-Aware AI Advisor Pattern](./ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md)
 - [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md)

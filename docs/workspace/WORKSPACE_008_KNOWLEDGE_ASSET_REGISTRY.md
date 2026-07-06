@@ -130,7 +130,7 @@ Adoption data seeded from [KB-012 adoption matrix](../company/reviews/KNOWLEDGE_
 
 | Capability | Implementation |
 |------------|----------------|
-| Asset catalog | 13 promoted assets |
+| Asset catalog | 14 promoted assets |
 | Category / status / project filters | GET form on list page |
 | Registry table | Asset, Category, Status, Version, Owner, Review Due, Projects |
 | Asset detail page | Metadata, relationships, governance, source link |
@@ -138,14 +138,14 @@ Adoption data seeded from [KB-012 adoption matrix](../company/reviews/KNOWLEDGE_
 | Review dashboard | Overdue / Due Soon / Upcoming based on `nextReviewDue` |
 | Source of truth notice | Displayed on list and detail pages |
 
-### Seeded assets (12)
+### Seeded assets (14)
 
 | Category | Asset |
 |----------|-------|
-| Architecture Pattern | AI Intelligence Architecture Pattern, Workspace-First AI Experience Pattern |
+| Architecture Pattern | AI Intelligence Architecture Pattern, Workspace Experience Architecture, Workspace-First AI Experience Pattern |
 | Engineering Standard | Coding Agent Operating Standard |
 | QA Standard | QA Engineering Framework, Root Cause Analysis Framework |
-| AI Pattern | Context Builder Pattern, Response Contract Pattern, AI Evaluation Framework, Human + AI Advisor Workspace Pattern |
+| AI Pattern | Context Builder Pattern, Response Contract Pattern, AI Evaluation Framework, Human + AI Advisor Workspace Pattern, Evidence-Aware AI Advisor Pattern |
 | Documentation Standard | Architecture Audit Standard, Documentation Maintenance Standard |
 | Playbook | Feature Delivery Standard |
 

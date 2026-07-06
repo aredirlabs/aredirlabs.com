@@ -4,13 +4,13 @@
 |-------|-------|
 | **Document** | Knowledge Base Roadmap |
 | **Owner** | Aredir Labs |
-| **Last updated** | 2026-06-25 |
+| **Last updated** | 2026-07-06 |
 | **Source review** | ALIGNFIT-GOV-002 Promotion Candidate Review; [KB 013](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md); [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTABLISHMENT.md); [EOS-001](./reviews/EOS_001_OPERATING_SYSTEM_ESTABLISHMENT.md); [EOS-002](./reviews/EOS_002_CAPABILITY_MODEL.md); [EOS-003](./reviews/EOS_003_PROJECT_INHERITANCE.md); [EOS-004](./reviews/EOS_004_ENGINEERING_BLUEPRINT.md); [IMPLEMENTATION-001](./reviews/IMPLEMENTATION_001_REFERENCE_REPOSITORY.md) |
 | **Next review** | 2026-09-12 |
 
 ## Current State
 
-### Promoted assets (13)
+### Promoted assets (14)
 
 | Category | Asset | Version |
 |----------|-------|---------|
@@ -24,6 +24,7 @@
 | AI Pattern | Response Contract Pattern | 1.0 |
 | AI Pattern | AI Evaluation Framework | 1.0 |
 | AI Pattern | Human + AI Advisor Workspace Pattern | 1.0 |
+| AI Pattern | Evidence-Aware AI Advisor Pattern | 1.0 |
 | Documentation Standard | Architecture Audit Standard | 1.0 |
 | Documentation Standard | Documentation Maintenance Standard | 1.0 |
 | Playbook | Feature Delivery Standard | 1.0 |
@@ -50,13 +51,13 @@ The Knowledge Base provides a **complete v1 operating model**:
 Architecture Audit → Feature Delivery → Coding Agent + QA → Knowledge Capture → Promotion
 ```
 
-AI features add: Context Builder → Intelligence layers → Response Contract → AI Evaluation → Workspace surfaces → Advisor collaboration.
+AI features add: Context Builder → Intelligence layers → Response Contract → AI Evaluation → Evidence-aware communication → Workspace surfaces → Advisor collaboration.
 
 ### Health snapshot (2026 Q2–Q3)
 
 See [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md) and [Registry Prerequisite Cleanup](./reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md). Summary:
 
-- **Strong:** 13 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene, UX experience architecture
+- **Strong:** 14 promoted assets, complete AI methodology, EOS + governance framework, documentation hygiene, UX experience architecture, evidence-aware advisor communication standard
 - **Resolved (KB-013):** stale footers, roadmap sync, honest `linked_projects`
 - **Resolved (GOVERNANCE-001):** eight-domain governance framework, index updates, AlignFit scope boundaries documented
 - **Resolved (EOS-001):** engineering operating system, maturity model, artifact taxonomy
@@ -107,6 +108,7 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | EOS-004 | Engineering Blueprint Specification | Operating Model | Complete |
 | IMPLEMENTATION-001 | Reference Repository Specification | Platform | Complete |
 | AREDIR-KB-017 | Workspace Experience Architecture | Architecture Pattern | Complete |
+| AREDIR-KB-018 | Evidence-Aware AI Advisor Pattern | AI Pattern | Complete |
 
 **Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
 

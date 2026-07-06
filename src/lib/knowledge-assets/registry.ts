@@ -235,6 +235,28 @@ const registryAssets: KnowledgeAsset[] = [
     },
   },
   {
+    id: "evidence-aware-ai-advisor-pattern",
+    title: "Evidence-Aware AI Advisor Pattern",
+    category: "ai_pattern",
+    status: "promoted_standard",
+    version: "1.0",
+    owner: "Aredir Labs",
+    linkedProjects: ["AlignFit", "ClassForge", "LeagueOS", "Aredir Labs"],
+    originProject: "AlignFit",
+    originArtifacts:
+      "COACH-INTEL-001, COACH-INTEL-002, COACH-INTEL-003, intelligence interpretation evolution, PROMOTION_CANDIDATE_REVIEW_2026_Q2",
+    lastReviewed: "2026-07-06",
+    nextReviewDue: "2026-10-06",
+    path: "ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md",
+    reusability: "high",
+    adoption: {
+      alignfit: "referenced",
+      classforge: "planned",
+      leagueos: "planned",
+      aredir_labs: "referenced",
+    },
+  },
+  {
     id: "architecture-audit-standard",
     title: "Architecture Audit Standard",
     category: "documentation_standard",

@@ -203,4 +203,5 @@ This pattern defines **who contributes intelligence over time** and **where cont
 - [Context Builder Pattern](./CONTEXT_BUILDER_PATTERN.md)
 - [Response Contract Pattern](./RESPONSE_CONTRACT_PATTERN.md)
 - [AI Evaluation Framework](./AI_EVALUATION_FRAMEWORK.md)
+- [Evidence-Aware AI Advisor Pattern](./EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md)
 - [Feature Delivery Standard](../playbooks/FEATURE_DELIVERY_STANDARD.md)

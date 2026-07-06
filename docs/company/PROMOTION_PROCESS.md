@@ -395,6 +395,7 @@ When an asset is replaced:
 - [Context Builder Pattern](./ai-patterns/CONTEXT_BUILDER_PATTERN.md) — first promoted AI Pattern
 - [Response Contract Pattern](./ai-patterns/RESPONSE_CONTRACT_PATTERN.md) — AI output boundary standard
 - [Human + AI Advisor Workspace Pattern](./ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) — shared advisor workspace collaboration
+- [Evidence-Aware AI Advisor Pattern](./ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) — evidence communication, uncertainty, and knowledge evolution
 - [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — first promoted Documentation Standard
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md) — doc sync and drift prevention
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) — end-to-end delivery playbook
