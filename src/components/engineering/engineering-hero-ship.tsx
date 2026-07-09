@@ -10,7 +10,8 @@ type EngineeringHeroShipProps = {
  * Environmental ship layer for the Engineering hero.
  *
  * Soft edge dissolves + rounded corners soften the PNG rectangle into the
- * page night while keeping the vessel and destination readable.
+ * page night. Final polish: slight right bias for typography room, reduced
+ * vessel opacity, and a quieter navigation constellation.
  */
 export function EngineeringHeroShip({ className }: EngineeringHeroShipProps) {
   return (
@@ -24,11 +25,11 @@ export function EngineeringHeroShip({ className }: EngineeringHeroShipProps) {
         className={cn(
           "absolute overflow-hidden rounded-[1.75rem] lg:rounded-[2.25rem]",
           // Mobile — vessel sits in lower field; silhouette kept intact
-          "bottom-[2%] left-[2%] right-[2%] h-[min(46svh,24rem)]",
-          "sm:left-[10%] sm:right-[4%] sm:h-[min(48svh,26rem)]",
-          // Desktop — left enough for destination; room for edge dissolves
-          "lg:bottom-[-2%] lg:left-auto lg:right-[8%] lg:top-[6%] lg:h-auto lg:w-[min(56%,38rem)]",
-          "xl:right-[10%] xl:w-[min(52%,40rem)]",
+          "bottom-[2%] left-[4%] right-0 h-[min(46svh,24rem)]",
+          "sm:left-[12%] sm:right-0 sm:h-[min(48svh,26rem)]",
+          // Desktop — ~4% farther right for typography breathing room
+          "lg:bottom-[-2%] lg:left-auto lg:right-[4%] lg:top-[6%] lg:h-auto lg:w-[min(56%,38rem)]",
+          "xl:right-[5%] xl:w-[min(52%,40rem)]",
         )}
       >
         <Image
@@ -38,10 +39,20 @@ export function EngineeringHeroShip({ className }: EngineeringHeroShipProps) {
           priority
           sizes="(max-width: 1024px) 90vw, 38rem"
           className={cn(
-            // Bias framing toward the destination on the artwork's right
-            "object-cover object-[62%_40%] mix-blend-screen",
-            "lg:object-[60%_38%]",
+            // Vessel body primary; destination still readable but quieter
+            "object-cover object-[58%_40%] mix-blend-screen opacity-[0.92]",
+            "lg:object-[56%_38%] lg:opacity-90",
           )}
+        />
+
+        {/* Soften the navigation constellation (right of vessel) without hiding it */}
+        <div
+          className="absolute inset-y-0 right-0 w-[42%] lg:w-[38%]"
+          style={{
+            background:
+              "linear-gradient(270deg, rgba(10,12,20,0.28) 0%, rgba(10,12,20,0.14) 45%, transparent 100%)",
+          }}
+          aria-hidden
         />
 
         {/* Narrow edge dissolves on all four sides */}
@@ -84,7 +95,7 @@ export function EngineeringHeroShip({ className }: EngineeringHeroShipProps) {
         className="absolute inset-0"
         style={{
           background: [
-            "linear-gradient(90deg, #0a0c14 0%, #0a0c14 36%, rgba(10,12,20,0.75) 50%, rgba(10,12,20,0.25) 62%, transparent 74%)",
+            "linear-gradient(90deg, #0a0c14 0%, #0a0c14 38%, rgba(10,12,20,0.78) 52%, rgba(10,12,20,0.28) 64%, transparent 76%)",
             "linear-gradient(180deg, #0a0c14 0%, rgba(10,12,20,0.45) 6%, transparent 16%)",
             "linear-gradient(0deg, #0a0c14 0%, rgba(10,12,20,0.4) 6%, transparent 16%)",
           ].join(", "),
