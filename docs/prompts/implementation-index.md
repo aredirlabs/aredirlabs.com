@@ -1,6 +1,6 @@
 # Implementation Index
 
-Ordered prompts for building aredirlabs.com.
+Ordered tracker for Engineering Work Packages, optional implementation briefs/prompts, and Knowledge Base / workspace work items for aredirlabs.com.
 
 | ID | Prompt | Status | Depends on |
 |----|--------|--------|------------|
@@ -16,6 +16,7 @@ Ordered prompts for building aredirlabs.com.
 | SITE-ENGINEERING-001 | Public engineering experience redesign | Complete | [`/engineering`](../../src/app/(public)/engineering/page.tsx), [Public engineering experience](../architecture/public-engineering-experience.md), [Information architecture](../product/information-architecture.md), `public/images/engineering-ship.png` |
 | SITE-ENGINEERING-002 | Hero artwork environmental integration | Complete | [`engineering-hero-ship.tsx`](../../src/components/engineering/engineering-hero-ship.tsx), [`engineering-hero-backdrop.tsx`](../../src/components/engineering/engineering-hero-backdrop.tsx) |
 | SITE-ENGINEERING-003 | Protect engineering methodology routes | Complete | Redirect `/engineering-operating-system` and `/docs/company/*` → `/engineering`; public-safe CTAs/cards; [Public engineering experience](../architecture/public-engineering-experience.md) |
+| PROCESS-WP-001 | Work Package vs Implementation Brief refinement | Complete | [Feature Delivery Standard](../company/playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief), EOS lifecycle, Coding Agent / AI / Project Governance, agent docs, BODY-UX-004 case note |
 
 ## Knowledge Base (company)
 
@@ -66,10 +67,11 @@ Verification docs live under `plan/docs/`.
 
 ## Rules
 
-1. **001A** must be committed before feature prompts.
-2. Every implementation prompt must include the [coding agent operating standard](../agent/coding-agent-operating-standard.md) prefix.
-3. Use [guarded prompt template](../agent/guarded-prompt-template.md) for new prompts.
-4. Update this index when adding prompts.
+1. **001A** must be committed before feature prompts (when foundation prompts are used).
+2. An **Engineering Work Package** is the required implementation artifact. An **Implementation Brief / Prompt** is optional — see [Engineering Work Package vs Implementation Brief](../company/playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+3. When an implementation prompt is used, it must include the [coding agent operating standard](../agent/coding-agent-operating-standard.md) prefix and must not expand work-package scope.
+4. Use [guarded prompt template](../agent/guarded-prompt-template.md) for new optional briefs.
+5. Update this index when adding work packages, prompts, or related work items.
 
 ## Verification baseline
 

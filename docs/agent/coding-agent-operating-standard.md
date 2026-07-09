@@ -2,9 +2,17 @@
 
 **Status:** Required for all agent-driven implementation work in Aredir Labs repositories.
 
+**Canonical (Knowledge Base):** [docs/company/engineering-standards/CODING_AGENT_OPERATING_STANDARD.md](../company/engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)
+
+## Engineering Work Package first
+
+An **Engineering Work Package** is the required implementation specification. An **Implementation Brief / Prompt** is optional — create one only when the work package alone is not sufficient for sequencing, risk control, or multi-agent coordination.
+
+See [Engineering Work Package vs Implementation Brief](../company/playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+
 ## Required Prompt Prefix
 
-All implementation prompts must begin with:
+When an implementation brief/prompt is used, it must begin with:
 
 ```
 You are working inside an existing production-bound Next.js application.
@@ -25,14 +33,16 @@ Preserve routing, styling, accessibility, content structure, and existing behavi
 4. **Preserve behavior** — Routing, styling, accessibility, content structure, and existing UX stay intact unless the prompt changes them.
 5. **Match conventions** — Follow naming, file layout, and patterns documented in `docs/architecture/` and `docs/engineering/`.
 6. **Verify before claiming success** — Run applicable checks and report actual results.
+7. **Respect work-package scope** — Do not expand beyond the Engineering Work Package; an optional brief must not override it.
 
 ## Before Coding
 
 - [ ] Read this document.
-- [ ] Read the active prompt in `docs/prompts/`.
+- [ ] Read the Engineering Work Package (authoritative scope).
+- [ ] If an Implementation Brief / Prompt exists, read it in `docs/prompts/` — it must not expand work-package scope.
 - [ ] Review `docs/architecture/project-conventions.md` and related architecture docs.
 - [ ] Inspect files you will touch; note existing patterns.
-- [ ] Confirm scope: only change what the prompt requires.
+- [ ] Confirm scope: only change what the work package (or brief) requires.
 
 ## During Implementation
 
@@ -76,14 +86,15 @@ Additional gates when applicable:
 
 Stop and ask (or document in the PR) when:
 
-- The prompt conflicts with existing architecture or standards.
+- The work package or prompt conflicts with existing architecture or standards.
 - A new dependency seems necessary but was not requested.
 - Fixing the issue requires broad refactors or breaking changes.
 - Requirements are ambiguous for user-facing or accessibility-critical behavior.
 
 ## Related Documentation
 
-- [Guarded prompt template](./guarded-prompt-template.md)
+- [Guarded prompt template](./guarded-prompt-template.md) — for optional implementation briefs
 - [PR review template](./pr-review-template.md)
+- [Feature Delivery Standard](../company/playbooks/FEATURE_DELIVERY_STANDARD.md)
 - [Repository standards](../engineering/repository-standards.md)
 - [Manual QA checklist](../qa/manual-qa-checklist.md)

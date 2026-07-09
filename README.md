@@ -128,11 +128,15 @@ Local → Feature Branch → PR → Preview Deployment → Manual QA → Merge �
 
 ## Agent-driven development
 
-All implementation prompts must start with the required prefix defined in:
+Prefer implementing from a complete **Engineering Work Package**. An **Implementation Brief / Prompt** is optional — use one only when the work package alone is not sufficient.
+
+When an implementation prompt is used, it must start with the required prefix defined in:
 
 **[docs/agent/coding-agent-operating-standard.md](docs/agent/coding-agent-operating-standard.md)**
 
-Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.md) for new prompts. Implementation order: [docs/prompts/implementation-index.md](docs/prompts/implementation-index.md).
+Use [docs/agent/guarded-prompt-template.md](docs/agent/guarded-prompt-template.md) for optional briefs. Track work packages and prompts in [docs/prompts/implementation-index.md](docs/prompts/implementation-index.md).
+
+See [Engineering Work Package vs Implementation Brief](docs/company/playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
 
 ## Documentation map
 

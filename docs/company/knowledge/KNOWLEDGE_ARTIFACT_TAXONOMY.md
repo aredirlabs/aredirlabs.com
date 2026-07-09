@@ -215,11 +215,11 @@ Reviews **feed** promotion candidates. Findings may produce Patterns, Standards,
 
 ### Definition
 
-**Historical records of completed work** — verification specs, work-item prompts, and implementation indexes that document what was built and tested.
+**Historical records of completed work** — Engineering Work Packages, optional Implementation Briefs / Prompts, verification specs, and implementation indexes that document what was specified, built, and tested.
 
 ### Characteristics
 
-- Tied to a work item ID and status (Complete, Planned)
+- Tied to a work package / work item ID and status (Complete, Planned)
 - Contains verification evidence or deliverable links
 - Lives in implementation tier
 - Becomes stale if indexes are not updated
@@ -228,10 +228,18 @@ Reviews **feed** promotion candidates. Findings may produce Patterns, Standards,
 
 | Record | Location |
 |--------|----------|
+| Engineering Work Package | Project plan / finding records (authoritative implementation spec) |
+| Implementation Brief / Prompt (optional) | `docs/prompts/` when used |
 | Implementation index | `docs/prompts/implementation-index.md` |
 | Foundation prompt | `docs/prompts/prompt-001A-foundation.md` |
 | WORKSPACE-008 spec | `docs/workspace/WORKSPACE_008_KNOWLEDGE_ASSET_REGISTRY.md` |
 | Verification docs | `plan/docs/AREDIR-WORKSPACE-*.md` |
+
+### Work Package vs Implementation Brief
+
+- **Engineering Work Package** — required implementation specification for an Engineering Finding.
+- **Implementation Brief / Prompt** — optional; used only when the work package alone is insufficient.
+- See [Feature Delivery Standard — Engineering Work Package vs Implementation Brief](../playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
 
 ### Promotion path
 

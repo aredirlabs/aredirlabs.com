@@ -81,7 +81,7 @@ reference-repository/
 │   ├── brand/                        ← brand scaffold (customized per repo)
 │   ├── qa/                           ← QA checklists and procedures
 │   ├── bugs/                         ← bug triage and known issues
-│   ├── prompts/                      ← implementation index and work-item prompts
+│   ├── prompts/                      ← implementation index; optional work-item prompts / briefs
 │   └── workspace/                    ← internal workspace docs (Reference Repository only)
 │
 ├── plan/
@@ -144,7 +144,8 @@ Every reusable engineering asset in the Reference Repository is listed below. Go
 |-------|------|:--------:|-------|
 | README | `README.md` | Yes | Identity, workflow, EOS links, platform versions |
 | Site brief / product overview | `docs/product/site-brief.md` | Yes | Scaffold; customized per product |
-| Implementation index | `docs/prompts/implementation-index.md` | Yes | Ordered work items |
+| Implementation index | `docs/prompts/implementation-index.md` | Yes | Work packages, optional briefs, KB items |
+| Guarded prompt template | `docs/agent/guarded-prompt-template.md` | Yes | Optional Implementation Brief scaffold |
 | Technical overview | `docs/engineering/technical-overview.md` | Recommended | Stack and system summary |
 | Repository standards | `docs/engineering/repository-standards.md` | Recommended | Text file hygiene, branch protection |
 | Environment strategy | `docs/engineering/environment-strategy.md` | Recommended | Dev/staging/prod |
@@ -177,7 +178,7 @@ Every reusable engineering asset in the Reference Repository is listed below. Go
 |-------|------|:--------:|-------|
 | AGENTS.md | `AGENTS.md` | Yes | Root agent rules |
 | Coding agent operating standard | `docs/agent/coding-agent-operating-standard.md` | Yes | Operational entry point |
-| Guarded prompt template | `docs/agent/guarded-prompt-template.md` | Yes | New prompt scaffold |
+| Guarded prompt template | `docs/agent/guarded-prompt-template.md` | Yes | Optional Implementation Brief scaffold |
 | PR review template | `docs/agent/pr-review-template.md` | Recommended | Agent and human review |
 | Foundation prompt | `docs/prompts/prompt-001A-foundation.md` | Recommended | Bootstrap work item |
 | Canonical agent standard | `docs/company/engineering-standards/CODING_AGENT_OPERATING_STANDARD.md` | Yes | Promoted KB asset |

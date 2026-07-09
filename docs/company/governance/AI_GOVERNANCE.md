@@ -47,15 +47,19 @@ Organize AI features around **workspace surfaces**, not chat-first interaction.
 
 ## Prompt standards
 
+### When to write an implementation prompt
+
+An **Engineering Work Package** is the required implementation artifact. An **Implementation Brief / Prompt** is optional — create one only when the work package alone is not sufficient. See [Engineering Work Package vs Implementation Brief](../playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+
 ### Required prompt prefix
 
-All implementation prompts must begin with the prefix defined in [Coding Agent Operating Standard — Required Prompt Prefix](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md#required-prompt-prefix).
+When an implementation prompt is used, it must begin with the prefix defined in [Coding Agent Operating Standard — Required Prompt Prefix](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md#required-prompt-prefix).
 
 ### Prompt composition
 
 | Prompt type | Standard |
 |-------------|----------|
-| Implementation | [Guarded prompt template](../../agent/guarded-prompt-template.md) |
+| Implementation (optional brief) | [Guarded prompt template](../../agent/guarded-prompt-template.md) |
 | PR review | [PR review template](../../agent/pr-review-template.md) |
 | Architecture audit | [Architecture Audit Standard](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) |
 | Governed reusable prompts | Promote to `docs/company/prompt-library/` when criteria met |

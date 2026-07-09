@@ -118,11 +118,11 @@ Evaluate Idea
       ↓
 Architecture Review (when required)
       ↓
-Scope & Plan
+Engineering Finding
       ↓
-Write Implementation Prompts
+Engineering Work Package
       ↓
-AI-Assisted Execution (within standards)
+Implementation (optional: Implementation Brief / Prompt)
       ↓
 Verification & QA
       ↓
@@ -139,15 +139,18 @@ Adoption across products
 
 **Canonical playbook:** [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md)
 
+The **Engineering Work Package** is the required implementation specification. An **Implementation Brief / Prompt** is optional — create one only when the work package alone is not sufficient for sequencing, risk control, or multi-agent coordination. See [Engineering Work Package vs Implementation Brief](./playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+
 ### Lifecycle stages in detail
 
 | Stage | EOS concern | Primary reference |
 |-------|-------------|-------------------|
 | **Evaluate idea** | Problem statement, sponsor, rough sizing | [Company Governance — SDLC](./governance/COMPANY_GOVERNANCE.md#software-development-lifecycle) |
 | **Architecture review** | Ownership, source of truth, drift | [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) |
-| **Scope & plan** | Acceptance criteria, verification plan | [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) |
-| **Implementation prompts** | Guarded prefix, scoped work items | [AI Governance](./governance/AI_GOVERNANCE.md) |
-| **AI-assisted execution** | Agent workflow, minimal diff | [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) |
+| **Engineering finding** | Evidence-linked observation from audit | [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) |
+| **Engineering work package** | Required implementation specification (objective, constraints, acceptance, verification) | [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) |
+| **Implementation brief (optional)** | Extra sequencing / risk / coordination when the work package alone is insufficient | [AI Governance](./governance/AI_GOVERNANCE.md) |
+| **AI-assisted execution** | Agent workflow, minimal diff — from work package or optional brief | [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) |
 | **Verification & QA** | Lint, build, manual QA, AI evaluation | [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md) |
 | **Documentation** | Three-tier sync, index updates | [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md) |
 | **Release** | Preview → merge → production validation | [Company Governance — Release](./governance/COMPANY_GOVERNANCE.md#release-process) |

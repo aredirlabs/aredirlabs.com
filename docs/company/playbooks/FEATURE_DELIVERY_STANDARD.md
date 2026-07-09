@@ -43,11 +43,11 @@ Idea
     ↓
 Architecture Audit
     ↓
-Scope Definition
+Engineering Finding
     ↓
-Implementation Planning
+Engineering Work Package
     ↓
-Execution
+Implementation  (optional: Implementation Brief / Prompt)
     ↓
 Verification
     ↓
@@ -76,29 +76,37 @@ Knowledge Capture
 | **Expected outputs** | Audit deliverables per [Architecture Audit Standard](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) (scaled to feature size) |
 | **Quality requirements** | Skip only for trivial, isolated changes with no architecture touch; document skip rationale |
 
-### Scope Definition
+### Engineering Finding
 
 | | |
 |---|---|
-| **Purpose** | Bound in-scope / out-of-scope work with acceptance criteria |
-| **Expected outputs** | Scope statement, acceptance criteria, affected surfaces, AI/QA implications |
-| **Quality requirements** | Explicit exclusions; no ambiguous "improve" without measurable criteria |
+| **Purpose** | Capture an evidence-linked observation from audit that warrants change |
+| **Expected outputs** | Numbered finding with evidence, severity, and recommended direction |
+| **Quality requirements** | Traceable to audit evidence; no orphan recommendations |
 
-### Implementation Planning
+### Engineering Work Package
 
 | | |
 |---|---|
-| **Purpose** | Structure work before execution |
-| **Expected outputs** | Milestones, work items, implementation prompts, verification plan |
-| **Quality requirements** | Incremental steps; each step verifiable independently |
+| **Purpose** | Produce the required implementation specification for a finding |
+| **Expected outputs** | Work package with objective, context, constraints, non-goals, acceptance criteria, success indicators, and verification expectations |
+| **Quality requirements** | Complete enough for an engineer or coding agent to implement without conversational context; authoritative source of truth for scope |
+
+### Implementation Brief / Prompt (optional)
+
+| | |
+|---|---|
+| **Purpose** | Add sequencing, risk control, or coordination when the work package alone is not sufficient |
+| **Expected outputs** | Guarded implementation brief/prompt that references the work package and does not expand scope |
+| **Quality requirements** | Optional — omit when the work package already contains sufficient objective, constraints, acceptance criteria, and verification |
 
 ### Execution
 
 | | |
 |---|---|
-| **Purpose** | Implement scoped change per engineering standards |
+| **Purpose** | Implement the work package (or optional brief) per engineering standards |
 | **Expected outputs** | Code/docs diff, branch/PR, preview deployment |
-| **Quality requirements** | [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — minimal diff, no unrequested architecture shifts |
+| **Quality requirements** | [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — minimal diff, no unrequested architecture shifts; scope bounded by the work package |
 
 ### Verification
 
@@ -173,31 +181,70 @@ For AI features, additionally validate alignment with:
 - [Context Builder Pattern](../ai-patterns/CONTEXT_BUILDER_PATTERN.md)
 - [Response Contract Pattern](../ai-patterns/RESPONSE_CONTRACT_PATTERN.md)
 
-Audit recommendations feed **Implementation Planning** — not open-ended rework.
+Audit recommendations feed **Engineering Work Packages** — not open-ended rework.
 
 ---
 
 ## Implementation Planning
 
-Reduce ambiguity before execution.
+Reduce ambiguity before execution. The **Engineering Work Package** is the required planning artifact.
 
 ### Plan components
 
 | Component | Content |
 |-----------|---------|
 | **Milestones** | Optional grouping for multi-step features (workspace-style IDs or product milestones) |
-| **Work items** | Issues, prompts, or tracked KB IDs (e.g. AREDIR-KB-00N) |
-| **Implementation prompts** | Guarded prompts with [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) prefix |
-| **Acceptance criteria** | Testable conditions for done |
+| **Engineering Work Packages** | Required implementation specifications for findings (objective, constraints, acceptance, verification) |
+| **Implementation Briefs / Prompts** | Optional — only when the work package alone is insufficient; guarded prefix when used |
+| **Acceptance criteria** | Testable conditions for done (must live in the work package) |
 | **Verification requirements** | Which lint/build/DB/QA gates apply per [QA Engineering Framework](../qa-standards/QA_ENGINEERING_FRAMEWORK.md) |
 
 ### Planning quality bar
 
-- Each work item has a single verifiable outcome
+- Each work package has a single verifiable outcome
 - Dependencies and order documented
 - Out-of-scope items listed explicitly
 - AI features: context builder and response contract approach noted before coding
-- No execution start until scope and plan reviewed for non-trivial work
+- No execution start until the work package is complete for non-trivial work
+- Do not create a separate implementation brief that only repeats the work package
+
+---
+
+## Engineering Work Package vs Implementation Brief
+
+An **Engineering Work Package** is the required implementation specification for an Engineering Finding. It should be complete enough for an engineer or coding agent to implement the intended change without relying on conversational context.
+
+An **Implementation Brief** (also called an implementation prompt) is **optional**. It may be created when the work requires extra implementation strategy, sequencing, risk control, or multi-agent coordination.
+
+### Use an Implementation Brief when
+
+- the work spans multiple systems
+- sequencing matters
+- there is migration or compatibility risk
+- multiple implementation paths need to be constrained
+- several agents or reviewers must coordinate
+- the work package is intentionally high-level
+
+### Do not create an Implementation Brief when
+
+- the work package already contains sufficient objective, constraints, acceptance criteria, and verification
+- the task is mostly compositional or localized
+- a separate prompt would only repeat the work package
+
+### Authority
+
+- The **work package remains the authoritative source of truth**.
+- An implementation brief **must not override or expand scope** beyond the work package.
+- When a brief is used, it must reference the work package ID and apply the [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) guarded prefix.
+
+### Case study — BODY-UX-004
+
+AlignFit **BODY-UX-004** validated this refinement:
+
+- The work was implemented **directly from the Engineering Work Package** without a separate implementation prompt.
+- The agent preserved scope and non-goals.
+- The implementation mapped cleanly to acceptance criteria.
+- This demonstrated that implementation prompts are **optional, not mandatory**.
 
 ---
 
@@ -216,7 +263,7 @@ Execution follows the [Coding Agent Operating Standard](../engineering-standards
 
 ### Workflow mapping
 
-The engineering standard's Request → Audit → Design → Implementation → Verification → Documentation → Completion Report maps to this playbook's Architecture Audit through Documentation stages.
+The engineering standard's Request → Audit → Design → Implementation → Verification → Documentation → Completion Report maps to this playbook's Architecture Audit → Finding → Work Package → Implementation → Verification → Documentation stages. An Implementation Brief is an optional handoff between Work Package and Implementation.
 
 Stop and escalate per engineering standard when scope conflicts with architecture or new dependencies seem required.
 

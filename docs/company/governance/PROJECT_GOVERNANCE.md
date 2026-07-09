@@ -81,16 +81,18 @@ Product architecture docs must link upward to applicable canonical patterns. The
 | Doc type | Location | Purpose |
 |----------|----------|---------|
 | **Verification specs** | `plan/docs/` | Implementation verification records (AREDIR-WORKSPACE-*, feature verifications) |
-| **Work-item prompts** | `docs/prompts/` | Ordered implementation prompts with dependencies |
-| **Implementation index** | `docs/prompts/implementation-index.md` | Master tracker for prompts and KB work items |
+| **Engineering Work Packages** | Project plan / finding records | Required implementation specifications for Engineering Findings |
+| **Implementation Briefs / Prompts** | `docs/prompts/` | Optional — only when a work package alone is insufficient; ordered when used |
+| **Implementation index** | `docs/prompts/implementation-index.md` | Master tracker for work packages, optional prompts, and KB work items |
 
 Planning docs are **implementation tier**. They document what was built and verified — not company standards.
 
 Rules:
 
-1. Update the implementation index when adding prompts or work items.
-2. Every implementation prompt includes the [coding agent operating standard](../../agent/coding-agent-operating-standard.md) prefix.
+1. Update the implementation index when adding work packages, prompts, or work items.
+2. When an implementation brief/prompt is used, it includes the [coding agent operating standard](../../agent/coding-agent-operating-standard.md) prefix and must not expand work-package scope.
 3. Verification specs record pass/fail evidence, not assumptions.
+4. Do not require a separate implementation prompt for every work package — see [Engineering Work Package vs Implementation Brief](../playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
 
 ---
 
@@ -98,7 +100,7 @@ Rules:
 
 Every project maintains an **implementation index** tracking:
 
-- Ordered foundation and feature prompts
+- Engineering Work Packages and optional foundation/feature prompts
 - Knowledge Base promotion work items
 - Workspace or internal tooling work items (when applicable)
 - Status, dependencies, and deliverable links

@@ -145,8 +145,8 @@ Implementation Planning
 | | |
 |---|---|
 | **Purpose** | Sequence work without committing to unscoped rewrites |
-| **Expected outputs** | Proposed next steps, work item candidates, promotion candidates |
-| **Quality requirements** | Aligns with [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — incremental, verifiable steps |
+| **Expected outputs** | Proposed next steps, Engineering Work Package candidates, promotion candidates |
+| **Quality requirements** | Aligns with [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — incremental, verifiable steps; work packages are required; implementation briefs are optional |
 
 ---
 
@@ -397,7 +397,7 @@ Every completed audit should produce a durable record (project `docs/`, workspac
 | **Findings** | Numbered, evidence-linked observations |
 | **Risks** | Ranked register with severity |
 | **Recommendations** | Categorized per [Recommendation Framework](#recommendation-framework) |
-| **Proposed Next Steps** | Sequenced work items, owners, verification expectations |
+| **Proposed Next Steps** | Sequenced Engineering Work Packages, owners, verification expectations |
 
 ### Supporting Knowledge Base promotion
 
@@ -418,7 +418,11 @@ Document audit ID or path in promotion work items (e.g. AREDIR-KB-00N) for trace
 ```
 Architecture Audit          ← understand system (this standard)
         ↓
-Implementation Planning     ← scoped work items
+Engineering Finding         ← evidence-linked observation
+        ↓
+Engineering Work Package    ← required implementation specification
+        ↓
+Implementation Brief        ← optional (only when work package alone is insufficient)
         ↓
 Coding Agent Operating      ← implement with guardrails
         ↓
@@ -429,7 +433,8 @@ Knowledge Base Promotion    ← extract reusable IP
 
 | Standard | Relationship |
 |----------|--------------|
-| [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) | Audits precede agent work; **Audit** stage in agent workflow maps to scope and current-state analysis; implementation plans must be incremental |
+| [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) | Audits precede agent work; **Audit** stage in agent workflow maps to scope and current-state analysis; Engineering Work Packages are the required implementation artifact; implementation briefs are optional |
+| [Feature Delivery Standard](../playbooks/FEATURE_DELIVERY_STANDARD.md) | Defines Work Package vs Implementation Brief; work package is authoritative |
 | [QA Engineering Framework](../qa-standards/QA_ENGINEERING_FRAMEWORK.md) | Audit findings inform test gaps; verification plans reference QA lifecycle; production audits trigger release-readiness review |
 | [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) | Baseline for AI topology audits; drift assessment checks layer ownership |
 | [Context Builder Pattern](../ai-patterns/CONTEXT_BUILDER_PATTERN.md) | Audit data-selection and bounded-context implementation |

@@ -55,7 +55,7 @@ Operational copy for day-to-day prompts also lives at [`docs/agent/coding-agent-
 
 ### Understand Before Modifying
 
-Agents must read relevant files, architecture docs, and the active prompt **before** writing code.
+Agents must read relevant files, architecture docs, and the Engineering Work Package (plus any optional Implementation Brief) **before** writing code.
 
 - Inspect files that will be touched and note existing patterns
 - Read `docs/architecture/`, `docs/engineering/`, and product-specific docs as applicable
@@ -146,8 +146,8 @@ Completion Report
 | | |
 |---|---|
 | **Purpose** | Establish clear scope, constraints, and success criteria |
-| **Expected outputs** | Work item or prompt with explicit in-scope / out-of-scope boundaries |
-| **Quality requirements** | References this standard; includes verification expectations; no ambiguous "make it better" without criteria |
+| **Expected outputs** | Engineering Work Package (required); optional Implementation Brief / Prompt when the work package alone is insufficient |
+| **Quality requirements** | References this standard; includes verification expectations; no ambiguous "make it better" without criteria; brief must not expand work-package scope |
 
 ### Audit
 
@@ -202,6 +202,8 @@ See [Verification Standards](#verification-standards) below.
 ---
 
 ## Required Prompt Prefix
+
+When an **Implementation Brief / Prompt** is used, it must begin with the prefix below. Implementation briefs are **optional** — a complete Engineering Work Package may be executed directly without a separate prompt. See [Engineering Work Package vs Implementation Brief](../playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
 
 All implementation prompts in Aredir Labs repositories must begin with:
 

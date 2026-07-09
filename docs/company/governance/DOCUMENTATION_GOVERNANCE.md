@@ -132,12 +132,13 @@ Implementation-tier docs serve specific purposes:
 
 | Doc type | Purpose | Lifecycle |
 |----------|---------|-----------|
+| **Engineering Work Packages** | Required implementation specification for findings | Permanent after Complete |
 | **Verification specs** | Record what was built and tested | Permanent after Complete |
-| **Work-item prompts** | Guide agent implementation | Permanent; may be superseded |
+| **Implementation Briefs / Prompts** | Optional agent handoff when work package alone is insufficient | Permanent; may be superseded |
 | **Audit records** | Evidence-based system evaluation | Permanent; feeds promotions |
 | **Project notes** | Lightweight decision memory | Active during project; summarize into ADRs or promotions |
 
-Implementation notes are not company standards. Extract reusable content through promotion — do not elevate raw implementation prompts to `docs/company/` without review.
+Implementation notes are not company standards. Extract reusable content through promotion — do not elevate raw implementation prompts to `docs/company/` without review. An Engineering Work Package is the required implementation artifact; a separate implementation prompt is not mandatory for every package.
 
 ---
 

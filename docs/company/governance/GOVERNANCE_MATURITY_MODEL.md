@@ -116,7 +116,7 @@ Reusable knowledge is a managed company asset with lifecycle, metadata, review c
 ### Progression to Level 4
 
 - Require [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) for all agent work
-- Implement guarded prompt prefix on every implementation prompt
+- Require Engineering Work Packages for findings; use guarded prompt prefix when an optional implementation brief is written
 - Add AI evaluation for intelligence features
 - Adopt [AI Governance](../governance/AI_GOVERNANCE.md) workflow
 
@@ -132,7 +132,7 @@ AI agents and human engineers collaborate within documented standards, verificat
 
 | Criterion | Evidence |
 |-----------|----------|
-| Agent operating standard adopted | Prompt prefix on all implementation prompts |
+| Agent operating standard adopted | Work packages drive implementation; prompt prefix on optional implementation briefs |
 | Verification gates enforced | Lint, build, QA evidence in completion reports |
 | AI patterns adopted (when applicable) | Context Builder, Response Contract, Evaluation Framework referenced in product AI architecture |
 | Workspace-first UX (when applicable) | Intelligence surfaced in workspace, not chat-only |

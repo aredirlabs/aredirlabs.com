@@ -1,12 +1,17 @@
 # Guarded Prompt Template
 
-Use this template for all implementation prompts in Aredir Labs projects. Copy, fill in placeholders, and save under `docs/prompts/` when appropriate.
+Use this template **when an Implementation Brief / Prompt is needed**. An Engineering Work Package is the required implementation specification; a separate prompt is optional and should not be created when it would only repeat the work package.
+
+See [Engineering Work Package vs Implementation Brief](../company/playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+
+Copy, fill in placeholders, and save under `docs/prompts/` when appropriate.
 
 ---
 
 ## Prompt: [TITLE]
 
 **ID:** prompt-XXX  
+**Work Package:** [e.g. BODY-UX-004 / AREDIR-KB-00N] — authoritative scope  
 **Depends on:** [e.g. prompt-001A-foundation]  
 **Scope:** [feature | fix | docs | infra]
 
@@ -25,16 +30,16 @@ Preserve routing, styling, accessibility, content structure, and existing behavi
 
 ### Goal
 
-[One paragraph: what success looks like.]
+[One paragraph: what success looks like. Must align with the work package — do not expand scope.]
 
 ### In scope
 
-- [ ] Item 1
+- [ ] Item 1 (from work package)
 - [ ] Item 2
 
 ### Out of scope
 
-- [ ] Item 1 (explicitly excluded)
+- [ ] Item 1 (explicitly excluded — from work package non-goals)
 
 ### Files to inspect first
 
@@ -43,7 +48,7 @@ Preserve routing, styling, accessibility, content structure, and existing behavi
 
 ### Implementation notes
 
-[Constraints, design references, copy, URLs, acceptance criteria.]
+[Sequencing, risk controls, multi-path constraints, coordination — reasons this brief exists beyond the work package.]
 
 ### Verification
 
@@ -59,8 +64,10 @@ Agent must report: what changed, files changed, checks run, passed/failed checks
 
 ## Checklist before sending a prompt
 
+- [ ] Work package already exists and is the source of truth
+- [ ] This brief is needed (sequencing / risk / multi-system / coordination) — not a duplicate of the work package
 - [ ] Required prefix included
-- [ ] Scope bounded (in / out)
+- [ ] Scope bounded (in / out) and does not expand the work package
 - [ ] No implicit new dependencies
 - [ ] Verification steps defined
 - [ ] Dependencies on prior prompts noted

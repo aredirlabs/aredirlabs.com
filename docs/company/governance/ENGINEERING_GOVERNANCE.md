@@ -173,7 +173,7 @@ A work item is **done** when all applicable criteria are met:
 | Database gates pass | Schema or seed changes |
 | Manual QA complete | User-facing changes |
 | Documentation updated | Behavior, structure, or standards affected |
-| Indexes updated | New prompts, assets, or significant features |
+| Indexes updated | New work packages, optional prompts, assets, or significant features |
 | Completion report delivered | Agent-driven work |
 | Limitations documented | Any skipped verification |
 | Knowledge capture considered | Significant or reusable work |

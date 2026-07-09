@@ -185,23 +185,24 @@ AI collaboration expectations are defined here at the **repository level**. Doma
 |-------------|----------------|
 | **Workspace guidance** | `docs/agent/` with operating standard and prompt templates |
 | **Root agent instructions** | `AGENTS.md` or equivalent at repository root |
-| **Guarded prompt prefix** | Every implementation prompt includes the coding agent standard |
+| **Guarded prompt prefix** | When an implementation brief/prompt is used, it includes the coding agent standard |
 | **Verification expectations** | Lint, build, and manual QA when behavior changes |
 | **Minimal diff discipline** | Agents change only what the task requires |
+| **Engineering Work Package** | Required implementation specification for findings; briefs are optional |
 
 ### Recommended
 
 | Expectation | Implementation |
 |-------------|----------------|
-| Prompt organization | `docs/prompts/` with numbered, indexed prompts |
+| Prompt organization | `docs/prompts/` with numbered, indexed prompts when briefs are used |
 | PR review template | Agent and human review checklist |
 | Handoff expectations | Deliverable report with verification output |
-| Context preservation | Implementation index updated per work item |
+| Context preservation | Implementation index updated per work package |
 
 ### Audit expectations
 
 - AI-assisted changes require the same verification gates as human changes
-- Feature prompts document acceptance criteria and verification plan
+- Engineering Work Packages document acceptance criteria and verification plan; optional briefs must not expand that scope
 - AI features follow the intelligence pipeline per [AI Governance](./governance/AI_GOVERNANCE.md)
 - Promotion candidates from AI workflow improvements feed the knowledge loop
 
