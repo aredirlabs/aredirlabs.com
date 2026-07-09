@@ -27,6 +27,7 @@
 | `/projects/alignfit` | AlignFit portfolio detail |
 | `/projects/classforge` | ClassForge portfolio detail |
 | `/projects/leagueos` | LeagueOS portfolio detail |
+| `/engineering` | Public engineering philosophy — why and how Aredir Labs builds |
 | `/contact` | Email contact at info@aredirlabs.com (no form/backend) |
 
 ## Stack (this site)

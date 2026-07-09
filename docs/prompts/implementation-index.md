@@ -9,6 +9,14 @@ Ordered prompts for building aredirlabs.com.
 | 001C | [Techno-mythic design system & desktop-first site](./prompt-001C-design-system-uplift.md) | Complete | 001B |
 | 001D+ | _(future prompts)_ | Planned | 001C |
 
+## Site (public)
+
+| ID | Work item | Status | Deliverables |
+|----|-----------|--------|--------------|
+| SITE-ENGINEERING-001 | Public engineering experience redesign | Complete | [`/engineering`](../../src/app/(public)/engineering/page.tsx), [Public engineering experience](../architecture/public-engineering-experience.md), [Information architecture](../product/information-architecture.md), `public/images/engineering-ship.png` |
+| SITE-ENGINEERING-002 | Hero artwork environmental integration | Complete | [`engineering-hero-ship.tsx`](../../src/components/engineering/engineering-hero-ship.tsx), [`engineering-hero-backdrop.tsx`](../../src/components/engineering/engineering-hero-backdrop.tsx) |
+| SITE-ENGINEERING-003 | Protect engineering methodology routes | Complete | Redirect `/engineering-operating-system` and `/docs/company/*` → `/engineering`; public-safe CTAs/cards; [Public engineering experience](../architecture/public-engineering-experience.md) |
+
 ## Knowledge Base (company)
 
 | ID | Work item | Status | Deliverables |
@@ -78,6 +86,8 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 
 - [Coding agent operating standard](../agent/coding-agent-operating-standard.md)
 - [Site brief](../product/site-brief.md)
+- [Information architecture](../product/information-architecture.md)
+- [Public engineering experience](../architecture/public-engineering-experience.md)
 - [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../company/PROMOTION_PROCESS.md)
 - [Coding Agent Operating Standard (KB)](../company/engineering-standards/CODING_AGENT_OPERATING_STANDARD.md)

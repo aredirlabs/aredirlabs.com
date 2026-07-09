@@ -16,6 +16,7 @@ Company marketing site and **standard template repository** for Aredir Labs Next
 | `/about` | Company mission and approach |
 | `/projects` | Product portfolio |
 | `/projects/[slug]` | AlignFit, ClassForge, LeagueOS detail pages |
+| `/engineering` | Public engineering philosophy and practice |
 | `/contact` | Email contact at info@aredirlabs.com |
 
 Brand tokens and copy live in `src/app/globals.css` and `src/lib/site-config.ts`.

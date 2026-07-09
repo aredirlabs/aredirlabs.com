@@ -47,6 +47,12 @@ Reusable UI patterns for Aredir Labs marketing and product surfaces.
 - Respect `prefers-reduced-motion`.
 - Keep animations subtle and purposeful.
 
+## Public engineering (`/engineering`)
+
+- Hero uses approved raster ship artwork via `next/image` — not SVG recreation.
+- Backdrop is sparse starfield only; avoid constellation-line overlays that compete with artwork.
+- Public page leads with philosophy; detailed EOS methodology stays in repository docs / authenticated workspace (not public routes).
+
 ## Related
 
 - [Component guidelines](./component-guidelines.md)

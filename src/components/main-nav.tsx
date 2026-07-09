@@ -22,7 +22,11 @@ export function MainNav() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "rounded-md px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                isActive ? "text-foreground" : "text-muted-foreground",
+                isActive
+                  ? item.href === "/engineering"
+                    ? "text-[#F97316]"
+                    : "text-foreground"
+                  : "text-muted-foreground",
               )}
             >
               {item.label}
