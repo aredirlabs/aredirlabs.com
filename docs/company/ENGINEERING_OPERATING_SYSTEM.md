@@ -15,6 +15,9 @@ This is not a product feature. It is the **operating model** that AlignFit, Clas
 **Entry points:**
 
 - **Operating system (this document)** — full lifecycle model and artifact layers
+- **[Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)** — framework boundary and methodological capability map (AEF-000)
+- **[Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)** — normative ownership and boundaries (AEF-001)
+- **[Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)** — extraction specification for `aredir-project-bootstrap` (AEF-002)
 - **[Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)** — repository onboarding methodology (EOS-003)
 - **[Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)** — repository structural contract (EOS-004)
 - **[Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md)** — engineering platform specification (IMPLEMENTATION-001)
@@ -282,6 +285,9 @@ Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTAB
 
 ## Related
 
+- [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)
 - [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md)

@@ -18,7 +18,7 @@ Projects **consume** the EOS. They do not recreate it. Product-specific work liv
 
 Part of the [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md). Completed by [EOS-003 Review](./reviews/EOS_003_PROJECT_INHERITANCE.md).
 
-Structural requirements for what a repository must contain: [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md) (EOS-004). Executable platform specification: [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) (IMPLEMENTATION-001). Inheritance defines **how** to consume the EOS; the blueprint defines **what** must exist; the reference repository defines **exactly what is shipped**.
+Structural requirements for what a repository must contain: [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md) (EOS-004). Executable platform specification: [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md) (IMPLEMENTATION-001). Inheritance defines **how** to consume the EOS; the blueprint defines **what** must exist; the reference repository defines **exactly what is shipped**. Bootstrap readiness relative to the broader framework: [AEF-000 Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md); normative ownership: [AEF-001 Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md); extraction boundary: [AEF-002](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md).
 
 ---
 

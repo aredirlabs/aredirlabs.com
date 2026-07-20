@@ -720,6 +720,9 @@ When a deferred capability matures, add it to this document via EOS review — n
 
 ## Related
 
+- [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)

@@ -163,6 +163,9 @@ Formal review records: [GOVERNANCE-001](./reviews/GOVERNANCE_001_FRAMEWORK_ESTAB
 
 ## Related
 
+- [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)

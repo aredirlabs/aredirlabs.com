@@ -12,6 +12,8 @@ Standards evolve independently from projects. A project may change its implement
 
 This document is the authoritative catalog of engineering standards currently maintained by Aredir Labs for use across products and future initiatives.
 
+Framework context: [AEF-000 Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) maps standards into methodological capabilities; [AEF-001 Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) is the normative ownership reference; [AEF-002 Bootstrap Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) defines extraction inclusion.
+
 ---
 
 ## Engineering Standards Catalog

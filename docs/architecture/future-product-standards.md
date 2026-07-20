@@ -23,6 +23,9 @@ Guidelines when spinning up new Aredir Labs products from this template.
 
 **Canonical company standards** live under [`docs/company/`](../company/). Clone or sync this tree when spinning up products from the template.
 
+- [Aredir Engineering Framework Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) — framework boundary, ownership map, bootstrap readiness (AEF-000)
+- [Framework Capability Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) — normative capability ownership (AEF-001)
+- [Bootstrap Extraction Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) — what future bootstrap may distribute (AEF-002)
 - [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md) — company operating model; products inherit the full EOS
 - [Governance Index](../company/GOVERNANCE_INDEX.md) — engineering governance entry point (GOVERNANCE-001)
 - [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) — architecture patterns, engineering/QA standards, AI patterns, playbooks
@@ -65,6 +68,9 @@ Document overrides in the product repo under `docs/product/`:
 
 ## Related
 
+- [AEF-000 Aredir Engineering Framework Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Project Inheritance Model](../company/PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Blueprint Specification](../company/ENGINEERING_BLUEPRINT_SPECIFICATION.md)
 - [Reference Repository Specification](../company/REFERENCE_REPOSITORY_SPECIFICATION.md)

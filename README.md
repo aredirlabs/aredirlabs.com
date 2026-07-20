@@ -151,6 +151,7 @@ See [Engineering Work Package vs Implementation Brief](docs/company/playbooks/FE
 | QA | [docs/qa/](docs/qa/) |
 | Prompts | [docs/prompts/](docs/prompts/) |
 | **Knowledge Base (canonical)** | [docs/company/](docs/company/) |
+| **Aredir Engineering Framework** | [AEF-000 Discovery](docs/company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) · [AEF-001 Contracts](docs/company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) · [AEF-002 Bootstrap Boundary](docs/company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
 | **Engineering Operating System** | [docs/company/ENGINEERING_OPERATING_SYSTEM.md](docs/company/ENGINEERING_OPERATING_SYSTEM.md) |
 | **Engineering Capability Model** | [docs/company/ENGINEERING_CAPABILITY_MODEL.md](docs/company/ENGINEERING_CAPABILITY_MODEL.md) |
 | **Project Inheritance Model** | [docs/company/PROJECT_INHERITANCE_MODEL.md](docs/company/PROJECT_INHERITANCE_MODEL.md) |
@@ -175,6 +176,9 @@ The [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md)
 
 - [Reference Repository Specification](docs/company/REFERENCE_REPOSITORY_SPECIFICATION.md) — engineering platform specification (IMPLEMENTATION-001)
 
+- [Aredir Engineering Framework Discovery](docs/company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) — framework boundary and capability map (AEF-000)
+- [Framework Capability Contracts](docs/company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) — normative ownership and boundaries (AEF-001)
+- [Bootstrap Extraction Boundary](docs/company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) — extraction specification for `aredir-project-bootstrap` (AEF-002)
 - [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md) — **company operating model entry point** (EOS-001)
 - [Engineering Capability Model](docs/company/ENGINEERING_CAPABILITY_MODEL.md) — organizational competencies (EOS-002)
 - [Project Inheritance Model](docs/company/PROJECT_INHERITANCE_MODEL.md) — repository onboarding (EOS-003)

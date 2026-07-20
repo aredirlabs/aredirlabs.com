@@ -48,6 +48,9 @@ Ordered tracker for Engineering Work Packages, optional implementation briefs/pr
 | AREDIR-KB-017 | Promote Workspace Experience Architecture | Complete | [Workspace Experience Architecture](../company/architecture-patterns/AREDIR_UX_001_WORKSPACE_EXPERIENCE_ARCHITECTURE.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Architecture Patterns), [AREDIR-UX-001 Review](../company/reviews/AREDIR_UX_001_EXPERIENCE_ARCHITECTURE_ESTABLISHMENT.md) |
 | AREDIR-KB-018 | Promote Evidence-Aware AI Advisor Pattern | Complete | [Evidence-Aware AI Advisor Pattern](../company/ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AI Patterns), [KB 018 Review](../company/reviews/KB_018_EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) |
 | AREDIR-KB-019 | Promote Evidence Lifecycle Pattern | Complete | [Evidence Lifecycle Pattern](../company/knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (Knowledge Patterns), [KB 019 Review](../company/reviews/KB_019_EVIDENCE_LIFECYCLE_PATTERN.md) |
+| AEF-000 | Aredir Engineering Framework discovery | Complete | [AEF-000 Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AEF section), README / Governance Index / EOS entry-point links |
+| AEF-001 | Framework capability contracts | Complete | [AEF-001 Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md), [AEF-000](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md), KB Index / README / roadmap updates |
+| AEF-002 | Bootstrap extraction boundary | Complete | [AEF-002 Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md), [AEF-001](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md), extraction manifest + sync strategy (no extraction performed) |
 
 ## Workspace (internal)
 
@@ -112,6 +115,9 @@ Plus manual QA when user-facing behavior changes. Workspace milestones also veri
 - [Knowledge Asset Registry Readiness Review](../company/reviews/KNOWLEDGE_ASSET_REGISTRY_READINESS_REVIEW.md)
 - [Knowledge Asset Registry Roadmap](../company/KNOWLEDGE_ASSET_REGISTRY_ROADMAP.md)
 - [KB 013 Registry Prerequisite Cleanup](../company/reviews/KB_013_REGISTRY_PREREQUISITE_CLEANUP.md)
+- [AEF-000 Aredir Engineering Framework Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Governance Index](../company/GOVERNANCE_INDEX.md)
 - [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
 - [Engineering Capability Model](../company/ENGINEERING_CAPABILITY_MODEL.md)

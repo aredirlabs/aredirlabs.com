@@ -32,6 +32,9 @@
 
 ### Governance
 
+- [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) — framework boundary and capability ownership map
+- [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) — normative capability ownership and boundaries
+- [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) — extraction specification for `aredir-project-bootstrap`
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md) — company operating model (EOS-001)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md) — organizational competencies (EOS-002)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md) — repository onboarding methodology (EOS-003)
@@ -111,8 +114,11 @@ Ordered — registry prerequisites complete; proceed to WORKSPACE-008.
 | AREDIR-KB-017 | Workspace Experience Architecture | Architecture Pattern | Complete |
 | AREDIR-KB-018 | Evidence-Aware AI Advisor Pattern | AI Pattern | Complete |
 | AREDIR-KB-019 | Evidence Lifecycle Pattern | Knowledge Pattern | Complete |
+| AEF-000 | Aredir Engineering Framework Discovery | Framework Discovery | Complete |
+| AEF-001 | Framework Capability Contracts | Framework Governance | Complete |
+| AEF-002 | Bootstrap Extraction Boundary | Framework Implementation Spec | Complete |
 
-**Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard.
+**Next work item:** Q3 quarterly KB review (2026-09-12); AREDIR-KB-016 Knowledge Capture Standard; BOOTSTRAP-001 Phase 1–3 implementation (proposed in AEF-002).
 
 ---
 

@@ -48,6 +48,7 @@ docs/company/
 ├── ENGINEERING_BLUEPRINT_SPECIFICATION.md  ← repository blueprint (EOS-004)
 ├── REFERENCE_REPOSITORY_SPECIFICATION.md   ← engineering platform (IMPLEMENTATION-001)
 ├── GOVERNANCE_INDEX.md              ← governance entry point (GOVERNANCE-001)
+├── framework/                       ← Aredir Engineering Framework series (AEF-000+)
 ├── governance/                      ← domain governance + maturity model
 ├── knowledge/                       ← artifact taxonomy
 ├── KNOWLEDGE_BASE_INDEX.md          ← this file
@@ -378,6 +379,18 @@ Reviews
 
 ---
 
+## Aredir Engineering Framework
+
+The Aredir Engineering Framework (AEF) is the framework boundary for company engineering methodology — including EOS, governance, Knowledge Base, and bootstrap readiness. Start at [AEF-000 Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md).
+
+| AEF artifact | Document |
+|--------------|----------|
+| Framework discovery | [AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) |
+| Framework capability contracts | [AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) |
+| Bootstrap extraction boundary | [AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
+
+AEF does not replace the EOS. AEF-000 maps methodological subsystems; **AEF-001 is the normative ownership reference**; **AEF-002 is the extraction specification** for future `aredir-project-bootstrap` work.
+
 ## Engineering Operating System
 
 The EOS is the company methodology above the Knowledge Base. Start at [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md).
@@ -469,6 +482,9 @@ Knowledge Base
 
 ## Related
 
+- [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
