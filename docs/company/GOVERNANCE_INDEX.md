@@ -117,6 +117,14 @@ The complete delivery loop connects governance domains to promoted assets:
 Architecture Audit → Feature Delivery → Coding Agent + QA → Knowledge Capture → Promotion
 ```
 
+When formal assessment evidence is required:
+
+```
+Architecture Audit → AQSF → AVF → Findings → Promotion Candidates → Promotion Process
+```
+
+Quality Systems (`aredir-quality-systems`) owns AQSF/AVF. Labs owns Architecture Audit and Promotion acceptance. See [Architecture Audit — Relationship to Quality Systems](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md#relationship-to-quality-systems).
+
 AI features add:
 
 ```

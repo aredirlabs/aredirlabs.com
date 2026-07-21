@@ -11,8 +11,8 @@
 | **Origin Artifacts** | COACH-ARCH-001, COACH-INTEL-001, COACH-INTEL-002, COACH-INTEL-003, AREDIR-KB-001 through AREDIR-KB-005, AlignFit coach architecture evolution, `docs/architecture/` template reviews, workspace foundation audits (AREDIR-WORKSPACE-001 through AREDIR-WORKSPACE-006) |
 | **Linked Projects** | AlignFit, Aredir Labs |
 | **Reusability** | High |
-| **Last Reviewed** | 2026-06-12 |
-| **Next Review Due** | 2026-09-12 |
+| **Last Reviewed** | 2026-07-20 |
+| **Next Review Due** | 2026-10-20 |
 
 ## Purpose
 
@@ -33,6 +33,16 @@ Repeated audit work across AlignFit Coach intelligence and Aredir Labs template 
 | **Accumulating technical debt** | Shortcuts compound because no one pauses to assess the whole |
 
 **Goal:** Produce evidence-based understanding that informs safe change, Knowledge Base promotions, and implementation planning.
+
+Architecture Audit determines:
+
+- Architectural quality and design correctness
+- Capability and ownership boundaries
+- Source-of-truth and data-flow clarity
+- Long-term maintainability and drift risk
+- Architectural recommendations (Preserve / Refactor / Consolidate / Redesign / Defer)
+
+Architecture Audit **does not** prescribe verification mechanics, confidence scoring, or finding-record schemas. Those belong to Quality Systems (AQSF/AVF).
 
 ### When to run an architecture audit
 
@@ -411,12 +421,67 @@ Document audit ID or path in promotion work items (e.g. AREDIR-KB-00N) for trace
 
 ---
 
+## Relationship to Quality Systems
+
+Architecture Audit and Quality Systems are complementary authorities. They must not be duplicated across repositories.
+
+### Canonical assessment flow
+
+```
+Engineering Question
+        ↓
+Architecture Audit          ← What should be evaluated? (ownership, SoT, design, drift)
+        ↓
+AQSF                        ← What quality dimensions / lenses matter?
+        ↓
+AVF                         ← What evidence supports those conclusions, and with what confidence?
+        ↓
+Assessment Findings
+        ↓
+Promotion Candidates        ← reusable methodology / quality gaps (when applicable)
+        ↓
+Engineering Promotion Process  ← Labs owns acceptance into company standards
+        ↓
+Owning Repository
+```
+
+Validation evidence: CLASSFORGE-ASSESSMENT-001 exercised Architecture Audit questions with AVF-style discovery, capability mapping, risk, evidence, and confidence practices; QUALITY-PROMOTION-001 and LABS-PROMOTION-001 close the integration loop.
+
+### Responsibility split
+
+| Concern | Owner | Repository |
+|---------|-------|------------|
+| Architectural questions, ownership, SoT, recommendation categories | Architecture Audit (this standard) | `aredirlabs-com` |
+| What quality means (dimensions / lenses) | AQSF | `aredir-quality-systems` |
+| Evidence collection, verification, confidence, finding structure, comparative assessment | AVF / AQSF-002 | `aredir-quality-systems` |
+| Accepting promoted company standards | [Promotion Process](../PROMOTION_PROCESS.md) | `aredirlabs-com` |
+| Product remediation and implementation | Product engineering | Product repositories |
+| Distribution / adoption packaging | Bootstrap | `aredir-project-bootstrap` |
+
+### Delegation rules
+
+1. Architecture Audit determines **what** architectural concerns to evaluate and **how** to categorize recommendations.
+2. Quality Systems provides reusable assessment methodology for evidence, confidence, findings, and option comparison.
+3. Architecture Audit **intentionally delegates** verification mechanics, evidence-strength classes, and finding schemas to AVF/AQSF.
+4. Do **not** copy AQSF/AVF procedure bodies into this standard. Cite document IDs and commit SHAs when practical (see Quality Systems README provenance guidance).
+5. Product-specific defects remain product-owned. Reusable methodology gaps become promotion candidates.
+
+External authority (do not fork):
+
+- AQSF overview and principles — `aredir-quality-systems` `docs/aqsf/`
+- AVF-000…AVF-008 — `aredir-quality-systems` `docs/avf/`
+- Quality findings — AQSF-002
+
+---
+
 ## Relationship to Existing Standards
 
 ### Where architecture audits fit
 
 ```
 Architecture Audit          ← understand system (this standard)
+        ↓
+Quality assessment (AQSF/AVF) ← evidence, confidence, finding discipline (external)
         ↓
 Engineering Finding         ← evidence-linked observation
         ↓
@@ -426,9 +491,9 @@ Implementation Brief        ← optional (only when work package alone is insuff
         ↓
 Coding Agent Operating      ← implement with guardrails
         ↓
-QA Engineering Framework    ← verify outcomes
+QA Engineering Framework    ← verify delivery outcomes
         ↓
-Knowledge Base Promotion    ← extract reusable IP
+Knowledge Base Promotion    ← extract reusable IP (Labs Promotion Process)
 ```
 
 | Standard | Relationship |
@@ -436,11 +501,12 @@ Knowledge Base Promotion    ← extract reusable IP
 | [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) | Audits precede agent work; **Audit** stage in agent workflow maps to scope and current-state analysis; Engineering Work Packages are the required implementation artifact; implementation briefs are optional |
 | [Feature Delivery Standard](../playbooks/FEATURE_DELIVERY_STANDARD.md) | Defines Work Package vs Implementation Brief; work package is authoritative |
 | [QA Engineering Framework](../qa-standards/QA_ENGINEERING_FRAMEWORK.md) | Audit findings inform test gaps; verification plans reference QA lifecycle; production audits trigger release-readiness review |
+| Quality Systems (AQSF / AVF) | External authority for evidence, confidence, findings, and comparative assessment — see [Relationship to Quality Systems](#relationship-to-quality-systems) |
 | [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md) | Baseline for AI topology audits; drift assessment checks layer ownership |
 | [Context Builder Pattern](../ai-patterns/CONTEXT_BUILDER_PATTERN.md) | Audit data-selection and bounded-context implementation |
 | [Response Contract Pattern](../ai-patterns/RESPONSE_CONTRACT_PATTERN.md) | Audit closed-world narrative boundaries and contract validation |
 
-Architecture audits **do not replace** QA or implementation standards — they ensure those standards apply to an understood system.
+Architecture audits **do not replace** QA, Quality Systems, or implementation standards — they ensure those standards apply to an understood system.
 
 ---
 
@@ -464,7 +530,10 @@ Likely future promotions — **not created in this work item**:
 
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Promotion Process](../PROMOTION_PROCESS.md)
+- [Evidence Lifecycle Pattern](../knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
+- [Engineering Capability Model](../ENGINEERING_CAPABILITY_MODEL.md)
 - [Documentation Maintenance Standard](./DOCUMENTATION_MAINTENANCE_STANDARD.md)
 - [Feature Delivery Standard](../playbooks/FEATURE_DELIVERY_STANDARD.md)
 - [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [QA Engineering Framework](../qa-standards/QA_ENGINEERING_FRAMEWORK.md)
+- Quality Systems (`aredir-quality-systems`) — AQSF / AVF (external; do not duplicate)

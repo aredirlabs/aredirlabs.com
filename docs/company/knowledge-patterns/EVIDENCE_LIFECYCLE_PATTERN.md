@@ -11,8 +11,8 @@
 | **Origin Artifacts** | Architecture Governance, AREDIR-KB-018 Evidence-Aware AI Advisor Pattern, evidence lifecycle synthesis, PROMOTION_CANDIDATE_REVIEW_2026_Q2 |
 | **Linked Projects** | Aredir Labs, AlignFit, ClassForge, LeagueOS |
 | **Reusability** | High |
-| **Last Reviewed** | 2026-07-06 |
-| **Next Review Due** | 2026-10-06 |
+| **Last Reviewed** | 2026-07-20 |
+| **Next Review Due** | 2026-10-20 |
 
 ## Purpose
 
@@ -291,8 +291,23 @@ This pattern applies wherever decisions depend on evidence:
 | **AI Systems** | Input observations → structured evidence → model interpretation → deployed knowledge → automation decisions → monitored outcomes |
 | **Knowledge Management** | Artifact observations → curated evidence → synthesis interpretation → organizational knowledge → governance decisions → usage outcomes |
 | **Enterprise Architecture** | System observations → architecture evidence → design interpretation → target knowledge → migration decisions → operational outcomes |
+| **Architecture / Quality Assessment** | Repository and runtime observations → assessment evidence → interpreted findings → organizational knowledge → promotion or remediation decisions → new observations |
 
 The pattern is domain-agnostic. Implementation varies; the lifecycle stages do not.
+
+### Assessment artifact recognition
+
+Architecture audits and Quality Systems assessments commonly produce named artifacts. Map them to lifecycle stages without redefining AQSF/AVF:
+
+| Artifact | Typical lifecycle stage | Notes |
+|----------|-------------------------|-------|
+| **Observation / evidence register entries** | Observation → Evidence | Provenance required; Fact vs Inference labeled |
+| **Quality Finding** | Interpretation → provisional Knowledge | Structured per Quality Systems AQSF-002; not automatically a company standard |
+| **Assessment Report** | Knowledge (scoped) | Durable understanding for a system/question; may include Architecture Audit sections |
+| **Promotion Candidate** | Decision input | Proposal to change an owning repository; acceptance follows [Promotion Process](../PROMOTION_PROCESS.md) |
+| **Promoted Standard** | Organizational Knowledge | Only after Labs (or designated owner) promotion acceptance |
+
+Quality Systems (`aredir-quality-systems`) defines **how** findings and evidence strength are recorded (AVF). This pattern defines **how understanding evolves** across any domain. Do not duplicate AVF procedures here.
 
 ---
 
@@ -306,6 +321,9 @@ This pattern governs **how understanding is created**. Complementary patterns go
 | [Human + AI Advisor Workspace Pattern](../ai-patterns/HUMAN_AI_ADVISOR_WORKSPACE_PATTERN.md) | Shared records where multiple contributors advance the lifecycle over time |
 | Facts → Meaning → Recommendations | Application-owned intelligence pipeline ([AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)) — structured progression from facts through assessments and insights to recommendations |
 | [Evidence-Aware AI Advisor Pattern](../ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) | How understanding is **communicated** to humans — uncertainty, evidence dimensions, and historical integrity at the advisor layer |
+| [Architecture Audit Standard](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) | What architectural questions to evaluate; delegates verification mechanics to Quality Systems |
+| Quality Systems AVF (`aredir-quality-systems`) | External — evidence collection, confidence, finding structure, comparative assessment |
+| [Promotion Process](../PROMOTION_PROCESS.md) | How reusable assessment outputs become company assets |
 
 ### Distinction from Evidence-Aware AI Advisor Pattern
 
@@ -339,5 +357,6 @@ These patterns are designed to work together. The lifecycle defines the stages; 
 - [AI Intelligence Architecture Pattern](../architecture-patterns/AI_INTELLIGENCE_ARCHITECTURE_PATTERN.md)
 - [Root Cause Analysis Framework](../qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md)
 - [Architecture Audit Standard](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
+- Quality Systems (`aredir-quality-systems`) — AQSF / AVF (external; evidence and findings)
 
 **Recommended next work item:** AREDIR-KB-016 — Knowledge Capture Standard (Documentation Standard; per [Knowledge Base Roadmap](../KNOWLEDGE_BASE_ROADMAP.md)).

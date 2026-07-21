@@ -162,6 +162,14 @@ Scope → Current State → Ownership → Source of Truth → Data Flow → Depe
 - When onboarding a new product
 - When incidents reveal ownership ambiguity
 
+### Relationship to Quality Systems
+
+Architecture Audit determines architectural questions and recommendation categories. Evidence collection, confidence assessment, finding schemas, and comparative-option discipline are provided by Quality Systems (AQSF/AVF in `aredir-quality-systems`). Do not duplicate those procedures in Labs docs.
+
+Canonical flow: Engineering Question → Architecture Audit → AQSF → AVF → Findings → Promotion Candidates → [Promotion Process](../PROMOTION_PROCESS.md) → Owning repository.
+
+Details: [Architecture Audit Standard — Relationship to Quality Systems](../documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md#relationship-to-quality-systems).
+
 ### Audit outputs
 
 | Output | Feeds |
@@ -169,7 +177,8 @@ Scope → Current State → Ownership → Source of Truth → Data Flow → Depe
 | Ownership matrix | Implementation planning |
 | Source-of-truth register | Data model and integration decisions |
 | Drift findings | Technical debt and alignment work |
-| Promotion candidates | [Knowledge Governance](./KNOWLEDGE_GOVERNANCE.md) |
+| Assessment findings (with evidence/confidence) | Product work packages; Quality Systems finding conventions when used |
+| Promotion candidates | [Knowledge Governance](./KNOWLEDGE_GOVERNANCE.md) / [Promotion Process](../PROMOTION_PROCESS.md) |
 | Risk register | Prioritized remediation |
 
 Audits do not authorize unscoped rewrites. Recommendations must align with [Coding Agent Operating Standard](../engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) — incremental, verifiable steps.

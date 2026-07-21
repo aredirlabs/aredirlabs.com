@@ -121,7 +121,7 @@ Capabilities below are **AEF methodological subsystems** supported by existing a
 |----------|-----------|
 | **Do not invent** a separate “Security Framework” | Security exists as EOS-002 capability + Engineering Governance section; no promoted Security Standard yet (explicitly deferred) |
 | **Do not invent** “Platform Engineering” / “DevEx” / “Data Engineering” | Listed as deferred capabilities in EOS-002 |
-| **Do not invent** “AQSF” as an active AEF capability | Referenced as future generalization path in Engineering Standards Index and UI Quality Audit Standard — aspirational, not established |
+| **Do not invent** “AQSF” as an active AEF capability | AQSF/AVF now exist in external repository `aredir-quality-systems`. They remain **outside AEF capability inventory**. Labs owns Architecture Audit and Promotion; Quality Systems owns evaluation/verification methods. See Architecture Audit ↔ Quality Systems integration (LABS-PROMOTION-001). |
 | **Merge** “Verification” into Quality & Verification | QA Engineering Framework + AI Evaluation + checklists already form one verification surface |
 | **Keep** Bootstrap separate from EOS | Inheritance/blueprint/reference specs form a distinct extractable subsystem for `aredir-project-bootstrap` |
 | **Keep** Governance separate from EOS identity | EOS states governance supports capabilities; GOVERNANCE-001 is its own established framework |
@@ -518,7 +518,7 @@ Target: future **`aredir-project-bootstrap`** repository. No extraction performe
 |------|-------------|
 | Missing capabilities | Deferred EOS-002 capabilities remain deferred (Data Eng, Platform Eng, DevEx, etc.) |
 | Incomplete standards | Decision Record Standard; Knowledge Capture Standard; Security Standard; Release Management Playbook; Deployment Standards folder |
-| Architectural gaps | No extracted bootstrap repository; no generator/tooling; AQSF not established |
+| Architectural gaps | Bootstrap extraction and tooling maturity remain open; AQSF/AVF now live in `aredir-quality-systems` (external to AEF) — integrate via Architecture Audit / Promotion Process, do not absorb into AEF |
 | Documentation gaps | `framework/` folder not yet in Blueprint tree; UI audit outside `docs/company/`; ADR format not standalone |
 | Governance gaps | Formal incident/observability playbooks immature (EOS-002 Operations note); consulting methodology absent |
 
@@ -530,7 +530,7 @@ Target: future **`aredir-project-bootstrap`** repository. No extraction performe
 | Sequence bootstrap extraction after AEF ownership map is accepted | **Recommendation** |
 | Promote or relocate UI Quality Audit under company documentation/quality standards when ready | **Recommendation** |
 | Complete AREDIR-KB-016 and Decision Record Standard (already planned) | **Recommendation** (pre-existing roadmap) |
-| Build AQSF as umbrella quality brand | **Future opportunity** |
+| Absorb AQSF into AEF as a capability | **Rejected** — Quality Systems remains an external repository authority; Labs integrates by reference (LABS-PROMOTION-001) |
 | Package AEF as external consulting offer | **Future opportunity** |
 | Automate promotion workflow / asset dependency mapping | **Future opportunity** (KB Roadmap tooling list) |
 
@@ -578,7 +578,7 @@ See §12.
 | AEF-002 | Bootstrap extraction boundary discovery — exact file set for `aredir-project-bootstrap` | Complete — [AEF-002](./AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
 | AEF-003 | Documentation structure discovery — Blueprint update for `framework/`, standards path normalization | Documentation Governance |
 | AEF-004 | Pattern catalog discovery — formalize established vs candidate reusable patterns list | KB Index; this §8 |
-| AEF-005 | Quality umbrella discovery — relationship of QA Framework, UI Audit, future AQSF | Engineering Standards Index |
+| AEF-005 | Quality umbrella clarification — QA Framework / UI Audit (C5) vs external AQSF/AVF (`aredir-quality-systems`) | Engineering Standards Index; LABS-PROMOTION-001 |
 | — | Pre-existing: AREDIR-KB-016 Knowledge Capture Standard | KB Roadmap |
 | — | Pre-existing: Decision Record Standard | GOVERNANCE-001 follow-up |
 | — | Pre-existing: Release Management Playbook | KB Roadmap |

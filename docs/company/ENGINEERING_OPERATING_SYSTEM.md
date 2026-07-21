@@ -150,7 +150,8 @@ The **Engineering Work Package** is the required implementation specification. A
 |-------|-------------|-------------------|
 | **Evaluate idea** | Problem statement, sponsor, rough sizing | [Company Governance — SDLC](./governance/COMPANY_GOVERNANCE.md#software-development-lifecycle) |
 | **Architecture review** | Ownership, source of truth, drift | [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) |
-| **Engineering finding** | Evidence-linked observation from audit | [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) |
+| **Quality assessment (when needed)** | Evidence, confidence, structured findings for the audit question | Quality Systems AQSF/AVF (`aredir-quality-systems`) — external; see [Architecture Audit ↔ Quality Systems](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md#relationship-to-quality-systems) |
+| **Engineering finding** | Evidence-linked observation from audit / assessment | [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md); finding structure per AQSF-002 when using Quality Systems |
 | **Engineering work package** | Required implementation specification (objective, constraints, acceptance, verification) | [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) |
 | **Implementation brief (optional)** | Extra sequencing / risk / coordination when the work package alone is insufficient | [AI Governance](./governance/AI_GOVERNANCE.md) |
 | **AI-assisted execution** | Agent workflow, minimal diff — from work package or optional brief | [Coding Agent Operating Standard](./engineering-standards/CODING_AGENT_OPERATING_STANDARD.md) |
@@ -171,6 +172,24 @@ Context Builder → Facts → Assessments → Insights → Recommendations
 ```
 
 See [AI Governance](./governance/AI_GOVERNANCE.md) and [Architecture Governance](./governance/ARCHITECTURE_GOVERNANCE.md).
+
+### Architecture Audit and Quality Systems
+
+When an engineering question requires formal assessment, use the integrated flow (do not invent a parallel process):
+
+```
+Engineering Question
+      ↓
+Architecture Audit     ← what to evaluate
+      ↓
+AQSF                   ← what quality means (external: aredir-quality-systems)
+      ↓
+AVF                    ← how evidence and confidence are established (external)
+      ↓
+Findings → Promotion Candidates → Promotion Process → Owning repository
+```
+
+Architecture Audit remains Labs-owned. AQSF/AVF remain Quality Systems-owned. The [Promotion Process](./PROMOTION_PROCESS.md) remains the authority for company-standard acceptance. Details: [Architecture Audit Standard — Relationship to Quality Systems](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md#relationship-to-quality-systems).
 
 ---
 
@@ -297,5 +316,7 @@ Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTAB
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
 - [Promotion Process](./PROMOTION_PROCESS.md)
+- [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md)
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md)
 - [Future product standards](../architecture/future-product-standards.md)
+- Quality Systems (`aredir-quality-systems`) — AQSF / AVF (external)

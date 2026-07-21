@@ -496,7 +496,7 @@ Embed verification throughout delivery so “done” requires evidence — inclu
 #### Future Evolution
 
 - Promotion/relocation of UI Quality Audit under `docs/company/`
-- Possible future AQSF umbrella (not an AEF capability today)
+- External Quality Systems (AQSF/AVF in `aredir-quality-systems`) — not an AEF capability; integrate via Architecture Audit and Promotion Process
 - Promoted Security Standard interface when created
 
 ---
@@ -1159,7 +1159,7 @@ No additional aspirational principles are introduced.
 | AEF-002 | Bootstrap extraction boundary — exact file set | Complete — [AEF-002](./AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
 | AEF-003 | Documentation structure — Blueprint `framework/` listing; standards path normalization | C4, C8 |
 | AEF-004 | Pattern catalog — established vs candidate list under owners | C3, C6, C7, C10 |
-| AEF-005 | Quality umbrella — QA Framework, UI Audit, future AQSF relationship | C5 |
+| AEF-005 | Quality umbrella — QA Framework / UI Audit (C5) vs external AQSF/AVF relationship | C5 |
 | AREDIR-KB-016 | Knowledge Capture Standard | C7 |
 | — | Decision Record Standard | C9 / C4 |
 | — | Release Management Playbook | C9 |

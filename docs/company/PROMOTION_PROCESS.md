@@ -2,8 +2,8 @@
 
 **Status:** Company Standard  
 **Owner:** Aredir Labs  
-**Last reviewed:** 2026-06-12  
-**Next review due:** 2026-09-12
+**Last reviewed:** 2026-07-20  
+**Next review due:** 2026-10-20
 
 ## Purpose
 
@@ -370,6 +370,41 @@ Use this when submitting a candidate for review:
 
 ---
 
+## Assessment outputs and Quality Systems
+
+Architecture audits and Quality Systems assessments may produce reusable improvement signals. Those signals do **not** bypass this process.
+
+### Canonical path
+
+```
+Quality Finding / Architecture Finding
+        ↓
+Promotion Candidate          ← recorded per Quality Systems AQSF-002 conventions (or audit ledger)
+        ↓
+Promotion Process (this document)
+        ↓
+Owning repository            ← Labs methodology, Quality Systems methods, Bootstrap packaging, or product
+```
+
+| Stage | Owner |
+|-------|-------|
+| Produce finding with evidence | Assessment / audit (product or Labs work package) |
+| Record promotion candidate shape | Quality Systems conventions (`aredir-quality-systems`) when using AQSF finding → candidate linkage |
+| Accept, revise, defer, or reject as company asset | **This Promotion Process** (`aredirlabs-com`) |
+| Implement accepted change | Owning repository named on the candidate |
+
+### Rules
+
+1. **Methodology continues to own promotion decisions.** Quality Systems supplies evidence structure and candidate recording guidance; it does not authorize company-standard publication.
+2. Product defects are **not** promotion candidates. They become product work packages.
+3. Candidates that belong in Quality Systems (assessment methods) are implemented in `aredir-quality-systems`, then optionally redistributed later via Bootstrap.
+4. Candidates that belong in Labs (EOS, Architecture Audit, Decision Records, Future Product Standards) are implemented here under this process.
+5. Architecture Audit recommendation categories (Preserve / Refactor / …) and AVF release recommendations are **inputs** to promotion judgment — not substitutes for review.
+
+See [Architecture Audit Standard — Relationship to Quality Systems](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md#relationship-to-quality-systems).
+
+---
+
 ## Deprecation and supersession
 
 When an asset is replaced:
@@ -398,8 +433,10 @@ When an asset is replaced:
 - [Evidence-Aware AI Advisor Pattern](./ai-patterns/EVIDENCE_AWARE_AI_ADVISOR_PATTERN.md) — evidence communication, uncertainty, and knowledge evolution
 - [Evidence Lifecycle Pattern](./knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md) — observation-to-knowledge lifecycle and organizational learning
 - [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — first promoted Documentation Standard
+- [Evidence Lifecycle Pattern](./knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md) — observation → evidence → knowledge → decision
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md) — doc sync and drift prevention
 - [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) — end-to-end delivery playbook
 - [Knowledge Base Roadmap](./KNOWLEDGE_BASE_ROADMAP.md)
 - [KB Review 2026 Q2](./reviews/KB_REVIEW_2026_Q2.md)
 - [Coding agent operating standard](../agent/coding-agent-operating-standard.md) — operational entry point in product repos
+- Quality Systems (`aredir-quality-systems`) — AQSF-002 finding → promotion-candidate recording (external)

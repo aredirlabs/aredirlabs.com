@@ -3,8 +3,8 @@
 **Status:** Company Standard  
 **Owner:** Aredir Labs  
 **Work item:** EOS-002  
-**Last reviewed:** 2026-06-25  
-**Next review due:** 2026-09-12
+**Last reviewed:** 2026-07-20  
+**Next review due:** 2026-10-20
 
 ## Purpose
 
@@ -187,6 +187,7 @@ Ability to design sustainable systems with clear ownership, domain boundaries, a
 - **Knowledge Management** — proven patterns promoted
 - **Quality Engineering** — architecture risks inform test strategy
 - **Documentation** — audit records and ADRs
+- **Quality Systems (external)** — evidence, confidence, and finding discipline for audits
 
 ---
 
@@ -337,6 +338,7 @@ Ability to produce reliable software through embedded verification, investigatio
 |------|-----------|
 | Governance | [Engineering Governance](./governance/ENGINEERING_GOVERNANCE.md) |
 | Standards | [QA Engineering Framework](./qa-standards/QA_ENGINEERING_FRAMEWORK.md), [Root Cause Analysis](./qa-standards/ROOT_CAUSE_ANALYSIS_FRAMEWORK.md) |
+| External | Quality Systems (`aredir-quality-systems`) — AQSF / AVF for assessment evidence and confidence |
 | Operational | [Manual QA checklist](../qa/manual-qa-checklist.md), [Release checklist](../qa/release-checklist.md), [UAT checklist](../qa/uat-checklist.md), [Bug triage](../bugs/bug-triage-process.md) |
 | Playbook | [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md) — Verification stage |
 
@@ -354,6 +356,8 @@ Ability to produce reliable software through embedded verification, investigatio
 - **AI Engineering** — AI-specific evaluation and testing
 - **Operations** — production verification and incident learnings
 - **Documentation** — known issues and verification records
+- **Architecture** — audit findings feed verification priorities
+- **Quality Systems (external)** — assessment methodology distinct from delivery QA checklists
 
 ---
 
@@ -688,6 +692,53 @@ Full asset inventory: [Knowledge Base Index](./KNOWLEDGE_BASE_INDEX.md).
 
 Security spans all capabilities as a cross-cutting baseline.
 
+When an engineering question requires formal assessment:
+
+```
+Engineering
+      ↓
+Architecture (Architecture Audit)
+      ↓
+Quality Systems — AQSF (external: what quality means)
+      ↓
+Quality Systems — AVF (external: evidence, confidence, findings)
+      ↓
+Promotion (Labs Promotion Process)
+      ↓
+Implementation (product repositories)
+```
+
+See [External capability — Quality Systems](#external-capability--quality-systems).
+
+---
+
+## External capability — Quality Systems
+
+Quality Systems is an **external engineering capability**, not an eleventh EOS-002 active capability and not an AEF capability.
+
+| | |
+|---|---|
+| **Repository** | `aredir-quality-systems` |
+| **Owns** | AQSF (quality evaluation intent), AVF (verification, evidence, confidence, findings, comparative assessment), quality finding and promotion-candidate **recording** conventions |
+| **Does not own** | Engineering governance, Architecture Audit methodology, company promotion acceptance, Bootstrap distribution, product implementation |
+| **Consumed by** | Architecture audits, platform assessments, release-confidence work that needs structured evidence |
+| **Feeds** | Promotion candidates into the Labs [Promotion Process](./PROMOTION_PROCESS.md); product findings into product work packages |
+
+### Why it remains external
+
+Repository authority intentionally prevents duplicated standards:
+
+| Repository | Owns |
+|------------|------|
+| `aredirlabs-com` | Engineering methodology, governance, architecture audit, promotion acceptance |
+| `aredir-quality-systems` | Quality evaluation and verification methodology |
+| `aredir-project-bootstrap` | Distribution and adoption packaging |
+| Product repos | Implementation and product-specific decisions |
+
+Do not copy AQSF/AVF bodies into `docs/company/`. Reference document IDs and commit SHAs.
+
+Evidence that this split works in practice: CLASSFORGE-ASSESSMENT-001 + QUALITY-PROMOTION-001.
+
 ---
 
 ## Deferred capabilities
@@ -730,3 +781,5 @@ When a deferred capability matures, add it to this document via EOS review — n
 - [Governance Maturity Model](./governance/GOVERNANCE_MATURITY_MODEL.md)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
 - [EOS-002 Capability Model Review](./reviews/EOS_002_CAPABILITY_MODEL.md)
+- Quality Systems (`aredir-quality-systems`) — AQSF / AVF (external)
+- [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — Relationship to Quality Systems

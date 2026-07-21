@@ -271,7 +271,7 @@ Keep documentation consistent, discoverable, and maintainable across Aredir Labs
 
 ### Examples
 
-- [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — repeatable methodology for system evaluation before change
+- [Architecture Audit Standard](./documentation-standards/ARCHITECTURE_AUDIT_STANDARD.md) — repeatable methodology for system evaluation before change; integrates with external Quality Systems (AQSF/AVF) without duplication
 - [Documentation Maintenance Standard](./documentation-standards/DOCUMENTATION_MAINTENANCE_STANDARD.md) — keeping canonical, operational, and project docs synchronized
 - This index and [Promotion Process](./PROMOTION_PROCESS.md)
 - Implementation index (`docs/prompts/implementation-index.md`)
