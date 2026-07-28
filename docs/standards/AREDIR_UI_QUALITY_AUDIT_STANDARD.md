@@ -40,6 +40,17 @@ Every audit should evaluate the following domains, even if the emphasis shifts b
 10. Empty states and unknown states
 11. Content density
 12. Mobile, tablet, and desktop behavior
+13. Personalization quality
+14. Density governance
+15. Legacy surface governance
+16. Cognitive progression measurement
+
+The four additional dimensions above are reusable cross-cutting lenses for experience quality:
+
+- **Personalization Quality** — whether the experience meaningfully adapts to a user’s context without creating inconsistency or over-customization.
+- **Density Governance** — whether content density is deliberate, readable, and matched to the user’s current task.
+- **Legacy Surface Governance** — whether older or inherited surfaces are contained, clearly identified, and not allowed to degrade the quality of the current experience.
+- **Cognitive Progression Measurement** — whether the experience helps users perceive their place in a workflow and understand what happens next.
 
 ## Audit principles
 
@@ -345,7 +356,7 @@ Use the following structure for each UI audit report.
 
 1. Define the page, workspace, or user journey under review.
 2. Review the experience at mobile, tablet, and desktop viewports.
-3. Apply the eight audit levels in sequence.
+3. Apply the audit levels and reusable evaluation dimensions in sequence.
 4. Record findings with severity, evidence, and impact.
 5. Prioritize fixes by user impact and confidence risk.
 6. Recheck after remediation.
@@ -374,6 +385,7 @@ A strong initial application of this standard is a responsive audit of the Align
 - Validate that primary actions, hierarchy, and navigation remain clear at each size
 - Confirm that dashboard-to-workspace transitions preserve context and clarity
 - Inspect empty, loading, and unknown states for trust and readiness
+- Evaluate personalization quality, density governance, legacy surface governance, and cognitive progression measurement as part of the audit
 
 **Suggested output**
 - A short audit report using the reusable template above
@@ -390,3 +402,4 @@ A strong initial application of this standard is a responsive audit of the Align
 - Level 6: Trust and Credibility — confirm the interface feels reliable and mature
 - Level 7: Accessibility — ensure the UI is usable by a wide range of people
 - Level 8: Performance Perception — confirm the experience feels responsive and reassuring
+- Cross-cutting evaluation dimensions: Personalization Quality, Density Governance, Legacy Surface Governance, and Cognitive Progression Measurement

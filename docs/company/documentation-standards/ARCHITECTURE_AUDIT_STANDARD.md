@@ -181,6 +181,7 @@ Understand **reality** before proposing changes.
 - Inspect routes, API handlers, schema, and env configuration
 - Trace one critical user journey in code
 - Compare documentation claims to observed behavior — note gaps
+- For UI surfaces, include the reusable evaluation dimensions from the UI Quality Audit Standard when relevant: personalization quality, density governance, legacy surface governance, and cognitive progression measurement
 
 ### Outputs
 

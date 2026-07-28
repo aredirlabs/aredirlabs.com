@@ -3,8 +3,8 @@
 **Status:** Company Standard  
 **Owner:** Aredir Labs  
 **Work item:** EOS-001  
-**Last reviewed:** 2026-06-25  
-**Next review due:** 2026-09-12
+**Last reviewed:** 2026-07-10  
+**Next review due:** 2026-10-10
 
 ## Purpose
 
@@ -125,7 +125,7 @@ Engineering Finding
       ↓
 Engineering Work Package
       ↓
-Implementation (optional: Implementation Brief / Prompt)
+Implementation (optional: Implementation Brief / Prompt only when needed)
       ↓
 Verification & QA
       ↓
@@ -142,7 +142,18 @@ Adoption across products
 
 **Canonical playbook:** [Feature Delivery Standard](./playbooks/FEATURE_DELIVERY_STANDARD.md)
 
-The **Engineering Work Package** is the required implementation specification. An **Implementation Brief / Prompt** is optional — create one only when the work package alone is not sufficient for sequencing, risk control, or multi-agent coordination. See [Engineering Work Package vs Implementation Brief](./playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+The **Engineering Work Package** is the authoritative implementation specification for an Engineering Finding. It carries the objective, constraints, acceptance criteria, and verification plan. An **Implementation Brief / Prompt** is optional and must not replace the work package; create one only when the work package alone is not sufficient for sequencing, risk control, or multi-agent coordination. See [Engineering Work Package vs Implementation Brief](./playbooks/FEATURE_DELIVERY_STANDARD.md#engineering-work-package-vs-implementation-brief).
+
+### Validated methodology improvements from the first complete EOS execution
+
+The first complete EOS execution in the AlignFit Body Workspace remediation and the subsequent Nutrition Workspace audit validated several methodology improvements:
+
+- **Work-package-first execution improved traceability.** Findings moved into a concrete Engineering Work Package that defined implementation scope, acceptance criteria, and verification expectations before implementation began.
+- **Implementation briefs remained optional.** When used, they served as sequencing or coordination aids rather than alternate implementation specifications, which reduced scope drift and kept the work package authoritative.
+- **UI evaluation needed explicit experience dimensions.** The remediation and audit showed that layout quality alone did not capture personalization, density, legacy-surface risk, or the user’s sense of progress through a workflow.
+- **Knowledge capture should stay evidence-based.** Reusable patterns were documented as candidates for future review rather than promoted prematurely, preserving the distinction between validated learning and promoted company standards.
+
+The rationale for retaining these practices is straightforward: the improvements were observable in execution, they improved clarity and verification, and they preserved the EOS boundary between evidence-based delivery and speculative governance.
 
 ### Lifecycle stages in detail
 
@@ -235,6 +246,13 @@ The Knowledge Base is the **canonical store of promoted company intellectual pro
 
 **Registry:** `/workspace/knowledge-assets` — governance view of promoted assets; markdown remains canonical.
 
+During the validated EOS execution and follow-on audit, the following reusable patterns were identified as Knowledge Base promotion candidates for future review, but they are not promoted at this time:
+
+- **Canonical Representation Pattern** — preserve a single authoritative representation of workspace state, decisions, and recommendations across surfaces.
+- **Digital Twin Projection Pattern** — maintain a projection of the current workspace state that can be reasoned about without duplicating ownership or source-of-truth logic.
+- **Experience Audit Pattern** — treat experience review as a repeatable audit method that captures readiness, density, progression, and legacy-surface risk.
+- **Engineering Remediation Pattern** — connect audit findings to scoped work packages, verification, and documentation updates without expanding scope into speculative rework.
+
 ---
 
 ## How products inherit the EOS
@@ -287,6 +305,26 @@ Projects progress through five maturity levels defined in [Governance Maturity M
 - **ClassForge / LeagueOS:** Level 2–3 — template inheritance; adoption in progress
 
 ---
+
+## Documentation change summary
+
+This update reflects only changes demonstrated by the first complete EOS execution and the subsequent Nutrition Workspace audit:
+
+- The lifecycle language now states that Engineering Work Packages are the authoritative implementation specification and that Implementation Briefs remain optional.
+- The UI audit standard now includes Personalization Quality, Density Governance, Legacy Surface Governance, and Cognitive Progression Measurement as reusable evaluation dimensions.
+- Audit guidance now points reviewers to these dimensions when evaluating product surfaces and workflow quality.
+- The EOS now records newly identified Knowledge Base promotion candidates without promoting them: Canonical Representation Pattern, Digital Twin Projection Pattern, Experience Audit Pattern, and Engineering Remediation Pattern.
+- The methodology improvements and rationale are documented here so future work can distinguish validated practice from deferred architecture ideas.
+
+## Future Architecture Recommendations
+
+The following ideas were identified during this review but intentionally deferred and not adopted as part of this documentation update:
+
+- Engineering Assessment Framework
+- Methodology Review
+- Knowledge Promotion workflow
+- Continuous Improvement governance
+- Engineering Methodology Findings
 
 ## Maintenance
 
