@@ -6,6 +6,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | --- | --- | --- |
 | [AREDIR-DISCOVERY-003](./AREDIR-DISCOVERY-003_ENGINEERING_OPERATIONS_ARCHITECTURE.md) | Engineering Operations Architecture | Complete |
 | [AREDIR-DISCOVERY-004](./AREDIR-DISCOVERY-004_ENGINEERING_MISSION_ARTIFACT_DEFINITION.md) | Engineering Mission Artifact Definition | Complete |
+| [AREDIR-DISCOVERY-005](./AREDIR-DISCOVERY-005_CLIENT_ASSESSMENT_CAPABILITY_DISTRIBUTION_BOUNDARY.md) | Client Assessment Capability Distribution Boundary | Complete |
 
 ## Related operationalization
 
