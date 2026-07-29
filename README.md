@@ -150,6 +150,8 @@ See [Engineering Work Package vs Implementation Brief](docs/company/playbooks/FE
 | Bugs | [docs/bugs/](docs/bugs/) |
 | QA | [docs/qa/](docs/qa/) |
 | Prompts | [docs/prompts/](docs/prompts/) |
+| **Discovery** | [docs/discovery/](docs/discovery/) |
+| **Engineering Missions** | [docs/missions/](docs/missions/) — [Contract](docs/missions/ENGINEERING-MISSION-CONTRACT.md) · [Template](docs/missions/ENGINEERING-MISSION-TEMPLATE.md) · [Registry](docs/missions/ENGINEERING-MISSION-REGISTRY.md) |
 | **Knowledge Base (canonical)** | [docs/company/](docs/company/) |
 | **Aredir Engineering Framework** | [AEF-000 Discovery](docs/company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) · [AEF-001 Contracts](docs/company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) · [AEF-002 Bootstrap Boundary](docs/company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
 | **Engineering Operating System** | [docs/company/ENGINEERING_OPERATING_SYSTEM.md](docs/company/ENGINEERING_OPERATING_SYSTEM.md) |

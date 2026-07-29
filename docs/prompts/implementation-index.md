@@ -51,6 +51,9 @@ Ordered tracker for Engineering Work Packages, optional implementation briefs/pr
 | AEF-000 | Aredir Engineering Framework discovery | Complete | [AEF-000 Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md), [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md) (AEF section), README / Governance Index / EOS entry-point links |
 | AEF-001 | Framework capability contracts | Complete | [AEF-001 Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md), [AEF-000](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md), KB Index / README / roadmap updates |
 | AEF-002 | Bootstrap extraction boundary | Complete | [AEF-002 Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md), [AEF-001](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md), extraction manifest + sync strategy (no extraction performed) |
+| AREDIR-DISCOVERY-003 | Engineering Operations Architecture discovery | Complete | [DISCOVERY-003](../discovery/AREDIR-DISCOVERY-003_ENGINEERING_OPERATIONS_ARCHITECTURE.md) |
+| AREDIR-DISCOVERY-004 | Engineering Mission Artifact Definition | Complete | [DISCOVERY-004](../discovery/AREDIR-DISCOVERY-004_ENGINEERING_MISSION_ARTIFACT_DEFINITION.md) |
+| AREDIR-MISSION-001 | Engineering Mission contract, template, and Labs registry | Complete | [Missions hub](../missions/README.md), [Contract](../missions/ENGINEERING-MISSION-CONTRACT.md), [Template](../missions/ENGINEERING-MISSION-TEMPLATE.md), [Registry](../missions/ENGINEERING-MISSION-REGISTRY.md), [Seed Mission](../missions/records/AREDIR-MISSION-001_engineering-mission-contract.md), [Completion report](../missions/AREDIR-MISSION-001_COMPLETION_REPORT.md) |
 
 ## Workspace (internal)
 
