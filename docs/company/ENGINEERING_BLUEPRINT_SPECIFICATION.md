@@ -150,6 +150,8 @@ Repositories **Adopt** company standards by default, **Extend** with documented 
 
 Company-owned assets (`docs/company/`, frameworks, promoted KB) are **synced or referenced** — not forked with parallel maintenance.
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for **repository structural compliance** (blueprint zones).
+
 ### Promotion workflow
 
 Reusable discoveries follow [Knowledge Governance](./governance/KNOWLEDGE_GOVERNANCE.md) and [Promotion Process](./PROMOTION_PROCESS.md). Classify candidates per [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md).
@@ -476,6 +478,7 @@ EOS-003 defines **how to inherit**. EOS-004 defines **what to inherit into**. [I
 
 ## Related
 
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)

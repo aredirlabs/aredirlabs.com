@@ -16,6 +16,8 @@ Define how project artifacts become **Aredir Labs company assets** in the Knowle
 3. **Reuse is the bar** — if it only applies to one feature, it stays in the project.
 4. **Metadata is mandatory** — promoted assets must be searchable, owned, and reviewable.
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for the **promotion lifecycle** (how reusable knowledge returns to the company Knowledge Base).
+
 ---
 
 ## Asset Lifecycle
@@ -418,6 +420,7 @@ When an asset is replaced:
 
 ## Related
 
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)
 - [Knowledge Artifact Taxonomy](./knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)

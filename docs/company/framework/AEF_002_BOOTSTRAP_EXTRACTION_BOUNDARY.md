@@ -19,12 +19,15 @@ It defines boundaries only. It does **not** perform extraction, reorganize repos
 | Ownership ambiguity | Resolve via [AEF-001](./AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md); document residual ambiguity — do not invent |
 | Canonical home vs bootstrap package | Canonical ownership stays in `aredirlabs-com` unless marked bootstrap-owned template |
 | Sync vs fork | Products **sync or reference** `docs/company/` — never fork ownership ([Inheritance Model](../PROJECT_INHERITANCE_MODEL.md)) |
+| Cross-repository representation architecture | [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md) |
 
 ---
 
 ## 1. Executive Summary
 
 `aredir-project-bootstrap` is a **packaging and inheritance distribution** repository. It is not the new owner of Aredir engineering methodology.
+
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for **Bootstrap extraction classification and packaging inventory**.
 
 | Repository | Role |
 |------------|------|
@@ -507,6 +510,8 @@ future_content:
 
 ## 8. Repository Boundary Model
 
+Repository roles below are the Bootstrap extraction view. Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md).
+
 | Concern | aredirlabs-com | aredir-project-bootstrap | Product repos | Future consulting repos |
 |---------|----------------|--------------------------|---------------|-------------------------|
 | AEF / EOS / Governance authority | **Canonical** | Sync consumer / distributor | Sync consumer | Optional curated subset (future) |
@@ -714,6 +719,7 @@ Physical paths inside generated product repos should still match Blueprint zones
 
 ## Related
 
+- [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [AEF-000 Aredir Engineering Framework Discovery](./AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
 - [AEF-001 Framework Capability Contracts](./AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
 - [Project Inheritance Model](../PROJECT_INHERITANCE_MODEL.md)

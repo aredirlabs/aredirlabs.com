@@ -257,7 +257,9 @@ During the validated EOS execution and follow-on audit, the following reusable p
 
 ## How products inherit the EOS
 
-New and existing products consume the EOS by following the [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md), conforming to the [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md), and inheriting from the [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md):
+New and existing products consume the EOS by following the [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md), conforming to the [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md), and inheriting from the [Reference Repository Specification](./REFERENCE_REPOSITORY_SPECIFICATION.md).
+
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for the **engineering operating model**.
 
 1. **Cloning or syncing** the Aredir Labs Reference Repository ([aredirlabs-com](https://github.com/aredirlabs/aredirlabs-com))
 2. **Carrying forward** `docs/company/`, operational docs, and GitHub templates — see [Future product standards](../architecture/future-product-standards.md)
@@ -342,6 +344,7 @@ Formal records: [GOVERNANCE-001 Review](./reviews/GOVERNANCE_001_FRAMEWORK_ESTAB
 
 ## Related
 
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
 - [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
 - [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)

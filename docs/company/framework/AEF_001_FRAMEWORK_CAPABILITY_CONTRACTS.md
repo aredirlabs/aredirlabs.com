@@ -96,6 +96,8 @@ Supporting spines (AEF-000): repository bootstrap lifecycle (C8); evidence/learn
 | **Orchestrates** | Links and conflict-rules across owners without duplicating their detail |
 | **Internal only** | Remains authoritative in Aredir Labs; bootstrap may sync/reference, not fork ownership |
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for **capability ownership contracts** (who owns what).
+
 ---
 
 ## 3. Capability Contracts
@@ -1182,6 +1184,7 @@ No additional aspirational principles are introduced.
 
 ## Related
 
+- [Capability Distribution Architecture](./CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [AEF-000 Aredir Engineering Framework Discovery](./AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
 - [AEF-002 Bootstrap Extraction Boundary](./AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
 - [Engineering Operating System](../ENGINEERING_OPERATING_SYSTEM.md)

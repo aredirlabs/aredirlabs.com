@@ -72,6 +72,8 @@ Mission does **not** replace:
 
 **Labs may project** Mission indexes and Primary Active designations. Labs must **not** become system of record for Missions whose authoritative home is another repository.
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](../company/framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This contract remains the authority for **Engineering Mission lifecycle and artifact rules**.
+
 **Owning capability for Labs delivery/methodology Missions:** AEF **C9 — Delivery & Release Framework** (or another existing AEF capability when more accurate). Do **not** invent C11.
 
 ---
@@ -389,3 +391,13 @@ Mission creation is **not** mandatory for every Package. Use Missions when opera
 | Future application projections vs record | Record wins |
 
 Material contract changes require a Labs package and Mission decision-log note on affected Active Missions when practical.
+
+---
+
+## Related
+
+- [Capability Distribution Architecture](../company/framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
+- [AREDIR-DISCOVERY-003 — Engineering Operations Architecture](../discovery/AREDIR-DISCOVERY-003_ENGINEERING_OPERATIONS_ARCHITECTURE.md)
+- [AREDIR-DISCOVERY-004 — Engineering Mission Artifact Definition](../discovery/AREDIR-DISCOVERY-004_ENGINEERING_MISSION_ARTIFACT_DEFINITION.md)
+- [Engineering Mission Template](./ENGINEERING-MISSION-TEMPLATE.md)
+- [Engineering Mission Registry](./ENGINEERING-MISSION-REGISTRY.md)

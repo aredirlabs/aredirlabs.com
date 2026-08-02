@@ -77,7 +77,7 @@ Primary indexes that must stay current:
 - [Governance Index](../GOVERNANCE_INDEX.md)
 - [Knowledge Base Index](../KNOWLEDGE_BASE_INDEX.md)
 - [Implementation index](../../prompts/implementation-index.md)
-- [AEF series](../framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) when framework discoveries change capability or documentation maps; ownership: [AEF-001](../framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md); bootstrap inclusion: [AEF-002](../framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
+- [AEF series](../framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) when framework discoveries change capability or documentation maps; ownership: [AEF-001](../framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md); bootstrap inclusion: [AEF-002](../framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md); cross-repository representation: [Capability Distribution Architecture](../framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 
 ---
 
@@ -162,6 +162,7 @@ The goal is trustworthy documentation that any engineer, agent, or new product c
 
 ## Related
 
+- [Capability Distribution Architecture](../framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](../ENGINEERING_OPERATING_SYSTEM.md)
 - [Knowledge Artifact Taxonomy](../knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
 - [Governance Index](../GOVERNANCE_INDEX.md)

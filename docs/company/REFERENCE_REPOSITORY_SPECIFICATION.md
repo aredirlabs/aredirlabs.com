@@ -47,6 +47,8 @@ Part of the [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md). C
 
 Products **clone, sync, or generate from** the Reference Repository. They customize product metadata, domain docs, and source code — not company methodology.
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for **what the Engineering Reference Repository ships**.
+
 ---
 
 ## Repository layout
@@ -125,7 +127,7 @@ reference-repository/
 
 | Asset | Reference Repository | Product repository |
 |-------|:--------------------:|:------------------:|
-| `docs/company/` | Authoritative source | Synced copy |
+| `docs/company/` | Authoritative source | Synced copy (representation; ownership remains Labs — see [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)) |
 | `docs/workspace/` | Present | Optional |
 | `docs/product/`, `docs/brand/` | Scaffold only | Fully customized |
 | `src/` | Template application | Domain implementation |
@@ -459,6 +461,7 @@ The Reference Repository is the **first executable engineering asset** built fro
 
 ## Related
 
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Engineering Blueprint Specification](./ENGINEERING_BLUEPRINT_SPECIFICATION.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)

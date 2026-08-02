@@ -34,6 +34,8 @@ Structural requirements for what a repository must contain: [Engineering Bluepri
 
 **Conflict rule:** Canonical `docs/company/` wins unless a governed **Deviate** decision exists per [Promotion Process](./PROMOTION_PROCESS.md).
 
+Cross-repository representation and ownership boundaries are governed by the [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md). This document remains the authority for **how repositories inherit and consume the EOS** (Adopt / Extend / Deviate).
+
 ---
 
 ## Repository lifecycle
@@ -138,6 +140,8 @@ Development Ready
 ---
 
 ## Ownership model
+
+Representation of company methodology in product repositories does not transfer methodology authority. See [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md).
 
 ### Company-owned
 
@@ -334,6 +338,7 @@ Products do not maintain parallel copies of company standards.
 
 ## Related
 
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
 - [Governance Index](./GOVERNANCE_INDEX.md)

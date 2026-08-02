@@ -388,8 +388,9 @@ The Aredir Engineering Framework (AEF) is the framework boundary for company eng
 | Framework discovery | [AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md) |
 | Framework capability contracts | [AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) |
 | Bootstrap extraction boundary | [AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
+| Capability Distribution Architecture | [CAPABILITY_DISTRIBUTION_ARCHITECTURE.md](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md) |
 
-AEF does not replace the EOS. AEF-000 maps methodological subsystems; **AEF-001 is the normative ownership reference**; **AEF-002 is the extraction specification** for future `aredir-project-bootstrap` work.
+AEF does not replace the EOS. AEF-000 maps methodological subsystems; **AEF-001 is the normative ownership reference**; **AEF-002 is the extraction specification** for `aredir-project-bootstrap` packaging. **[Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)** is the company architectural standard — and reference hub — for how representations cross repository boundaries without transferring authority.
 
 ## Engineering Operating System
 
@@ -485,6 +486,7 @@ Knowledge Base
 - [AEF-000 Aredir Engineering Framework Discovery](./framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
 - [AEF-001 Framework Capability Contracts](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
 - [AEF-002 Bootstrap Extraction Boundary](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
+- [Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)
 - [Engineering Operating System](./ENGINEERING_OPERATING_SYSTEM.md)
 - [Project Inheritance Model](./PROJECT_INHERITANCE_MODEL.md)
 - [Engineering Capability Model](./ENGINEERING_CAPABILITY_MODEL.md)
