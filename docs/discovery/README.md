@@ -17,6 +17,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 ## Related canonical architecture
 
 - [Capability Distribution Architecture](../company/framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md) — AREDIR-ARCHITECTURE-007 (Company Standard; reference hub)
+- [FOUNDATION-RELEASE-001](../releases/FOUNDATION-RELEASE-001.md) — Aredir Foundation v1.0 architectural baseline
 
 ## Related operationalization
 

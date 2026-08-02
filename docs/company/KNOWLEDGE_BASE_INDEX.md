@@ -389,8 +389,9 @@ The Aredir Engineering Framework (AEF) is the framework boundary for company eng
 | Framework capability contracts | [AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md](./framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md) |
 | Bootstrap extraction boundary | [AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md](./framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md) |
 | Capability Distribution Architecture | [CAPABILITY_DISTRIBUTION_ARCHITECTURE.md](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md) |
+| Foundation release (v1.0) | [FOUNDATION-RELEASE-001](../releases/FOUNDATION-RELEASE-001.md) |
 
-AEF does not replace the EOS. AEF-000 maps methodological subsystems; **AEF-001 is the normative ownership reference**; **AEF-002 is the extraction specification** for `aredir-project-bootstrap` packaging. **[Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)** is the company architectural standard — and reference hub — for how representations cross repository boundaries without transferring authority.
+AEF does not replace the EOS. AEF-000 maps methodological subsystems; **AEF-001 is the normative ownership reference**; **AEF-002 is the extraction specification** for `aredir-project-bootstrap` packaging. **[Capability Distribution Architecture](./framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md)** is the company architectural standard — and reference hub — for how representations cross repository boundaries without transferring authority. **[FOUNDATION-RELEASE-001](../releases/FOUNDATION-RELEASE-001.md)** records **Aredir Foundation v1.0** as the company architectural baseline.
 
 ## Engineering Operating System
 

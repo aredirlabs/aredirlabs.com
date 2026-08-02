@@ -163,7 +163,7 @@ The ecosystem now demonstrates **one concept → one authority → many referenc
 
 | Phase | Status |
 | --- | --- |
-| Phase 1 — Aredir Architecture (through DOCS-008) | **Complete** — milestone candidate: Aredir Foundation v1 |
+| Phase 1 — Aredir Architecture (through DOCS-008) | **Complete** — recorded as [FOUNDATION-RELEASE-001](../releases/FOUNDATION-RELEASE-001.md) (Foundation v1.0) |
 | Phase 2 — Product Validation (Phoenix, ClassForge, AlignFit) | Next operating focus |
 | Phase 3 — Internal Operations (Ops Platform v1) | After product rhythm restored |
 
