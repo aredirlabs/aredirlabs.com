@@ -7,6 +7,7 @@ import {
   workspaceProjectPrompts,
   workspaceProjects,
   workspaceSettings,
+  workspaceEngineeringWork,
 } from "./schema";
 
 const sql = neon(process.env.DATABASE_URL!);
@@ -74,6 +75,25 @@ const projects = [
       "The Aredir Labs public website and internal workspace. Platform includes project registry, documentation hub, prompt library, and Knowledge Asset Registry on Neon Postgres, Drizzle, and Better Auth.",
     repoUrl: "https://github.com/aredirlabs/aredirlabs-com",
     publicUrl: "https://aredirlabs.com",
+  },
+];
+
+const engineeringWork = [
+  {
+    id: "eng_work_alignfit_hydration_operational_state",
+    projectId: "proj_01",
+    title: "Hydration Operational State Representation",
+    summary:
+      "Define and validate how hydration operational state should be represented for AlignFit, bounded by verified current-state evidence.",
+    type: "architecture" as const,
+    workflow: "architecture" as const,
+    state: "proposed" as const,
+    currentNextAction:
+      "Confirm the governing discovery or architecture evidence and define the bounded outcome.",
+    currentOutcome: null,
+    priority: null,
+    condition: null,
+    conditionRationale: null,
   },
 ];
 
@@ -448,6 +468,39 @@ async function seed() {
   }
 
   console.log(`Done. ${inserted} projects upserted.`);
+
+  console.log("Seeding workspace_engineering_work...");
+  let engineeringWorkInserted = 0;
+
+  for (const work of engineeringWork) {
+    const result = await db
+      .insert(workspaceEngineeringWork)
+      .values(work)
+      .onConflictDoUpdate({
+        target: workspaceEngineeringWork.id,
+        set: {
+          title: work.title,
+          summary: work.summary,
+          type: work.type,
+          workflow: work.workflow,
+          state: work.state,
+          currentNextAction: work.currentNextAction,
+          currentOutcome: null,
+          priority: null,
+          condition: null,
+          conditionRationale: null,
+          updatedAt: new Date(),
+        },
+      })
+      .returning({ id: workspaceEngineeringWork.id });
+
+    if (result.length > 0) {
+      console.log(`  ✓ ${work.title}`);
+      engineeringWorkInserted++;
+    }
+  }
+
+  console.log(`Done. ${engineeringWorkInserted} Engineering Work items upserted.`);
 
   console.log("Seeding workspace_project_milestones...");
   let milestonesInserted = 0;

@@ -148,6 +148,54 @@ export const workspaceProjectPromptStatusEnum = pgEnum(
   ["drafted", "run", "verified", "needs_followup", "superseded"],
 );
 
+export const engineeringWorkTypeEnum = pgEnum("engineering_work_type", [
+  "feature",
+  "task",
+  "bug",
+  "research",
+  "architecture",
+  "verification",
+  "documentation",
+  "maintenance",
+  "release",
+]);
+
+export const engineeringWorkWorkflowEnum = pgEnum(
+  "engineering_work_workflow",
+  [
+    "delivery",
+    "defect",
+    "discovery",
+    "research",
+    "architecture",
+    "maintenance",
+    "verification",
+    "documentation",
+    "promotion",
+    "release",
+  ],
+);
+
+export const engineeringWorkStateEnum = pgEnum("engineering_work_state", [
+  "proposed",
+  "active",
+  "in_review",
+  "completed",
+  "closed",
+  "cancelled",
+  "superseded",
+]);
+
+export const engineeringWorkReferenceAuthorityEnum = pgEnum(
+  "engineering_work_reference_authority",
+  ["repository_authoritative", "external_read_only", "workspace_derived"],
+);
+
+export const engineeringWorkReferenceStatusEnum = pgEnum(
+  "engineering_work_reference_status",
+  ["expected", "verified", "stale", "missing"],
+);
+
 export const workspaceProjectNotes = pgTable("workspace_project_notes", {
   id: text("id").primaryKey(),
   projectId: text("project_id")
@@ -215,3 +263,46 @@ export const workspaceProjectPrompts = pgTable("workspace_project_prompts", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const workspaceEngineeringWork = pgTable("workspace_engineering_work", {
+  id: text("id").primaryKey(),
+  projectId: text("project_id")
+    .notNull()
+    .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  summary: text("summary").notNull(),
+  type: engineeringWorkTypeEnum("type").notNull(),
+  workflow: engineeringWorkWorkflowEnum("workflow").notNull(),
+  state: engineeringWorkStateEnum("state").notNull().default("proposed"),
+  currentNextAction: text("current_next_action").notNull(),
+  currentOutcome: text("current_outcome"),
+  priority: text("priority"),
+  condition: text("condition"),
+  conditionRationale: text("condition_rationale"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const workspaceEngineeringWorkRepositoryReferences = pgTable(
+  "workspace_engineering_work_repository_references",
+  {
+    id: text("id").primaryKey(),
+    engineeringWorkId: text("engineering_work_id")
+      .notNull()
+      .references(() => workspaceEngineeringWork.id, { onDelete: "cascade" }),
+    repository: text("repository").notNull(),
+    sourceLocation: text("source_location").notNull(),
+    artifactClass: text("artifact_class").notNull(),
+    authority: engineeringWorkReferenceAuthorityEnum("authority").notNull(),
+    artifactIdentifier: text("artifact_identifier"),
+    branch: text("branch"),
+    commitHash: text("commit_hash"),
+    referenceStatus: engineeringWorkReferenceStatusEnum("reference_status")
+      .notNull()
+      .default("expected"),
+    lastReviewedAt: timestamp("last_reviewed_at"),
+    note: text("note"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+);

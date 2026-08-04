@@ -6,6 +6,8 @@ import {
   workspaceProjectMilestones,
   workspaceProjectPrompts,
   workspaceProjects,
+  workspaceEngineeringWork,
+  workspaceEngineeringWorkRepositoryReferences,
 } from "@/lib/db/schema";
 import {
   WORKSPACE_PROJECT_DOCUMENT_CATEGORIES,
@@ -129,6 +131,76 @@ export type WorkspaceProjectDocument =
   typeof workspaceProjectDocuments.$inferSelect;
 
 export type WorkspaceProjectPrompt = typeof workspaceProjectPrompts.$inferSelect;
+
+export type WorkspaceEngineeringWork =
+  typeof workspaceEngineeringWork.$inferSelect;
+
+export async function getProjectEngineeringWork(projectId: string) {
+  const db = getDb();
+
+  return db
+    .select()
+    .from(workspaceEngineeringWork)
+    .where(eq(workspaceEngineeringWork.projectId, projectId))
+    .orderBy(desc(workspaceEngineeringWork.updatedAt));
+}
+
+export async function getProjectEngineeringWorkById(
+  projectSlug: string,
+  engineeringWorkId: string,
+) {
+  const db = getDb();
+  const rows = await db
+    .select({
+      id: workspaceEngineeringWork.id,
+      projectId: workspaceEngineeringWork.projectId,
+      title: workspaceEngineeringWork.title,
+      summary: workspaceEngineeringWork.summary,
+      type: workspaceEngineeringWork.type,
+      workflow: workspaceEngineeringWork.workflow,
+      state: workspaceEngineeringWork.state,
+      currentNextAction: workspaceEngineeringWork.currentNextAction,
+      currentOutcome: workspaceEngineeringWork.currentOutcome,
+      priority: workspaceEngineeringWork.priority,
+      condition: workspaceEngineeringWork.condition,
+      conditionRationale: workspaceEngineeringWork.conditionRationale,
+      createdAt: workspaceEngineeringWork.createdAt,
+      updatedAt: workspaceEngineeringWork.updatedAt,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+    .from(workspaceEngineeringWork)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceEngineeringWork.projectId, workspaceProjects.id),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceEngineeringWork.id, engineeringWorkId),
+      ),
+    )
+    .limit(1);
+
+  return rows[0] ?? null;
+}
+
+export async function getEngineeringWorkRepositoryReferences(
+  engineeringWorkId: string,
+) {
+  const db = getDb();
+
+  return db
+    .select()
+    .from(workspaceEngineeringWorkRepositoryReferences)
+    .where(
+      eq(
+        workspaceEngineeringWorkRepositoryReferences.engineeringWorkId,
+        engineeringWorkId,
+      ),
+    )
+    .orderBy(asc(workspaceEngineeringWorkRepositoryReferences.createdAt));
+}
 
 export type WorkspaceDocumentSearchResult = WorkspaceProjectDocument & {
   projectName: string;

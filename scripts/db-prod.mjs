@@ -33,8 +33,12 @@ const commands = {
     bin: "scripts/migrate-workspace-006.mjs",
     args: [],
     then: {
-      bin: "node_modules/drizzle-kit/bin.cjs",
-      args: ["push"],
+      bin: "scripts/migrate-engineering-work-002.mjs",
+      args: [],
+      then: {
+        bin: "node_modules/drizzle-kit/bin.cjs",
+        args: ["push"],
+      },
     },
   },
   seed: {
@@ -58,9 +62,11 @@ function runStep(step) {
 }
 
 let result = runStep(target);
+let nextStep = target.then;
 
-if ((result.status ?? 1) === 0 && target.then) {
-  result = runStep(target.then);
+while ((result.status ?? 1) === 0 && nextStep) {
+  result = runStep(nextStep);
+  nextStep = nextStep.then;
 }
 
 process.exit(result.status ?? 1);

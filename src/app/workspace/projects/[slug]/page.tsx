@@ -8,6 +8,7 @@ import { Eyebrow } from "@/components/eyebrow";
 import { ProjectMilestonesSection } from "@/components/workspace/project-milestones-section";
 import { ProjectDocumentsSection } from "@/components/workspace/project-documents-section";
 import { ProjectPromptsSection } from "@/components/workspace/project-prompts-section";
+import { ProjectEngineeringWorkSection } from "@/components/workspace/project-engineering-work-section";
 import {
   ProjectCurrentFocusSection,
   ProjectOverviewSection,
@@ -24,9 +25,14 @@ import {
   workspaceProjectNotes,
   workspaceProjectPrompts,
   workspaceProjects,
+  workspaceEngineeringWork,
 } from "@/lib/db/schema";
 import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
-import { getProjectDocuments, getProjectPrompts } from "@/lib/workspace/queries";
+import {
+  getProjectDocuments,
+  getProjectEngineeringWork,
+  getProjectPrompts,
+} from "@/lib/workspace/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -65,11 +71,13 @@ export default async function WorkspaceProjectDetailPage({
   let milestones: Array<typeof workspaceProjectMilestones.$inferSelect> = [];
   let documents: Array<typeof workspaceProjectDocuments.$inferSelect> = [];
   let prompts: Array<typeof workspaceProjectPrompts.$inferSelect> = [];
+  let engineeringWork: Array<typeof workspaceEngineeringWork.$inferSelect> = [];
   let error: string | null = null;
   let notesError: string | null = null;
   let milestonesError: string | null = null;
   let documentsError: string | null = null;
   let promptsError: string | null = null;
+  let engineeringWorkError: string | null = null;
 
   try {
     const db = getDb();
@@ -104,6 +112,13 @@ export default async function WorkspaceProjectDetailPage({
       } catch (e) {
         promptsError =
           e instanceof Error ? e.message : "Failed to load prompts";
+      }
+
+      try {
+        engineeringWork = await getProjectEngineeringWork(project.id);
+      } catch (e) {
+        engineeringWorkError =
+          e instanceof Error ? e.message : "Failed to load Engineering Work";
       }
 
       try {
@@ -241,6 +256,12 @@ export default async function WorkspaceProjectDetailPage({
         </section>
 
         <ProjectCurrentFocusSection project={project} />
+
+        <ProjectEngineeringWorkSection
+          projectSlug={project.slug}
+          workItems={engineeringWork}
+          workItemsError={engineeringWorkError}
+        />
 
         <ProjectMilestonesSection
           projectSlug={project.slug}
