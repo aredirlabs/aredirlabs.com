@@ -65,7 +65,7 @@ The current authenticated Workspace remains shared-access. Its route proxy check
 - `git diff --check`: passed.
 - Migration application/seed idempotence: not run; no configured local database was supplied.
 - The dependency baseline was subsequently repaired and validated by AREDIR-INFRA-002. Full TypeScript, lint, and all script syntax checks now pass. The production build remains environment-limited only by unavailable Google Fonts. See `ENGINEERING-WORK-002_VALIDATION_REPORT.md` for the current validation classification and dynamic-validation limits.
-- AREDIR-ENGINEERING-WORK-004 resolved the Type/Workflow/State label ambiguity using semantic labeled metadata. Dynamic database and runtime validation remains pending an approved non-production environment.
+- AREDIR-ENGINEERING-WORK-004 resolved the Type/Workflow/State label ambiguity using semantic labeled metadata. AREDIR-RUNTIME-001 subsequently confirmed the approved Dev data, built local runtime, public routes, and unauthenticated Workspace/Work boundary. Full authenticated runtime validation remains pending only the approved local account credential.
 
 ## Intentionally deferred
 

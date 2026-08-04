@@ -2,7 +2,9 @@
 
 ## Target establishment status
 
-**Not established.**
+**Superseded by AREDIR-RUNTIME-001 evidence on 2026-08-04.**
+
+The ignored local configuration now resolves to the confirmed Neon Dev posture. Read-only validation confirmed the singular Hydration OSR record, zero repository references, and one allow-listed account. The authenticated credential was not available, so the current runtime classification remains **Partially validated**; see `AREDIR-RUNTIME-001.md` for the executed matrix and limitations.
 
 The repository expects local values in ignored `.env.local`; the example identifies `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `NEXT_PUBLIC_SITE_URL`, and `WORKSPACE_ALLOWED_EMAILS`. The example is instructional only. At validation time there was no usable `.env.local` or process `DATABASE_URL`.
 

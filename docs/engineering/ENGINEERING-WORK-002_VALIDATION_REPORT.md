@@ -4,6 +4,8 @@
 
 **Partially validated**
 
+Runtime posture update (2026-08-04): a confirmed Dev target, singular seeded record, zero references, allow-listed account, successful production build, built local public-route checks, and unauthenticated Workspace/Work redirects have now been observed. The authenticated journey remains deferred solely because no approved credential was available. See `AREDIR-RUNTIME-001.md`.
+
 Static implementation and dependency validation pass. Operational acceptance cannot be established because the required database and authenticated runtime checks were blocked before execution by the absence of a classifiable non-production `DATABASE_URL`.
 
 ## Environment
@@ -12,8 +14,8 @@ Static implementation and dependency validation pass. Operational acceptance can
 | --- | --- |
 | Operating system | Windows 10.0.26200, x64 |
 | Node / npm | v22.19.0 / 11.7.0 |
-| Database classification | Unavailable; no `.env.local` and no `DATABASE_URL` in the validation environment |
-| Application environment | Not started; database configuration is absent |
+| Database classification | Confirmed Neon Dev posture; read-only runtime prerequisite checks passed |
+| Application environment | Production build and isolated `next start` runtime passed; `next dev` retains known local `spawn EPERM` limitation |
 | Browser | No browser runtime review performed |
 | Google Fonts network status | Unavailable; build cannot reach `fonts.googleapis.com` |
 
