@@ -459,13 +459,13 @@ If AEF-003 remains in its current state (empty file, conflicting identity, no ow
 
 ## Related
 
-- [AEF-000 Aredir Engineering Framework Discovery](docs/company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
-- [AEF-001 Framework Capability Contracts](docs/company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
-- [AEF-002 Bootstrap Extraction Boundary](docs/company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
-- [AREDIR-DISCOVERY-001 AEF Architecture Reconstruction](docs/discovery/AREDIR-DISCOVERY-001_AEF_ARCHITECTURE_RECONSTRUCTION.md)
-- [AREDIR-DISCOVERY-002 Engineering Knowledge Classification](docs/discovery/AREDIR-DISCOVERY-002_ENGINEERING_KNOWLEDGE_CLASSIFICATION.md)
-- [Evidence Lifecycle Pattern](docs/company/knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
-- [Engineering Operating System](docs/company/ENGINEERING_OPERATING_SYSTEM.md)
-- [Promotion Process](docs/company/PROMOTION_PROCESS.md)
-- [Knowledge Base Index](docs/company/KNOWLEDGE_BASE_INDEX.md)
-- [Knowledge Artifact Taxonomy](docs/company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)
+- [AEF-000 Aredir Engineering Framework Discovery](../company/framework/AEF_000_AREDIR_ENGINEERING_FRAMEWORK_DISCOVERY.md)
+- [AEF-001 Framework Capability Contracts](../company/framework/AEF_001_FRAMEWORK_CAPABILITY_CONTRACTS.md)
+- [AEF-002 Bootstrap Extraction Boundary](../company/framework/AEF_002_BOOTSTRAP_EXTRACTION_BOUNDARY.md)
+- [AREDIR-DISCOVERY-001 AEF Architecture Reconstruction](./AREDIR-DISCOVERY-001_AEF_ARCHITECTURE_RECONSTRUCTION.md)
+- [AREDIR-DISCOVERY-002 Engineering Knowledge Classification](./AREDIR-DISCOVERY-002_ENGINEERING_KNOWLEDGE_CLASSIFICATION.md)
+- [Evidence Lifecycle Pattern](../company/knowledge-patterns/EVIDENCE_LIFECYCLE_PATTERN.md)
+- [Engineering Operating System](../company/ENGINEERING_OPERATING_SYSTEM.md)
+- [Promotion Process](../company/PROMOTION_PROCESS.md)
+- [Knowledge Base Index](../company/KNOWLEDGE_BASE_INDEX.md)
+- [Knowledge Artifact Taxonomy](../company/knowledge/KNOWLEDGE_ARTIFACT_TAXONOMY.md)

@@ -27,3 +27,12 @@ Engineering Mission contract implementation (post-discovery):
 - [Mission Contract](../missions/ENGINEERING-MISSION-CONTRACT.md)
 - [Mission Template](../missions/ENGINEERING-MISSION-TEMPLATE.md)
 - [Mission Registry](../missions/ENGINEERING-MISSION-REGISTRY.md)
+
+## Platform assessment records
+
+- [PLATFORM-ASSESSMENT-001](./PLATFORM-ASSESSMENT-001.md)
+- [Authentication Inventory](./AUTHENTICATION-INVENTORY.md)
+- [Data Model Inventory](./DATA-MODEL-INVENTORY.md)
+- [Feature Inventory](./FEATURE-INVENTORY.md)
+- [UI Foundation Inventory](./UI-FOUNDATION-INVENTORY.md)
+- [Repository Boundary Assessment](./REPOSITORY-BOUNDARY-ASSESSMENT.md)
