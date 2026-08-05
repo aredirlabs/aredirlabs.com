@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, ExternalLink, FileQuestion } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ExternalLink, FileQuestion, Pencil } from "lucide-react";
 
 import { Eyebrow } from "@/components/eyebrow";
 import {
@@ -103,7 +103,10 @@ export default async function EngineeringWorkDetailPage({
 
       <div className="mb-8">
         <Eyebrow>Engineering Work</Eyebrow>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight">{work.title}</h1>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-2xl font-semibold tracking-tight">{work.title}</h1>
+          <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="size-3.5" />Edit Engineering Work</Link>
+        </div>
       </div>
 
       <div className="space-y-4">

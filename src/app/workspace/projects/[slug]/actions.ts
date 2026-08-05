@@ -18,6 +18,9 @@ import {
   isEngineeringWorkState,
   isEngineeringWorkType,
   isEngineeringWorkWorkflow,
+  type EngineeringWorkState,
+  type EngineeringWorkType,
+  type EngineeringWorkWorkflow,
 } from "@/lib/workspace/engineering-work";
 import { isWorkspaceProjectDocumentCategory } from "@/lib/workspace/document-categories";
 import { isWorkspaceMilestoneStatus } from "@/lib/workspace/milestone-status";
@@ -28,6 +31,12 @@ import { isWorkspaceProjectPromptType } from "@/lib/workspace/prompt-types";
 export type CreateEngineeringWorkState = {
   error?: string;
   workId?: string;
+};
+
+export type UpdateEngineeringWorkState = {
+  error?: string;
+  fieldErrors?: Partial<Record<"title" | "type" | "workflow" | "state" | "summary" | "currentNextAction", string>>;
+  success?: boolean;
 };
 
 export async function createEngineeringWork(
@@ -118,6 +127,85 @@ export async function createEngineeringWork(
       error:
         e instanceof Error ? e.message : "Failed to create Engineering Work.",
     };
+  }
+}
+
+export async function updateEngineeringWork(
+  projectSlug: string,
+  workId: string,
+  _prevState: UpdateEngineeringWorkState,
+  formData: FormData,
+): Promise<UpdateEngineeringWorkState> {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session) {
+    return { error: "You must be signed in to update Engineering Work." };
+  }
+
+  const title = formData.get("title");
+  const type = formData.get("type");
+  const workflow = formData.get("workflow");
+  const summary = formData.get("summary");
+  const state = formData.get("state");
+  const currentNextAction = formData.get("current_next_action");
+  const fieldErrors: UpdateEngineeringWorkState["fieldErrors"] = {};
+
+  if (typeof title !== "string" || !title.trim()) fieldErrors.title = "Title is required.";
+  else if (title.trim().length > 200) fieldErrors.title = "Title must be 200 characters or fewer.";
+  if (typeof type !== "string" || !isEngineeringWorkType(type)) fieldErrors.type = "Select a valid Engineering Work type.";
+  if (typeof workflow !== "string" || !isEngineeringWorkWorkflow(workflow)) fieldErrors.workflow = "Select a valid Engineering Work workflow.";
+  if (typeof state !== "string" || !isEngineeringWorkState(state)) fieldErrors.state = "Select a valid lifecycle state.";
+  if (typeof summary !== "string" || !summary.trim()) fieldErrors.summary = "Objective is required.";
+  else if (summary.trim().length > 4000) fieldErrors.summary = "Objective must be 4,000 characters or fewer.";
+  if (typeof currentNextAction !== "string" || !currentNextAction.trim()) fieldErrors.currentNextAction = "Recommended next action is required.";
+  else if (currentNextAction.trim().length > 2000) fieldErrors.currentNextAction = "Recommended next action must be 2,000 characters or fewer.";
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return { error: "Correct the highlighted fields and try again.", fieldErrors };
+  }
+
+  const normalizedTitle = title as string;
+  const normalizedType = type as EngineeringWorkType;
+  const normalizedWorkflow = workflow as EngineeringWorkWorkflow;
+  const normalizedState = state as EngineeringWorkState;
+  const normalizedSummary = summary as string;
+  const normalizedCurrentNextAction = currentNextAction as string;
+
+  try {
+    const db = getDb();
+    const [project] = await db
+      .select({ id: workspaceProjects.id })
+      .from(workspaceProjects)
+      .where(eq(workspaceProjects.slug, projectSlug))
+      .limit(1);
+
+    if (!project) return { error: "Project not found." };
+
+    const updated = await db
+      .update(workspaceEngineeringWork)
+      .set({
+        title: normalizedTitle.trim(),
+        type: normalizedType,
+        workflow: normalizedWorkflow,
+        state: normalizedState,
+        summary: normalizedSummary.trim(),
+        currentNextAction: normalizedCurrentNextAction.trim(),
+        updatedAt: new Date(),
+      })
+      .where(and(
+        eq(workspaceEngineeringWork.id, workId),
+        eq(workspaceEngineeringWork.projectId, project.id),
+      ))
+      .returning({ id: workspaceEngineeringWork.id });
+
+    if (!updated[0]) return { error: "Engineering Work was not found in this project." };
+
+    revalidatePath("/workspace");
+    revalidatePath(`/workspace/projects/${projectSlug}`);
+    revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}`);
+    return { success: true };
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "Failed to update Engineering Work." };
   }
 }
 
