@@ -12,6 +12,7 @@ import {
   getEngineeringWorkRepositoryReferences,
   getProjectEngineeringWorkById,
 } from "@/lib/workspace/queries";
+import { getRelatedKnowledgeForEngineeringWork } from "@/lib/workspace/related-knowledge";
 import {
   ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS,
   ENGINEERING_WORK_REFERENCE_STATUS_LABELS,
@@ -54,12 +55,16 @@ export default async function EngineeringWorkDetailPage({
 
   let work: Awaited<ReturnType<typeof getProjectEngineeringWorkById>> | null = null;
   let references: Awaited<ReturnType<typeof getEngineeringWorkRepositoryReferences>> = [];
+  let relatedKnowledge: Awaited<ReturnType<typeof getRelatedKnowledgeForEngineeringWork>> = [];
   let error: string | null = null;
 
   try {
     work = await getProjectEngineeringWorkById(slug, workId);
     if (work) {
-      references = await getEngineeringWorkRepositoryReferences(work.id);
+      [references, relatedKnowledge] = await Promise.all([
+        getEngineeringWorkRepositoryReferences(work.id),
+        getRelatedKnowledgeForEngineeringWork(work),
+      ]);
     }
   } catch (e) {
     error = e instanceof Error ? e.message : "Failed to load Engineering Work";
@@ -145,6 +150,43 @@ export default async function EngineeringWorkDetailPage({
             {work.conditionRationale ? <p className="mt-2 text-sm leading-7 text-muted-foreground">{work.conditionRationale}</p> : null}
           </section>
         ) : null}
+
+        <section className="rounded-lg border border-border bg-card p-6">
+          <div>
+            <h2 className="font-heading text-base font-semibold">Related knowledge</h2>
+            <p className="mt-1 text-sm text-muted-foreground">Read-only context deliberately connected to this Engineering Work. Repository evidence remains separate below.</p>
+          </div>
+          {relatedKnowledge.length === 0 ? (
+            <div className="mt-4 rounded-md border border-dashed border-border bg-muted/20 p-6 text-center">
+              <FileQuestion className="mx-auto size-5 text-muted-foreground" />
+              <p className="mt-3 text-sm font-medium">No related knowledge has been connected yet.</p>
+              <p className="mt-1 text-sm text-muted-foreground">Add or verify supporting architecture, discovery, or validation context before advancing this work.</p>
+            </div>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {relatedKnowledge.map((item) => (
+                <li key={item.id} className="rounded-md border border-border bg-background/60 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="font-medium">{item.title}</p>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </div>
+                    <span className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-primary">{item.knowledgeClass}</span>
+                  </div>
+                  <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+                    <DetailField label="Project" value={item.projectContext} />
+                    <DetailField label="Authority" value={item.authorityLocation} />
+                    <DetailField label="Last reviewed / updated" value={item.lastReviewed} />
+                  </dl>
+                  <Link href={`${item.href}?fromWork=${encodeURIComponent(work.id)}&project=${encodeURIComponent(work.projectSlug)}`} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    Open {item.knowledgeClass.toLowerCase()}
+                    <ExternalLink className="size-3.5" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         <section className="rounded-lg border border-border bg-card p-6">
           <h2 className="font-heading text-base font-semibold">Related repository artifacts</h2>

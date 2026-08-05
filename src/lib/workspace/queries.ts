@@ -42,6 +42,80 @@ export type OperatingSnapshot = {
   }>;
 };
 
+export type DailyOperatingExperience = {
+  continuation: {
+    id: string;
+    title: string;
+    summary: string;
+    currentNextAction: string;
+    projectName: string;
+    projectSlug: string;
+  } | null;
+  attention: {
+    title: string;
+    projectName: string;
+    projectSlug: string;
+    detail: string | null;
+  } | null;
+  activeProjects: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    currentFocus: string | null;
+    nextStep: string | null;
+  }>;
+  recentProjects: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    status: string;
+    currentFocus: string | null;
+  }>;
+};
+
+/** Uses existing update timestamps as a proxy for recent activity. */
+export async function getDailyOperatingExperience(): Promise<DailyOperatingExperience> {
+  const db = getDb();
+  const [continuationRows, blockedRows, activeProjects, recentProjects] = await Promise.all([
+    db.select({ id: workspaceEngineeringWork.id, title: workspaceEngineeringWork.title, summary: workspaceEngineeringWork.summary, currentNextAction: workspaceEngineeringWork.currentNextAction, projectName: workspaceProjects.name, projectSlug: workspaceProjects.slug })
+      .from(workspaceEngineeringWork)
+      .innerJoin(workspaceProjects, eq(workspaceEngineeringWork.projectId, workspaceProjects.id))
+      .where(
+        inArray(workspaceEngineeringWork.state, [
+          "active",
+          "in_review",
+          "proposed",
+        ]),
+      )
+      .orderBy(
+        sql`CASE
+          WHEN ${workspaceEngineeringWork.state} = 'active' THEN 0
+          WHEN ${workspaceEngineeringWork.state} = 'in_review' THEN 1
+          ELSE 2
+        END`,
+        desc(workspaceEngineeringWork.updatedAt),
+      )
+      .limit(1),
+    db.select({ title: workspaceProjectMilestones.title, projectName: workspaceProjects.name, projectSlug: workspaceProjects.slug, detail: workspaceProjectMilestones.description })
+      .from(workspaceProjectMilestones)
+      .innerJoin(workspaceProjects, eq(workspaceProjectMilestones.projectId, workspaceProjects.id))
+      .where(eq(workspaceProjectMilestones.status, "blocked"))
+      .orderBy(asc(workspaceProjectMilestones.sortOrder))
+      .limit(1),
+    db.select({ id: workspaceProjects.id, name: workspaceProjects.name, slug: workspaceProjects.slug, currentFocus: workspaceProjects.currentFocus, nextStep: workspaceProjects.nextStep })
+      .from(workspaceProjects)
+      .where(inArray(workspaceProjects.status, ["active", "testing"]))
+      .orderBy(desc(workspaceProjects.updatedAt))
+      .limit(3),
+    db.select({ id: workspaceProjects.id, name: workspaceProjects.name, slug: workspaceProjects.slug, status: workspaceProjects.status, currentFocus: workspaceProjects.currentFocus })
+      .from(workspaceProjects)
+      .orderBy(desc(workspaceProjects.updatedAt))
+      .limit(4),
+  ]);
+
+  return { continuation: continuationRows[0] ?? null, attention: blockedRows[0] ?? null, activeProjects, recentProjects };
+}
+
 export async function getOperatingSnapshot(): Promise<OperatingSnapshot> {
   const db = getDb();
 

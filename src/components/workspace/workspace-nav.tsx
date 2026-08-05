@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth-client";
 
 const navItems = [
-  { href: "/workspace", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/workspace", label: "Workspace", icon: LayoutDashboard },
   { href: "/workspace/projects", label: "Projects", icon: FolderKanban },
   { href: "/workspace/docs", label: "Documents", icon: FileText },
   { href: "/workspace/prompts", label: "Prompts", icon: MessageSquareText },

@@ -27,6 +27,7 @@ export const dynamic = "force-dynamic";
 
 type KnowledgeAssetDetailPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ fromWork?: string | string[]; project?: string | string[] }>;
 };
 
 function DetailField({
@@ -48,8 +49,12 @@ function DetailField({
 
 export default async function KnowledgeAssetDetailPage({
   params,
+  searchParams,
 }: KnowledgeAssetDetailPageProps) {
   const { id } = await params;
+  const { fromWork, project } = await searchParams;
+  const returnWorkId = typeof fromWork === "string" ? fromWork : null;
+  const returnProjectSlug = typeof project === "string" ? project : null;
 
   if (!id?.trim()) {
     notFound();
@@ -67,11 +72,11 @@ export default async function KnowledgeAssetDetailPage({
   return (
     <div className="p-8">
       <Link
-        href="/workspace/knowledge-assets"
+        href={returnWorkId && returnProjectSlug ? `/workspace/projects/${encodeURIComponent(returnProjectSlug)}/engineering-work/${encodeURIComponent(returnWorkId)}` : "/workspace/knowledge-assets"}
         className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="size-3.5" />
-        Knowledge Assets
+        {returnWorkId && returnProjectSlug ? "Back to Engineering Work" : "Knowledge Assets"}
       </Link>
 
       <div className="max-w-4xl">

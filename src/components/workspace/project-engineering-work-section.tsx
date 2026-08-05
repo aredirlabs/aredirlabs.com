@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, ClipboardList } from "lucide-react";
+import { AlertTriangle, ClipboardList, Plus } from "lucide-react";
 
 import {
   EngineeringWorkMetadata,
@@ -39,9 +39,13 @@ export function ProjectEngineeringWorkSection({
       <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-primary">
         Current operational focus
       </p>
-      <h2 className="mt-2 font-heading text-lg font-semibold">
-        Engineering Work
-      </h2>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-heading text-lg font-semibold">Engineering Work</h2>
+        <Link href={`/workspace/projects/${projectSlug}/engineering-work/new`} className="inline-flex items-center gap-1.5 rounded-md border border-primary/25 bg-primary/5 px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <Plus className="size-3.5" />
+          New Engineering Work
+        </Link>
+      </div>
       <p className="mt-1 text-sm text-muted-foreground">
         The work currently carrying this project forward.
       </p>

@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 
 type ProjectDocumentDetailPageProps = {
   params: Promise<{ slug: string; documentSlug: string }>;
+  searchParams: Promise<{ fromWork?: string | string[] }>;
 };
 
 function DocumentContent({ content }: { content: string }) {
@@ -32,8 +33,11 @@ function DocumentContent({ content }: { content: string }) {
 
 export default async function ProjectDocumentDetailPage({
   params,
+  searchParams,
 }: ProjectDocumentDetailPageProps) {
   const { slug, documentSlug } = await params;
+  const fromWork = (await searchParams).fromWork;
+  const returnWorkId = typeof fromWork === "string" ? fromWork : null;
 
   if (!slug?.trim() || !documentSlug?.trim()) {
     notFound();
@@ -48,11 +52,11 @@ export default async function ProjectDocumentDetailPage({
   return (
     <div className="p-8">
       <Link
-        href={`/workspace/projects/${document.projectSlug}`}
+        href={returnWorkId ? `/workspace/projects/${document.projectSlug}/engineering-work/${encodeURIComponent(returnWorkId)}` : `/workspace/projects/${document.projectSlug}`}
         className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="size-3.5" />
-        {document.projectName}
+        {returnWorkId ? "Back to Engineering Work" : document.projectName}
       </Link>
 
       <article className="max-w-3xl rounded-lg border border-border bg-card p-6">

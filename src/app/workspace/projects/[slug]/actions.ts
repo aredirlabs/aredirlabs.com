@@ -12,12 +12,114 @@ import {
   workspaceProjectNotes,
   workspaceProjectPrompts,
   workspaceProjects,
+  workspaceEngineeringWork,
 } from "@/lib/db/schema";
+import {
+  isEngineeringWorkState,
+  isEngineeringWorkType,
+  isEngineeringWorkWorkflow,
+} from "@/lib/workspace/engineering-work";
 import { isWorkspaceProjectDocumentCategory } from "@/lib/workspace/document-categories";
 import { isWorkspaceMilestoneStatus } from "@/lib/workspace/milestone-status";
 import { isWorkspaceProjectNoteType } from "@/lib/workspace/note-types";
 import { isWorkspaceProjectPromptStatus } from "@/lib/workspace/prompt-status";
 import { isWorkspaceProjectPromptType } from "@/lib/workspace/prompt-types";
+
+export type CreateEngineeringWorkState = {
+  error?: string;
+  workId?: string;
+};
+
+export async function createEngineeringWork(
+  projectSlug: string,
+  _prevState: CreateEngineeringWorkState,
+  formData: FormData,
+): Promise<CreateEngineeringWorkState> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    return { error: "You must be signed in to create Engineering Work." };
+  }
+
+  const title = formData.get("title");
+  const type = formData.get("type");
+  const workflow = formData.get("workflow");
+  const summary = formData.get("summary");
+  const state = formData.get("state") ?? "proposed";
+  const currentNextAction = formData.get("current_next_action");
+
+  if (typeof title !== "string" || !title.trim()) {
+    return { error: "Title is required." };
+  }
+  if (title.trim().length > 200) {
+    return { error: "Title must be 200 characters or fewer." };
+  }
+  if (typeof type !== "string" || !isEngineeringWorkType(type)) {
+    return { error: "Select a valid Engineering Work type." };
+  }
+  if (
+    typeof workflow !== "string" ||
+    !isEngineeringWorkWorkflow(workflow)
+  ) {
+    return { error: "Select a valid Engineering Work workflow." };
+  }
+  if (typeof summary !== "string" || !summary.trim()) {
+    return { error: "Objective is required." };
+  }
+  if (summary.trim().length > 4000) {
+    return { error: "Objective must be 4,000 characters or fewer." };
+  }
+  if (typeof state !== "string" || !isEngineeringWorkState(state)) {
+    return { error: "Select a valid lifecycle state." };
+  }
+  if (
+    typeof currentNextAction !== "string" ||
+    !currentNextAction.trim()
+  ) {
+    return { error: "Recommended next action is required." };
+  }
+  if (currentNextAction.trim().length > 2000) {
+    return { error: "Recommended next action must be 2,000 characters or fewer." };
+  }
+
+  try {
+    const db = getDb();
+    const [project] = await db
+      .select({ id: workspaceProjects.id })
+      .from(workspaceProjects)
+      .where(eq(workspaceProjects.slug, projectSlug))
+      .limit(1);
+
+    if (!project) {
+      return { error: "Project not found." };
+    }
+
+    const workId = `eng_work_${crypto.randomUUID()}`;
+    await db.insert(workspaceEngineeringWork).values({
+      id: workId,
+      projectId: project.id,
+      title: title.trim(),
+      type,
+      workflow,
+      summary: summary.trim(),
+      state,
+      currentNextAction: currentNextAction.trim(),
+    });
+
+    revalidatePath(`/workspace/projects/${projectSlug}`);
+    revalidatePath(
+      `/workspace/projects/${projectSlug}/engineering-work/${workId}`,
+    );
+    return { workId };
+  } catch (e) {
+    return {
+      error:
+        e instanceof Error ? e.message : "Failed to create Engineering Work.",
+    };
+  }
+}
 
 export type CreateProjectMilestoneState = {
   error?: string;

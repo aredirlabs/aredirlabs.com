@@ -12,6 +12,12 @@ export const ENGINEERING_WORK_TYPES = [
 
 export type EngineeringWorkType = (typeof ENGINEERING_WORK_TYPES)[number];
 
+export function isEngineeringWorkType(
+  value: string,
+): value is EngineeringWorkType {
+  return ENGINEERING_WORK_TYPES.includes(value as EngineeringWorkType);
+}
+
 export const ENGINEERING_WORK_TYPE_LABELS: Record<EngineeringWorkType, string> = {
   feature: "Feature",
   task: "Task",
@@ -40,6 +46,12 @@ export const ENGINEERING_WORK_WORKFLOWS = [
 export type EngineeringWorkWorkflow =
   (typeof ENGINEERING_WORK_WORKFLOWS)[number];
 
+export function isEngineeringWorkWorkflow(
+  value: string,
+): value is EngineeringWorkWorkflow {
+  return ENGINEERING_WORK_WORKFLOWS.includes(value as EngineeringWorkWorkflow);
+}
+
 export const ENGINEERING_WORK_WORKFLOW_LABELS: Record<
   EngineeringWorkWorkflow,
   string
@@ -67,6 +79,12 @@ export const ENGINEERING_WORK_STATES = [
 ] as const;
 
 export type EngineeringWorkState = (typeof ENGINEERING_WORK_STATES)[number];
+
+export function isEngineeringWorkState(
+  value: string,
+): value is EngineeringWorkState {
+  return ENGINEERING_WORK_STATES.includes(value as EngineeringWorkState);
+}
 
 export const ENGINEERING_WORK_STATE_LABELS: Record<EngineeringWorkState, string> = {
   proposed: "Proposed",
