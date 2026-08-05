@@ -93,30 +93,42 @@ export default async function EngineeringWorkDetailPage({
     <div className="p-8">
       <Link href={`/workspace/projects/${work.projectSlug}`} className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <ArrowLeft className="size-3.5" />
-        {work.projectName}
+        Back to project · {work.projectName}
       </Link>
 
       <div className="mb-8">
         <Eyebrow>Engineering Work</Eyebrow>
         <h1 className="mt-2 text-2xl font-semibold tracking-tight">{work.title}</h1>
-        <div className="mt-3">
-          <EngineeringWorkMetadata
-            type={work.type}
-            workflow={work.workflow}
-            state={work.state}
-          />
-        </div>
       </div>
 
       <div className="space-y-4">
-        <section className="rounded-lg border border-border bg-card p-6">
-          <h2 className="font-heading text-base font-semibold">Summary</h2>
-          <p className="mt-3 text-sm leading-7 text-foreground/90">{work.summary}</p>
-        </section>
-
-        <section className="rounded-lg border border-border bg-card p-6">
-          <h2 className="font-heading text-base font-semibold">Current next action</h2>
-          <p className="mt-3 text-sm leading-7 text-foreground/90">{work.currentNextAction}</p>
+        <section className="rounded-lg border border-primary/25 bg-card p-6 shadow-sm">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+            <div>
+              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-primary">
+                Engineering objective
+              </p>
+              <p className="mt-3 text-base leading-7 text-foreground/90">{work.summary}</p>
+            </div>
+            <div className="rounded-md border border-border bg-background/60 p-4 lg:min-w-64">
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
+                Current position
+              </p>
+              <div className="mt-3">
+                <EngineeringWorkMetadata
+                  type={work.type}
+                  workflow={work.workflow}
+                  state={work.state}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 rounded-md border border-primary/15 bg-primary/5 p-4">
+            <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.1em] text-primary">
+              Recommended next action
+            </p>
+            <p className="mt-2 text-base font-semibold leading-7 text-foreground">{work.currentNextAction}</p>
+          </div>
         </section>
 
         {work.currentOutcome ? (
@@ -140,8 +152,9 @@ export default async function EngineeringWorkDetailPage({
           {references.length === 0 ? (
             <div className="mt-4 rounded-md border border-dashed border-border bg-muted/20 p-6 text-center">
               <FileQuestion className="mx-auto size-5 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium">No repository references recorded.</p>
+              <p className="mt-3 text-sm font-medium">No repository evidence is linked yet.</p>
               <p className="mt-1 text-sm text-muted-foreground">This initial representation does not infer or copy repository artifacts.</p>
+              <p className="mt-3 text-sm text-muted-foreground">Repository evidence will appear here after validated implementation artifacts are linked to this Engineering Work. Repository contents remain authoritative.</p>
             </div>
           ) : (
             <ul className="mt-4 space-y-3">
@@ -173,8 +186,9 @@ export default async function EngineeringWorkDetailPage({
           )}
         </section>
 
-        <section className="rounded-lg border border-border bg-card p-6">
+        <section className="rounded-lg border border-border bg-muted/20 p-6">
           <h2 className="font-heading text-base font-semibold">Record details</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Supporting metadata for this Engineering Work record.</p>
           <dl className="mt-4 grid gap-4 sm:grid-cols-2">
             <DetailField label="Priority" value={work.priority ?? "—"} />
             <DetailField label="Created" value={formatTimestamp(work.createdAt)} />

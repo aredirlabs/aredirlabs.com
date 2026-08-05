@@ -195,6 +195,14 @@ export default async function WorkspaceProjectDetailPage({
       </div>
 
       <div className="space-y-4">
+        <ProjectEngineeringWorkSection
+          projectSlug={project.slug}
+          workItems={engineeringWork}
+          workItemsError={engineeringWorkError}
+        />
+
+        <ProjectCurrentFocusSection project={project} />
+
         <ProjectOverviewSection project={project} />
 
         <section className="rounded-lg border border-border bg-card p-6">
@@ -254,14 +262,6 @@ export default async function WorkspaceProjectDetailPage({
             />
           </dl>
         </section>
-
-        <ProjectCurrentFocusSection project={project} />
-
-        <ProjectEngineeringWorkSection
-          projectSlug={project.slug}
-          workItems={engineeringWork}
-          workItemsError={engineeringWorkError}
-        />
 
         <ProjectMilestonesSection
           projectSlug={project.slug}
