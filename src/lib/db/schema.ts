@@ -283,6 +283,23 @@ export const workspaceEngineeringWork = pgTable("workspace_engineering_work", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const workspaceEngineeringWorkDefects = pgTable(
+  "workspace_engineering_work_defects",
+  {
+    engineeringWorkId: text("engineering_work_id")
+      .primaryKey()
+      .references(() => workspaceEngineeringWork.id, { onDelete: "cascade" }),
+    observedBehavior: text("observed_behavior").notNull(),
+    expectedBehavior: text("expected_behavior").notNull(),
+    reproductionSteps: text("reproduction_steps").notNull(),
+    environment: text("environment").notNull(),
+    evidence: text("evidence").notNull(),
+    nextInvestigation: text("next_investigation").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+);
+
 export const workspaceEngineeringWorkRepositoryReferences = pgTable(
   "workspace_engineering_work_repository_references",
   {
