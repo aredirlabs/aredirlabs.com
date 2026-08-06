@@ -20,8 +20,8 @@ export const ENGINEERING_WORK_SHARED_INTAKE_FIELDS = [
   "Record identity",
 ] as const;
 
-// This configuration defines the engineering conversation. Only Delivery maps
-// its conversation to persisted fields in this iteration.
+// This configuration defines the engineering conversation. Delivery and Defect
+// map their conversations to persisted fields.
 export const ENGINEERING_WORK_INTAKE_DEFINITIONS = {
   delivery: {
     intent: "Plan and carry out an implementation-oriented change.",
@@ -39,10 +39,11 @@ export const ENGINEERING_WORK_INTAKE_DEFINITIONS = {
       { label: "Expected behavior", required: true },
       { label: "Reproduction", required: true },
       { label: "Environment", required: false },
-      { label: "Evidence", required: false },
-      { label: "Next investigation", required: false },
+      { label: "Evidence", required: true },
+      { label: "Next investigation", required: true },
+      { label: "Validation target", required: true },
     ],
-    implemented: false,
+    implemented: true,
   },
   discovery: {
     intent: "Understand an opportunity or uncertainty before committing to delivery.",

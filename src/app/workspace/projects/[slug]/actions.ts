@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { and, eq } from "drizzle-orm";
 
 import { auth } from "@/lib/auth";
-import { getDb } from "@/lib/db";
+import { getDb, getSql } from "@/lib/db";
 import {
   workspaceProjectDocuments,
   workspaceProjectMilestones,
@@ -38,6 +38,38 @@ export type UpdateEngineeringWorkState = {
   fieldErrors?: Partial<Record<"title" | "type" | "workflow" | "state" | "summary" | "currentNextAction", string>>;
   success?: boolean;
 };
+
+type DefectContextFields = {
+  observedBehavior: string;
+  expectedBehavior: string;
+  reproductionSteps: string;
+  environment: string;
+  evidence: string;
+  nextInvestigation: string;
+  validationTarget: string;
+};
+
+function getDefectContextFields(formData: FormData): DefectContextFields | null {
+  const fields = {
+    observedBehavior: formData.get("observed_behavior"),
+    expectedBehavior: formData.get("expected_behavior"),
+    reproductionSteps: formData.get("reproduction_steps"),
+    environment: formData.get("environment"),
+    evidence: formData.get("evidence"),
+    nextInvestigation: formData.get("next_investigation"),
+    validationTarget: formData.get("validation_target"),
+  };
+
+  if (Object.values(fields).some(
+    (value) => typeof value !== "string" || !value.trim() || value.trim().length > 4000,
+  )) {
+    return null;
+  }
+
+  return Object.fromEntries(
+    Object.entries(fields).map(([key, value]) => [key, (value as string).trim()]),
+  ) as DefectContextFields;
+}
 
 export async function createEngineeringWork(
   projectSlug: string,
@@ -93,7 +125,45 @@ export async function createEngineeringWork(
     return { error: "Recommended next action must be 2,000 characters or fewer." };
   }
 
+  const defectContext = workflow === "defect" ? getDefectContextFields(formData) : null;
+  if (workflow === "defect" && !defectContext) {
+    return { error: "Every Defect context field is required and must be 4,000 characters or fewer." };
+  }
+
   try {
+    if (workflow === "defect" && defectContext) {
+      const workId = `eng_work_${crypto.randomUUID()}`;
+      const rows = await getSql()`
+        WITH project AS (
+          SELECT id FROM workspace_projects WHERE slug = ${projectSlug}
+        ), work AS (
+          INSERT INTO workspace_engineering_work (
+            id, project_id, title, summary, type, workflow, state, current_next_action
+          )
+          SELECT ${workId}, project.id, ${title.trim()}, ${summary.trim()}, ${type},
+            ${workflow}, ${state}, ${currentNextAction.trim()}
+          FROM project
+          RETURNING id
+        )
+        INSERT INTO workspace_engineering_work_defects (
+          engineering_work_id, observed_behavior, expected_behavior,
+          reproduction_steps, environment, evidence, next_investigation, validation_target
+        )
+        SELECT work.id, ${defectContext.observedBehavior}, ${defectContext.expectedBehavior},
+          ${defectContext.reproductionSteps}, ${defectContext.environment},
+          ${defectContext.evidence}, ${defectContext.nextInvestigation},
+          ${defectContext.validationTarget}
+        FROM work
+        RETURNING engineering_work_id
+      `;
+
+      if (!rows[0]) return { error: "Project not found." };
+
+      revalidatePath(`/workspace/projects/${projectSlug}`);
+      revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}`);
+      return { workId };
+    }
+
     const db = getDb();
     const [project] = await db
       .select({ id: workspaceProjects.id })
@@ -170,8 +240,53 @@ export async function updateEngineeringWork(
   const normalizedState = state as EngineeringWorkState;
   const normalizedSummary = summary as string;
   const normalizedCurrentNextAction = currentNextAction as string;
+  const defectContext = normalizedWorkflow === "defect" ? getDefectContextFields(formData) : null;
+  if (normalizedWorkflow === "defect" && !defectContext) {
+    return { error: "Every Defect context field is required and must be 4,000 characters or fewer." };
+  }
 
   try {
+    if (normalizedWorkflow === "defect" && defectContext) {
+      const rows = await getSql()`
+        WITH updated_work AS (
+          UPDATE workspace_engineering_work AS work
+          SET title = ${normalizedTitle.trim()}, type = ${normalizedType},
+            workflow = ${normalizedWorkflow}, state = ${normalizedState},
+            summary = ${normalizedSummary.trim()},
+            current_next_action = ${normalizedCurrentNextAction.trim()}, updated_at = NOW()
+          WHERE work.id = ${workId}
+            AND work.workflow = 'defect'
+            AND work.project_id = (
+              SELECT id FROM workspace_projects WHERE slug = ${projectSlug}
+            )
+            AND EXISTS (
+              SELECT 1 FROM workspace_engineering_work_defects AS context
+              WHERE context.engineering_work_id = work.id
+            )
+          RETURNING work.id
+        ), updated_context AS (
+          UPDATE workspace_engineering_work_defects AS context
+          SET observed_behavior = ${defectContext.observedBehavior},
+            expected_behavior = ${defectContext.expectedBehavior},
+            reproduction_steps = ${defectContext.reproductionSteps},
+            environment = ${defectContext.environment}, evidence = ${defectContext.evidence},
+            next_investigation = ${defectContext.nextInvestigation},
+            validation_target = ${defectContext.validationTarget}, updated_at = NOW()
+          FROM updated_work
+          WHERE context.engineering_work_id = updated_work.id
+          RETURNING context.engineering_work_id
+        )
+        SELECT engineering_work_id FROM updated_context
+      `;
+
+      if (!rows[0]) return { error: "Defect Engineering Work was not found in this project." };
+
+      revalidatePath("/workspace");
+      revalidatePath(`/workspace/projects/${projectSlug}`);
+      revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}`);
+      return { success: true };
+    }
+
     const db = getDb();
     const [project] = await db
       .select({ id: workspaceProjects.id })

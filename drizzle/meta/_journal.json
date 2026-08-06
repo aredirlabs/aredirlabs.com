@@ -15,6 +15,13 @@
       "when": 1786035940000,
       "tag": "0001_engineering_work_012",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786037000000,
+      "tag": "0002_defect_context_validation_target",
+      "breakpoints": true
     }
   ]
 }

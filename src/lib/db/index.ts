@@ -12,6 +12,14 @@ function createDb() {
   return drizzle(sql, { schema });
 }
 
+function createSql() {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    throw new Error("DATABASE_URL environment variable is not set");
+  }
+  return neon(url);
+}
+
 let _db: ReturnType<typeof createDb> | null = null;
 
 export function getDb() {
@@ -19,6 +27,15 @@ export function getDb() {
     _db = createDb();
   }
   return _db;
+}
+
+let _sql: ReturnType<typeof createSql> | null = null;
+
+export function getSql() {
+  if (!_sql) {
+    _sql = createSql();
+  }
+  return _sql;
 }
 
 export const db = new Proxy(

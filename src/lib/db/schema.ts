@@ -295,6 +295,7 @@ export const workspaceEngineeringWorkDefects = pgTable(
     environment: text("environment").notNull(),
     evidence: text("evidence").notNull(),
     nextInvestigation: text("next_investigation").notNull(),
+    validationTarget: text("validation_target").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

@@ -13,6 +13,7 @@ import {
   getProjectEngineeringWorkById,
 } from "@/lib/workspace/queries";
 import { getRelatedKnowledgeForEngineeringWork } from "@/lib/workspace/related-knowledge";
+import { getProjectDefectContext } from "@/lib/workspace/defect-context";
 import {
   ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS,
   ENGINEERING_WORK_REFERENCE_STATUS_LABELS,
@@ -56,14 +57,18 @@ export default async function EngineeringWorkDetailPage({
   let work: Awaited<ReturnType<typeof getProjectEngineeringWorkById>> | null = null;
   let references: Awaited<ReturnType<typeof getEngineeringWorkRepositoryReferences>> = [];
   let relatedKnowledge: Awaited<ReturnType<typeof getRelatedKnowledgeForEngineeringWork>> = [];
+  let defectContext: Awaited<ReturnType<typeof getProjectDefectContext>> = null;
   let error: string | null = null;
 
   try {
     work = await getProjectEngineeringWorkById(slug, workId);
     if (work) {
-      [references, relatedKnowledge] = await Promise.all([
+      [references, relatedKnowledge, defectContext] = await Promise.all([
         getEngineeringWorkRepositoryReferences(work.id),
         getRelatedKnowledgeForEngineeringWork(work),
+        work.workflow === "defect"
+          ? getProjectDefectContext(work.projectSlug, work.id)
+          : Promise.resolve(null),
       ]);
     }
   } catch (e) {
@@ -138,6 +143,21 @@ export default async function EngineeringWorkDetailPage({
             <p className="mt-2 text-base font-semibold leading-7 text-foreground">{work.currentNextAction}</p>
           </div>
         </section>
+
+        {work.workflow === "defect" && defectContext ? (
+          <section className="rounded-lg border border-border bg-card p-6">
+            <div><h2 className="font-heading text-base font-semibold">Defect investigation</h2><p className="mt-1 text-sm text-muted-foreground">Structured investigation context for this Defect Engineering Work.</p></div>
+            <dl className="mt-5 grid gap-5 sm:grid-cols-2">
+              <DetailField label="Observed Behavior" value={defectContext.observedBehavior} />
+              <DetailField label="Expected Behavior" value={defectContext.expectedBehavior} />
+              <DetailField label="Reproduction Steps" value={defectContext.reproductionSteps} />
+              <DetailField label="Environment" value={defectContext.environment} />
+              <DetailField label="Evidence" value={defectContext.evidence} />
+              <DetailField label="Next Investigation" value={defectContext.nextInvestigation} />
+              <DetailField label="Validation Target" value={defectContext.validationTarget} />
+            </dl>
+          </section>
+        ) : null}
 
         {work.currentOutcome ? (
           <section className="rounded-lg border border-border bg-card p-6">

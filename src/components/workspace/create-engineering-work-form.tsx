@@ -94,15 +94,27 @@ export function CreateEngineeringWorkForm({
           </div>
         )}
 
-      <div>
-        <label htmlFor="engineering-work-summary" className="block text-sm font-medium text-foreground">{intake.implemented ? "Objective" : "Current shared summary"}</label>
-        <textarea id="engineering-work-summary" name="summary" required maxLength={4000} rows={5} placeholder="What should this work accomplish?" className={inputClassName} />
-      </div>
+        <div>
+          <label htmlFor="engineering-work-summary" className="block text-sm font-medium text-foreground">{workflow === "defect" ? "Concise defect synopsis" : intake.implemented ? "Objective" : "Current shared summary"}</label>
+          <textarea id="engineering-work-summary" name="summary" required maxLength={4000} rows={workflow === "defect" ? 3 : 5} placeholder={workflow === "defect" ? "A concise description of the defect." : "What should this work accomplish?"} className={inputClassName} />
+        </div>
 
-      <div>
-        <label htmlFor="engineering-work-next-action" className="block text-sm font-medium text-foreground">{intake.implemented ? "Recommended next action" : "Current shared next action"}</label>
-        <textarea id="engineering-work-next-action" name="current_next_action" required maxLength={2000} rows={3} placeholder="What should happen next?" className={inputClassName} />
-      </div>
+        <div>
+          <label htmlFor="engineering-work-next-action" className="block text-sm font-medium text-foreground">{workflow === "defect" ? "Current operational next action" : intake.implemented ? "Recommended next action" : "Current shared next action"}</label>
+          <textarea id="engineering-work-next-action" name="current_next_action" required maxLength={2000} rows={3} placeholder="What should happen next?" className={inputClassName} />
+        </div>
+
+        {workflow === "defect" ? (
+          <div className="space-y-5 border-t border-border pt-5">
+            <div><label htmlFor="defect-observed-behavior" className="block text-sm font-medium text-foreground">Observed Behavior</label><textarea id="defect-observed-behavior" name="observed_behavior" required maxLength={4000} rows={4} className={inputClassName} /></div>
+            <div><label htmlFor="defect-expected-behavior" className="block text-sm font-medium text-foreground">Expected Behavior</label><textarea id="defect-expected-behavior" name="expected_behavior" required maxLength={4000} rows={4} className={inputClassName} /></div>
+            <div><label htmlFor="defect-reproduction-steps" className="block text-sm font-medium text-foreground">Reproduction Steps</label><textarea id="defect-reproduction-steps" name="reproduction_steps" required rows={4} placeholder="Concise steps, or explain why the event is intermittent." className={inputClassName} /></div>
+            <div><label htmlFor="defect-environment" className="block text-sm font-medium text-foreground">Environment</label><textarea id="defect-environment" name="environment" required rows={3} placeholder="Relevant browser, authentication, database, version, or runtime context." className={inputClassName} /></div>
+            <div><label htmlFor="defect-evidence" className="block text-sm font-medium text-foreground">Evidence</label><textarea id="defect-evidence" name="evidence" required rows={3} placeholder="HTTP status, console summary, stack trace excerpt, or screenshot reference." className={inputClassName} /></div>
+            <div><label htmlFor="defect-next-investigation" className="block text-sm font-medium text-foreground">Next Investigation</label><textarea id="defect-next-investigation" name="next_investigation" required rows={3} className={inputClassName} /></div>
+            <div><label htmlFor="defect-validation-target" className="block text-sm font-medium text-foreground">Validation Target</label><textarea id="defect-validation-target" name="validation_target" required rows={3} placeholder="What confirms the defect has been investigated or resolved?" className={inputClassName} /></div>
+          </div>
+        ) : null}
       </section>
 
       {state.error ? <div role="alert" className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{state.error}</div> : null}

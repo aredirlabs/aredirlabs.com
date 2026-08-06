@@ -16,6 +16,7 @@ export type DefectContextInput = {
   environment: string;
   evidence: string;
   nextInvestigation: string;
+  validationTarget: string;
 };
 
 function normalizedDefectContext(input: DefectContextInput): DefectContextInput {
@@ -26,6 +27,7 @@ function normalizedDefectContext(input: DefectContextInput): DefectContextInput 
     environment: input.environment.trim(),
     evidence: input.evidence.trim(),
     nextInvestigation: input.nextInvestigation.trim(),
+    validationTarget: input.validationTarget.trim(),
   };
 }
 
@@ -51,6 +53,7 @@ export async function getProjectDefectContext(
       environment: workspaceEngineeringWorkDefects.environment,
       evidence: workspaceEngineeringWorkDefects.evidence,
       nextInvestigation: workspaceEngineeringWorkDefects.nextInvestigation,
+      validationTarget: workspaceEngineeringWorkDefects.validationTarget,
       createdAt: workspaceEngineeringWorkDefects.createdAt,
       updatedAt: workspaceEngineeringWorkDefects.updatedAt,
     })
