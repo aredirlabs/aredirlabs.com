@@ -1,10 +1,10 @@
 # Public Site Experience
 
 **Status:** Canonical
-**Version:** 1.0
+**Version:** 1.2
 **Owner:** Aredir Labs
 **Category:** Brand
-**Last Reviewed:** 2026-07-06
+**Last Reviewed:** 2026-08-06
 
 ---
 
@@ -14,7 +14,9 @@ This document defines the intended visitor experience for the Aredir Labs public
 
 Unlike implementation documentation, this document focuses on the emotional journey, narrative flow, and information architecture of the public experience.
 
-Every public-facing page should reinforce the Aredir Labs brand philosophy while guiding visitors toward a deeper understanding of the company.
+Every public-facing page should support a clear understanding of the company without repeating the full philosophy unnecessarily.
+
+The primary public mission is: **Aredir exists to provide the operational environment in which engineering occurs.**
 
 The website should communicate confidence through clarity, craftsmanship, and disciplined engineering.
 
@@ -50,7 +52,7 @@ Engineering
 
 Contact
 
-Engineering is the bridge between products and the deeper engineering methodology.
+Engineering is the bridge between the company mission, current products, and the deeper engineering methodology.
 
 ---
 
@@ -152,6 +154,8 @@ Introduce Aredir Labs.
 
 Communicate mission.
 
+Establish engineering as a universal discipline for creating validated outcomes.
+
 Create curiosity.
 
 Direct visitors toward projects and engineering.
@@ -189,7 +193,7 @@ Each project should communicate:
 
 Purpose
 
-Explain why Aredir Labs engineers differently.
+Explain what Aredir Labs means by engineering and why the discipline matters.
 
 This page introduces:
 
@@ -198,6 +202,7 @@ This page introduces:
 - responsible AI
 - evidence-driven engineering
 - craftsmanship
+- engineering beyond software
 
 It should not expose internal governance.
 
@@ -303,6 +308,23 @@ Whitespace should guide the reader through the narrative.
 
 ---
 
+# Visual Language
+
+The Engineering page is the canonical presentation reference for the public site. Other pages should inherit its hierarchy, pacing, dark identity surfaces, restrained accents, and editorial density without reproducing its composition exactly.
+
+Color has consistent meaning:
+
+- Dark surfaces establish identity, mission, and major transitions.
+- White or neutral surfaces support exploration and sustained reading.
+- Orange marks engineering insight, emphasis, and important calls to action.
+- Blue indicates links, controls, navigation, and other interaction.
+
+Cards are reserved for independent objects and destinations, including projects and navigation choices. Philosophy, explanatory copy, contact information, and other editorial material should rely on typography, whitespace, and rules rather than decorative containers.
+
+Primary public pages begin with a dark hero using a shared typography hierarchy and content width. Home and Engineering may retain distinctive identity imagery within that common treatment.
+
+---
+
 # Calls to Action
 
 Calls to action should invite exploration.
@@ -347,7 +369,9 @@ A successful visitor should leave the site understanding:
 
 Who Aredir Labs is.
 
-Why Aredir Labs engineers differently.
+Why Aredir exists.
+
+How Aredir defines engineering.
 
 What kinds of products Aredir Labs builds.
 

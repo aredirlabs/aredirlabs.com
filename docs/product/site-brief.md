@@ -6,7 +6,8 @@
 
 ## Purpose
 
-- Present Aredir Labs as an independent, founder-led software lab.
+- Present Aredir Labs as the company building the operational environment in which engineering occurs.
+- Define engineering as a universal discipline for creating validated outcomes, with software as one implementation.
 - Showcase the product portfolio with honest status.
 - Provide a simple contact path via email at info@aredirlabs.com.
 - Serve as the template repository for Aredir Labs standards.
@@ -22,12 +23,12 @@
 | Route | Purpose |
 |-------|---------|
 | `/` | Home: hero, projects preview, about preview, contact CTA |
-| `/about` | Mission, founder-led approach, philosophy, validation |
+| `/about` | Mission, engineering definition, process, and long-term direction |
 | `/projects` | Full project grid |
 | `/projects/alignfit` | AlignFit portfolio detail |
 | `/projects/classforge` | ClassForge portfolio detail |
 | `/projects/leagueos` | LeagueOS portfolio detail |
-| `/engineering` | Public engineering philosophy — why and how Aredir Labs builds |
+| `/engineering` | Public engineering philosophy — definition, principles, process, and environment |
 | `/contact` | Email contact at info@aredirlabs.com (no form/backend) |
 
 ## Stack (this site)

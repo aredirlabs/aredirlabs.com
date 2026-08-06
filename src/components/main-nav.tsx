@@ -21,7 +21,7 @@ export function MainNav() {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "rounded-md px-2 py-2 font-mono text-xs uppercase tracking-[0.08em] transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 sm:tracking-[0.12em]",
                 isActive
                   ? item.href === "/engineering"
                     ? "text-[#F97316]"

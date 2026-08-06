@@ -1,7 +1,6 @@
 export const siteConfig = {
   name: "Aredir Labs",
-  tagline:
-    "Building intelligent software that helps people learn, perform, and make better decisions.",
+  tagline: "The operational environment in which engineering occurs.",
   url: "https://aredirlabs.com",
   contactEmail: "info@aredirlabs.com",
 } as const;

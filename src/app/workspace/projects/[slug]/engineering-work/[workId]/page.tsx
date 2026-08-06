@@ -99,6 +99,252 @@ export default async function EngineeringWorkDetailPage({
     notFound();
   }
 
+  if (work.workflow === "defect" && defectContext) {
+    const isHistoricalPosture = [
+      "completed",
+      "closed",
+      "cancelled",
+      "superseded",
+    ].includes(work.state);
+
+    return (
+      <div className="px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+        <div className="mx-auto max-w-5xl">
+          <Link
+            href={`/workspace/projects/${work.projectSlug}`}
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ArrowLeft className="size-3.5" />
+            Back to project · {work.projectName}
+          </Link>
+
+          <header className="mt-6 border-b border-border pb-7 sm:mt-8 sm:pb-8">
+            <Eyebrow>Defect Engineering Work</Eyebrow>
+            <h1 className="mt-2 max-w-4xl text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
+              {work.title}
+            </h1>
+            <div className="mt-4">
+              <EngineeringWorkMetadata
+                type={work.type}
+                workflow={work.workflow}
+                state={work.state}
+              />
+            </div>
+            <div className="mt-6 max-w-3xl">
+              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                Defect synopsis
+              </p>
+              <p className="mt-2 text-base leading-7 text-foreground/90 sm:text-lg sm:leading-8">
+                {work.summary}
+              </p>
+            </div>
+          </header>
+
+          <main className="mt-6 space-y-10 sm:mt-8 sm:space-y-12">
+            <section
+              aria-labelledby="current-action-heading"
+              className="overflow-hidden rounded-lg border border-primary/30 bg-primary/5 shadow-sm"
+            >
+              <div className="border-l-4 border-primary px-5 py-5 sm:px-6 sm:py-6">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="max-w-3xl">
+                    <p className="font-mono text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-primary">
+                      Current operational next action{isHistoricalPosture ? " · historical" : ""}
+                    </p>
+                    <h2 id="current-action-heading" className="mt-2 text-lg font-semibold leading-7 text-foreground sm:text-xl">
+                      {work.currentNextAction}
+                    </h2>
+                    {isHistoricalPosture ? (
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        This record is {work.state.replace("_", " ")}; the direction above is retained for verification or historical context.
+                      </p>
+                    ) : null}
+                  </div>
+                  <Link
+                    href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`}
+                    className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
+                  >
+                    <Pencil className="size-3.5" />
+                    Edit Engineering Work
+                  </Link>
+                </div>
+              </div>
+            </section>
+
+            <section aria-labelledby="investigation-heading" className="mt-10 sm:mt-12">
+              <div className="max-w-3xl">
+                <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-primary">
+                  Supporting context
+                </p>
+                <h2 id="investigation-heading" className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
+                  Investigation
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  What happened, how it was reproduced, and what supports the current understanding.
+                </p>
+              </div>
+
+              <div className="mt-6 rounded-lg border border-border bg-card px-5 sm:px-6">
+                <section aria-labelledby="behavior-heading" className="py-6">
+                  <h3 id="behavior-heading" className="text-base font-semibold">Behavior</h3>
+                  <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
+                    <DetailField label="Observed Behavior" value={defectContext.observedBehavior} />
+                    <DetailField label="Expected Behavior" value={defectContext.expectedBehavior} />
+                  </dl>
+                </section>
+
+                <section aria-labelledby="reproduction-heading" className="border-t border-border py-6">
+                  <h3 id="reproduction-heading" className="text-base font-semibold">Reproduction context</h3>
+                  <dl className="mt-5 grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(14rem,0.5fr)] md:gap-8">
+                    <DetailField label="Reproduction Steps" value={defectContext.reproductionSteps} />
+                    <DetailField label="Environment" value={defectContext.environment} />
+                  </dl>
+                </section>
+
+                <section aria-labelledby="evidence-heading" className="border-t border-border py-6">
+                  <h3 id="evidence-heading" className="text-base font-semibold">Evidence and validation</h3>
+                  <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-7">
+                    <div className="md:col-span-2">
+                      <DetailField label="Evidence" value={defectContext.evidence} />
+                    </div>
+                    <DetailField label="Validation Target" value={defectContext.validationTarget} />
+                    <div className="rounded-md border-l-2 border-primary bg-primary/5 px-4 py-3">
+                      <DetailField label="Next Investigation" value={defectContext.nextInvestigation} />
+                    </div>
+                  </dl>
+                </section>
+              </div>
+            </section>
+
+            {work.currentOutcome || work.condition ? (
+              <section aria-labelledby="assessment-heading" className="border-t border-border pt-8">
+                <h2 id="assessment-heading" className="text-lg font-semibold">Current assessment</h2>
+                <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
+                  {work.currentOutcome ? <DetailField label="Current Outcome" value={work.currentOutcome} /> : null}
+                  {work.condition ? (
+                    <DetailField
+                      label="Condition"
+                      value={<><span className="font-medium">{work.condition}</span>{work.conditionRationale ? <span className="mt-2 block leading-6 text-muted-foreground">{work.conditionRationale}</span> : null}</>}
+                    />
+                  ) : null}
+                </dl>
+              </section>
+            ) : null}
+
+            <section aria-labelledby="related-knowledge-heading" className="border-t border-border pt-8">
+              <h2 id="related-knowledge-heading" className="sr-only">Related knowledge</h2>
+              <details className="group">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                  <span>
+                    <span className="block text-lg font-semibold">Related knowledge</span>
+                    <span className="mt-1 block text-sm leading-6 text-muted-foreground">Supporting architecture, discovery, and validation context · {relatedKnowledge.length} {relatedKnowledge.length === 1 ? "item" : "items"}</span>
+                  </span>
+                  <span aria-hidden="true" className="mt-1 font-mono text-xs text-muted-foreground group-open:hidden">Show</span>
+                  <span aria-hidden="true" className="mt-1 hidden font-mono text-xs text-muted-foreground group-open:inline">Hide</span>
+                </summary>
+                {relatedKnowledge.length === 0 ? (
+                  <div className="mt-5 rounded-md border border-dashed border-border bg-muted/20 p-5 text-center">
+                    <FileQuestion className="mx-auto size-5 text-muted-foreground" />
+                    <p className="mt-3 text-sm font-medium">No related knowledge has been connected yet.</p>
+                    <p className="mt-1 text-sm text-muted-foreground">Add or verify supporting architecture, discovery, or validation context before advancing this work.</p>
+                  </div>
+                ) : (
+                  <ul className="mt-5 divide-y divide-border border-y border-border">
+                    {relatedKnowledge.map((item) => (
+                      <li key={item.id} className="py-5">
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div className="max-w-3xl">
+                            <p className="font-medium">{item.title}</p>
+                            <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                          </div>
+                          <span className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-primary">{item.knowledgeClass}</span>
+                        </div>
+                        <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+                          <DetailField label="Project" value={item.projectContext} />
+                          <DetailField label="Authority" value={item.authorityLocation} />
+                          <DetailField label="Last reviewed / updated" value={item.lastReviewed} />
+                        </dl>
+                        <Link href={`${item.href}?fromWork=${encodeURIComponent(work.id)}&project=${encodeURIComponent(work.projectSlug)}`} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          Open {item.knowledgeClass.toLowerCase()}
+                          <ExternalLink className="size-3.5" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </details>
+            </section>
+
+            <section aria-labelledby="repository-evidence-heading" className="border-t border-border pt-8">
+              <h2 id="repository-evidence-heading" className="sr-only">Repository evidence</h2>
+              <details className="group">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                  <span>
+                    <span className="block text-lg font-semibold">Repository evidence</span>
+                    <span className="mt-1 block text-sm leading-6 text-muted-foreground">Read-only references; source repositories remain authoritative · {references.length} {references.length === 1 ? "reference" : "references"}</span>
+                  </span>
+                  <span aria-hidden="true" className="mt-1 font-mono text-xs text-muted-foreground group-open:hidden">Show</span>
+                  <span aria-hidden="true" className="mt-1 hidden font-mono text-xs text-muted-foreground group-open:inline">Hide</span>
+                </summary>
+                {references.length === 0 ? (
+                  <div className="mt-5 rounded-md border border-dashed border-border bg-muted/20 p-5 text-center">
+                    <FileQuestion className="mx-auto size-5 text-muted-foreground" />
+                    <p className="mt-3 text-sm font-medium">No repository evidence is linked yet.</p>
+                    <p className="mt-1 text-sm text-muted-foreground">Repository evidence will appear after validated implementation artifacts are linked. Repository contents remain authoritative.</p>
+                  </div>
+                ) : (
+                  <ul className="mt-5 divide-y divide-border border-y border-border">
+                    {references.map((reference) => {
+                      const sourceUrl = navigableUrl(reference.sourceLocation);
+                      return (
+                        <li key={reference.id} className="py-5">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <p className="font-medium">{reference.artifactClass}</p>
+                            <span className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">{ENGINEERING_WORK_REFERENCE_STATUS_LABELS[reference.referenceStatus]}</span>
+                          </div>
+                          <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            <DetailField label="Repository" value={reference.repository} />
+                            <DetailField label="Authority" value={ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS[reference.authority]} />
+                            <DetailField label="Identifier" value={reference.artifactIdentifier ?? "—"} />
+                            <DetailField label="Branch" value={reference.branch ?? "—"} />
+                            <DetailField label="Commit" value={reference.commitHash ?? "—"} />
+                            <DetailField label="Last reviewed" value={reference.lastReviewedAt ? formatTimestamp(reference.lastReviewedAt) : "—"} />
+                          </dl>
+                          <div className="mt-4">
+                            <p className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Source location</p>
+                            {sourceUrl ? <Link href={sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex break-all text-sm text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span>{reference.sourceLocation}</span><ExternalLink className="ml-1 mt-0.5 size-3.5 shrink-0" /></Link> : <p className="mt-1 break-all text-sm text-muted-foreground">{reference.sourceLocation}</p>}
+                          </div>
+                          {reference.note ? <p className="mt-4 text-sm text-muted-foreground">{reference.note}</p> : null}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </details>
+            </section>
+
+            <section aria-labelledby="record-reference-heading" className="border-t border-border pb-2 pt-8">
+              <h2 id="record-reference-heading" className="sr-only">Reference metadata</h2>
+              <details className="group text-muted-foreground">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                  Reference metadata
+                  <span aria-hidden="true" className="font-mono text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
+                  <span aria-hidden="true" className="hidden font-mono text-xs font-normal text-muted-foreground group-open:inline">Hide</span>
+                </summary>
+                <dl className="mt-5 grid gap-4 border-l border-border pl-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
+                  <DetailField label="Record ID" value={<span className="break-all font-mono text-xs">{work.id}</span>} />
+                  <DetailField label="Created" value={formatTimestamp(work.createdAt)} />
+                  <DetailField label="Updated" value={formatTimestamp(work.updatedAt)} />
+                  <DetailField label="Priority" value={work.priority ?? "—"} />
+                </dl>
+              </details>
+            </section>
+          </main>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8">
       <Link href={`/workspace/projects/${work.projectSlug}`} className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">

@@ -1,7 +1,10 @@
-# AREDIR-VISION-001 — Product Operating Environment Philosophy
+# AREDIR-VISION-001 — Engineering Operating Environment Philosophy
 
-**Status:** Foundational company vision
+**Status:** Foundational company vision, revised by COMPANY-VISION-002
+
 **Owner:** Aredir Labs
+
+**Last revised:** 2026-08-06
 
 ## Purpose
 
@@ -11,19 +14,19 @@ It is neither a marketing statement nor an implementation specification. It does
 
 ## What Aredir is
 
-Aredir is an **Operating Environment for organizations that create products**.
+**Aredir exists to provide the operational environment in which engineering occurs.**
 
-It is intended to help an organization understand and coordinate the work through which an idea becomes a useful, reliable, and sustainable product. Engineering is Aredir's flagship capability because it is where the underlying philosophy was first discovered and tested. The platform itself, however, is organization-centric rather than engineering-exclusive.
+Engineering is the disciplined process of transforming ideas, problems, and opportunities into validated outcomes through evidence, design, implementation, and continuous improvement.
 
-An operating environment is more than a collection of tools presented together. It gives the organization a coherent way to see its work, its decisions, its knowledge, and the relationships among them. It helps each person act from an informed view of the same organizational reality.
+An operational environment is more than a collection of tools presented together. It gives people a coherent place to discover opportunities, understand problems, design solutions, evaluate tradeoffs, implement change, validate outcomes, and preserve what they learn. Project coordination, documentation, knowledge, software tooling, and AI may support this work, but none of them defines Aredir's purpose.
 
 ## Why Aredir exists
 
-Most organizations create products through disconnected systems: project management, documentation, engineering, quality, knowledge, publishing, customer engagement, and business planning. Each system can be useful on its own, yet they often understand very little about one another. Context is recreated by hand, decisions become difficult to trace, and people must carry the connections between systems in their heads.
+Engineering often takes place across disconnected systems for planning, documentation, implementation, quality, knowledge, operations, and business decisions. Each system can be useful on its own, yet they often understand very little about one another. Context is recreated by hand, decisions become difficult to trace, and people must carry the connections between systems in their heads.
 
 This is not merely an efficiency problem. It makes sound judgment harder. Work can appear complete without its evidence; plans can advance without their constraints; knowledge can exist without reaching the people who need it; and teams can lose the reason behind an important decision.
 
-Aredir exists to create a coherent operating environment that understands relationships between organizational capabilities. It does not seek to replace every specialized product an organization uses. It seeks to make the organization itself more legible: to connect the context, work, evidence, and decisions that allow people to create products with greater clarity and confidence.
+Aredir exists to create a coherent operational environment that understands the relationships among engineering context, work, evidence, knowledge, decisions, and outcomes. It does not seek to replace every specialized product an organization uses. It seeks to improve how engineering is performed by making the work more legible and continuous.
 
 ## Product philosophy
 
@@ -49,19 +52,19 @@ Plans, work, decisions, and outcomes are more useful when their basis can be und
 
 People should not have to search a record to discover how to move work forward. Each perspective should make the most relevant next action clear enough that a capable person can begin with confidence.
 
-## One organizational reality, many perspectives
+## One engineering reality, many perspectives
 
-Aredir serves people who contribute to product creation from different responsibilities: executive, product, project, engineering, quality, knowledge, marketing, publishing, operations, and future perspectives that emerge from real organizational needs.
+Aredir can serve people who contribute to an engineering outcome from different responsibilities. The relevant perspectives depend on the domain and may include leadership, product, project, engineering, quality, knowledge, and operations.
 
-These are not separate disconnected applications. They are views of the same organizational reality. A decision made in one perspective can inform another; work in one capability can carry context from the work that preceded it; and knowledge can remain connected to the outcomes it helped produce.
+These should not become separate disconnected realities. A decision made from one perspective can inform another; work can carry context from what preceded it; and knowledge can remain connected to the outcomes it helped produce.
 
 No perspective is the whole organization. Each should receive the context, language, and level of detail appropriate to its work while remaining connected to a shared understanding of purpose and progress.
 
-## Engineering as the flagship capability
+## Software as the current proving ground
 
-Engineering leads today because it is the discipline through which the Aredir Engineering Framework was discovered and validated. It provided a demanding proving ground for turning ambiguous work into explicit objectives, current position, evidence, and next action.
+Software engineering is the domain through which Aredir's current methods and environment are being discovered and validated. It provides a demanding proving ground for turning ambiguous work into explicit objectives, current position, evidence, implementation, and validated outcomes.
 
-This leadership is a matter of validated learning, not a claim that engineering is more important than product, quality, knowledge, publishing, operations, or any other organizational capability. Engineering establishes a credible starting point from which the broader operating environment can evolve. Future capabilities should be held to the same standard: they should earn their shape through real work and observed value.
+This starting point does not make software synonymous with engineering, nor does it claim current support for other industries. The engineering process is universal, different domains engineer different outcomes, and future support must earn its shape through real work and observed value.
 
 ## Product experience philosophy
 
@@ -87,17 +90,17 @@ Small, complete slices make it possible to see whether a capability improves und
 
 ## Long-term direction
 
-Over time, Aredir may bring business strategy, projects, engineering, knowledge, verification, publishing, operations, and customer engagement into an interconnected operating environment built on one shared model of organizational reality.
+Over time, Aredir may support engineering across domains through a shared model of intent, work, evidence, decisions, outcomes, and learning.
 
-The direction is coherence, not total replacement. Specialized tools may continue to be valuable. Aredir should connect capabilities where shared context improves judgment, continuity, and execution, while respecting the authority of the people and practices that already do important work well.
+The direction is coherence, not total replacement. Specialized tools may continue to be valuable. Aredir should connect activities where shared context improves judgment, continuity, and execution, while respecting the authority of the people and practices that already do important work well.
 
-The ambition is an environment in which an organization can understand what it is trying to achieve, what is happening now, why it matters, what evidence supports it, and what should happen next—across the capabilities required to create and operate products.
+The ambition is an environment in which people can understand what they are trying to achieve, what is happening now, why it matters, what evidence supports it, what outcome resulted, and what should happen next.
 
 ## Decision lens
 
 Future product decisions should be evaluated by asking:
 
-1. Does this help an organization understand or coordinate a meaningful part of its product-creating work?
+1. Does this improve a meaningful part of the engineering process from opportunity through validated outcome?
 2. Does it connect context, work, knowledge, evidence, or decisions in a way that reduces cognitive load?
 3. Does it use familiar language and strengthen an existing workflow rather than create unnecessary ceremony?
 4. Does it make the current purpose, position, or next correct action clearer?
@@ -108,4 +111,4 @@ If a proposed capability cannot answer these questions well, it may be premature
 
 ## Enduring principle
 
-Aredir should make organizations that create products more capable of seeing their work clearly and acting on it wisely. Engineering leads this journey today because it provided the evidence. The destination is a broader operating environment in which every essential capability can contribute to a shared, coherent understanding of the work.
+Aredir should make engineering more coherent, legible, and capable of continuous improvement. Its current software work supplies the evidence; its enduring purpose is to provide the operational environment in which engineering occurs.

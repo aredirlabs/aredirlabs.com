@@ -9,15 +9,15 @@ How Aredir Labs communicates on aredirlabs.com (implemented in v1 copy).
 | Calm | Measured, clear | Hype-driven or urgent |
 | Capable | Confident in craft | Arrogant |
 | Technical | Precise when needed | Jargon-heavy |
-| Founder-led | Direct, accountable | Corporate or vague |
+| Thoughtful | Direct, durable | Corporate or vague |
 | Practical | Workflow-focused | Feature-list fluff |
 | Trustworthy | Honest about status | Overpromising |
 
 ## Site copy patterns
 
-- **Hero:** Outcome-first headline; supporting line explains the lab.
+- **Hero:** Mission-first headline; supporting line explains engineering in plain language.
 - **Products:** Name, one-line description, honest status badge.
-- **About:** Mission, approach, philosophy, validation — short sections.
+- **About:** Mission, engineering definition, process, and direction—short sections.
 - **Contact:** Plain email CTA; no form until explicitly scoped.
 
 ## Writing rules

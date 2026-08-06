@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Eyebrow } from "@/components/eyebrow";
+import { PublicPageHero } from "@/components/public-page-hero";
 import { RuneDivider } from "@/components/rune-divider";
 import { SectionShell } from "@/components/section-shell";
 import { Button } from "@/components/ui/button";
@@ -10,51 +11,46 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
-    "Aredir Labs is a founder-led software lab building AI-powered SaaS products through disciplined iteration.",
+    "Aredir Labs is building the operational environment in which engineering occurs.",
 });
 
 const SECTIONS = [
   {
     label: "Mission",
-    heading: "Why we build",
-    body: "Aredir Labs creates software that empowers people to improve outcomes, make better decisions, and achieve meaningful progress through technology. We focus on AI-powered SaaS applications, quality engineering, and modern product development.",
+    heading: "Why Aredir exists",
+    body: "Aredir exists to provide the operational environment in which engineering occurs. The tools we create support that purpose; they are not the purpose themselves.",
   },
   {
-    label: "Approach",
-    heading: "Founder-led, production-minded",
-    body: "Products are shaped directly by founders and builders who stay close to users. Decisions favor shipping, learning, and iteration over bureaucracy—calm, capable, and accountable to outcomes.",
+    label: "Engineering",
+    heading: "A discipline, not a domain",
+    body: "Engineering is the disciplined process of transforming ideas, problems, and opportunities into validated outcomes through evidence, design, implementation, and continuous improvement.",
   },
   {
-    label: "Philosophy",
-    heading: "Focused products, done well",
-    body: "We build focused products, not platforms for their own sake. Each tool should do a clear job well, integrate sensibly with real workflows, and earn trust through consistent execution.",
+    label: "Process",
+    heading: "From uncertainty to outcomes",
+    body: "Engineering means discovering opportunities, understanding problems, designing solutions, evaluating tradeoffs, implementing change, validating outcomes, and learning continuously. Software engineering is one expression of this broader process.",
   },
   {
-    label: "Validation",
-    heading: "Iterative and honest",
-    body: "Ideas are tested early with real users and production-minded workflows. We validate assumptions, refine scope, and ship incrementally—reducing risk while improving fit over time.",
+    label: "Direction",
+    heading: "One process, many outcomes",
+    body: "Different domains engineer different outcomes, but the underlying discipline is shared. Aredir is being built around that universal process, beginning with the engineering work we know and can validate today.",
   },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-grid-line">
-        <div className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-50" aria-hidden />
-        <SectionShell className="relative pt-16">
-          <div className="max-w-2xl">
-            <Eyebrow>About the Lab</Eyebrow>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-              About Aredir Labs
-            </h1>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              An independent software lab building AI-powered SaaS products for
-              real-world workflows. Named for an old word for a noble
-              craftsman—a workshop where careful engineering meets a little myth.
-            </p>
-          </div>
-        </SectionShell>
-      </section>
+      <PublicPageHero
+        eyebrow="About the Lab"
+        title="About Aredir Labs"
+        description={
+          <p>
+            An independent lab building a coherent environment for meaningful
+            engineering work. Named for an old word for a noble craftsman—a
+            workshop where disciplined practice meets a little myth.
+          </p>
+        }
+      />
 
       <SectionShell>
         <div className="grid gap-x-12 gap-y-12 sm:grid-cols-2">
@@ -73,15 +69,14 @@ export default function AboutPage() {
         <RuneDivider className="mt-16" />
       </SectionShell>
 
-      <SectionShell className="border-t border-grid-line bg-card/40">
+      <SectionShell className="border-t border-grid-line bg-muted/25 dark:bg-muted/15">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-muted-foreground">
             See what we are building across the portfolio.
           </p>
           <Button
             asChild
-            variant="outline"
-            className="font-mono text-xs uppercase tracking-[0.1em]"
+            className="bg-[#F97316] font-mono text-xs uppercase tracking-[0.1em] text-white hover:bg-[#F97316]/90"
           >
             <Link href="/projects">View projects</Link>
           </Button>

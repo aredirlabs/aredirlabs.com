@@ -53,8 +53,7 @@ export default async function OpenGraphImage() {
           <span style={{ fontSize: 40, fontWeight: 600 }}>{siteConfig.name}</span>
         </div>
         <p style={{ fontSize: 46, fontWeight: 600, lineHeight: 1.15, maxWidth: 960 }}>
-          Building intelligent software that helps people learn, perform, and
-          make better decisions.
+          The operational environment in which engineering occurs.
         </p>
         <p
           style={{
@@ -66,7 +65,7 @@ export default async function OpenGraphImage() {
             textTransform: "uppercase",
           }}
         >
-          AI-powered SaaS · Quality engineering · Product development
+          Evidence · Design · Implementation · Continuous improvement
         </p>
       </div>
     ),

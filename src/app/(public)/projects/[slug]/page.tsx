@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Eyebrow } from "@/components/eyebrow";
+import { PublicPageHero } from "@/components/public-page-hero";
 import { SectionShell } from "@/components/section-shell";
 import { StatusChip } from "@/components/status-chip";
 import { Button } from "@/components/ui/button";
@@ -43,30 +44,15 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
   return (
     <>
-      <section className="relative overflow-hidden border-b border-grid-line">
-        <div className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-50" aria-hidden />
-        <SectionShell className="relative pt-16">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3">
-              <Eyebrow>Project</Eyebrow>
-              <StatusChip status={project.status} />
-            </div>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-              {project.name}
-            </h1>
-            <p className="mt-5 text-lg text-muted-foreground leading-relaxed">
-              {project.description}
-            </p>
-          </div>
-        </SectionShell>
-      </section>
+      <PublicPageHero
+        eyebrow="Project"
+        eyebrowAdornment={<StatusChip status={project.status} />}
+        title={project.name}
+        description={<p>{project.description}</p>}
+      />
 
       <SectionShell>
-        <div className="relative max-w-2xl overflow-hidden rounded-lg border border-border bg-card p-8">
-          <span
-            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
-            aria-hidden
-          />
+        <div className="max-w-2xl border-y border-border py-10 sm:py-12">
           <Eyebrow>Overview</Eyebrow>
           <div className="mt-4 space-y-6 text-muted-foreground leading-relaxed">
             {project.summary ? <p>{project.summary}</p> : null}

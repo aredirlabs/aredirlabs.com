@@ -34,7 +34,7 @@ export const ENGINEERING_PRINCIPLES = [
     id: "craftsmanship",
     title: "Craftsmanship",
     description:
-      "We build with care — thoughtful architecture, deliberate code, and products shaped by people who stay close to the work.",
+      "We build with care — thoughtful design, deliberate implementation, and outcomes shaped by people who stay close to the work.",
     icon: Hammer,
   },
   {
@@ -48,7 +48,7 @@ export const ENGINEERING_PRINCIPLES = [
     id: "continuous-learning",
     title: "Continuous Learning",
     description:
-      "Every project teaches us something. We capture knowledge, refine practice, and carry forward what compounds across products.",
+      "Every effort teaches us something. We capture knowledge, refine practice, and carry forward what improves the work that follows.",
     icon: RefreshCw,
   },
   {
@@ -74,20 +74,20 @@ export const ENGINEERING_BUILD_STEPS = [
   },
   {
     id: "architecture",
-    title: "Architecture",
-    description: "Design systems with clear ownership, sustainable boundaries, and room to evolve.",
+    title: "Design",
+    description: "Shape a response, evaluate tradeoffs, and establish clear responsibilities and constraints.",
     icon: Layers,
   },
   {
     id: "engineering",
-    title: "Engineering",
-    description: "Build incrementally — scoped work, disciplined execution, and production-minded craft.",
+    title: "Implementation",
+    description: "Create change incrementally through scoped work, disciplined execution, and careful craft.",
     icon: Code2,
   },
   {
     id: "verification",
     title: "Verification",
-    description: "Validate through testing, review, and honest assessment of what is ready to ship.",
+    description: "Validate through testing, review, measurement, and honest assessment of the outcome.",
     icon: CheckCircle,
   },
   {
@@ -115,7 +115,7 @@ export const ENGINEERING_RESOURCE_LINKS = [
   {
     title: "Our Principles",
     description:
-      "The values that shape every product: transparency, evidence, craftsmanship, quality, learning, and responsible AI.",
+      "The values that shape our work: transparency, evidence, craftsmanship, quality, learning, and responsible AI.",
     href: "#principles",
   },
   {
@@ -127,7 +127,7 @@ export const ENGINEERING_RESOURCE_LINKS = [
   {
     title: "Get in Touch",
     description:
-      "Talk with us about how Aredir Labs approaches engineering for your product.",
+      "Talk with us about how Aredir Labs approaches engineering and validated outcomes.",
     href: "/contact",
   },
 ] as const;

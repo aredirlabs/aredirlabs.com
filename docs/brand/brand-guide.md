@@ -4,11 +4,11 @@ Aredir Labs company brand for aredirlabs.com and aligned product marketing.
 
 ## Brand essence
 
-**Aredir Labs** is an independent software lab building focused SaaS products for real-world workflows—fitness, education, workflow automation, and operational systems.
+**Aredir Labs** exists to provide the operational environment in which engineering occurs. Its current software products are evidence of that engineering practice, not the limit of the company mission.
 
 ## Positioning
 
-Independent software lab building focused SaaS products.
+The operational environment in which engineering occurs.
 
 ## Tone
 
@@ -17,7 +17,7 @@ Independent software lab building focused SaaS products.
 | Calm | Measured copy; no hype |
 | Capable | Clear competence; show craft |
 | Technical | Precise without jargon overload |
-| Founder-led | Direct, accountable voice |
+| Thoughtful | Direct, durable voice |
 | Practical | Outcomes and workflows first |
 | Trustworthy | Honest status and scope |
 

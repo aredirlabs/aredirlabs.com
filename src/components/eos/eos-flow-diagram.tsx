@@ -51,7 +51,7 @@ export function EosFlowDiagram({ steps, className }: EosFlowDiagramProps) {
         })}
       </div>
 
-      <ol className="grid gap-3 sm:grid-cols-2 lg:hidden">
+      <ol className="grid gap-x-8 sm:grid-cols-2 lg:hidden">
         {steps.map((step, index) => {
           const Icon = step.icon;
           const isOutcome = step.id === "outcome";
@@ -59,7 +59,7 @@ export function EosFlowDiagram({ steps, className }: EosFlowDiagramProps) {
           return (
             <li
               key={step.id}
-              className="flex items-center gap-3 rounded-lg border border-border bg-card/60 px-4 py-3"
+              className="flex items-center gap-3 border-t border-border py-4"
             >
               <span className="font-mono text-xs text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}

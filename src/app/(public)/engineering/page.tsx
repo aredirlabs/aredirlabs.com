@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { EosExploreCard } from "@/components/eos/eos-explore-card";
 import { EosFlowDiagram } from "@/components/eos/eos-flow-diagram";
-import { EosPillarCard } from "@/components/eos/eos-pillar-card";
 import { EngineeringHeroBackdrop } from "@/components/engineering/engineering-hero-backdrop";
 import { EngineeringHeroShip } from "@/components/engineering/engineering-hero-ship";
 import { Eyebrow } from "@/components/eyebrow";
@@ -20,7 +19,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Engineering",
   description:
-    "How Aredir Labs engineers software — disciplined exploration, transparent reasoning, and craftsmanship that helps people navigate complexity.",
+    "Aredir Labs defines engineering as a disciplined process for transforming ideas, problems, and opportunities into validated outcomes.",
 });
 
 export default function EngineeringPage() {
@@ -42,16 +41,15 @@ export default function EngineeringPage() {
               <span className="text-[#F97316]">We navigate it.</span>
             </h1>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
-              <p>Engineering is exploration.</p>
               <p>
-                Every meaningful product begins with uncertainty. Requirements
-                evolve. Technology changes. New evidence replaces old
-                assumptions.
+                Engineering is the disciplined process of transforming ideas,
+                problems, and opportunities into validated outcomes through
+                evidence, design, implementation, and continuous improvement.
               </p>
               <p>
-                We build systems that help people navigate complexity through
-                disciplined engineering, transparent reasoning, and continuous
-                learning.
+                Every meaningful engineering effort begins with uncertainty. The
+                discipline gives people a way to navigate it without pretending
+                it is gone.
               </p>
             </div>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -83,31 +81,28 @@ export default function EngineeringPage() {
             id="why-engineering-heading"
             className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl"
           >
-            Why engineering matters
+            Engineering is larger than software
           </h2>
           <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Software complexity is not a temporary problem waiting for a
-              simpler future. Systems grow. Integrations multiply. Expectations
-              rise. The teams building them need more than speed — they need
-              clarity.
+              Engineering begins wherever an idea, problem, or opportunity must
+              become a reliable outcome. It includes discovering what matters,
+              understanding the problem, designing a response, evaluating
+              tradeoffs, implementing change, and testing what actually happened.
             </p>
             <p>
-              We engineer with evidence, not instinct alone. We validate
-              assumptions before they become expensive commitments. We embed
-              quality throughout delivery because craftsmanship is how trust is
-              earned.
+              Software engineering is one implementation of that discipline, not
+              its definition. Different domains work with different materials,
+              constraints, responsibilities, and outcomes, while sharing the same
+              need for evidence and sound judgment.
             </p>
             <p>
-              AI accelerates what we can build, but it does not replace the
-              discipline of knowing what to build and why. Responsible
-              engineering means using powerful tools within transparent
-              boundaries — and learning continuously as both technology and
-              products evolve.
+              Tools can accelerate parts of the work, but they do not replace the
+              discipline of knowing what to change, why it should change, and how
+              the outcome will be validated.
             </p>
             <p>
-              The outcome is software people can rely on: capable, honest, and
-              built to improve over time.
+              Aredir exists to improve the conditions in which this work happens.
             </p>
           </div>
         </div>
@@ -128,19 +123,31 @@ export default function EngineeringPage() {
             How we hold ourselves accountable
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-            Public-facing values that shape every product we build.
+            Public-facing values that shape every engineering effort.
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {ENGINEERING_PRINCIPLES.map((principle) => (
-            <EosPillarCard
-              key={principle.id}
-              title={principle.title}
-              description={principle.description}
-              icon={principle.icon}
-            />
-          ))}
-        </div>
+        <ol className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          {ENGINEERING_PRINCIPLES.map((principle, index) => {
+            const Icon = principle.icon;
+
+            return (
+              <li key={principle.id} className="border-t border-border pt-6">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-xs text-[#F97316]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <Icon className="size-5 text-muted-foreground" aria-hidden />
+                </div>
+                <h3 className="mt-5 font-heading text-base font-semibold tracking-tight text-foreground">
+                  {principle.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {principle.description}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
       </SectionShell>
 
       {/* Why This Matters */}
@@ -156,18 +163,18 @@ export default function EngineeringPage() {
           </h2>
           <div className="mt-6 space-y-4 text-left text-muted-foreground leading-relaxed sm:text-center">
             <p>
-              Modern software changes constantly. Requirements evolve.
-              Technology advances. AI accelerates development. The complexity of
-              systems continues to grow.
+              Engineering connects thoughtful intent to evidence of what changed.
+              Without that discipline, activity can be mistaken for progress and
+              completion for success.
             </p>
             <p>
-              Disciplined engineering is not bureaucracy. It is the foundation
-              that allows innovation to scale without sacrificing quality.
+              Discipline is not ceremony. It creates enough structure to make
+              uncertainty visible, decisions accountable, and learning reusable.
             </p>
             <p>
-              At Aredir Labs, that discipline shows up in how we discover
-              problems, design architecture, verify outcomes, and carry learning
-              forward — so each product begins where the last one finished.
+              Aredir is being built around this universal process. We are starting
+              from engineering practices validated through real software work,
+              without treating software as the boundary of the idea.
             </p>
           </div>
         </div>
@@ -213,11 +220,16 @@ export default function EngineeringPage() {
               foundation.
             </p>
             <p>
-              Behind every product is a reusable operating system that captures
-              our principles, governance, engineering knowledge, quality
-              practices, architectural patterns, and continuous learning.
+              One part of that foundation defines the principles, governance,
+              lifecycle, authority, and operational rules that guide the work.
             </p>
-            <p>Every new project begins where the last one finished.</p>
+            <p>
+              Aredir provides the working environment where people apply that
+              guidance: exploring opportunities, making decisions, carrying out
+              change, validating outcomes, and preserving what they learn. The
+              shared method defines how engineering should work; the environment
+              is where the work occurs.
+            </p>
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
@@ -237,19 +249,15 @@ export default function EngineeringPage() {
         aria-labelledby="journey-heading"
         className="border-t border-grid-line pb-24 sm:pb-28"
       >
-        <figure className="relative mx-auto max-w-3xl overflow-hidden rounded-xl border border-border bg-card px-8 py-12 text-center sm:px-12 sm:py-14">
-          <div
-            className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-30"
-            aria-hidden
-          />
-          <Eyebrow className="relative">Our Journey</Eyebrow>
+        <figure className="mx-auto max-w-3xl border-y border-border py-12 text-center sm:py-14">
+          <Eyebrow>Our Journey</Eyebrow>
           <h2
             id="journey-heading"
-            className="relative mt-3 text-2xl font-semibold tracking-tight sm:text-3xl"
+            className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl"
           >
             Every project is another voyage
           </h2>
-          <blockquote className="relative mt-6">
+          <blockquote className="mt-6">
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
                 Every meaningful engineering effort begins at the edge of the

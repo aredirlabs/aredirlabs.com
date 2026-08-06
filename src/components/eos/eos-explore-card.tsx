@@ -20,12 +20,12 @@ export function EosExploreCard({
     <Link
       href={href}
       className={cn(
-        "group relative flex h-full flex-col rounded-xl border border-border bg-card/80 p-5 transition-colors hover:border-[#F97316]/35 hover:bg-card",
+        "group relative flex h-full flex-col rounded-xl border border-border bg-card/80 p-5 transition-colors hover:border-primary/40 hover:bg-card",
         className,
       )}
     >
       <span
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F97316]/35 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
         aria-hidden
       />
       <h3 className="font-heading text-base font-semibold tracking-tight text-foreground">
@@ -34,7 +34,7 @@ export function EosExploreCard({
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
         {description}
       </p>
-      <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs uppercase tracking-[0.12em] text-[#F97316]">
+      <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs uppercase tracking-[0.12em] text-primary">
         Explore
         <ArrowRight
           className="size-3.5 transition-transform group-hover:translate-x-0.5"

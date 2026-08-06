@@ -14,7 +14,7 @@ Implemented structure for aredirlabs.com (Prompt 001B, SITE-ENGINEERING-001).
 
 Header nav: About, Projects, Engineering, Contact (+ logo home, theme toggle, Contact CTA on desktop).
 
-**Engineering** is the public engineering experience. Detailed Engineering Operating System materials live in repository docs and the authenticated workspace — not as public site routes.
+**Engineering** is the public engineering experience. It explains the universal discipline and the working environment in public language. Detailed Engineering Operating System materials live in repository docs and the authenticated workspace—not as public site routes.
 
 ## Engineering section (public)
 
@@ -46,7 +46,7 @@ Former public routes `/engineering-operating-system` and `/docs/company/*` perma
 
 1. Hero — headline, supporting copy, View Projects / Contact
 2. Projects preview — three project cards
-3. About preview — founder-led bullets + link to About
+3. Mission preview — engineering activities + link to About
 4. Contact CTA — link to Contact
 
 ## Footer
