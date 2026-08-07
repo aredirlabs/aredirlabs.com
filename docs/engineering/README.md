@@ -1,5 +1,11 @@
 # Engineering Records
 
+## Operational experience
+
+| Package | Record | Status |
+| --- | --- | --- |
+| WORKSPACE-OPERATIONAL-003 | [Operational Workspace Entry Experience](./WORKSPACE-OPERATIONAL-003_OPERATIONAL_WORKSPACE_ENTRY_EXPERIENCE.md) | Implementation complete; authenticated runtime blocked by Neon connectivity |
+
 ## Engineering Work
 
 | Series | Records |

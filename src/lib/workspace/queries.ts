@@ -7,6 +7,7 @@ import {
   workspaceProjectPrompts,
   workspaceProjects,
   workspaceEngineeringWork,
+  workspaceEngineeringWorkDefects,
   workspaceEngineeringWorkRepositoryReferences,
 } from "@/lib/db/schema";
 import {
@@ -22,6 +23,15 @@ import {
   WORKSPACE_PROJECT_PROMPT_TYPES,
   type WorkspaceProjectPromptType,
 } from "@/lib/workspace/prompt-types";
+import {
+  ATTENTION_DISPLAY_LIMIT,
+  CONTINUATION_DISPLAY_LIMIT,
+  projectionFromEligibleSources,
+  type ContinuationSource,
+  type WorkspaceAttentionItem,
+  type WorkspaceAttentionProjection,
+  type WorkspaceContinuationProjection,
+} from "@/lib/workspace/workspace-operational";
 
 export type OperatingSnapshot = {
   activeCount: number;
@@ -43,20 +53,8 @@ export type OperatingSnapshot = {
 };
 
 export type DailyOperatingExperience = {
-  continuation: {
-    id: string;
-    title: string;
-    summary: string;
-    currentNextAction: string;
-    projectName: string;
-    projectSlug: string;
-  } | null;
-  attention: {
-    title: string;
-    projectName: string;
-    projectSlug: string;
-    detail: string | null;
-  } | null;
+  continuation: WorkspaceContinuationProjection;
+  attention: WorkspaceAttentionProjection;
   activeProjects: Array<{
     id: string;
     name: string;
@@ -64,56 +62,172 @@ export type DailyOperatingExperience = {
     currentFocus: string | null;
     nextStep: string | null;
   }>;
-  recentProjects: Array<{
-    id: string;
-    name: string;
-    slug: string;
-    status: string;
-    currentFocus: string | null;
-  }>;
 };
 
-/** Uses existing update timestamps as a proxy for recent activity. */
+const operatingProject = inArray(workspaceProjects.status, ["active", "testing"]);
+const eligibleWorkState = inArray(workspaceEngineeringWork.state, ["active", "in_review"]);
+const hasNoCondition = sql<boolean>`btrim(coalesce(${workspaceEngineeringWork.condition}, '')) = ''`;
+const hasRequiredWorkText = sql<boolean>`
+  btrim(${workspaceEngineeringWork.title}) <> ''
+  AND btrim(${workspaceEngineeringWork.summary}) <> ''
+  AND btrim(${workspaceEngineeringWork.currentNextAction}) <> ''
+  AND btrim(${workspaceProjects.slug}) <> ''
+`;
+const hasCompleteDefectContext = sql<boolean>`
+  ${workspaceEngineeringWork.workflow} <> 'defect'
+  OR (
+    ${workspaceEngineeringWorkDefects.engineeringWorkId} IS NOT NULL
+    AND btrim(${workspaceEngineeringWorkDefects.observedBehavior}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.expectedBehavior}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.reproductionSteps}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.environment}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.evidence}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.nextInvestigation}) <> ''
+    AND btrim(${workspaceEngineeringWorkDefects.validationTarget}) <> ''
+  )
+`;
+
+/**
+ * Produces a bounded shared projection. `updatedAt` only stabilizes the order
+ * of already-eligible peers; it never establishes eligibility or a winner.
+ */
 export async function getDailyOperatingExperience(): Promise<DailyOperatingExperience> {
   const db = getDb();
-  const [continuationRows, blockedRows, activeProjects, recentProjects] = await Promise.all([
-    db.select({ id: workspaceEngineeringWork.id, title: workspaceEngineeringWork.title, summary: workspaceEngineeringWork.summary, currentNextAction: workspaceEngineeringWork.currentNextAction, projectName: workspaceProjects.name, projectSlug: workspaceProjects.slug })
+  const [continuationRows, conditionedRows, incompleteDefectRows, blockedMilestoneRows, activeProjects] = await Promise.all([
+    db.select({
+      totalCandidates: sql<number>`count(*) over()`,
+      id: workspaceEngineeringWork.id,
+      title: workspaceEngineeringWork.title,
+      summary: workspaceEngineeringWork.summary,
+      workflow: workspaceEngineeringWork.workflow,
+      state: workspaceEngineeringWork.state,
+      currentNextAction: workspaceEngineeringWork.currentNextAction,
+      condition: workspaceEngineeringWork.condition,
+      updatedAt: workspaceEngineeringWork.updatedAt,
+      projectId: workspaceProjects.id,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+      projectStatus: workspaceProjects.status,
+      defectNextInvestigation: workspaceEngineeringWorkDefects.nextInvestigation,
+      defectValidationTarget: workspaceEngineeringWorkDefects.validationTarget,
+      defectContextComplete: hasCompleteDefectContext,
+    })
+      .from(workspaceEngineeringWork)
+      .innerJoin(workspaceProjects, eq(workspaceEngineeringWork.projectId, workspaceProjects.id))
+      .leftJoin(
+        workspaceEngineeringWorkDefects,
+        eq(workspaceEngineeringWorkDefects.engineeringWorkId, workspaceEngineeringWork.id),
+      )
+      .where(and(operatingProject, eligibleWorkState, hasNoCondition, hasRequiredWorkText, hasCompleteDefectContext))
+      .orderBy(desc(workspaceEngineeringWork.updatedAt), asc(workspaceEngineeringWork.id))
+      .limit(CONTINUATION_DISPLAY_LIMIT),
+    db.select({
+      total: sql<number>`count(*) over()`,
+      id: workspaceEngineeringWork.id,
+      title: workspaceEngineeringWork.title,
+      condition: workspaceEngineeringWork.condition,
+      explanation: workspaceEngineeringWork.conditionRationale,
+      projectId: workspaceProjects.id,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
       .from(workspaceEngineeringWork)
       .innerJoin(workspaceProjects, eq(workspaceEngineeringWork.projectId, workspaceProjects.id))
       .where(
-        inArray(workspaceEngineeringWork.state, [
-          "active",
-          "in_review",
-          "proposed",
-        ]),
+        and(
+          operatingProject,
+          eligibleWorkState,
+          sql<boolean>`btrim(coalesce(${workspaceEngineeringWork.condition}, '')) <> ''`,
+        ),
       )
-      .orderBy(
-        sql`CASE
-          WHEN ${workspaceEngineeringWork.state} = 'active' THEN 0
-          WHEN ${workspaceEngineeringWork.state} = 'in_review' THEN 1
-          ELSE 2
-        END`,
-        desc(workspaceEngineeringWork.updatedAt),
+      .orderBy(desc(workspaceEngineeringWork.updatedAt), asc(workspaceEngineeringWork.id))
+      .limit(ATTENTION_DISPLAY_LIMIT),
+    db.select({
+      total: sql<number>`count(*) over()`,
+      id: workspaceEngineeringWork.id,
+      title: workspaceEngineeringWork.title,
+      projectId: workspaceProjects.id,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
+      .from(workspaceEngineeringWork)
+      .innerJoin(workspaceProjects, eq(workspaceEngineeringWork.projectId, workspaceProjects.id))
+      .leftJoin(
+        workspaceEngineeringWorkDefects,
+        eq(workspaceEngineeringWorkDefects.engineeringWorkId, workspaceEngineeringWork.id),
       )
-      .limit(1),
-    db.select({ title: workspaceProjectMilestones.title, projectName: workspaceProjects.name, projectSlug: workspaceProjects.slug, detail: workspaceProjectMilestones.description })
+      .where(
+        and(
+          operatingProject,
+          eligibleWorkState,
+          eq(workspaceEngineeringWork.workflow, "defect"),
+          hasNoCondition,
+          sql<boolean>`NOT (${hasCompleteDefectContext})`,
+        ),
+      )
+      .orderBy(desc(workspaceEngineeringWork.updatedAt), asc(workspaceEngineeringWork.id))
+      .limit(ATTENTION_DISPLAY_LIMIT),
+    db.select({
+      total: sql<number>`count(*) over()`,
+      id: workspaceProjectMilestones.id,
+      title: workspaceProjectMilestones.title,
+      description: workspaceProjectMilestones.description,
+      projectId: workspaceProjects.id,
+      projectName: workspaceProjects.name,
+      projectSlug: workspaceProjects.slug,
+    })
       .from(workspaceProjectMilestones)
       .innerJoin(workspaceProjects, eq(workspaceProjectMilestones.projectId, workspaceProjects.id))
-      .where(eq(workspaceProjectMilestones.status, "blocked"))
-      .orderBy(asc(workspaceProjectMilestones.sortOrder))
-      .limit(1),
+      .where(and(operatingProject, eq(workspaceProjectMilestones.status, "blocked")))
+      .orderBy(asc(workspaceProjects.id), asc(workspaceProjectMilestones.sortOrder), asc(workspaceProjectMilestones.id))
+      .limit(ATTENTION_DISPLAY_LIMIT),
     db.select({ id: workspaceProjects.id, name: workspaceProjects.name, slug: workspaceProjects.slug, currentFocus: workspaceProjects.currentFocus, nextStep: workspaceProjects.nextStep })
       .from(workspaceProjects)
-      .where(inArray(workspaceProjects.status, ["active", "testing"]))
-      .orderBy(desc(workspaceProjects.updatedAt))
+      .where(operatingProject)
+      .orderBy(asc(workspaceProjects.name), asc(workspaceProjects.id))
       .limit(3),
-    db.select({ id: workspaceProjects.id, name: workspaceProjects.name, slug: workspaceProjects.slug, status: workspaceProjects.status, currentFocus: workspaceProjects.currentFocus })
-      .from(workspaceProjects)
-      .orderBy(desc(workspaceProjects.updatedAt))
-      .limit(4),
   ]);
 
-  return { continuation: continuationRows[0] ?? null, attention: blockedRows[0] ?? null, activeProjects, recentProjects };
+  const continuation = projectionFromEligibleSources(
+    continuationRows as ContinuationSource[],
+    Number(continuationRows[0]?.totalCandidates ?? 0),
+  );
+
+  const conditionedItems: WorkspaceAttentionItem[] = conditionedRows.map((row) => ({
+    project: { id: row.projectId, name: row.projectName, slug: row.projectSlug },
+    artifact: { kind: "engineering_work", id: row.id, title: row.title },
+    condition: row.condition!.trim(),
+    explanation: row.explanation?.trim() || null,
+    destination: `/workspace/projects/${row.projectSlug}/engineering-work/${row.id}`,
+  }));
+  const incompleteDefectItems: WorkspaceAttentionItem[] = incompleteDefectRows.map((row) => ({
+    project: { id: row.projectId, name: row.projectName, slug: row.projectSlug },
+    artifact: { kind: "engineering_work", id: row.id, title: row.title },
+    condition: "Defect context is incomplete",
+    explanation: "This active Defect cannot be presented as a trustworthy continuation until its required investigation context is complete.",
+    destination: `/workspace/projects/${row.projectSlug}/engineering-work/${row.id}`,
+  }));
+  const blockedMilestoneItems: WorkspaceAttentionItem[] = blockedMilestoneRows.map((row) => ({
+    project: { id: row.projectId, name: row.projectName, slug: row.projectSlug },
+    artifact: { kind: "milestone", id: row.id, title: row.title },
+    condition: "Blocked milestone",
+    explanation: row.description?.trim() || null,
+    destination: `/workspace/projects/${row.projectSlug}`,
+  }));
+  const attentionItems = [...conditionedItems, ...incompleteDefectItems, ...blockedMilestoneItems];
+  const attentionTotal =
+    Number(conditionedRows[0]?.total ?? 0) +
+    Number(incompleteDefectRows[0]?.total ?? 0) +
+    Number(blockedMilestoneRows[0]?.total ?? 0);
+
+  return {
+    continuation,
+    attention: {
+      total: attentionTotal,
+      items: attentionItems.slice(0, ATTENTION_DISPLAY_LIMIT),
+    },
+    activeProjects,
+  };
 }
 
 export async function getOperatingSnapshot(): Promise<OperatingSnapshot> {
