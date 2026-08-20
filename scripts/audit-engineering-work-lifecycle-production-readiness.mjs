@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 
 import { neon } from "@neondatabase/serverless";
@@ -69,10 +70,18 @@ async function inspect(name, url) {
     : "";
   const [target] = await sql.query(`
     SELECT work.id, project.id AS project_id, project.name AS project_name,
-           project.slug AS project_slug, work.title, work.summary,
+           project.slug AS project_slug, project.status::text AS project_status,
+           project.stage::text AS project_stage,
+           project.current_focus AS project_current_focus,
+           project.next_step AS project_next_step,
+           project.target_date AS project_target_date,
+           project.created_at AS project_created_at,
+           project.updated_at AS project_updated_at,
+           work.title, work.summary,
            work.type::text AS type, work.workflow::text AS workflow,
            work.state::text AS state, work.current_next_action,
-           work.current_outcome, work.condition, work.condition_rationale
+           work.current_outcome, work.condition, work.condition_rationale,
+           work.priority, work.created_at, work.updated_at
            ${projectionSelect}
       FROM workspace_engineering_work AS work
       JOIN workspace_projects AS project ON project.id = work.project_id
@@ -80,14 +89,18 @@ async function inspect(name, url) {
   `, [TARGET_ID]);
   const [counts] = await sql.query(`
     SELECT
+      (SELECT count(*)::int FROM workspace_projects) AS projects,
       (SELECT count(*)::int FROM workspace_engineering_work) AS work_items,
+      (SELECT count(*)::int
+         FROM workspace_engineering_work
+        WHERE project_id = (SELECT project_id FROM workspace_engineering_work WHERE id = $1)) AS target_project_work_items,
       (SELECT count(*)::int FROM workspace_engineering_work WHERE current_next_action IS NULL) AS null_next_actions,
       (SELECT count(*)::int FROM workspace_engineering_work_defects) AS defects,
       (SELECT count(*)::int
          FROM workspace_engineering_work_defects AS defect
          JOIN workspace_engineering_work AS work ON work.id = defect.engineering_work_id
         WHERE work.workflow <> 'defect') AS incompatible_defects
-  `);
+  `, [TARGET_ID]);
   const historyPresent = relations.some((row) => row.table_name === "workspace_engineering_work_history");
   const [targetHistory] = historyPresent
     ? await sql.query(
@@ -200,6 +213,18 @@ async function main() {
     );
   }
 
+  const runtimeCorrelationEvidence = {
+    target: production.target,
+    counts: production.counts,
+    targetHistoryCount: production.targetHistoryCount,
+    allHistoryCount: production.allHistoryCount,
+    appliedMigrationHashes: production.migrations.map((migration) => migration.hash),
+    relations: production.relations,
+  };
+  const runtimeCorrelationFingerprint = createHash("sha256")
+    .update(JSON.stringify(runtimeCorrelationEvidence))
+    .digest("hex");
+
   console.log(JSON.stringify({
     auditedAt: new Date().toISOString(),
     development: {
@@ -223,6 +248,8 @@ async function main() {
       target: production.target,
       targetHistoryCount: production.targetHistoryCount,
       allHistoryCount: production.allHistoryCount,
+      runtimeCorrelationFingerprint,
+      runtimeCorrelationEvidence,
     },
     localMigrations: local.map(({ tag, when }) => ({ tag, when })),
     pendingProductionMigrations: pending.map(({ tag, when }) => ({ tag, when })),

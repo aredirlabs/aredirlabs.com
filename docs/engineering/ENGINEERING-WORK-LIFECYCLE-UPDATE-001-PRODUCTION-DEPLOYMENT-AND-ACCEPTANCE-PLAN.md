@@ -49,14 +49,14 @@ Production currently has:
 
 The local Development URL positively maps to the Development endpoint and branch above. The ignored local Production URL positively maps to the Production endpoint and branch above.
 
-No local .vercel project metadata, Vercel CLI, Vercel token, organization ID, or project ID is available. The public site responds from Vercel, but its X-Vercel-Id is a request identifier rather than a rollback deployment ID. Consequently:
+No local .vercel project metadata, Vercel CLI, Vercel token, organization ID, or project ID is available. The public site responds from Vercel, but its X-Vercel-Id is a request identifier rather than a rollback deployment ID. Vercel's encrypted DATABASE_URL values are write-only in the available control surface and must not be replaced merely to disclose them.
 
-- the actual Vercel Preview DATABASE_URL mapping is not observable here;
-- it is not established that Preview is unable to reach Production data;
-- the actual Vercel Production DATABASE_URL mapping is documented but not independently observable here;
+- **Production mapping:** DATABASE_URL is not directly inspected. Runtime identity may instead be proven by correlated read-only evidence: a fresh SELECT-only audit of the intended Neon branch must match the authenticated Production runtime's exact UUID-scoped acceptance record, record timestamps, project metadata/timestamps, and pre-acceptance empty-history state. The audit also records row counts, migration state, relations, Neon identity, server timestamp/LSN, and a SHA-256 fingerprint of the non-secret correlation tuple. This is **runtime identity proven by correlated read-only evidence**, not **DATABASE_URL secret directly inspected**.
+- **Preview mapping:** unverified — mutation prohibited. Preview is excluded from migration, deployment verification, and authenticated acceptance. Its unknown mapping is not a Production-write blocker while no Preview runtime or mutation is used in the approved sequence.
+- no existing runtime endpoint exposes a Neon endpoint/branch fingerprint. The authenticated record and project views are the available runtime-accessible database fingerprint; X-Vercel-Id identifies a request, not the database;
 - the current Vercel Production deployment ID is not available here.
 
-All four are hard authorization blockers. An authorized human must inspect Vercel Project Settings and the current Production deployment before migration. Preview mutation remains prohibited until its DATABASE_URL is shown to resolve to a non-Production branch.
+Before the first Production write, an authenticated human must record the correlated Production evidence and the current healthy Vercel Production deployment ID. A mismatch or insufficiently exact runtime tuple remains a hard blocker. Direct secret inspection is neither required nor permitted by this plan. Preview remains unverified and mutation-prohibited, but does not block Production while it stays outside the sequence.
 
 ## Neon recovery mechanism
 
@@ -102,7 +102,7 @@ The bounded candidate consists of:
 
 There are no dependency-version changes and no AlignFit repository changes.
 
-The current workspace is not yet a deployable immutable artifact: it is on main at f4778fb427dbcf2fff828619cb835edd1c97f844 with uncommitted and untracked package changes. Production execution must reference a reviewed commit SHA containing the complete diff. Never deploy the working tree directly.
+The frozen Phase A–C application baseline is commit 1bf4e58434f8c3293d656c5f2e46742dca848aec. This non-secret mapping-gate revision must be committed directly on top of that baseline; the resulting full commit SHA is the final Production candidate. Production execution must reference that exact reviewed commit containing both the application diff and the final production-readiness controls. Never deploy the working tree directly.
 
 ## Compatibility
 
@@ -131,8 +131,8 @@ Authorization must not be inferred from Phase A, B, or C acceptance or from this
 
 ## Pre-authorization preparation
 
-1. Move the complete diff to a feature branch and commit it.
-2. Open and review a PR; record the candidate commit SHA.
+1. Confirm the exact immutable candidate commit SHA and review its complete diff.
+2. Record the candidate SHA in the authorization manifest and Vercel deployment operation.
 3. Run:
 
    - npm.cmd test
@@ -142,8 +142,17 @@ Authorization must not be inferred from Phase A, B, or C acceptance or from this
    - npm.cmd run test:db:lifecycle:phase-b
    - npm.cmd run test:db:lifecycle:phase-c
 
-4. Use only confirmed Development for preview authenticated mutation QA. Preview must not point to the Production branch.
-5. Confirm Vercel Production DATABASE_URL maps to endpoint ep-nameless-dawn-a61gilim and branch br-crimson-shape-a6q4y35g without exposing the credential.
+4. Do not use Vercel Preview for database QA, migration, deployment verification, or acceptance. Record Preview as `unverified — mutation prohibited` unless independent read-only evidence later establishes its branch.
+5. Without inspecting or replacing DATABASE_URL, establish the current Vercel Production runtime mapping by correlation:
+
+   - run the SELECT-only readiness audit against endpoint ep-nameless-dawn-a61gilim / branch br-crimson-shape-a6q4y35g;
+   - in the authenticated current Production deployment, open project `aredirlabs-com` and Engineering Work `eng_work_23e97a29-0b92-47f1-9b93-04c6f07d6df9`;
+   - compare the exact ID, title, Objective, type/workflow/state, Current Next Action, null Outcome/Condition, record created/updated timestamps, and project status/stage/focus/next-step/target-date/created/updated timestamps;
+   - confirm from the SELECT-only audit that the target and total lifecycle-history counts are zero; after the new application is deployed, also confirm the authenticated runtime renders the empty history state;
+   - record the audit's project/work/Defect/history row counts, applied migration state, server time/LSN, and runtime-correlation fingerprint beside the authenticated observation;
+   - classify the result as `runtime identity proven by correlated read-only evidence; DATABASE_URL secret not directly inspected`.
+
+   Any mismatch, missing target, unexpected history, or inability to compare the exact timestamps is a stop condition.
 6. Record the previous healthy Vercel Production deployment ID.
 7. Record a Neon restore point or protected pre-migration branch according to the authorized Neon recovery procedure.
 8. Freeze all Production Engineering Work mutations from the final audit until acceptance verification completes.
@@ -233,8 +242,9 @@ Stop before the first Production write if any of these is true:
 
 - explicit authorization does not name the exact commit, endpoint, branch, and migrations;
 - the candidate working tree is dirty, the PR is unapproved, or Vercel would deploy a different SHA;
-- any test, build, Dev validator, preview QA, or readiness assertion fails;
-- Vercel Preview or Production database mapping is unknown or points to the wrong branch;
+- any test, build, Dev validator, or readiness assertion fails;
+- Production runtime identity cannot be established by the required correlated read-only evidence, or the evidence points to a different database;
+- Preview is used anywhere in the operation sequence while its mapping remains unverified;
 - the Production endpoint, project, branch, database, or migration hashes differ;
 - pending migrations are not exactly 0003 and 0004 in order;
 - the target is missing, changed, not Active, or has any history;
@@ -278,6 +288,10 @@ For an ambiguous submission, never resubmit first. Query the projection and hist
 - Application failure after successful acceptance: Vercel may roll back, but freeze all Engineering Work mutations because the old UI contains the retired generic bypass. Retain the completed projection and append-only event, then forward-fix and redeploy.
 - Never restore or down-migrate after a truthful acceptance event merely to undo the business decision. Database restoration after acceptance requires separate incident authority because it would erase accepted history.
 
+## Preview isolation decision
+
+Unknown Preview database mapping is not a Production-write blocker because Preview is excluded entirely from the authorized operation path. No Preview deployment promotion, authenticated workspace visit, database QA, mutation, migration, or acceptance action may occur. If that boundary changes, Preview mapping becomes a new authorization gate and must first be established independently.
+
 ## Decision
 
-The package is technically ready to become an immutable release candidate, but Production execution is not authorized. The remaining gates are commit/PR/preview evidence, Vercel environment mapping confirmation, recovery-point recording, exact-SHA authorization, and the final read-only audit.
+Production execution is not authorized. The remaining gates are an exact immutable candidate SHA containing the final controls, correlated read-only Production runtime identity evidence, the current healthy Vercel rollback deployment ID, the protected Neon recovery branch and exact recovery LSN, exact-SHA authorization, and the final SELECT-only audit. Preview evidence is not required while Preview remains excluded and mutation-prohibited.
