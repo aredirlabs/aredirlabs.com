@@ -528,4 +528,70 @@ export const workspaceEngineeringWorkRepositoryReferences = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
+  (table) => [
+    uniqueIndex(
+      "workspace_engineering_work_repository_references_identity_idx",
+    ).on(table.engineeringWorkId, table.repository, table.sourceLocation),
+    check(
+      "workspace_engineering_work_repo_refs_review_requires_ts",
+      sql`("reference_status" NOT IN ('verified', 'stale', 'missing')) OR ("last_reviewed_at" IS NOT NULL)`,
+    ),
+  ],
+);
+
+export const workspaceEngineeringWorkRepositoryReferenceRevisions = pgTable(
+  "workspace_engineering_work_repo_revisions",
+  {
+    id: text("id").primaryKey(),
+    historyEventId: text("history_event_id")
+      .notNull()
+      .references(() => workspaceEngineeringWorkHistory.id, {
+        onDelete: "restrict",
+      }),
+    engineeringWorkId: text("engineering_work_id")
+      .notNull()
+      .references(() => workspaceEngineeringWork.id, { onDelete: "restrict" }),
+    repositoryReferenceId: text("repository_reference_id")
+      .notNull()
+      .references(() => workspaceEngineeringWorkRepositoryReferences.id, {
+        onDelete: "restrict",
+      }),
+    previousReference: jsonb("previous_reference")
+      .$type<Record<string, unknown>>()
+      .notNull(),
+    resultingReference: jsonb("resulting_reference")
+      .$type<Record<string, unknown>>()
+      .notNull(),
+    referenceSchemaVersion: integer("reference_schema_version")
+      .notNull()
+      .default(1),
+  },
+  (table) => [
+    unique(
+      "workspace_engineering_work_repo_revisions_history_event_uniq",
+    ).on(table.historyEventId),
+    index("workspace_engineering_work_repo_revisions_work_idx").on(
+      table.engineeringWorkId,
+    ),
+    foreignKey({
+      columns: [table.engineeringWorkId, table.historyEventId],
+      foreignColumns: [
+        workspaceEngineeringWorkHistory.engineeringWorkId,
+        workspaceEngineeringWorkHistory.id,
+      ],
+      name: "workspace_engineering_work_repo_revisions_same_work_event_fk",
+    }).onDelete("restrict"),
+    check(
+      "workspace_engineering_work_repo_revisions_previous_reference",
+      sql`jsonb_typeof(${table.previousReference}) = 'object'`,
+    ),
+    check(
+      "workspace_engineering_work_repo_revisions_resulting_reference",
+      sql`jsonb_typeof(${table.resultingReference}) = 'object'`,
+    ),
+    check(
+      "workspace_engineering_work_repo_revisions_schema_version",
+      sql`${table.referenceSchemaVersion} > 0`,
+    ),
+  ],
 );

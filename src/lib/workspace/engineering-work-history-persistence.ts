@@ -7,6 +7,10 @@ import type {
   EngineeringWorkActor,
   EngineeringWorkDecisionProvenance,
 } from "./engineering-work-provenance";
+import type {
+  EngineeringWorkReferenceStatus,
+} from "./engineering-work";
+import type { EngineeringWorkRepositoryArtifactClass } from "./repository-reference";
 
 export type EngineeringWorkSqlExecutor = {
   query(queryWithPlaceholders: string, params?: unknown[]): Promise<Array<Record<string, unknown>>>;
@@ -607,4 +611,333 @@ export async function appendEngineeringWorkDecisionEvent(
     ],
   );
   return persistenceResult(rows);
+}
+
+export type EngineeringWorkRepositoryReferencePersistenceResult =
+  | {
+      ok: true;
+      engineeringWorkId: string;
+      version: number;
+      historyEventId: string;
+      repositoryReferenceId: string;
+      repositoryRevisionId: string;
+    }
+  | { ok: false; reason: "not_found_or_stale" | "duplicate" | "noop" | "review_required" };
+
+export type CreateEngineeringWorkRepositoryReferenceWithHistoryInput = {
+  engineeringWorkId: string;
+  projectSlug: string;
+  expectedVersion: number;
+  repositoryReferenceId: string;
+  historyEventId: string;
+  repositoryRevisionId: string;
+  repository: string;
+  sourceLocation: string;
+  artifactClass: EngineeringWorkRepositoryArtifactClass;
+  artifactIdentifier?: string | null;
+  branch?: string | null;
+  commitHash?: string | null;
+  note?: string | null;
+  provenance: EngineeringWorkDecisionProvenance;
+};
+
+export type MaintainEngineeringWorkRepositoryReferenceWithHistoryInput = {
+  engineeringWorkId: string;
+  projectSlug: string;
+  expectedVersion: number;
+  repositoryReferenceId: string;
+  historyEventId: string;
+  repositoryRevisionId: string;
+  artifactClass: EngineeringWorkRepositoryArtifactClass;
+  artifactIdentifier?: string | null;
+  branch?: string | null;
+  commitHash?: string | null;
+  referenceStatus: EngineeringWorkReferenceStatus;
+  note?: string | null;
+  decisionBasisSummary?: string | null;
+  provenance: EngineeringWorkDecisionProvenance;
+};
+
+function referencePersistenceResult(
+  rows: Array<Record<string, unknown>>,
+): EngineeringWorkRepositoryReferencePersistenceResult {
+  const row = rows[0];
+  if (!row) return { ok: false, reason: "not_found_or_stale" };
+  if (row.review_denied) return { ok: false, reason: "review_required" };
+  if (row.reference_count === 0) return { ok: false, reason: "not_found_or_stale" };
+  if (row.history_event_id == null) {
+    return { ok: false, reason: row.duplicate ? "duplicate" : "noop" };
+  }
+  return {
+    ok: true,
+    engineeringWorkId: String(row.engineering_work_id),
+    version: Number(row.version),
+    historyEventId: String(row.history_event_id),
+    repositoryReferenceId: String(row.repository_reference_id),
+    repositoryRevisionId: String(row.repository_revision_id ?? ""),
+  };
+}
+
+const referenceHistoryColumns = `
+  prior_state, resulting_state,
+  decision, rationale, decision_basis,
+  action_actor_type, action_actor_identifier, action_actor_display_name,
+  decision_actor_type, decision_actor_identifier, decision_actor_display_name,
+  decision_role, authority_type, authority_reference, authority_context,
+  based_on_event_id, provenance_metadata, occurred_at`;
+
+function referenceSnapshot(alias: string) {
+  return `
+  'repository', ${alias}.repository,
+  'sourceLocation', ${alias}.source_location,
+  'artifactClass', ${alias}.artifact_class,
+  'authority', ${alias}.authority,
+  'artifactIdentifier', ${alias}.artifact_identifier,
+  'branch', ${alias}.branch,
+  'commitHash', ${alias}.commit_hash,
+  'referenceStatus', ${alias}.reference_status,
+  'lastReviewedAt', ${alias}.last_reviewed_at,
+  'note', ${alias}.note`;
+}
+
+/**
+ * Adds a repository reference, increments the parent work version, appends a
+ * workflow_context_update history event, and writes an immutable revision in
+ * one atomic statement. Creation always records `expected` status; a duplicate
+ * identity submission is rejected as a semantic no-op.
+ */
+export async function createEngineeringWorkRepositoryReferenceWithHistory(
+  sql: EngineeringWorkSqlExecutor,
+  input: CreateEngineeringWorkRepositoryReferenceWithHistoryInput,
+): Promise<EngineeringWorkRepositoryReferencePersistenceResult> {
+  const provenance = input.provenance;
+  const rows = await sql.query(
+    `WITH current_work AS (
+       SELECT work.* FROM workspace_engineering_work AS work
+       JOIN workspace_projects AS project ON project.id = work.project_id
+       WHERE work.id = $1 AND project.slug = $2 AND work.version = $3
+         AND work.state IN ('proposed', 'active', 'in_review', 'completed')
+       FOR UPDATE OF work
+     ), inserted_reference AS (
+       INSERT INTO workspace_engineering_work_repository_references (
+         id, engineering_work_id, repository, source_location, artifact_class, authority,
+         artifact_identifier, branch, commit_hash, reference_status, note
+       )
+       SELECT $4, work.id, $5, $6, $7, 'repository_authoritative', $8, $9, $10, 'expected', $11
+       FROM current_work AS work
+       ON CONFLICT (engineering_work_id, repository, source_location) DO NOTHING
+       RETURNING *
+     ), updated_work AS (
+       UPDATE workspace_engineering_work AS work SET
+         version = work.version + 1, updated_at = statement_timestamp()
+       FROM inserted_reference AS reference
+       WHERE work.id = reference.engineering_work_id
+       RETURNING work.*
+     ), inserted_history AS (
+       INSERT INTO workspace_engineering_work_history (
+         id, engineering_work_id, kind, action_type, ${referenceHistoryColumns}
+       )
+       SELECT $12, work.id, 'workflow_context_update', 'repository_reference_added',
+         work.state, work.state,
+         $13, $14, $15::jsonb,
+         $16::engineering_work_actor_type, $17, $18,
+         $19::engineering_work_actor_type, $20, $21,
+         $22::engineering_work_decision_role, $23::engineering_work_authority_type, $24, $25,
+         $26, $27::jsonb, statement_timestamp()
+       FROM updated_work AS work
+       RETURNING id, engineering_work_id
+     ), inserted_revision AS (
+       INSERT INTO workspace_engineering_work_repo_revisions (
+         id, history_event_id, engineering_work_id, repository_reference_id,
+         previous_reference, resulting_reference, reference_schema_version
+       )
+       SELECT $28, history.id, history.engineering_work_id, reference.id,
+         '{}'::jsonb,
+         jsonb_build_object(${referenceSnapshot("reference")}), 1
+       FROM updated_work AS work
+       JOIN inserted_history AS history ON history.engineering_work_id = work.id
+       JOIN inserted_reference AS reference ON reference.engineering_work_id = work.id
+       RETURNING id
+     )
+     SELECT work.id AS engineering_work_id,
+       COALESCE(updated.version, work.version) AS version,
+       history.id AS history_event_id,
+       reference.id AS repository_reference_id,
+       (SELECT id FROM inserted_revision) AS repository_revision_id,
+       (SELECT count(*)::int FROM workspace_engineering_work_repository_references AS existing
+          JOIN current_work AS work2 ON work2.id = existing.engineering_work_id
+         WHERE existing.repository = $5 AND existing.source_location = $6
+           AND existing.id <> $4) AS duplicate,
+       (SELECT count(*)::int FROM current_work) AS reference_count
+     FROM current_work AS work
+     LEFT JOIN updated_work AS updated ON updated.id = work.id
+     LEFT JOIN inserted_history AS history ON history.engineering_work_id = work.id
+     LEFT JOIN inserted_reference AS reference ON reference.engineering_work_id = work.id`,
+    [
+      nonblank(input.engineeringWorkId, "Engineering Work ID"),
+      nonblank(input.projectSlug, "Project slug"),
+      validExpectedVersion(input.expectedVersion),
+      nonblank(input.repositoryReferenceId, "Repository reference ID"),
+      nonblank(input.repository, "Repository"),
+      nonblank(input.sourceLocation, "Source location"),
+      input.artifactClass,
+      normalizedOptional(input.artifactIdentifier),
+      normalizedOptional(input.branch),
+      normalizedOptional(input.commitHash),
+      normalizedOptional(input.note),
+      nonblank(input.historyEventId, "History event ID"),
+      provenance.decision,
+      provenance.rationale,
+      JSON.stringify(provenance.decisionBasis ?? {}),
+      provenance.actionActor.type,
+      provenance.actionActor.identifier,
+      provenance.actionActor.displayName,
+      provenance.decisionActor.type,
+      provenance.decisionActor.identifier,
+      provenance.decisionActor.displayName,
+      provenance.decisionRole,
+      provenance.authority?.type ?? null,
+      provenance.authority?.reference ?? null,
+      provenance.authority?.context ?? null,
+      provenance.basedOnEventId,
+      JSON.stringify(provenance.metadata ?? {}),
+      nonblank(input.repositoryRevisionId, "Repository revision ID"),
+    ],
+  );
+  return referencePersistenceResult(rows);
+}
+
+/**
+ * Maintains a repository reference's metadata with the same atomic guarantees
+ * as creation. A submission that changes nothing is rejected without any
+ * mutation. A change to a review status (`verified`, `stale`, or `missing`)
+ * requires a decision basis summary and sets a server-controlled review
+ * timestamp.
+ */
+export async function maintainEngineeringWorkRepositoryReferenceWithHistory(
+  sql: EngineeringWorkSqlExecutor,
+  input: MaintainEngineeringWorkRepositoryReferenceWithHistoryInput,
+): Promise<EngineeringWorkRepositoryReferencePersistenceResult> {
+  const provenance = input.provenance;
+  const decisionBasisSummary = input.decisionBasisSummary?.trim() || null;
+  const rows = await sql.query(
+    `WITH current_work AS (
+       SELECT work.* FROM workspace_engineering_work AS work
+       JOIN workspace_projects AS project ON project.id = work.project_id
+       WHERE work.id = $1 AND project.slug = $2 AND work.version = $3
+         AND work.state IN ('proposed', 'active', 'in_review', 'completed')
+       FOR UPDATE OF work
+     ), current_reference AS (
+       SELECT reference.*,
+         ROW(reference.artifact_class, reference.artifact_identifier, reference.branch,
+             reference.commit_hash, reference.reference_status, reference.note)
+         IS DISTINCT FROM ROW($5, $6, $7, $8, $9, $10) AS changed,
+         reference.reference_status IS DISTINCT FROM $9 AS status_changed
+       FROM workspace_engineering_work_repository_references AS reference
+       JOIN current_work AS work ON work.id = reference.engineering_work_id
+       WHERE reference.id = $4
+       FOR UPDATE OF reference
+     ), review_gate AS (
+       SELECT EXISTS (
+         SELECT 1 FROM current_reference AS candidate
+         WHERE candidate.status_changed
+           AND $9 IN ('verified', 'stale', 'missing')
+           AND btrim(coalesce($28, '')) = ''
+       ) AS denied
+     ), updated_reference AS (
+       UPDATE workspace_engineering_work_repository_references AS reference SET
+         artifact_class = $5,
+         artifact_identifier = $6,
+         branch = $7,
+         commit_hash = $8,
+         reference_status = $9,
+         last_reviewed_at = CASE
+           WHEN $9 IN ('verified', 'stale', 'missing') AND previous.status_changed
+           THEN statement_timestamp()
+           ELSE reference.last_reviewed_at END,
+         note = $10,
+         updated_at = statement_timestamp()
+       FROM current_reference AS previous
+       WHERE reference.id = previous.id AND previous.changed
+         AND NOT (SELECT denied FROM review_gate)
+       RETURNING reference.*
+     ), updated_work AS (
+       UPDATE workspace_engineering_work AS work SET
+         version = work.version + 1, updated_at = statement_timestamp()
+       FROM updated_reference AS reference
+       WHERE work.id = reference.engineering_work_id
+       RETURNING work.*
+     ), inserted_history AS (
+       INSERT INTO workspace_engineering_work_history (
+         id, engineering_work_id, kind, action_type, ${referenceHistoryColumns}
+       )
+       SELECT $11, work.id, 'workflow_context_update', 'repository_reference_updated',
+         work.state, work.state,
+         $12, $13, $14::jsonb,
+         $15::engineering_work_actor_type, $16, $17,
+         $18::engineering_work_actor_type, $19, $20,
+         $21::engineering_work_decision_role, $22::engineering_work_authority_type, $23, $24,
+         $25, $26::jsonb, statement_timestamp()
+       FROM updated_work AS work
+       RETURNING id, engineering_work_id
+     ), inserted_revision AS (
+       INSERT INTO workspace_engineering_work_repo_revisions (
+         id, history_event_id, engineering_work_id, repository_reference_id,
+         previous_reference, resulting_reference, reference_schema_version
+       )
+       SELECT $27, history.id, history.engineering_work_id, reference.id,
+         jsonb_build_object(${referenceSnapshot("previous")}),
+         jsonb_build_object(${referenceSnapshot("reference")}), 1
+       FROM current_reference AS previous
+       JOIN updated_reference AS reference ON reference.id = previous.id
+       JOIN inserted_history AS history ON history.engineering_work_id = reference.engineering_work_id
+       RETURNING id
+     )
+     SELECT work.id AS engineering_work_id,
+       COALESCE(updated.version, work.version) AS version,
+       history.id AS history_event_id,
+       reference.id AS repository_reference_id,
+       (SELECT id FROM inserted_revision) AS repository_revision_id,
+       (SELECT denied::int FROM review_gate) AS review_denied,
+       (SELECT count(*)::int FROM current_reference) AS reference_count
+     FROM current_work AS work
+     LEFT JOIN updated_work AS updated ON updated.id = work.id
+     LEFT JOIN inserted_history AS history ON history.engineering_work_id = work.id
+     LEFT JOIN updated_reference AS reference ON reference.engineering_work_id = work.id`,
+    [
+      nonblank(input.engineeringWorkId, "Engineering Work ID"),
+      nonblank(input.projectSlug, "Project slug"),
+      validExpectedVersion(input.expectedVersion),
+      nonblank(input.repositoryReferenceId, "Repository reference ID"),
+      input.artifactClass,
+      normalizedOptional(input.artifactIdentifier),
+      normalizedOptional(input.branch),
+      normalizedOptional(input.commitHash),
+      input.referenceStatus,
+      normalizedOptional(input.note),
+      nonblank(input.historyEventId, "History event ID"),
+      provenance.decision,
+      provenance.rationale,
+      JSON.stringify(
+        decisionBasisSummary
+          ? { ...(provenance.decisionBasis ?? {}), summary: decisionBasisSummary }
+          : (provenance.decisionBasis ?? {}),
+      ),
+      provenance.actionActor.type,
+      provenance.actionActor.identifier,
+      provenance.actionActor.displayName,
+      provenance.decisionActor.type,
+      provenance.decisionActor.identifier,
+      provenance.decisionActor.displayName,
+      provenance.decisionRole,
+      provenance.authority?.type ?? null,
+      provenance.authority?.reference ?? null,
+      provenance.authority?.context ?? null,
+      provenance.basedOnEventId,
+      JSON.stringify(provenance.metadata ?? {}),
+      nonblank(input.repositoryRevisionId, "Repository revision ID"),
+      decisionBasisSummary,
+    ],
+  );
+  return referencePersistenceResult(rows);
 }

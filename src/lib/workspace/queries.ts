@@ -10,6 +10,7 @@ import {
   workspaceEngineeringWorkHistory,
   workspaceEngineeringWorkDefects,
   workspaceEngineeringWorkRepositoryReferences,
+  workspaceEngineeringWorkRepositoryReferenceRevisions,
 } from "@/lib/db/schema";
 import {
   WORKSPACE_PROJECT_DOCUMENT_CATEGORIES,
@@ -424,21 +425,93 @@ export async function getProjectEngineeringWorkHistory(
     .orderBy(desc(workspaceEngineeringWorkHistory.occurredAt), desc(workspaceEngineeringWorkHistory.id));
 }
 
-export async function getEngineeringWorkRepositoryReferences(
+export async function getProjectEngineeringWorkRepositoryReferences(
+  projectSlug: string,
   engineeringWorkId: string,
 ) {
   const db = getDb();
 
   return db
-    .select()
+    .select({
+      id: workspaceEngineeringWorkRepositoryReferences.id,
+      engineeringWorkId: workspaceEngineeringWorkRepositoryReferences.engineeringWorkId,
+      repository: workspaceEngineeringWorkRepositoryReferences.repository,
+      sourceLocation: workspaceEngineeringWorkRepositoryReferences.sourceLocation,
+      artifactClass: workspaceEngineeringWorkRepositoryReferences.artifactClass,
+      authority: workspaceEngineeringWorkRepositoryReferences.authority,
+      artifactIdentifier: workspaceEngineeringWorkRepositoryReferences.artifactIdentifier,
+      branch: workspaceEngineeringWorkRepositoryReferences.branch,
+      commitHash: workspaceEngineeringWorkRepositoryReferences.commitHash,
+      referenceStatus: workspaceEngineeringWorkRepositoryReferences.referenceStatus,
+      lastReviewedAt: workspaceEngineeringWorkRepositoryReferences.lastReviewedAt,
+      note: workspaceEngineeringWorkRepositoryReferences.note,
+      createdAt: workspaceEngineeringWorkRepositoryReferences.createdAt,
+      updatedAt: workspaceEngineeringWorkRepositoryReferences.updatedAt,
+    })
     .from(workspaceEngineeringWorkRepositoryReferences)
-    .where(
+    .innerJoin(
+      workspaceEngineeringWork,
       eq(
         workspaceEngineeringWorkRepositoryReferences.engineeringWorkId,
-        engineeringWorkId,
+        workspaceEngineeringWork.id,
+      ),
+    )
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceEngineeringWork.projectId, workspaceProjects.id),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceEngineeringWork.id, engineeringWorkId),
       ),
     )
     .orderBy(asc(workspaceEngineeringWorkRepositoryReferences.createdAt));
+}
+
+export async function getProjectEngineeringWorkRepositoryReferenceRevisions(
+  projectSlug: string,
+  engineeringWorkId: string,
+) {
+  const db = getDb();
+
+  return db
+    .select({
+      id: workspaceEngineeringWorkRepositoryReferenceRevisions.id,
+      historyEventId:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.historyEventId,
+      engineeringWorkId:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.engineeringWorkId,
+      repositoryReferenceId:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.repositoryReferenceId,
+      previousReference:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.previousReference,
+      resultingReference:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.resultingReference,
+      referenceSchemaVersion:
+        workspaceEngineeringWorkRepositoryReferenceRevisions.referenceSchemaVersion,
+    })
+    .from(workspaceEngineeringWorkRepositoryReferenceRevisions)
+    .innerJoin(
+      workspaceEngineeringWork,
+      eq(
+        workspaceEngineeringWorkRepositoryReferenceRevisions.engineeringWorkId,
+        workspaceEngineeringWork.id,
+      ),
+    )
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceEngineeringWork.projectId, workspaceProjects.id),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceEngineeringWork.id, engineeringWorkId),
+      ),
+    )
+    .orderBy(
+      asc(workspaceEngineeringWorkRepositoryReferenceRevisions.id),
+    );
 }
 
 export type WorkspaceDocumentSearchResult = WorkspaceProjectDocument & {

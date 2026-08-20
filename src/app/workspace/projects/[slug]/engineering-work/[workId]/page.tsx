@@ -9,9 +9,9 @@ import {
 } from "@/components/workspace/engineering-work-badges";
 import { formatTimestamp } from "@/lib/workspace/format-date";
 import {
-  getEngineeringWorkRepositoryReferences,
   getProjectEngineeringWorkById,
   getProjectEngineeringWorkHistory,
+  getProjectEngineeringWorkRepositoryReferences,
 } from "@/lib/workspace/queries";
 import { getRelatedKnowledgeForEngineeringWork } from "@/lib/workspace/related-knowledge";
 import { getProjectDefectContext } from "@/lib/workspace/defect-context";
@@ -94,7 +94,7 @@ export default async function EngineeringWorkDetailPage({
   }
 
   let work: Awaited<ReturnType<typeof getProjectEngineeringWorkById>> | null = null;
-  let references: Awaited<ReturnType<typeof getEngineeringWorkRepositoryReferences>> = [];
+  let references: Awaited<ReturnType<typeof getProjectEngineeringWorkRepositoryReferences>> = [];
   let relatedKnowledge: Awaited<ReturnType<typeof getRelatedKnowledgeForEngineeringWork>> = [];
   let defectContext: Awaited<ReturnType<typeof getProjectDefectContext>> = null;
   let history: Awaited<ReturnType<typeof getProjectEngineeringWorkHistory>> = [];
@@ -104,7 +104,7 @@ export default async function EngineeringWorkDetailPage({
     work = await getProjectEngineeringWorkById(slug, workId);
     if (work) {
       [references, relatedKnowledge, defectContext, history] = await Promise.all([
-        getEngineeringWorkRepositoryReferences(work.id),
+        getProjectEngineeringWorkRepositoryReferences(work.projectSlug, work.id),
         getRelatedKnowledgeForEngineeringWork(work),
         work.workflow === "defect"
           ? getProjectDefectContext(work.projectSlug, work.id)
@@ -371,6 +371,15 @@ export default async function EngineeringWorkDetailPage({
                   </ul>
                 )}
               </details>
+              <div className="mt-4 text-right">
+                <Link
+                  href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/evidence`}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <Pencil className="size-3.5" />
+                  Manage repository evidence
+                </Link>
+              </div>
             </section>
 
             <EngineeringWorkHistory events={history} />
@@ -556,6 +565,15 @@ export default async function EngineeringWorkDetailPage({
               })}
             </ul>
           )}
+          <div className="mt-4 text-right">
+            <Link
+              href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/evidence`}
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Pencil className="size-3.5" />
+              Manage repository evidence
+            </Link>
+          </div>
         </section>
 
         <EngineeringWorkHistory events={history} />

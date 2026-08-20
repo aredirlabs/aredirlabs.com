@@ -36,6 +36,20 @@
       "when": 1787240606915,
       "tag": "0004_engineering_work_history_chain_integrity",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1787259294895,
+      "tag": "0005_engineering_work_repository_evidence",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1787259600000,
+      "tag": "0006_engineering_work_reference_review_check",
+      "breakpoints": true
     }
   ]
 }

@@ -96,6 +96,24 @@ export const ENGINEERING_WORK_STATE_LABELS: Record<EngineeringWorkState, string>
   superseded: "Superseded",
 };
 
+export const ENGINEERING_WORK_REFERENCE_STATUSES = [
+  "expected",
+  "verified",
+  "stale",
+  "missing",
+] as const;
+
+export type EngineeringWorkReferenceStatus =
+  (typeof ENGINEERING_WORK_REFERENCE_STATUSES)[number];
+
+export function isEngineeringWorkReferenceStatus(
+  value: string,
+): value is EngineeringWorkReferenceStatus {
+  return ENGINEERING_WORK_REFERENCE_STATUSES.includes(
+    value as EngineeringWorkReferenceStatus,
+  );
+}
+
 export const ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS = {
   repository_authoritative: "Repository authoritative",
   external_read_only: "External read-only",
