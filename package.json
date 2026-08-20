@@ -7,12 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx src/lib/workspace/workspace-operational.test.ts",
+    "test": "tsx --test src/lib/workspace/workspace-operational.test.ts src/lib/workspace/engineering-work-history.test.ts",
+    "test:db:lifecycle": "node --env-file=.env.local scripts/validate-engineering-work-lifecycle-phase-a.mjs",
+    "test:db:lifecycle:phase-b": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs scripts/validate-engineering-work-lifecycle-phase-b.ts",
+    "test:db:lifecycle:phase-c": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs scripts/validate-engineering-work-lifecycle-phase-c.ts",
     "db:generate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs generate",
     "db:migrate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs migrate",
     "db:push": "node --env-file=.env.local scripts/migrate-workspace-006.mjs && node --env-file=.env.local scripts/migrate-engineering-work-002.mjs && node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
     "db:seed": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs src/lib/db/seed.ts",
     "db:push:prod": "node scripts/db-prod.mjs push",
+    "db:migrate:prod": "node scripts/db-prod.mjs migrate",
     "db:seed:prod": "node scripts/db-prod.mjs seed"
   },
   "dependencies": {

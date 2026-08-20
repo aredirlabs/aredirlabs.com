@@ -7,6 +7,7 @@ import {
   workspaceProjectPrompts,
   workspaceProjects,
   workspaceEngineeringWork,
+  workspaceEngineeringWorkHistory,
   workspaceEngineeringWorkDefects,
   workspaceEngineeringWorkRepositoryReferences,
 } from "@/lib/db/schema";
@@ -352,6 +353,8 @@ export async function getProjectEngineeringWorkById(
       priority: workspaceEngineeringWork.priority,
       condition: workspaceEngineeringWork.condition,
       conditionRationale: workspaceEngineeringWork.conditionRationale,
+      finalDisposition: workspaceEngineeringWork.finalDisposition,
+      version: workspaceEngineeringWork.version,
       createdAt: workspaceEngineeringWork.createdAt,
       updatedAt: workspaceEngineeringWork.updatedAt,
       projectName: workspaceProjects.name,
@@ -371,6 +374,54 @@ export async function getProjectEngineeringWorkById(
     .limit(1);
 
   return rows[0] ?? null;
+}
+
+export async function getProjectEngineeringWorkHistory(
+  projectSlug: string,
+  engineeringWorkId: string,
+) {
+  const db = getDb();
+  return db
+    .select({
+      id: workspaceEngineeringWorkHistory.id,
+      kind: workspaceEngineeringWorkHistory.kind,
+      actionType: workspaceEngineeringWorkHistory.actionType,
+      priorState: workspaceEngineeringWorkHistory.priorState,
+      resultingState: workspaceEngineeringWorkHistory.resultingState,
+      previousNextAction: workspaceEngineeringWorkHistory.previousNextAction,
+      resultingNextAction: workspaceEngineeringWorkHistory.resultingNextAction,
+      previousOutcome: workspaceEngineeringWorkHistory.previousOutcome,
+      resultingOutcome: workspaceEngineeringWorkHistory.resultingOutcome,
+      previousCondition: workspaceEngineeringWorkHistory.previousCondition,
+      resultingCondition: workspaceEngineeringWorkHistory.resultingCondition,
+      previousFinalDisposition: workspaceEngineeringWorkHistory.previousFinalDisposition,
+      resultingFinalDisposition: workspaceEngineeringWorkHistory.resultingFinalDisposition,
+      decision: workspaceEngineeringWorkHistory.decision,
+      rationale: workspaceEngineeringWorkHistory.rationale,
+      decisionBasis: workspaceEngineeringWorkHistory.decisionBasis,
+      actionActorType: workspaceEngineeringWorkHistory.actionActorType,
+      actionActorIdentifier: workspaceEngineeringWorkHistory.actionActorIdentifier,
+      actionActorDisplayName: workspaceEngineeringWorkHistory.actionActorDisplayName,
+      decisionActorType: workspaceEngineeringWorkHistory.decisionActorType,
+      decisionActorIdentifier: workspaceEngineeringWorkHistory.decisionActorIdentifier,
+      decisionActorDisplayName: workspaceEngineeringWorkHistory.decisionActorDisplayName,
+      decisionRole: workspaceEngineeringWorkHistory.decisionRole,
+      authorityType: workspaceEngineeringWorkHistory.authorityType,
+      occurredAt: workspaceEngineeringWorkHistory.occurredAt,
+    })
+    .from(workspaceEngineeringWorkHistory)
+    .innerJoin(
+      workspaceEngineeringWork,
+      eq(workspaceEngineeringWorkHistory.engineeringWorkId, workspaceEngineeringWork.id),
+    )
+    .innerJoin(workspaceProjects, eq(workspaceEngineeringWork.projectId, workspaceProjects.id))
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceEngineeringWork.id, engineeringWorkId),
+      ),
+    )
+    .orderBy(desc(workspaceEngineeringWorkHistory.occurredAt), desc(workspaceEngineeringWorkHistory.id));
 }
 
 export async function getEngineeringWorkRepositoryReferences(

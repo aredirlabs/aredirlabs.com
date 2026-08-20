@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, ExternalLink, FileQuestion, Pencil } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CircleCheck, ExternalLink, FileQuestion, Pencil } from "lucide-react";
 
 import { Eyebrow } from "@/components/eyebrow";
 import {
@@ -11,6 +11,7 @@ import { formatTimestamp } from "@/lib/workspace/format-date";
 import {
   getEngineeringWorkRepositoryReferences,
   getProjectEngineeringWorkById,
+  getProjectEngineeringWorkHistory,
 } from "@/lib/workspace/queries";
 import { getRelatedKnowledgeForEngineeringWork } from "@/lib/workspace/related-knowledge";
 import { getProjectDefectContext } from "@/lib/workspace/defect-context";
@@ -45,6 +46,44 @@ function navigableUrl(value: string) {
   }
 }
 
+function EngineeringWorkHistory({
+  events,
+}: {
+  events: Awaited<ReturnType<typeof getProjectEngineeringWorkHistory>>;
+}) {
+  return (
+    <section className="rounded-lg border border-border bg-card p-6">
+      <h2 className="font-heading text-base font-semibold">Lifecycle history</h2>
+      <p className="mt-1 text-sm text-muted-foreground">Append-only operational and decision history. Action and decision actors remain distinct.</p>
+      {events.length === 0 ? <p className="mt-4 text-sm text-muted-foreground">No post-migration lifecycle history has been recorded.</p> : (
+        <ol className="mt-5 space-y-4">
+          {events.map((event) => {
+            const basis = typeof event.decisionBasis.summary === "string" ? event.decisionBasis.summary : null;
+            return (
+              <li key={event.id} className="rounded-md border border-border bg-background/60 p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2"><p className="font-medium">{event.actionType.replaceAll("_", " ")}</p><time className="font-mono text-xs text-muted-foreground">{formatTimestamp(event.occurredAt)}</time></div>
+                {event.priorState || event.resultingState ? <p className="mt-2 text-sm text-muted-foreground">{event.priorState ?? "—"} → {event.resultingState ?? "—"}</p> : null}
+                {event.decision ? <p className="mt-3 text-sm">{event.decision}</p> : null}
+                {event.rationale ? <p className="mt-2 text-sm text-muted-foreground">{event.rationale}</p> : null}
+                {basis ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Basis:</span> {basis}</p> : null}
+                <dl className="mt-4 grid gap-3 border-t border-border pt-3 text-sm sm:grid-cols-2">
+                  <DetailField label="Action actor" value={event.actionActorDisplayName ?? event.actionActorIdentifier} />
+                  <DetailField label="Decision actor" value={event.decisionActorDisplayName ?? event.decisionActorIdentifier ?? "No decision actor"} />
+                  <DetailField label="Decision role" value={event.decisionRole ?? "—"} />
+                  <DetailField label="Authority" value={event.authorityType ?? "—"} />
+                </dl>
+                {event.previousNextAction !== event.resultingNextAction ? <p className="mt-3 text-sm text-muted-foreground"><span className="font-medium text-foreground">Next Action:</span> {event.previousNextAction ?? "—"} → {event.resultingNextAction ?? "—"}</p> : null}
+                {event.previousOutcome !== event.resultingOutcome ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Outcome:</span> {event.previousOutcome ?? "—"} → {event.resultingOutcome ?? "—"}</p> : null}
+                {event.resultingFinalDisposition ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Final disposition:</span> {event.resultingFinalDisposition}</p> : null}
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
+  );
+}
+
 export default async function EngineeringWorkDetailPage({
   params,
 }: EngineeringWorkDetailPageProps) {
@@ -58,17 +97,19 @@ export default async function EngineeringWorkDetailPage({
   let references: Awaited<ReturnType<typeof getEngineeringWorkRepositoryReferences>> = [];
   let relatedKnowledge: Awaited<ReturnType<typeof getRelatedKnowledgeForEngineeringWork>> = [];
   let defectContext: Awaited<ReturnType<typeof getProjectDefectContext>> = null;
+  let history: Awaited<ReturnType<typeof getProjectEngineeringWorkHistory>> = [];
   let error: string | null = null;
 
   try {
     work = await getProjectEngineeringWorkById(slug, workId);
     if (work) {
-      [references, relatedKnowledge, defectContext] = await Promise.all([
+      [references, relatedKnowledge, defectContext, history] = await Promise.all([
         getEngineeringWorkRepositoryReferences(work.id),
         getRelatedKnowledgeForEngineeringWork(work),
         work.workflow === "defect"
           ? getProjectDefectContext(work.projectSlug, work.id)
           : Promise.resolve(null),
+        getProjectEngineeringWorkHistory(work.projectSlug, work.id),
       ]);
     }
   } catch (e) {
@@ -152,7 +193,7 @@ export default async function EngineeringWorkDetailPage({
                       Current operational next action{isHistoricalPosture ? " · historical" : ""}
                     </p>
                     <h2 id="current-action-heading" className="mt-2 text-lg font-semibold leading-7 text-foreground sm:text-xl">
-                      {work.currentNextAction}
+                      {work.currentNextAction ?? "No current next action recorded."}
                     </h2>
                     {isHistoricalPosture ? (
                       <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -160,13 +201,17 @@ export default async function EngineeringWorkDetailPage({
                       </p>
                     ) : null}
                   </div>
-                  <Link
+                  {!isHistoricalPosture ? <Link
                     href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`}
                     className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
                   >
                     <Pencil className="size-3.5" />
-                    Edit Engineering Work
-                  </Link>
+                    {work.state === "proposed" ? "Correct Proposal" : "Operate Engineering Work"}
+                  </Link> : null}
+                  {["active", "in_review"].includes(work.state) ? <Link
+                    href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/complete`}
+                    className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-md border border-primary/30 bg-background px-4 py-2.5 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
+                  ><CircleCheck className="size-3.5" />Complete</Link> : null}
                 </div>
               </div>
             </section>
@@ -216,7 +261,7 @@ export default async function EngineeringWorkDetailPage({
               </div>
             </section>
 
-            {work.currentOutcome || work.condition ? (
+            {work.currentOutcome || work.condition || work.finalDisposition ? (
               <section aria-labelledby="assessment-heading" className="border-t border-border pt-8">
                 <h2 id="assessment-heading" className="text-lg font-semibold">Current assessment</h2>
                 <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
@@ -227,6 +272,7 @@ export default async function EngineeringWorkDetailPage({
                       value={<><span className="font-medium">{work.condition}</span>{work.conditionRationale ? <span className="mt-2 block leading-6 text-muted-foreground">{work.conditionRationale}</span> : null}</>}
                     />
                   ) : null}
+                  {work.finalDisposition ? <DetailField label="Final Disposition" value={work.finalDisposition} /> : null}
                 </dl>
               </section>
             ) : null}
@@ -323,6 +369,8 @@ export default async function EngineeringWorkDetailPage({
               </details>
             </section>
 
+            <EngineeringWorkHistory events={history} />
+
             <section aria-labelledby="record-reference-heading" className="border-t border-border pb-2 pt-8">
               <h2 id="record-reference-heading" className="sr-only">Reference metadata</h2>
               <details className="group text-muted-foreground">
@@ -356,7 +404,8 @@ export default async function EngineeringWorkDetailPage({
         <Eyebrow>Engineering Work</Eyebrow>
         <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight">{work.title}</h1>
-          <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="size-3.5" />Edit Engineering Work</Link>
+          {["proposed", "active", "in_review"].includes(work.state) ? <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="size-3.5" />{work.state === "proposed" ? "Correct Proposal" : "Operate Engineering Work"}</Link> : null}
+          {["active", "in_review"].includes(work.state) ? <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/complete`} className="inline-flex items-center gap-2 rounded-md border border-primary/30 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><CircleCheck className="size-3.5" />Complete</Link> : null}
         </div>
       </div>
 
@@ -386,7 +435,7 @@ export default async function EngineeringWorkDetailPage({
             <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.1em] text-primary">
               Recommended next action
             </p>
-            <p className="mt-2 text-base font-semibold leading-7 text-foreground">{work.currentNextAction}</p>
+            <p className="mt-2 text-base font-semibold leading-7 text-foreground">{work.currentNextAction ?? "No current next action recorded."}</p>
           </div>
         </section>
 
@@ -409,6 +458,13 @@ export default async function EngineeringWorkDetailPage({
           <section className="rounded-lg border border-border bg-card p-6">
             <h2 className="font-heading text-base font-semibold">Current outcome</h2>
             <p className="mt-3 text-sm leading-7 text-foreground/90">{work.currentOutcome}</p>
+          </section>
+        ) : null}
+
+        {work.finalDisposition ? (
+          <section className="rounded-lg border border-border bg-card p-6">
+            <h2 className="font-heading text-base font-semibold">Final disposition</h2>
+            <p className="mt-3 text-sm leading-7 text-foreground/90">{work.finalDisposition}</p>
           </section>
         ) : null}
 
@@ -496,6 +552,8 @@ export default async function EngineeringWorkDetailPage({
             </ul>
           )}
         </section>
+
+        <EngineeringWorkHistory events={history} />
 
         <section className="rounded-lg border border-border bg-muted/20 p-6">
           <h2 className="font-heading text-base font-semibold">Record details</h2>

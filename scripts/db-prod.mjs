@@ -15,6 +15,7 @@ if (process.env.CONFIRM_PROD_DB !== "true") {
     "Production database commands require explicit confirmation.\n" +
       "Set CONFIRM_PROD_DB=true to continue.\n\n" +
       "Example:\n" +
+      "  CONFIRM_PROD_DB=true npm run db:migrate:prod\n" +
       "  CONFIRM_PROD_DB=true npm run db:push:prod\n" +
       "  CONFIRM_PROD_DB=true npm run db:seed:prod",
   );
@@ -29,6 +30,10 @@ if (!existsSync(envFile)) {
 }
 
 const commands = {
+  migrate: {
+    bin: "node_modules/drizzle-kit/bin.cjs",
+    args: ["migrate"],
+  },
   push: {
     bin: "scripts/migrate-workspace-006.mjs",
     args: [],

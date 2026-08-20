@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
+import { eq } from "drizzle-orm";
 import {
   workspaceProjectDocuments,
   workspaceProjectMilestones,
@@ -9,6 +10,10 @@ import {
   workspaceSettings,
   workspaceEngineeringWork,
 } from "./schema";
+import {
+  createEngineeringWorkWithHistory,
+  type EngineeringWorkSqlExecutor,
+} from "@/lib/workspace/engineering-work-history-persistence";
 
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql);
@@ -469,38 +474,52 @@ async function seed() {
 
   console.log(`Done. ${inserted} projects upserted.`);
 
-  console.log("Seeding workspace_engineering_work...");
+  console.log("Seeding workspace_engineering_work through lifecycle history...");
   let engineeringWorkInserted = 0;
 
   for (const work of engineeringWork) {
-    const result = await db
-      .insert(workspaceEngineeringWork)
-      .values(work)
-      .onConflictDoUpdate({
-        target: workspaceEngineeringWork.id,
-        set: {
-          title: work.title,
-          summary: work.summary,
-          type: work.type,
-          workflow: work.workflow,
-          state: work.state,
-          currentNextAction: work.currentNextAction,
-          currentOutcome: null,
-          priority: null,
-          condition: null,
-          conditionRationale: null,
-          updatedAt: new Date(),
-        },
-      })
-      .returning({ id: workspaceEngineeringWork.id });
+    const [existing] = await db
+      .select({ id: workspaceEngineeringWork.id })
+      .from(workspaceEngineeringWork)
+      .where(eq(workspaceEngineeringWork.id, work.id))
+      .limit(1);
+    if (existing) {
+      console.log(`  - ${work.title} (preserved)`);
+      continue;
+    }
 
-    if (result.length > 0) {
+    const projectSlug = projects.find((project) => project.id === work.projectId)?.slug;
+    if (!projectSlug) throw new Error(`No project slug found for ${work.id}.`);
+    const result = await createEngineeringWorkWithHistory(
+      sql as unknown as EngineeringWorkSqlExecutor,
+      {
+        engineeringWorkId: work.id,
+        historyEventId: `eng_work_history_seed_${work.id}`,
+        defectRevisionId: null,
+        projectSlug,
+        title: work.title,
+        type: work.type,
+        workflow: work.workflow,
+        objective: work.summary,
+        currentNextAction: work.currentNextAction,
+        actionActor: {
+          type: "system",
+          identifier: "workspace-seed",
+          displayName: "Workspace seed",
+        },
+        defectContext: null,
+      },
+    );
+
+    if (result.ok) {
       console.log(`  ✓ ${work.title}`);
       engineeringWorkInserted++;
+    } else {
+      throw new Error(`Could not seed ${work.title}: project missing or identifier conflict.`);
     }
   }
 
-  console.log(`Done. ${engineeringWorkInserted} Engineering Work items upserted.`);
+  console.log(`Done. ${engineeringWorkInserted} Engineering Work items created; existing records preserved.`);
 
   console.log("Seeding workspace_project_milestones...");
   let milestonesInserted = 0;

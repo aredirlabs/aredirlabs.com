@@ -56,6 +56,12 @@ Ordered tracker for Engineering Work Packages, optional implementation briefs/pr
 | AREDIR-DISCOVERY-008 | Current Engineering Work Retrospective Intake Revalidation | Complete | [DISCOVERY-008](../discovery/AREDIR-DISCOVERY-008_CURRENT_ENGINEERING_WORK_RETROSPECTIVE_INTAKE_REVALIDATION.md) |
 | AREDIR-MISSION-001 | Engineering Mission contract, template, and Labs registry | Complete | [Missions hub](../missions/README.md), [Contract](../missions/ENGINEERING-MISSION-CONTRACT.md), [Template](../missions/ENGINEERING-MISSION-TEMPLATE.md), [Registry](../missions/ENGINEERING-MISSION-REGISTRY.md), [Seed Mission](../missions/records/AREDIR-MISSION-001_engineering-mission-contract.md), [Completion report](../missions/AREDIR-MISSION-001_COMPLETION_REPORT.md) |
 
+## Engineering Work
+
+| ID | Work item | Status | Deliverables |
+| --- | --- | --- | --- |
+| ENGINEERING-WORK-LIFECYCLE-UPDATE-001 | Outcome-aware operational updates, completion history, and decision provenance | Active — Production plan prepared; execution unauthorized | [Engineering Work package](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001.md), [Phase A validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-A-VALIDATION.md), [Phase B validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-B-VALIDATION.md), [Phase C validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-C-VALIDATION.md), [Production deployment and acceptance plan](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PRODUCTION-DEPLOYMENT-AND-ACCEPTANCE-PLAN.md) |
+
 ## Workspace (internal)
 
 | ID | Prompt | Status | Depends on |
