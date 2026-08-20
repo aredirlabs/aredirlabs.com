@@ -370,9 +370,10 @@ export async function transitionEngineeringWork(
   if (!rationale || rationale.length > 4_000) return { error: "Transition rationale is required and must be 4,000 characters or fewer." };
   if (!basis || basis.length > 4_000) return { error: "Decision basis is required and must be 4,000 characters or fewer." };
 
-  const allowedPrior = ["proposed", "active", "in_review"].includes(priorState);
-  const allowedResult = ["active", "in_review"].includes(resultingState);
-  if (!allowedPrior || !allowedResult) return { error: "Select a supported Phase B lifecycle transition." };
+  const allowedTransition =
+    (priorState === "active" && resultingState === "in_review") ||
+    (priorState === "in_review" && resultingState === "active");
+  if (!allowedTransition) return { error: "Select a supported operational lifecycle transition." };
   const actor = authenticatedHumanEngineeringWorkActor(session);
 
   try {
@@ -380,7 +381,7 @@ export async function transitionEngineeringWork(
       engineeringWorkId: workId,
       projectSlug,
       expectedVersion: version,
-      priorState: priorState as "proposed" | "active" | "in_review",
+      priorState: priorState as "active" | "in_review",
       resultingState: resultingState as "active" | "in_review",
       historyEventId: `eng_work_history_${crypto.randomUUID()}`,
       provenance: engineeringWorkDecisionProvenance({
@@ -397,5 +398,51 @@ export async function transitionEngineeringWork(
     return { success: true };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Failed to transition Engineering Work." };
+  }
+}
+
+export async function activateProposedEngineeringWork(
+  projectSlug: string,
+  workId: string,
+  _previous: EngineeringWorkMutationState,
+  formData: FormData,
+): Promise<EngineeringWorkMutationState> {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) return { error: "You must be signed in to activate Engineering Work." };
+
+  const version = formVersion(formData);
+  const expectedState = textValue(formData, "expected_state");
+  const authorized = textValue(formData, "activation_authorized") === "authorized";
+  const rationale = textValue(formData, "rationale");
+  const basis = textValue(formData, "decision_basis");
+  if (!version || expectedState !== "proposed") return { error: staleMutationError() };
+  if (!authorized) return { error: "Explicit human authorization is required to activate this proposal." };
+  if (!rationale || rationale.length > 4_000) return { error: "Activation rationale is required and must be 4,000 characters or fewer." };
+  if (!basis || basis.length > 4_000) return { error: "Decision basis is required and must be 4,000 characters or fewer." };
+
+  const actor = authenticatedHumanEngineeringWorkActor(session);
+  try {
+    const result = await persistEngineeringWorkTransitionAndHistory(sqlExecutor(), {
+      engineeringWorkId: workId,
+      projectSlug,
+      expectedVersion: version,
+      priorState: "proposed",
+      resultingState: "active",
+      historyEventId: `eng_work_history_${crypto.randomUUID()}`,
+      provenance: engineeringWorkDecisionProvenance({
+        actionActor: actor,
+        decisionActor: actor,
+        decisionRole: "authorization",
+        authority: { type: "human_owner", context: "Engineering Work activation gate" },
+        decision: "Authorize Proposed to Active lifecycle transition.",
+        rationale,
+        decisionBasis: { summary: basis },
+      }),
+    });
+    if (!result.ok) return { error: staleMutationError() };
+    revalidateEngineeringWork(projectSlug, workId);
+    return { success: true };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Failed to activate Engineering Work." };
   }
 }

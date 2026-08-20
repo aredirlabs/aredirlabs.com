@@ -6,6 +6,7 @@ import {
   persistEngineeringWorkCompletionAndHistory,
   persistEngineeringWorkTransitionAndHistory,
   persistOperationalUpdateAndHistory,
+  persistProposedCorrectionAndHistory,
   type EngineeringWorkSqlExecutor,
 } from "./engineering-work-history-persistence";
 import {
@@ -262,6 +263,86 @@ test("operating SQL preserves stable fields and integrates Defect revision histo
   assert.match(calls[0].query, /INSERT INTO workspace_engineering_work_defect_revisions/);
   assert.match(calls[0].query, /workspace_engineering_work_history/);
   assert.equal(calls[0].params?.[4], "operate");
+});
+
+test("proposal correction preserves Proposed state and records exactly one correction event", async () => {
+  const { sql, calls } = successfulSqlCapture();
+  await persistProposedCorrectionAndHistory(sql, {
+    engineeringWorkId: "work-1",
+    projectSlug: "aredirlabs-com",
+    expectedVersion: 1,
+    title: "Corrected proposal",
+    type: "feature",
+    objective: "Corrected objective.",
+    currentNextAction: "Review the corrected proposal.",
+    historyEventId: "history-correction",
+    provenance: humanExecution,
+  });
+
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].params?.[3], "proposed");
+  assert.equal(calls[0].params?.[4], "proposed_correction");
+  assert.equal(calls[0].params?.[5], "proposed");
+  assert.equal(calls[0].query.match(/INSERT INTO workspace_engineering_work_history/g)?.length, 1);
+});
+
+test("authorized proposal activation produces Active and exactly one truthful lifecycle event", async () => {
+  const { sql, calls } = successfulSqlCapture();
+  const authorization = engineeringWorkDecisionProvenance({
+    actionActor: human,
+    decisionActor: human,
+    decisionRole: "authorization",
+    authority: { type: "human_owner", context: "Engineering Work activation gate" },
+    decision: "Authorize Proposed to Active lifecycle transition.",
+    rationale: "The proposal is approved for implementation.",
+    decisionBasis: { summary: "The bounded scope was reviewed by the product authority." },
+  });
+
+  await persistEngineeringWorkTransitionAndHistory(sql, {
+    engineeringWorkId: "work-1",
+    projectSlug: "aredirlabs-com",
+    expectedVersion: 1,
+    priorState: "proposed",
+    resultingState: "active",
+    historyEventId: "history-activation",
+    provenance: authorization,
+  });
+
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].params?.[3], "proposed");
+  assert.equal(calls[0].params?.[4], "transition");
+  assert.equal(calls[0].params?.[5], "active");
+  assert.equal(calls[0].params?.[22], "transition");
+  assert.equal(calls[0].params?.[27], "human");
+  assert.equal(calls[0].params?.[30], "human");
+  assert.equal(calls[0].query.match(/INSERT INTO workspace_engineering_work_history/g)?.length, 1);
+  assert.match(calls[0].query, /title = CASE WHEN \$5 = 'proposed_correction' THEN \$7 ELSE work\.title END/);
+  assert.match(calls[0].query, /current_next_action = CASE WHEN \$5 IN \('proposed_correction', 'operate'\) THEN \$10 ELSE work\.current_next_action END/);
+});
+
+test("stale proposal activation fails without a projection or history result", async () => {
+  const calls: string[] = [];
+  const sql: EngineeringWorkSqlExecutor = {
+    async query(query) {
+      calls.push(query);
+      return [];
+    },
+  };
+  const result = await persistEngineeringWorkTransitionAndHistory(sql, {
+    engineeringWorkId: "work-1",
+    projectSlug: "aredirlabs-com",
+    expectedVersion: 99,
+    priorState: "proposed",
+    resultingState: "active",
+    historyEventId: "history-stale-activation",
+    provenance: humanExecution,
+  });
+
+  assert.deepEqual(result, { ok: false, reason: "not_found_or_stale" });
+  assert.equal(calls.length, 1);
+  assert.match(calls[0], /work\.version = \$3/);
+  assert.match(calls[0], /work\.state = \$4::engineering_work_state/);
+  assert.match(calls[0], /JOIN updated_work AS updated/);
 });
 
 test("Phase B rejects unsupported completion transitions before persistence", () => {

@@ -46,7 +46,7 @@ export default async function EditEngineeringWorkPage({
         {proposed
           ? <CorrectProposedEngineeringWorkForm projectSlug={work.projectSlug} work={work} defectContext={defectContext} />
           : <OperateEngineeringWorkForm projectSlug={work.projectSlug} work={work} defectContext={defectContext} />}
-        <EngineeringWorkTransitionForm projectSlug={work.projectSlug} work={work} />
+        {!proposed ? <EngineeringWorkTransitionForm projectSlug={work.projectSlug} work={work} /> : null}
       </div>
     </div>
   );

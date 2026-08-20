@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, CircleCheck, ExternalLink, FileQuestion, Pencil } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CircleCheck, CirclePlay, ExternalLink, FileQuestion, Pencil } from "lucide-react";
 
 import { Eyebrow } from "@/components/eyebrow";
 import {
@@ -208,6 +208,10 @@ export default async function EngineeringWorkDetailPage({
                     <Pencil className="size-3.5" />
                     {work.state === "proposed" ? "Correct Proposal" : "Operate Engineering Work"}
                   </Link> : null}
+                  {work.state === "proposed" ? <Link
+                    href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/activate`}
+                    className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-md border border-primary/30 bg-background px-4 py-2.5 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
+                  ><CirclePlay className="size-3.5" />Review &amp; Activate</Link> : null}
                   {["active", "in_review"].includes(work.state) ? <Link
                     href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/complete`}
                     className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-md border border-primary/30 bg-background px-4 py-2.5 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
@@ -405,6 +409,7 @@ export default async function EngineeringWorkDetailPage({
         <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight">{work.title}</h1>
           {["proposed", "active", "in_review"].includes(work.state) ? <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/edit`} className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Pencil className="size-3.5" />{work.state === "proposed" ? "Correct Proposal" : "Operate Engineering Work"}</Link> : null}
+          {work.state === "proposed" ? <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/activate`} className="inline-flex items-center gap-2 rounded-md border border-primary/30 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><CirclePlay className="size-3.5" />Review &amp; Activate</Link> : null}
           {["active", "in_review"].includes(work.state) ? <Link href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/complete`} className="inline-flex items-center gap-2 rounded-md border border-primary/30 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><CircleCheck className="size-3.5" />Complete</Link> : null}
         </div>
       </div>

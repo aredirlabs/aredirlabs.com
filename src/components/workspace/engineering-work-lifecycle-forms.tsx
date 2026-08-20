@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import {
+  activateProposedEngineeringWork,
   completeEngineeringWork,
   correctProposedEngineeringWork,
   operateEngineeringWork,
@@ -188,8 +189,50 @@ export function CompleteEngineeringWorkForm({ projectSlug, work }: { projectSlug
   );
 }
 
+export function ActivateProposedEngineeringWorkForm({ projectSlug, work }: { projectSlug: string; work: Work }) {
+  const [state, formAction, pending] = useActionState(activateProposedEngineeringWork.bind(null, projectSlug, work.id), initialState);
+  const detailPath = useReturnOnSuccess(projectSlug, work.id, state.success);
+
+  return (
+    <form action={formAction} className="mt-6 space-y-5">
+      <input type="hidden" name="version" value={work.version} />
+      <input type="hidden" name="expected_state" value="proposed" />
+
+      <section className="rounded-md border border-border bg-muted/20 p-4">
+        <p className="text-sm font-medium text-foreground">Proposal under review</p>
+        <dl className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
+          <div><dt className="text-muted-foreground">Title</dt><dd className="mt-1">{work.title}</dd></div>
+          <div><dt className="text-muted-foreground">Type</dt><dd className="mt-1">{ENGINEERING_WORK_TYPE_LABELS[work.type]}</dd></div>
+          <div><dt className="text-muted-foreground">Workflow</dt><dd className="mt-1">{ENGINEERING_WORK_WORKFLOW_LABELS[work.workflow]}</dd></div>
+          <div className="sm:col-span-2"><dt className="text-muted-foreground">Objective</dt><dd className="mt-1 whitespace-pre-wrap">{work.summary}</dd></div>
+          <div className="sm:col-span-2"><dt className="text-muted-foreground">Recommended Next Action</dt><dd className="mt-1 whitespace-pre-wrap">{work.currentNextAction ?? "None recorded"}</dd></div>
+        </dl>
+      </section>
+
+      <label className="flex items-start gap-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-3 text-sm">
+        <input type="checkbox" name="activation_authorized" value="authorized" required className="mt-0.5 size-4" />
+        <span><span className="font-medium text-foreground">Authorize activation</span><span className="mt-1 block text-muted-foreground">I have reviewed this proposal and authorize its transition from Proposed to Active without changing its stable fields.</span></span>
+      </label>
+      <div><label htmlFor="activation-rationale" className="block text-sm font-medium text-foreground">Authorization rationale</label><textarea id="activation-rationale" name="rationale" required maxLength={4000} rows={4} className={inputClassName} /></div>
+      <div><label htmlFor="activation-basis" className="block text-sm font-medium text-foreground">Decision basis</label><textarea id="activation-basis" name="decision_basis" required maxLength={4000} rows={4} className={inputClassName} /></div>
+
+      <section className="rounded-md border border-primary/20 bg-primary/5 p-4 text-sm">
+        <h2 className="font-medium text-foreground">Persisted decision provenance</h2>
+        <dl className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div><dt className="text-muted-foreground">Action actor</dt><dd className="mt-1">The authenticated human submitting this form</dd></div>
+          <div><dt className="text-muted-foreground">Decision actor</dt><dd className="mt-1">The authenticated human authorizing activation</dd></div>
+        </dl>
+        <p className="mt-3 text-muted-foreground">The current UI uses the same human for both roles, while the lifecycle event persists each identity separately.</p>
+      </section>
+
+      <MutationError state={state} />
+      <div className="flex items-center gap-3"><Button type="submit" disabled={pending}>{pending ? "Activating..." : "Activate Engineering Work"}</Button><Button asChild type="button" variant="outline"><Link href={detailPath}>Cancel</Link></Button></div>
+    </form>
+  );
+}
+
 export function EngineeringWorkTransitionForm({ projectSlug, work }: { projectSlug: string; work: Work }) {
-  const target = work.state === "proposed" ? "active" : work.state === "active" ? "in_review" : work.state === "in_review" ? "active" : null;
+  const target = work.state === "active" ? "in_review" : work.state === "in_review" ? "active" : null;
   const [state, formAction, pending] = useActionState(transitionEngineeringWork.bind(null, projectSlug, work.id), initialState);
   useReturnOnSuccess(projectSlug, work.id, state.success);
   if (!target) return null;
