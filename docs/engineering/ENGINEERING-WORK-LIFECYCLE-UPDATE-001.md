@@ -4,23 +4,23 @@
 
 | Field | Decision |
 | --- | --- |
-| Status | Active; Phases A, B, and C implemented and validated on Neon Dev |
+| Status | Production accepted on 2026-08-20; documentation closeout recorded |
 | Project | AredirLabs.com |
-| Engineering Work classification | Feature / Delivery / Active |
+| Engineering Work classification | Feature / Delivery / Active canonical tracking record; completion remains a separate authenticated lifecycle action |
 | AlignFit mutation | None |
 | Repository Evidence Authoring | Deferred |
-| Production lifecycle mutation | Deferred until this capability is migrated, deployed, verified, and used by an authenticated human |
+| Production lifecycle mutation | Completed once through the authenticated acceptance conversation and verified read-only |
 
 ## 1. Completion decision
 
-Planning is complete, implementation is authorized, and Phases A, B, and C are complete. The capability remains divided into four internal phases under one Engineering Work outcome:
+Planning, Phases A–C implementation, Production migration/deployment, and authenticated Production acceptance are complete. The capability was delivered through four internal phases under one Engineering Work outcome:
 
 1. Durable lifecycle and decision history.
 2. Operational mutation, stable-field enforcement, Defect preservation, and concurrency.
 3. Outcome-aware completion and history presentation.
 4. Human/AI/system/integration representability tests and production acceptance.
 
-The package must not be marked complete until the production acceptance operation succeeds through the authenticated application.
+The package is Production accepted. Documentation closeout does not itself transition the canonical tracking record; completing `eng_work_823fe908-d387-41b6-8c98-c43f313240f7` remains a separately authenticated lifecycle action.
 
 ## 2. Canonical Engineering Work tracking record
 
@@ -386,25 +386,27 @@ Run targeted lifecycle tests, the full test suite, lint, TypeScript/build, migra
 
 ## 19. Production acceptance
 
-Read-only production inspection on 2026-08-20 identified:
+Production acceptance completed successfully on 2026-08-20. The final deployed application commit is `7af5bc8273bf42e7ad7b3dfa83f25643cc09abd9`, deployed by Vercel as `EJSggzXvG21PxX4nVt8VRs57RgMC`. Tracked migrations `0003_engineering_work_lifecycle_history` and `0004_engineering_work_history_chain_integrity` applied successfully; the post-migration audit recognized all five tracked migrations with none pending.
+
+The authenticated Complete operation occurred at `2026-08-20T19:54:47.489Z`. Canonical read-only acceptance verification passed, and an exact evidence reconciliation at `2026-08-20T19:58:23.968Z` confirmed:
 
 | ID | Project | Type | Workflow | State |
 | --- | --- | --- | --- | --- |
-| `eng_work_23e97a29-0b92-47f1-9b93-04c6f07d6df9` | AredirLabs.com | Maintenance | Maintenance | Active |
+| `eng_work_23e97a29-0b92-47f1-9b93-04c6f07d6df9` | AredirLabs.com | Maintenance | Maintenance | Completed, version 2 |
 
 Title: **Production Engineering Work Schema Alignment**
 
-The Objective and Active Next Action match the acceptance input; Outcome, Condition, and Condition Rationale are null. They must not be changed before this capability exists.
-
-After migration, deployment, and authorization, an authenticated human uses Complete with:
+The Project, Title, Type, Workflow, and Objective remained unchanged. Current Next Action, Condition, and Condition Rationale are null. The persisted acceptance values are:
 
 - Outcome: `Production/runtime Engineering Work schema aligned successfully using tracked migrations 0000–0002. Schema, migration ledger, existing-data integrity, Workspace, Project Engineering Work, and canonical Engineering Work creation were verified operational.`
 - Final disposition: `No further schema-alignment work is required. Engineering Work Repository Evidence Authoring remains separate follow-on work.`
-- Transition: Active to Completed.
+- Transition: Active to Completed, version 1 to version 2.
 - Decision rationale: `Outcome and runtime verification satisfy the intended schema-alignment objective.`
 - Decision actor/authority: authenticated human / human owner decision.
 
-Acceptance requires the original Objective unchanged, prior Active Next Action in history, nullable terminal Current Next Action, current Outcome and Final Disposition consistent, and one append-only transition event attributed to that human.
+Lifecycle event `eng_work_history_e8df21e9-1a41-4129-a845-795c897df61b` is the first and only lifecycle-history event globally and for the acceptance record. It preserves the prior Active Next Action, records the exact authorized Outcome, Final Disposition, rationale, and decision basis, and stores the authenticated human independently as action actor and decision actor with decision role `authorization` and authority `human_owner`. No earlier history was fabricated.
+
+The temporary Production Engineering Work mutation freeze ended only after the canonical verifier and exact read-only reconciliation passed at `2026-08-20T19:58:23.968Z`.
 
 ## 20. Future AI representability tests
 
@@ -454,6 +456,10 @@ No Production migration, deployment, or Production Engineering Work mutation occ
 
 ## 26. Recommended next lifecycle action
 
-Review the Phase C evidence, then proceed to the separately authorized production migration/deployment and authenticated acceptance sequence only when explicitly approved. Production Engineering Work Schema Alignment remains the reserved real acceptance target.
+Complete the canonical tracking record `eng_work_823fe908-d387-41b6-8c98-c43f313240f7` only through a separately authorized authenticated Complete conversation; this documentation closeout performs no lifecycle mutation.
+
+Then resume **Engineering Work Repository Evidence Authoring** as separate Engineering Work. Start from a canonical Proposed record and a read-only inventory of the existing repository-reference presentation/query contract. Define its authenticated authoring scope, validation, authority semantics, and atomic lifecycle-history integration before authorizing implementation. Do not reopen Production Engineering Work Schema Alignment or fold Repository Evidence Authoring into this completed package.
+
+Deferred UX follow-up: on desktop, the Complete Engineering Work page required reducing browser zoom to approximately 80% for comfortable full-form visibility. Capture sizing, viewport fit, and scrolling behavior as a separate UX/implementation intake; no remediation is part of this closeout.
 
 Engineering Work history must preserve decision truth, not merely changed field names.

@@ -2,9 +2,9 @@
 
 ## Status
 
-**Prepared; not authorized for Production execution.**
+**Production accepted; bounded execution and canonical verification completed on 2026-08-20.**
 
-This document defines the bounded production migration, application deployment, and authenticated acceptance sequence. Preparing and reviewing this plan does not authorize any Production write, Vercel deployment, database migration, seed, or Engineering Work mutation.
+This document records the bounded production migration, application deployment, authenticated acceptance sequence, and verified closeout. It grants no authority for any further Production write, Vercel deployment, database migration, seed, restore, or Engineering Work mutation.
 
 ## Fixed boundaries
 
@@ -107,7 +107,7 @@ The bounded candidate consists of:
 
 There are no dependency-version changes and no AlignFit repository changes.
 
-The frozen Phase A–C application baseline is commit 1bf4e58434f8c3293d656c5f2e46742dca848aec. This non-secret mapping-gate revision must be committed directly on top of that baseline; the resulting full commit SHA is the final Production candidate. Production execution must reference that exact reviewed commit containing both the application diff and the final production-readiness controls. Never deploy the working tree directly.
+The final Production candidate and deployed commit is `7af5bc8273bf42e7ad7b3dfa83f25643cc09abd9`. Vercel deployment `EJSggzXvG21PxX4nVt8VRs57RgMC` completed successfully for that exact SHA. The Phase A–C application baseline was `1bf4e58434f8c3293d656c5f2e46742dca848aec`; subsequent bounded commits froze the authorization controls and recovery evidence before Production execution.
 
 ## Compatibility
 
@@ -297,6 +297,18 @@ For an ambiguous submission, never resubmit first. Query the projection and hist
 
 Unknown Preview database mapping is not a Production-write blocker because Preview is excluded entirely from the authorized operation path. No Preview deployment promotion, authenticated workspace visit, database QA, mutation, migration, or acceptance action may occur. If that boundary changes, Preview mapping becomes a new authorization gate and must first be established independently.
 
-## Decision
+## Production closeout record
 
-Production execution is not authorized. The recovery gate and Vercel rollback-deployment gate are satisfied. The remaining gates are an exact immutable candidate SHA containing the final controls, correlated read-only Production runtime identity evidence, exact-SHA migration/deployment authorization, and the final SELECT-only audit. Preview evidence is not required while Preview remains excluded and mutation-prohibited.
+- Final deployed SHA: `7af5bc8273bf42e7ad7b3dfa83f25643cc09abd9`.
+- Vercel Production deployment: `EJSggzXvG21PxX4nVt8VRs57RgMC`; deployment completed successfully.
+- Tracked migrations `0003_engineering_work_lifecycle_history` and `0004_engineering_work_history_chain_integrity` applied successfully. Post-migration verification recognized all five tracked migrations with none pending.
+- Authenticated Complete occurred at `2026-08-20T19:54:47.489Z` for `eng_work_23e97a29-0b92-47f1-9b93-04c6f07d6df9` and returned an unambiguous redirect without retry.
+- Canonical verification passed, followed by exact SELECT-only reconciliation at `2026-08-20T19:58:23.968Z`.
+- The acceptance projection is Completed at version 2 with the authorized Outcome and Final Disposition; Current Next Action and Condition fields are null.
+- Lifecycle event `eng_work_history_e8df21e9-1a41-4129-a845-795c897df61b` is the only event globally and for the record. It is Active to Completed, preserves the prior Active Next Action, and stores the authorized rationale, decision basis, and separate human action/decision actors.
+- The temporary Production Engineering Work mutation freeze ended only after canonical verification succeeded.
+- Manual Neon snapshot `aredirlabs-prod at 2026-08-20 18:20:14 UTC (manual)` and Vercel rollback deployment `FCEqBKdp7` remain preserved deployment evidence. Neither authorizes a Production restore; restoration still requires separate incident authorization.
+- Deferred UX follow-up: the Complete page required browser zoom near 80% for comfortable full-form visibility on desktop. Sizing and scrolling remediation remains separate work.
+- Engineering Work Repository Evidence Authoring remains separate follow-on Engineering Work and was not begun by this package.
+
+ENGINEERING-WORK-LIFECYCLE-UPDATE-001 is Production accepted. No further Production action is authorized by this closeout record.

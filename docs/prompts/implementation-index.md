@@ -60,7 +60,7 @@ Ordered tracker for Engineering Work Packages, optional implementation briefs/pr
 
 | ID | Work item | Status | Deliverables |
 | --- | --- | --- | --- |
-| ENGINEERING-WORK-LIFECYCLE-UPDATE-001 | Outcome-aware operational updates, completion history, and decision provenance | Active — Production plan prepared; execution unauthorized | [Engineering Work package](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001.md), [Phase A validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-A-VALIDATION.md), [Phase B validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-B-VALIDATION.md), [Phase C validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-C-VALIDATION.md), [Production deployment and acceptance plan](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PRODUCTION-DEPLOYMENT-AND-ACCEPTANCE-PLAN.md) |
+| ENGINEERING-WORK-LIFECYCLE-UPDATE-001 | Outcome-aware operational updates, completion history, and decision provenance | Production accepted — canonical verification passed 2026-08-20; tracking-record completion remains separately controlled | [Engineering Work package](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001.md), [Phase A validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-A-VALIDATION.md), [Phase B validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-B-VALIDATION.md), [Phase C validation](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PHASE-C-VALIDATION.md), [Production deployment and acceptance plan](../engineering/ENGINEERING-WORK-LIFECYCLE-UPDATE-001-PRODUCTION-DEPLOYMENT-AND-ACCEPTANCE-PLAN.md) |
 
 ## Workspace (internal)
 
