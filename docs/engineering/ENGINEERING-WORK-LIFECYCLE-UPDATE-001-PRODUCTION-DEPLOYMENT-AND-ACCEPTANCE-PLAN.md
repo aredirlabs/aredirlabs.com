@@ -54,22 +54,27 @@ No local .vercel project metadata, Vercel CLI, Vercel token, organization ID, or
 - **Production mapping:** DATABASE_URL is not directly inspected. Runtime identity may instead be proven by correlated read-only evidence: a fresh SELECT-only audit of the intended Neon branch must match the authenticated Production runtime's exact UUID-scoped acceptance record, record timestamps, project metadata/timestamps, and pre-acceptance empty-history state. The audit also records row counts, migration state, relations, Neon identity, server timestamp/LSN, and a SHA-256 fingerprint of the non-secret correlation tuple. This is **runtime identity proven by correlated read-only evidence**, not **DATABASE_URL secret directly inspected**.
 - **Preview mapping:** unverified — mutation prohibited. Preview is excluded from migration, deployment verification, and authenticated acceptance. Its unknown mapping is not a Production-write blocker while no Preview runtime or mutation is used in the approved sequence.
 - no existing runtime endpoint exposes a Neon endpoint/branch fingerprint. The authenticated record and project views are the available runtime-accessible database fingerprint; X-Vercel-Id identifies a request, not the database;
-- the current Vercel Production deployment ID is not available here.
+- the manually verified current healthy Vercel Production rollback anchor is deployment `FCEqBKdp7`, URL `aredirlabs-7s6o6rv52-andrews-projects-150264eb.vercel.app`, Git SHA `f4778fb`, source branch `main`, environment `Production`, status `Ready / Current`, and primary domain `www.aredirlabs.com`.
 
-Before the first Production write, an authenticated human must record the correlated Production evidence and the current healthy Vercel Production deployment ID. A mismatch or insufficiently exact runtime tuple remains a hard blocker. Direct secret inspection is neither required nor permitted by this plan. Preview remains unverified and mutation-prohibited, but does not block Production while it stays outside the sequence.
+Before the first Production write, an authenticated human must record the correlated Production evidence. The Vercel rollback-deployment gate is satisfied by the anchor above. A mismatch or insufficiently exact runtime tuple remains a hard blocker. Direct secret inspection is neither required nor permitted by this plan. Preview remains unverified and mutation-prohibited, but does not block Production while it stays outside the sequence.
 
 ## Neon recovery mechanism
 
-Neon supports creating a protected child branch from a parent branch at a supplied parent LSN or RFC 3339 timestamp. Neon also supports snapshots and restoring a branch to a historical LSN or timestamp. See the official [create branch](https://api-docs.neon.tech/reference/createprojectbranch), [create snapshot](https://api-docs.neon.tech/reference/createsnapshot), and [restore branch](https://api-docs.neon.tech/reference/restoreprojectbranch) contracts.
+For this deployment, the recovery gate is satisfied by the following immutable, manually verified Neon Production snapshot:
 
-Immediately before migration:
+| Field | Recovery anchor |
+| --- | --- |
+| Neon project | plain-band-91202732 |
+| Production branch | aredirlabs-prod / br-crimson-shape-a6q4y35g |
+| Snapshot | aredirlabs-prod at 2026-08-20 18:20:14 UTC (manual) |
+| Snapshot creation time | 2026-08-20 18:20:14 UTC |
+| Snapshot expiration | never |
+| Timing | Created before Production migration |
+| Restore status | No restore performed |
 
-1. rerun the readiness audit and record its Production serverTime and currentLsn;
-2. create a protected recovery branch from br-crimson-shape-a6q4y35g at that exact LSN, with a name containing the candidate SHA and timestamp;
-3. record the recovery branch ID and verify it can be inspected;
-4. do not migrate until that identifier is included in the explicit authorization.
+This snapshot supersedes the previously planned protected recovery-child-branch requirement for this deployment. No Neon API credential or recovery branch is required.
 
-No Neon API credential is available in this workspace, so no recovery branch or snapshot has been created. A previously observed LSN is not the migration recovery point; it must be recaptured immediately before the authorized write.
+The snapshot is a recovery anchor, not authority to restore Production. If recovery becomes necessary, stop and obtain separate incident authorization before any restore. Prefer inspection through a separate branch restored from the snapshot when Neon makes that option available. Never restore or replace the Production branch merely because migration or deployment validation fails. See the official [snapshot](https://api-docs.neon.tech/reference/createsnapshot) and [restore](https://api-docs.neon.tech/reference/restoreprojectbranch) contracts.
 
 ## Frozen acceptance target
 
@@ -154,7 +159,7 @@ Authorization must not be inferred from Phase A, B, or C acceptance or from this
 
    Any mismatch, missing target, unexpected history, or inability to compare the exact timestamps is a stop condition.
 6. Record the previous healthy Vercel Production deployment ID.
-7. Record a Neon restore point or protected pre-migration branch according to the authorized Neon recovery procedure.
+7. Confirm the immutable manual Neon snapshot recorded in this plan remains available; do not restore it during preparation.
 8. Freeze all Production Engineering Work mutations from the final audit until acceptance verification completes.
 9. Run the SELECT-only readiness audit:
 
@@ -294,4 +299,4 @@ Unknown Preview database mapping is not a Production-write blocker because Previ
 
 ## Decision
 
-Production execution is not authorized. The remaining gates are an exact immutable candidate SHA containing the final controls, correlated read-only Production runtime identity evidence, the current healthy Vercel rollback deployment ID, the protected Neon recovery branch and exact recovery LSN, exact-SHA authorization, and the final SELECT-only audit. Preview evidence is not required while Preview remains excluded and mutation-prohibited.
+Production execution is not authorized. The recovery gate and Vercel rollback-deployment gate are satisfied. The remaining gates are an exact immutable candidate SHA containing the final controls, correlated read-only Production runtime identity evidence, exact-SHA migration/deployment authorization, and the final SELECT-only audit. Preview evidence is not required while Preview remains excluded and mutation-prohibited.
