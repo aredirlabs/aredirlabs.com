@@ -107,6 +107,64 @@ test("Defect parent action remains primary and investigation remains supporting 
   assert.equal(isContinuationCandidate({ ...defect, defectContextComplete: false }), false);
 });
 
+test("Completed Defect with complete context is excluded even when defect context is complete", () => {
+  const completedDefect = source({
+    id: "completed-defect-066ce4c6",
+    workflow: "defect",
+    state: "completed",
+    currentNextAction: "",
+    defectContextComplete: true,
+    defectNextInvestigation: "Compare proxy header sizes",
+    defectValidationTarget: "HTTP 431 no longer occurs",
+  });
+
+  assert.equal(isContinuationCandidate(completedDefect), false);
+  assert.equal(projectContinuation([completedDefect]).mode, "none");
+});
+
+test("Active Defect with complete context and required fields remains eligible", () => {
+  const activeDefect = source({
+    workflow: "defect",
+    state: "active",
+    currentNextAction: "Reproduce with production headers",
+    defectContextComplete: true,
+    defectNextInvestigation: "Compare proxy header sizes before and after sign-in",
+    defectValidationTarget: "Authenticated navigation completes without HTTP 431",
+  });
+
+  assert.equal(isContinuationCandidate(activeDefect), true);
+  const projection = projectContinuation([activeDefect]);
+  assert.equal(projection.mode, "single");
+  assert.equal(projection.candidates[0].artifact.workflow, "defect");
+  assert.equal(
+    projection.candidates[0].defectContext?.nextInvestigation,
+    "Compare proxy header sizes before and after sign-in",
+  );
+});
+
+test("Non-Defect workflows remain unaffected by defect context grouping", () => {
+  const delivery = source({
+    id: "delivery-1",
+    workflow: "delivery",
+    state: "active",
+    currentNextAction: "Deploy the corrected query",
+    defectContextComplete: false,
+  });
+  const maintenance = source({
+    id: "maintenance-1",
+    workflow: "maintenance",
+    state: "in_review",
+    currentNextAction: "Verify the index rebuild",
+    defectContextComplete: false,
+  });
+
+  assert.equal(isContinuationCandidate(delivery), true);
+  assert.equal(isContinuationCandidate(maintenance), true);
+  const projection = projectContinuation([delivery, maintenance]);
+  assert.equal(projection.mode, "ambiguous");
+  assert.equal(projection.totalCandidates, 2);
+});
+
 test("Proposed-only and terminal-only inputs produce honest absence", () => {
   assert.equal(projectContinuation([source({ state: "proposed" })]).mode, "none");
   assert.equal(projectContinuation([source({ state: "completed" })]).mode, "none");

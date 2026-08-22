@@ -136,6 +136,7 @@ export default async function WorkspacePage() {
   try {
     experience = await getDailyOperatingExperience();
   } catch (caught) {
+    console.error("Workspace load failed:", caught instanceof Error ? caught.message : caught);
     error = caught instanceof Error ? caught.message : "Failed to load workspace data";
   }
 

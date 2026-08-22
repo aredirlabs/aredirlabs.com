@@ -66,28 +66,37 @@ export type DailyOperatingExperience = {
   }>;
 };
 
-const operatingProject = inArray(workspaceProjects.status, ["active", "testing"]);
-const eligibleWorkState = inArray(workspaceEngineeringWork.state, ["active", "in_review"]);
-const hasNoCondition = sql<boolean>`btrim(coalesce(${workspaceEngineeringWork.condition}, '')) = ''`;
-const hasRequiredWorkText = sql<boolean>`
+export const operatingProject = inArray(workspaceProjects.status, ["active", "testing"]);
+export const eligibleWorkState = inArray(workspaceEngineeringWork.state, ["active", "in_review"]);
+export const hasNoCondition = sql<boolean>`btrim(coalesce(${workspaceEngineeringWork.condition}, '')) = ''`;
+export const hasRequiredWorkText = sql<boolean>`
   btrim(${workspaceEngineeringWork.title}) <> ''
   AND btrim(${workspaceEngineeringWork.summary}) <> ''
   AND btrim(${workspaceEngineeringWork.currentNextAction}) <> ''
   AND btrim(${workspaceProjects.slug}) <> ''
 `;
-const hasCompleteDefectContext = sql<boolean>`
+const isNotDefectWorkflow = sql<boolean>`
   ${workspaceEngineeringWork.workflow} <> 'defect'
-  OR (
-    ${workspaceEngineeringWorkDefects.engineeringWorkId} IS NOT NULL
-    AND btrim(${workspaceEngineeringWorkDefects.observedBehavior}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.expectedBehavior}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.reproductionSteps}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.environment}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.evidence}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.nextInvestigation}) <> ''
-    AND btrim(${workspaceEngineeringWorkDefects.validationTarget}) <> ''
-  )
 `;
+const hasCompleteDefectContextFields = sql<boolean>`
+  ${workspaceEngineeringWorkDefects.engineeringWorkId} IS NOT NULL
+  AND btrim(${workspaceEngineeringWorkDefects.observedBehavior}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.expectedBehavior}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.reproductionSteps}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.environment}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.evidence}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.nextInvestigation}) <> ''
+  AND btrim(${workspaceEngineeringWorkDefects.validationTarget}) <> ''
+`;
+const hasCompleteDefectContext = or(isNotDefectWorkflow, hasCompleteDefectContextFields)!;
+
+/**
+ * The exact WHERE predicate governing Workspace continuation eligibility.
+ * Exported so query-level tests can inspect the generated SQL structure.
+ */
+export function continuationEligibilityPredicate() {
+  return and(operatingProject, eligibleWorkState, hasNoCondition, hasRequiredWorkText, hasCompleteDefectContext)!;
+}
 
 /**
  * Produces a bounded shared projection. `updatedAt` only stabilizes the order
@@ -120,7 +129,7 @@ export async function getDailyOperatingExperience(): Promise<DailyOperatingExper
         workspaceEngineeringWorkDefects,
         eq(workspaceEngineeringWorkDefects.engineeringWorkId, workspaceEngineeringWork.id),
       )
-      .where(and(operatingProject, eligibleWorkState, hasNoCondition, hasRequiredWorkText, hasCompleteDefectContext))
+      .where(continuationEligibilityPredicate())
       .orderBy(desc(workspaceEngineeringWork.updatedAt), asc(workspaceEngineeringWork.id))
       .limit(CONTINUATION_DISPLAY_LIMIT),
     db.select({
