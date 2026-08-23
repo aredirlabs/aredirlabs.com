@@ -17,6 +17,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | [WORKSPACE-OPERATIONAL-002](./WORKSPACE-OPERATIONAL-002_WORKSPACE_CONTINUATION_CONTRACT.md) | Workspace Continuation Contract | Complete |
 | [AREDIR-DISCOVERY-008](./AREDIR-DISCOVERY-008_CURRENT_ENGINEERING_WORK_RETROSPECTIVE_INTAKE_REVALIDATION.md) | Current Engineering Work Retrospective Intake Revalidation | Complete |
 | [AREDIR-DISCOVERY-009](./AREDIR-DISCOVERY-009_CURRENT_STATE_INFORMATION_ARCHITECTURE_INVENTORY.md) | Current-State Information Architecture Inventory | Complete |
+| [AREDIR-DISCOVERY-010](./AREDIR-DISCOVERY-010_PROJECT_OPERATIONAL_STATE_AUTHORITY_AND_PROJECTION_ARCHITECTURE.md) | Project Operational State Authority and Projection Architecture | Complete |
 
 ## Related canonical architecture
 
