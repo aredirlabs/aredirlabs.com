@@ -18,6 +18,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | [AREDIR-DISCOVERY-008](./AREDIR-DISCOVERY-008_CURRENT_ENGINEERING_WORK_RETROSPECTIVE_INTAKE_REVALIDATION.md) | Current Engineering Work Retrospective Intake Revalidation | Complete |
 | [AREDIR-DISCOVERY-009](./AREDIR-DISCOVERY-009_CURRENT_STATE_INFORMATION_ARCHITECTURE_INVENTORY.md) | Current-State Information Architecture Inventory | Complete |
 | [AREDIR-DISCOVERY-010](./AREDIR-DISCOVERY-010_PROJECT_OPERATIONAL_STATE_AUTHORITY_AND_PROJECTION_ARCHITECTURE.md) | Project Operational State Authority and Projection Architecture | Complete |
+| [AREDIR-DISCOVERY-011](./AREDIR-DISCOVERY-011_ENGINEERING_WORK_PRIORITIZATION_AND_OPERATIONAL_SELECTION_SEMANTICS.md) | Engineering Work Prioritization and Operational Selection Semantics | Complete |
 
 ## Related canonical architecture
 
