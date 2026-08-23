@@ -1,8 +1,13 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, CircleCheck, CirclePlay, ExternalLink, FileQuestion, Pencil } from "lucide-react";
+import { ArrowLeft, CircleCheck, CirclePlay, ExternalLink, Pencil } from "lucide-react";
 
+import { Disclosure } from "@/components/ui/disclosure";
+import { EmptyState } from "@/components/ui/empty-state";
+import { FailureState } from "@/components/ui/failure-state";
+import { MetadataField, MetadataGroup } from "@/components/ui/metadata-field";
+import { Surface } from "@/components/ui/surface";
+import { Timeline, TimelineEntry } from "@/components/ui/timeline";
 import { Eyebrow } from "@/components/eyebrow";
 import {
   EngineeringWorkMetadata,
@@ -26,17 +31,6 @@ type EngineeringWorkDetailPageProps = {
   params: Promise<{ slug: string; workId: string }>;
 };
 
-function DetailField({ label, value }: { label: string; value: ReactNode }) {
-  return (
-    <div>
-      <dt className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
-        {label}
-      </dt>
-      <dd className="mt-1 text-sm">{value}</dd>
-    </div>
-  );
-}
-
 function navigableUrl(value: string) {
   try {
     const url = new URL(value);
@@ -52,35 +46,66 @@ function EngineeringWorkHistory({
   events: Awaited<ReturnType<typeof getProjectEngineeringWorkHistory>>;
 }) {
   return (
-    <section className="rounded-lg border border-border bg-card p-6">
-      <h2 className="font-heading text-base font-semibold">Lifecycle history</h2>
-      <p className="mt-1 text-sm text-muted-foreground">Append-only operational and decision history. Action and decision actors remain distinct.</p>
-      {events.length === 0 ? <p className="mt-4 text-sm text-muted-foreground">No post-migration lifecycle history has been recorded.</p> : (
-        <ol className="mt-5 space-y-4">
-          {events.map((event) => {
-            const basis = typeof event.decisionBasis.summary === "string" ? event.decisionBasis.summary : null;
-            return (
-              <li key={event.id} className="rounded-md border border-border bg-background/60 p-4">
-                <div className="flex flex-wrap items-center justify-between gap-2"><p className="font-medium">{event.actionType.replaceAll("_", " ")}</p><time className="font-mono text-xs text-muted-foreground">{formatTimestamp(event.occurredAt)}</time></div>
-                {event.priorState || event.resultingState ? <p className="mt-2 text-sm text-muted-foreground">{event.priorState ?? "—"} → {event.resultingState ?? "—"}</p> : null}
-                {event.decision ? <p className="mt-3 text-sm">{event.decision}</p> : null}
-                {event.rationale ? <p className="mt-2 text-sm text-muted-foreground">{event.rationale}</p> : null}
-                {basis ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Basis:</span> {basis}</p> : null}
-                <dl className="mt-4 grid gap-3 border-t border-border pt-3 text-sm sm:grid-cols-2">
-                  <DetailField label="Action actor" value={event.actionActorDisplayName ?? event.actionActorIdentifier} />
-                  <DetailField label="Decision actor" value={event.decisionActorDisplayName ?? event.decisionActorIdentifier ?? "No decision actor"} />
-                  <DetailField label="Decision role" value={event.decisionRole ?? "—"} />
-                  <DetailField label="Authority" value={event.authorityType ?? "—"} />
-                </dl>
-                {event.previousNextAction !== event.resultingNextAction ? <p className="mt-3 text-sm text-muted-foreground"><span className="font-medium text-foreground">Next Action:</span> {event.previousNextAction ?? "—"} → {event.resultingNextAction ?? "—"}</p> : null}
-                {event.previousOutcome !== event.resultingOutcome ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Outcome:</span> {event.previousOutcome ?? "—"} → {event.resultingOutcome ?? "—"}</p> : null}
-                {event.resultingFinalDisposition ? <p className="mt-2 text-sm text-muted-foreground"><span className="font-medium text-foreground">Final disposition:</span> {event.resultingFinalDisposition}</p> : null}
-              </li>
-            );
-          })}
-        </ol>
+    <Timeline
+      label="Lifecycle history"
+      description="Append-only operational and decision history. Action and decision actors remain distinct."
+    >
+      {events.length === 0 ? (
+        <li className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-[var(--space-inset-y)] px-[var(--space-inset-x)] text-[var(--type-narrative)] text-muted-foreground">
+          No post-migration lifecycle history has been recorded.
+        </li>
+      ) : (
+        events.map((event) => {
+          const basis = typeof event.decisionBasis.summary === "string" ? event.decisionBasis.summary : null;
+          const nextActionChanged = event.previousNextAction !== event.resultingNextAction;
+          const outcomeChanged = event.previousOutcome !== event.resultingOutcome;
+          return (
+            <TimelineEntry
+              key={event.id}
+              action={event.actionType.replaceAll("_", " ")}
+              timestamp={formatTimestamp(event.occurredAt)}
+              transition={
+                event.priorState || event.resultingState
+                  ? `${event.priorState ?? "—"} → ${event.resultingState ?? "—"}`
+                  : undefined
+              }
+              decision={event.decision}
+              decisionBasis={basis}
+              rationale={event.rationale}
+              nextActionTransition={
+                nextActionChanged
+                  ? `${event.previousNextAction ?? "—"} → ${event.resultingNextAction ?? "—"}`
+                  : undefined
+              }
+              outcomeTransition={
+                outcomeChanged
+                  ? `${event.previousOutcome ?? "—"} → ${event.resultingOutcome ?? "—"}`
+                  : undefined
+              }
+              finalDisposition={event.resultingFinalDisposition}
+              actor={event.actionActorDisplayName ?? event.actionActorIdentifier}
+              decisionActor={event.decisionActorDisplayName ?? event.decisionActorIdentifier ?? "No decision actor"}
+              metadata={
+                <>
+                  <div>
+                    <dt className="font-mono text-[var(--type-metadata)] uppercase tracking-[0.1em] text-muted-foreground">
+                      Decision role
+                    </dt>
+                    <dd className="mt-1">{event.decisionRole ?? "—"}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-mono text-[var(--type-metadata)] uppercase tracking-[0.1em] text-muted-foreground">
+                      Authority
+                    </dt>
+                    <dd className="mt-1">{event.authorityType ?? "—"}</dd>
+                  </div>
+                </>
+              }
+            />
+          );
+        })
       )}
-    </section>
+    </Timeline>
   );
 }
 
@@ -123,15 +148,11 @@ export default async function EngineeringWorkDetailPage({
           <ArrowLeft className="size-3.5" />
           Project detail
         </Link>
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-6">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="size-5 text-destructive" />
-            <div>
-              <h1 className="font-semibold text-destructive">Could not load Engineering Work</h1>
-              <p className="mt-1 text-sm text-muted-foreground">Check that the database is reachable and the Engineering Work migration has been applied.</p>
-            </div>
-          </div>
-        </div>
+        <FailureState
+          title="Could not load Engineering Work"
+          description="An unexpected error occurred while loading this Engineering Work. Please try again or contact support if the issue persists."
+          failureClass="unknown"
+        />
       </div>
     );
   }
@@ -233,73 +254,72 @@ export default async function EngineeringWorkDetailPage({
                 </p>
               </div>
 
-              <div className="mt-6 rounded-lg border border-border bg-card px-5 sm:px-6">
+              <Surface className="mt-6 px-5 sm:px-6">
                 <section aria-labelledby="behavior-heading" className="py-6">
                   <h3 id="behavior-heading" className="text-base font-semibold">Behavior</h3>
-                  <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
-                    <DetailField label="Observed Behavior" value={defectContext.observedBehavior} />
-                    <DetailField label="Expected Behavior" value={defectContext.expectedBehavior} />
-                  </dl>
+                  <MetadataGroup className="mt-5">
+                    <MetadataField label="Observed Behavior" value={defectContext.observedBehavior} />
+                    <MetadataField label="Expected Behavior" value={defectContext.expectedBehavior} />
+                  </MetadataGroup>
                 </section>
 
                 <section aria-labelledby="reproduction-heading" className="border-t border-border py-6">
                   <h3 id="reproduction-heading" className="text-base font-semibold">Reproduction context</h3>
-                  <dl className="mt-5 grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(14rem,0.5fr)] md:gap-8">
-                    <DetailField label="Reproduction Steps" value={defectContext.reproductionSteps} />
-                    <DetailField label="Environment" value={defectContext.environment} />
-                  </dl>
+                  <MetadataGroup className="mt-5" columns={2}>
+                    <MetadataField label="Reproduction Steps" value={defectContext.reproductionSteps} />
+                    <MetadataField label="Environment" value={defectContext.environment} />
+                  </MetadataGroup>
                 </section>
 
                 <section aria-labelledby="evidence-heading" className="border-t border-border py-6">
                   <h3 id="evidence-heading" className="text-base font-semibold">Evidence and validation</h3>
-                  <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-7">
-                    <div className="md:col-span-2">
-                      <DetailField label="Evidence" value={defectContext.evidence} />
+                  <MetadataGroup className="mt-5" columns={2}>
+                    <div className="sm:col-span-2">
+                      <MetadataField label="Evidence" value={defectContext.evidence} />
                     </div>
-                    <DetailField label="Validation Target" value={defectContext.validationTarget} />
-                    <div className="rounded-md border-l-2 border-primary bg-primary/5 px-4 py-3">
-                      <DetailField label="Next Investigation" value={defectContext.nextInvestigation} />
+                    <MetadataField label="Validation Target" value={defectContext.validationTarget} />
+                    <div className="rounded-[var(--radius-inset)] border-l-2 border-role-actionable bg-role-actionable-bg px-4 py-3">
+                      <MetadataField label="Next Investigation" value={defectContext.nextInvestigation} />
                     </div>
-                  </dl>
+                  </MetadataGroup>
                 </section>
-              </div>
+              </Surface>
             </section>
 
             {work.currentOutcome || work.condition || work.finalDisposition ? (
               <section aria-labelledby="assessment-heading" className="border-t border-border pt-8">
                 <h2 id="assessment-heading" className="text-lg font-semibold">Current assessment</h2>
-                <dl className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
-                  {work.currentOutcome ? <DetailField label="Current Outcome" value={work.currentOutcome} /> : null}
+                <MetadataGroup className="mt-5">
+                  {work.currentOutcome ? <MetadataField label="Current Outcome" value={work.currentOutcome} /> : null}
                   {work.condition ? (
-                    <DetailField
+                    <MetadataField
                       label="Condition"
-                      value={<><span className="font-medium">{work.condition}</span>{work.conditionRationale ? <span className="mt-2 block leading-6 text-muted-foreground">{work.conditionRationale}</span> : null}</>}
+                      value={<><span className="font-medium">{work.condition}</span>{work.conditionRationale ? <span className="mt-2 block leading-relaxed text-muted-foreground">{work.conditionRationale}</span> : null}</>}
                     />
                   ) : null}
-                  {work.finalDisposition ? <DetailField label="Final Disposition" value={work.finalDisposition} /> : null}
-                </dl>
+                  {work.finalDisposition ? <MetadataField label="Final Disposition" value={work.finalDisposition} /> : null}
+                </MetadataGroup>
               </section>
             ) : null}
 
             <section aria-labelledby="related-knowledge-heading" className="border-t border-border pt-8">
               <h2 id="related-knowledge-heading" className="sr-only">Related knowledge</h2>
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-                  <span>
-                    <span className="block text-lg font-semibold">Related knowledge</span>
-                    <span className="mt-1 block text-sm leading-6 text-muted-foreground">Supporting architecture, discovery, and validation context · {relatedKnowledge.length} {relatedKnowledge.length === 1 ? "item" : "items"}</span>
+              <Disclosure
+                summary="Related knowledge"
+                description={`Supporting architecture, discovery, and validation context · ${relatedKnowledge.length} ${relatedKnowledge.length === 1 ? "item" : "items"}`}
+                count={
+                  <span className="font-mono text-[var(--type-identifier)] text-muted-foreground">
+                    {relatedKnowledge.length}
                   </span>
-                  <span aria-hidden="true" className="mt-1 font-mono text-xs text-muted-foreground group-open:hidden">Show</span>
-                  <span aria-hidden="true" className="mt-1 hidden font-mono text-xs text-muted-foreground group-open:inline">Hide</span>
-                </summary>
+                }
+              >
                 {relatedKnowledge.length === 0 ? (
-                  <div className="mt-5 rounded-md border border-dashed border-border bg-muted/20 p-5 text-center">
-                    <FileQuestion className="mx-auto size-5 text-muted-foreground" />
-                    <p className="mt-3 text-sm font-medium">No related knowledge has been connected yet.</p>
-                    <p className="mt-1 text-sm text-muted-foreground">Add or verify supporting architecture, discovery, or validation context before advancing this work.</p>
-                  </div>
+                  <EmptyState
+                    title="No related knowledge has been connected yet."
+                    description="Add or verify supporting architecture, discovery, or validation context before advancing this work."
+                  />
                 ) : (
-                  <ul className="mt-5 divide-y divide-border border-y border-border">
+                  <ul className="divide-y divide-border border-y border-border">
                     {relatedKnowledge.map((item) => (
                       <li key={item.id} className="py-5">
                         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -309,11 +329,11 @@ export default async function EngineeringWorkDetailPage({
                           </div>
                           <span className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-primary">{item.knowledgeClass}</span>
                         </div>
-                        <dl className="mt-4 grid gap-4 sm:grid-cols-3">
-                          <DetailField label="Project" value={item.projectContext} />
-                          <DetailField label="Authority" value={item.authorityLocation} />
-                          <DetailField label="Last reviewed / updated" value={item.lastReviewed} />
-                        </dl>
+                        <MetadataGroup className="mt-4">
+                          <MetadataField label="Project" value={item.projectContext} />
+                          <MetadataField label="Authority" value={item.authorityLocation} />
+                          <MetadataField label="Last reviewed / updated" value={item.lastReviewed} />
+                        </MetadataGroup>
                         <Link href={`${item.href}?fromWork=${encodeURIComponent(work.id)}&project=${encodeURIComponent(work.projectSlug)}`} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                           Open {item.knowledgeClass.toLowerCase()}
                           <ExternalLink className="size-3.5" />
@@ -322,46 +342,45 @@ export default async function EngineeringWorkDetailPage({
                     ))}
                   </ul>
                 )}
-              </details>
+              </Disclosure>
             </section>
 
             <section aria-labelledby="repository-evidence-heading" className="border-t border-border pt-8">
               <h2 id="repository-evidence-heading" className="sr-only">Repository evidence</h2>
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-                  <span>
-                    <span className="block text-lg font-semibold">Repository evidence</span>
-                    <span className="mt-1 block text-sm leading-6 text-muted-foreground">Read-only references; source repositories remain authoritative · {references.length} {references.length === 1 ? "reference" : "references"}</span>
+              <Disclosure
+                summary="Repository evidence"
+                description={`Read-only references; source repositories remain authoritative · ${references.length} ${references.length === 1 ? "reference" : "references"}`}
+                count={
+                  <span className="font-mono text-[var(--type-identifier)] text-muted-foreground">
+                    {references.length}
                   </span>
-                  <span aria-hidden="true" className="mt-1 font-mono text-xs text-muted-foreground group-open:hidden">Show</span>
-                  <span aria-hidden="true" className="mt-1 hidden font-mono text-xs text-muted-foreground group-open:inline">Hide</span>
-                </summary>
+                }
+              >
                 {references.length === 0 ? (
-                  <div className="mt-5 rounded-md border border-dashed border-border bg-muted/20 p-5 text-center">
-                    <FileQuestion className="mx-auto size-5 text-muted-foreground" />
-                    <p className="mt-3 text-sm font-medium">No repository evidence is linked yet.</p>
-                    <p className="mt-1 text-sm text-muted-foreground">Repository evidence will appear after validated implementation artifacts are linked. Repository contents remain authoritative.</p>
-                  </div>
+                  <EmptyState
+                    title="No repository evidence is linked yet."
+                    description="Repository evidence will appear after validated implementation artifacts are linked. Repository contents remain authoritative."
+                  />
                 ) : (
-                  <ul className="mt-5 divide-y divide-border border-y border-border">
+                  <ul className="divide-y divide-border border-y border-border">
                     {references.map((reference) => {
                       const sourceUrl = navigableUrl(reference.sourceLocation);
                       return (
                         <li key={reference.id} className="py-5">
                           <div className="flex flex-wrap items-center justify-between gap-2">
                             <p className="font-medium">{reference.artifactClass}</p>
-                            <span className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">{ENGINEERING_WORK_REFERENCE_STATUS_LABELS[reference.referenceStatus]}</span>
+                            <span className="font-mono text-[var(--type-identifier)] uppercase tracking-[0.1em] text-muted-foreground">{ENGINEERING_WORK_REFERENCE_STATUS_LABELS[reference.referenceStatus]}</span>
                           </div>
-                          <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            <DetailField label="Repository" value={reference.repository} />
-                            <DetailField label="Authority" value={ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS[reference.authority]} />
-                            <DetailField label="Identifier" value={reference.artifactIdentifier ?? "—"} />
-                            <DetailField label="Branch" value={reference.branch ?? "—"} />
-                            <DetailField label="Commit" value={reference.commitHash ?? "—"} />
-                            <DetailField label="Last reviewed" value={reference.lastReviewedAt ? formatTimestamp(reference.lastReviewedAt) : "—"} />
-                          </dl>
+                          <MetadataGroup className="mt-4">
+                            <MetadataField label="Repository" value={reference.repository} />
+                            <MetadataField label="Authority" value={ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS[reference.authority]} />
+                            <MetadataField label="Identifier" value={reference.artifactIdentifier ?? "—"} variant="identifier" />
+                            <MetadataField label="Branch" value={reference.branch ?? "—"} />
+                            <MetadataField label="Commit" value={reference.commitHash ?? "—"} variant="identifier" />
+                            <MetadataField label="Last reviewed" value={reference.lastReviewedAt ? formatTimestamp(reference.lastReviewedAt) : "—"} />
+                          </MetadataGroup>
                           <div className="mt-4">
-                            <p className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Source location</p>
+                            <p className="font-mono text-[var(--type-identifier)] uppercase tracking-[0.1em] text-muted-foreground">Source location</p>
                             {sourceUrl ? <Link href={sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex break-all text-sm text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span>{reference.sourceLocation}</span><ExternalLink className="ml-1 mt-0.5 size-3.5 shrink-0" /></Link> : <p className="mt-1 break-all text-sm text-muted-foreground">{reference.sourceLocation}</p>}
                           </div>
                           {reference.note ? <p className="mt-4 text-sm text-muted-foreground">{reference.note}</p> : null}
@@ -370,7 +389,7 @@ export default async function EngineeringWorkDetailPage({
                     })}
                   </ul>
                 )}
-              </details>
+              </Disclosure>
               <div className="mt-4 text-right">
                 <Link
                   href={`/workspace/projects/${work.projectSlug}/engineering-work/${work.id}/evidence`}
@@ -386,19 +405,17 @@ export default async function EngineeringWorkDetailPage({
 
             <section aria-labelledby="record-reference-heading" className="border-t border-border pb-2 pt-8">
               <h2 id="record-reference-heading" className="sr-only">Reference metadata</h2>
-              <details className="group text-muted-foreground">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
-                  Reference metadata
-                  <span aria-hidden="true" className="font-mono text-xs font-normal text-muted-foreground group-open:hidden">Show</span>
-                  <span aria-hidden="true" className="hidden font-mono text-xs font-normal text-muted-foreground group-open:inline">Hide</span>
-                </summary>
-                <dl className="mt-5 grid gap-4 border-l border-border pl-4 text-sm sm:grid-cols-2 lg:grid-cols-4">
-                  <DetailField label="Record ID" value={<span className="break-all font-mono text-xs">{work.id}</span>} />
-                  <DetailField label="Created" value={formatTimestamp(work.createdAt)} />
-                  <DetailField label="Updated" value={formatTimestamp(work.updatedAt)} />
-                  <DetailField label="Priority" value={work.priority ?? "—"} />
-                </dl>
-              </details>
+              <Disclosure
+                summary="Reference metadata"
+                className="text-muted-foreground"
+              >
+                <MetadataGroup columns={4} className="border-l border-border pl-4">
+                  <MetadataField label="Record ID" value={<span className="break-all font-mono text-[var(--type-identifier)]">{work.id}</span>} variant="identifier" />
+                  <MetadataField label="Created" value={formatTimestamp(work.createdAt)} />
+                  <MetadataField label="Updated" value={formatTimestamp(work.updatedAt)} />
+                  <MetadataField label="Priority" value={work.priority ?? "—"} />
+                </MetadataGroup>
+              </Disclosure>
             </section>
           </main>
         </div>
@@ -424,16 +441,16 @@ export default async function EngineeringWorkDetailPage({
       </div>
 
       <div className="space-y-4">
-        <section className="rounded-lg border border-primary/25 bg-card p-6 shadow-sm">
+        <Surface variant="primary">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
             <div>
-              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-primary">
+              <p className="font-mono text-[var(--type-state)] font-medium uppercase tracking-[0.14em] text-role-actionable">
                 Engineering objective
               </p>
               <p className="mt-3 text-base leading-7 text-foreground/90">{work.summary}</p>
             </div>
-            <div className="rounded-md border border-border bg-background/60 p-4 lg:min-w-64">
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
+            <div className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4 lg:min-w-64">
+              <p className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
                 Current position
               </p>
               <div className="mt-3">
@@ -445,66 +462,66 @@ export default async function EngineeringWorkDetailPage({
               </div>
             </div>
           </div>
-          <div className="mt-6 rounded-md border border-primary/15 bg-primary/5 p-4">
-            <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.1em] text-primary">
+          <div className="mt-6 rounded-[var(--radius-inset)] border border-role-actionable-border bg-role-actionable-bg p-4">
+            <p className="font-mono text-[var(--type-state)] font-medium uppercase tracking-[0.1em] text-role-actionable">
               Recommended next action
             </p>
             <p className="mt-2 text-base font-semibold leading-7 text-foreground">{work.currentNextAction ?? "No current next action recorded."}</p>
           </div>
-        </section>
+        </Surface>
 
         {work.workflow === "defect" && defectContext ? (
-          <section className="rounded-lg border border-border bg-card p-6">
+          <Surface>
             <div><h2 className="font-heading text-base font-semibold">Defect investigation</h2><p className="mt-1 text-sm text-muted-foreground">Structured investigation context for this Defect Engineering Work.</p></div>
-            <dl className="mt-5 grid gap-5 sm:grid-cols-2">
-              <DetailField label="Observed Behavior" value={defectContext.observedBehavior} />
-              <DetailField label="Expected Behavior" value={defectContext.expectedBehavior} />
-              <DetailField label="Reproduction Steps" value={defectContext.reproductionSteps} />
-              <DetailField label="Environment" value={defectContext.environment} />
-              <DetailField label="Evidence" value={defectContext.evidence} />
-              <DetailField label="Next Investigation" value={defectContext.nextInvestigation} />
-              <DetailField label="Validation Target" value={defectContext.validationTarget} />
-            </dl>
-          </section>
+            <MetadataGroup className="mt-5">
+              <MetadataField label="Observed Behavior" value={defectContext.observedBehavior} />
+              <MetadataField label="Expected Behavior" value={defectContext.expectedBehavior} />
+              <MetadataField label="Reproduction Steps" value={defectContext.reproductionSteps} />
+              <MetadataField label="Environment" value={defectContext.environment} />
+              <MetadataField label="Evidence" value={defectContext.evidence} />
+              <MetadataField label="Next Investigation" value={defectContext.nextInvestigation} />
+              <MetadataField label="Validation Target" value={defectContext.validationTarget} />
+            </MetadataGroup>
+          </Surface>
         ) : null}
 
         {work.currentOutcome ? (
-          <section className="rounded-lg border border-border bg-card p-6">
+          <Surface>
             <h2 className="font-heading text-base font-semibold">Current outcome</h2>
             <p className="mt-3 text-sm leading-7 text-foreground/90">{work.currentOutcome}</p>
-          </section>
+          </Surface>
         ) : null}
 
         {work.finalDisposition ? (
-          <section className="rounded-lg border border-border bg-card p-6">
+          <Surface>
             <h2 className="font-heading text-base font-semibold">Final disposition</h2>
             <p className="mt-3 text-sm leading-7 text-foreground/90">{work.finalDisposition}</p>
-          </section>
+          </Surface>
         ) : null}
 
         {work.condition ? (
-          <section className="rounded-lg border border-border bg-card p-6">
+          <Surface>
             <h2 className="font-heading text-base font-semibold">Condition</h2>
             <p className="mt-3 text-sm font-medium">{work.condition}</p>
             {work.conditionRationale ? <p className="mt-2 text-sm leading-7 text-muted-foreground">{work.conditionRationale}</p> : null}
-          </section>
+          </Surface>
         ) : null}
 
-        <section className="rounded-lg border border-border bg-card p-6">
+        <Surface>
           <div>
             <h2 className="font-heading text-base font-semibold">Related knowledge</h2>
             <p className="mt-1 text-sm text-muted-foreground">Read-only context deliberately connected to this Engineering Work. Repository evidence remains separate below.</p>
           </div>
           {relatedKnowledge.length === 0 ? (
-            <div className="mt-4 rounded-md border border-dashed border-border bg-muted/20 p-6 text-center">
-              <FileQuestion className="mx-auto size-5 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium">No related knowledge has been connected yet.</p>
-              <p className="mt-1 text-sm text-muted-foreground">Add or verify supporting architecture, discovery, or validation context before advancing this work.</p>
-            </div>
+            <EmptyState
+              title="No related knowledge has been connected yet."
+              description="Add or verify supporting architecture, discovery, or validation context before advancing this work."
+              className="mt-4"
+            />
           ) : (
             <ul className="mt-4 space-y-3">
               {relatedKnowledge.map((item) => (
-                <li key={item.id} className="rounded-md border border-border bg-background/60 p-4">
+                <li key={item.id} className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <p className="font-medium">{item.title}</p>
@@ -512,11 +529,11 @@ export default async function EngineeringWorkDetailPage({
                     </div>
                     <span className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-primary">{item.knowledgeClass}</span>
                   </div>
-                  <dl className="mt-4 grid gap-4 sm:grid-cols-3">
-                    <DetailField label="Project" value={item.projectContext} />
-                    <DetailField label="Authority" value={item.authorityLocation} />
-                    <DetailField label="Last reviewed / updated" value={item.lastReviewed} />
-                  </dl>
+                  <MetadataGroup className="mt-4">
+                    <MetadataField label="Project" value={item.projectContext} />
+                    <MetadataField label="Authority" value={item.authorityLocation} />
+                    <MetadataField label="Last reviewed / updated" value={item.lastReviewed} />
+                  </MetadataGroup>
                   <Link href={`${item.href}?fromWork=${encodeURIComponent(work.id)}&project=${encodeURIComponent(work.projectSlug)}`} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     Open {item.knowledgeClass.toLowerCase()}
                     <ExternalLink className="size-3.5" />
@@ -525,38 +542,37 @@ export default async function EngineeringWorkDetailPage({
               ))}
             </ul>
           )}
-        </section>
+        </Surface>
 
-        <section className="rounded-lg border border-border bg-card p-6">
+        <Surface>
           <h2 className="font-heading text-base font-semibold">Related repository artifacts</h2>
           <p className="mt-1 text-sm text-muted-foreground">Read-only references. Artifact bodies remain authoritative in their source repositories.</p>
           {references.length === 0 ? (
-            <div className="mt-4 rounded-md border border-dashed border-border bg-muted/20 p-6 text-center">
-              <FileQuestion className="mx-auto size-5 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium">No repository evidence is linked yet.</p>
-              <p className="mt-1 text-sm text-muted-foreground">This initial representation does not infer or copy repository artifacts.</p>
-              <p className="mt-3 text-sm text-muted-foreground">Repository evidence will appear here after validated implementation artifacts are linked to this Engineering Work. Repository contents remain authoritative.</p>
-            </div>
+            <EmptyState
+              title="No repository evidence is linked yet."
+              description="Repository evidence will appear here after validated implementation artifacts are linked to this Engineering Work. Repository contents remain authoritative."
+              className="mt-4"
+            />
           ) : (
             <ul className="mt-4 space-y-3">
               {references.map((reference) => {
                 const sourceUrl = navigableUrl(reference.sourceLocation);
                 return (
-                  <li key={reference.id} className="rounded-md border border-border bg-background/60 p-4">
+                  <li key={reference.id} className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="font-medium">{reference.artifactClass}</p>
-                      <span className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">{ENGINEERING_WORK_REFERENCE_STATUS_LABELS[reference.referenceStatus]}</span>
+                      <span className="font-mono text-[var(--type-identifier)] uppercase tracking-[0.1em] text-muted-foreground">{ENGINEERING_WORK_REFERENCE_STATUS_LABELS[reference.referenceStatus]}</span>
                     </div>
-                    <dl className="mt-4 grid gap-4 sm:grid-cols-2">
-                      <DetailField label="Repository" value={reference.repository} />
-                      <DetailField label="Authority" value={ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS[reference.authority]} />
-                      <DetailField label="Identifier" value={reference.artifactIdentifier ?? "—"} />
-                      <DetailField label="Branch" value={reference.branch ?? "—"} />
-                      <DetailField label="Commit" value={reference.commitHash ?? "—"} />
-                      <DetailField label="Last reviewed" value={reference.lastReviewedAt ? formatTimestamp(reference.lastReviewedAt) : "—"} />
-                    </dl>
+                    <MetadataGroup className="mt-4">
+                      <MetadataField label="Repository" value={reference.repository} />
+                      <MetadataField label="Authority" value={ENGINEERING_WORK_REFERENCE_AUTHORITY_LABELS[reference.authority]} />
+                      <MetadataField label="Identifier" value={reference.artifactIdentifier ?? "—"} variant="identifier" />
+                      <MetadataField label="Branch" value={reference.branch ?? "—"} />
+                      <MetadataField label="Commit" value={reference.commitHash ?? "—"} variant="identifier" />
+                      <MetadataField label="Last reviewed" value={reference.lastReviewedAt ? formatTimestamp(reference.lastReviewedAt) : "—"} />
+                    </MetadataGroup>
                     <div className="mt-4">
-                      <p className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Source location</p>
+                      <p className="font-mono text-[var(--type-identifier)] uppercase tracking-[0.1em] text-muted-foreground">Source location</p>
                       {sourceUrl ? <Link href={sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex break-all text-sm text-primary underline-offset-4 hover:underline"><span>{reference.sourceLocation}</span><ExternalLink className="ml-1 mt-0.5 size-3.5 shrink-0" /></Link> : <p className="mt-1 break-all text-sm text-muted-foreground">{reference.sourceLocation}</p>}
                     </div>
                     {reference.note ? <p className="mt-4 text-sm text-muted-foreground">{reference.note}</p> : null}
@@ -574,19 +590,19 @@ export default async function EngineeringWorkDetailPage({
               Manage repository evidence
             </Link>
           </div>
-        </section>
+        </Surface>
 
         <EngineeringWorkHistory events={history} />
 
-        <section className="rounded-lg border border-border bg-muted/20 p-6">
+        <Surface className="bg-surface-inset">
           <h2 className="font-heading text-base font-semibold">Record details</h2>
           <p className="mt-1 text-sm text-muted-foreground">Supporting metadata for this Engineering Work record.</p>
-          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
-            <DetailField label="Priority" value={work.priority ?? "—"} />
-            <DetailField label="Created" value={formatTimestamp(work.createdAt)} />
-            <DetailField label="Updated" value={formatTimestamp(work.updatedAt)} />
-          </dl>
-        </section>
+          <MetadataGroup className="mt-4">
+            <MetadataField label="Priority" value={work.priority ?? "—"} />
+            <MetadataField label="Created" value={formatTimestamp(work.createdAt)} />
+            <MetadataField label="Updated" value={formatTimestamp(work.updatedAt)} />
+          </MetadataGroup>
+        </Surface>
       </div>
     </div>
   );

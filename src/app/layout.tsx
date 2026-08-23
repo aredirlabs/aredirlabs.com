@@ -1,6 +1,8 @@
 import { Geist, Inter, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 
 import { baseMetadata } from "@/lib/metadata";
+import { THEME_INITIALIZATION_SCRIPT } from "@/lib/theme-preference";
 
 import "./globals.css";
 
@@ -35,6 +37,15 @@ export default function RootLayout({
       className={`${geist.variable} ${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <Script
+          id="aredir-environment-theme"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: THEME_INITIALIZATION_SCRIPT,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <a
           href="#main-content"

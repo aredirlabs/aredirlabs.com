@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/lib/workspace/workspace-operational.test.ts src/lib/workspace/queries-sql-structure.test.ts src/lib/workspace/engineering-work-history.test.ts src/lib/workspace/repository-reference-persistence.test.ts",
+    "test": "tsx --test src/lib/workspace/visual-system-foundation.test.ts src/lib/workspace/workspace-operational.test.ts src/lib/workspace/queries-sql-structure.test.ts src/lib/workspace/engineering-work-history.test.ts src/lib/workspace/repository-reference-persistence.test.ts",
     "test:db:lifecycle": "node --env-file=.env.local scripts/validate-engineering-work-lifecycle-phase-a.mjs",
     "test:db:lifecycle:phase-b": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs scripts/validate-engineering-work-lifecycle-phase-b.ts",
     "test:db:lifecycle:phase-c": "node --env-file=.env.local node_modules/tsx/dist/cli.mjs scripts/validate-engineering-work-lifecycle-phase-c.ts",

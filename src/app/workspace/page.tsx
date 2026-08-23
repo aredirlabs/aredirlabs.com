@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, CircleAlert } from "lucide-react";
+import { ArrowRight, CircleAlert } from "lucide-react";
 
+import { FailureState } from "@/components/ui/failure-state";
 import { Eyebrow } from "@/components/eyebrow";
 import { getDailyOperatingExperience } from "@/lib/workspace/queries";
 import type { WorkspaceContinuationCandidate } from "@/lib/workspace/workspace-operational";
@@ -154,18 +155,11 @@ export default async function WorkspacePage() {
       </header>
 
       {error ? (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-6" role="alert">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-destructive" aria-hidden="true" />
-            <div>
-              <h2 className="font-semibold text-destructive">Workspace unavailable</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Could not load workspace data. Check that the development database is available and
-                configured correctly.
-              </p>
-            </div>
-          </div>
-        </div>
+        <FailureState
+          title="Workspace unavailable"
+          description="An unexpected error occurred while loading workspace data. Please try again or contact support if the issue persists."
+          failureClass="unknown"
+        />
       ) : experience ? (
         <div className="space-y-10 sm:space-y-12">
           <section aria-labelledby="continue-heading">

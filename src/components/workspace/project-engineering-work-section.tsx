@@ -1,6 +1,9 @@
 import Link from "next/link";
-import { AlertTriangle, ClipboardList, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
+import { EmptyState } from "@/components/ui/empty-state";
+import { FailureState } from "@/components/ui/failure-state";
+import { Surface } from "@/components/ui/surface";
 import {
   EngineeringWorkMetadata,
 } from "@/components/workspace/engineering-work-badges";
@@ -35,51 +38,35 @@ export function ProjectEngineeringWorkSection({
   const supportingWork = prioritizedWork.slice(1);
 
   return (
-    <section className="rounded-lg border border-primary/25 bg-card p-6 shadow-sm">
-      <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-primary">
-        Current operational focus
-      </p>
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
+    <Surface>
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-heading text-lg font-semibold">Engineering Work</h2>
-        <Link href={`/workspace/projects/${projectSlug}/engineering-work/new`} className="inline-flex items-center gap-1.5 rounded-md border border-primary/25 bg-primary/5 px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        <Link href={`/workspace/projects/${projectSlug}/engineering-work/new`} className="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] border border-border px-3 py-1.5 text-sm font-medium hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <Plus className="size-3.5" />
           New Engineering Work
         </Link>
       </div>
       <p className="mt-1 text-sm text-muted-foreground">
-        The work currently carrying this project forward.
+        Project-scoped engineering work ordered by lifecycle position.
       </p>
 
       {workItemsError ? (
-        <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 p-4">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-            <div>
-              <p className="text-sm font-medium text-destructive">
-                Could not load Engineering Work
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Project details loaded, but Engineering Work could not be retrieved.
-                Try refreshing the page.
-              </p>
-            </div>
-          </div>
-        </div>
+        <FailureState
+          title="Could not load Engineering Work"
+          description="Project details loaded, but Engineering Work could not be retrieved. Try refreshing the page."
+          failureClass="unknown"
+          className="mt-4"
+        />
       ) : !primaryWork ? (
-        <div className="mt-4 rounded-md border border-dashed border-border bg-muted/20 p-6 text-center">
-          <ClipboardList className="mx-auto size-5 text-muted-foreground" />
-          <p className="mt-3 text-sm font-medium">No Engineering Work yet.</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Engineering Work will appear here when a project-scoped operational record is available.
-          </p>
-        </div>
+        <EmptyState
+          title="No Engineering Work yet."
+          description="Engineering Work will appear here when a project-scoped operational record is available."
+          className="mt-4"
+        />
       ) : (
         <>
-          <article className="mt-5 rounded-md border border-primary/20 bg-primary/5 p-5">
+          <article className="mt-5 rounded-[var(--radius-inset)] border border-border bg-surface-inset p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.12em] text-primary">
-                Most important work
-              </p>
               <EngineeringWorkMetadata
                 type={primaryWork.type}
                 workflow={primaryWork.workflow}
@@ -97,9 +84,9 @@ export function ProjectEngineeringWorkSection({
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               {primaryWork.summary}
             </p>
-            <div className="mt-4 rounded-md border border-primary/15 bg-background/70 p-4">
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
-                What should happen next
+            <div className="mt-4 rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4">
+              <p className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
+                Current next action
               </p>
               <p className="mt-1 text-sm font-medium text-foreground">
                 {primaryWork.currentNextAction}
@@ -115,12 +102,12 @@ export function ProjectEngineeringWorkSection({
 
           {supportingWork.length > 0 ? (
             <div className="mt-6">
-              <h3 className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
+              <h3 className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
                 Other engineering work
               </h3>
               <ul className="mt-3 space-y-3">
                 {supportingWork.map((work) => (
-                  <li key={work.id} className="rounded-md border border-border bg-background/60 p-4">
+                  <li key={work.id} className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4">
                     <EngineeringWorkMetadata
                       type={work.type}
                       workflow={work.workflow}
@@ -144,6 +131,6 @@ export function ProjectEngineeringWorkSection({
           ) : null}
         </>
       )}
-    </section>
+    </Surface>
   );
 }

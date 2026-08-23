@@ -55,6 +55,24 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-surface-environment: var(--surface-environment);
+  --color-surface-surface: var(--surface-surface);
+  --color-surface-inset: var(--surface-inset);
+  --color-role-actionable: var(--role-actionable);
+  --color-role-actionable-bg: var(--role-actionable-bg);
+  --color-role-actionable-border: var(--role-actionable-border);
+  --color-role-attention: var(--role-attention);
+  --color-role-attention-bg: var(--role-attention-bg);
+  --color-role-attention-border: var(--role-attention-border);
+  --color-role-settled: var(--role-settled);
+  --color-role-settled-bg: var(--role-settled-bg);
+  --color-role-settled-border: var(--role-settled-border);
+  --color-role-inert: var(--role-inert);
+  --color-role-inert-bg: var(--role-inert-bg);
+  --color-role-inert-border: var(--role-inert-border);
+  --color-taxonomy-bg: var(--taxonomy-bg);
+  --color-taxonomy-border: var(--taxonomy-border);
+  --color-taxonomy-text: var(--taxonomy-text);
 }
 
 /* ---------------------------------------------------------------------------
@@ -162,6 +180,91 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ---------------------------------------------------------------------------
+   Authenticated visual-system tokens
+   Three-level surface hierarchy, four operational roles, geometry, typography.
+   Scoped under .dark and :root for both themes.
+
+   Role text colors are calibrated for WCAG AA (4.5:1) against their
+   role backgrounds at the minimum rendered size (0.6875rem / 11px).
+--------------------------------------------------------------------------- */
+
+:root {
+  /* Surface levels (light) */
+  --surface-environment: oklch(0.97 0.003 260);
+  --surface-surface: oklch(1 0 0);
+  --surface-inset: oklch(0.96 0.006 260);
+
+  /* Operational role colors (light) — AA-verified against role backgrounds */
+  --role-actionable: oklch(0.38 0.18 262);        /* darkened for AA on light bg */
+  --role-actionable-bg: oklch(0.55 0.18 262 / 6%);
+  --role-actionable-border: oklch(0.55 0.18 262 / 20%);
+  --role-attention: oklch(0.40 0.14 70);           /* darkened amber for AA */
+  --role-attention-bg: oklch(0.62 0.13 70 / 6%);
+  --role-attention-border: oklch(0.62 0.13 70 / 20%);
+  --role-settled: oklch(0.45 0.02 262);
+  --role-settled-bg: oklch(0.50 0.02 262 / 5%);
+  --role-settled-border: oklch(0.50 0.02 262 / 12%);
+  --role-inert: oklch(0.38 0.01 260);              /* darkened for AA on light bg */
+  --role-inert-bg: oklch(0.70 0.01 260 / 5%);
+  --role-inert-border: oklch(0.70 0.01 260 / 10%);
+
+  /* Taxonomy (neutral labels — no semantic color) */
+  --taxonomy-bg: oklch(0.96 0.006 260);
+  --taxonomy-border: oklch(0.90 0.01 260);
+  --taxonomy-text: oklch(0.42 0.02 262);           /* darkened for AA */
+
+  /* Geometry tokens */
+  --radius-surface: 0.375rem;
+  --radius-inset: 0.25rem;
+  --radius-control: 0.375rem;
+  --radius-badge: 0.25rem;
+
+  /* Spacing scale */
+  --space-surface-x: 1.5rem;
+  --space-surface-y: 1.5rem;
+  --space-inset-x: 1rem;
+  --space-inset-y: 0.75rem;
+  --space-row-x: 1rem;
+  --space-row-y: 0.75rem;
+
+  /* Typography scale */
+  --type-altitude: 1.875rem;
+  --type-section: 1.125rem;
+  --type-truth: 1rem;
+  --type-narrative: 0.875rem;
+  --type-metadata: 0.75rem;
+  --type-identifier: 0.75rem;
+  --type-state: 0.6875rem;
+  --type-evidence: 0.8125rem;
+}
+
+.dark {
+  /* Surface levels (dark) */
+  --surface-environment: oklch(0.18 0.004 262);
+  --surface-surface: oklch(0.22 0.004 262);
+  --surface-inset: oklch(0.20 0.004 262);
+
+  /* Operational role colors (dark) — AA-verified against role backgrounds */
+  --role-actionable: oklch(0.74 0.16 262);         /* brightened for AA on dark bg */
+  --role-actionable-bg: oklch(0.70 0.16 262 / 8%);
+  --role-actionable-border: oklch(0.70 0.16 262 / 20%);
+  --role-attention: oklch(0.82 0.13 78);           /* brightened amber for AA */
+  --role-attention-bg: oklch(0.80 0.13 78 / 8%);
+  --role-attention-border: oklch(0.80 0.13 78 / 20%);
+  --role-settled: oklch(0.74 0.012 262);
+  --role-settled-bg: oklch(0.72 0.012 262 / 6%);
+  --role-settled-border: oklch(0.72 0.012 262 / 12%);
+  --role-inert: oklch(0.66 0.01 262);              /* brightened for AA ≥4.5:1 on dark inert bg */
+  --role-inert-bg: oklch(0.55 0.01 262 / 6%);
+  --role-inert-border: oklch(0.55 0.01 262 / 10%);
+
+  /* Taxonomy (dark) */
+  --taxonomy-bg: oklch(0.26 0.006 262);
+  --taxonomy-border: oklch(1 0 0 / 9%);
+  --taxonomy-text: oklch(0.74 0.012 262);          /* brightened for AA */
 }
 
 @layer base {
