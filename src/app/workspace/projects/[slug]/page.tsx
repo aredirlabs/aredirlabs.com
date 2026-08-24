@@ -2,22 +2,24 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { asc, desc, eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, ExternalLink } from "lucide-react";
+import { AlertTriangle, ExternalLink } from "lucide-react";
 
-import { Eyebrow } from "@/components/eyebrow";
+import { Disclosure } from "@/components/ui/disclosure";
+import { Surface } from "@/components/ui/surface";
 import { ProjectMilestonesSection } from "@/components/workspace/project-milestones-section";
 import { ProjectDocumentsSection } from "@/components/workspace/project-documents-section";
 import { ProjectPromptsSection } from "@/components/workspace/project-prompts-section";
-import { ProjectEngineeringWorkSection } from "@/components/workspace/project-engineering-work-section";
-import { ProjectOperationalFocusSection, PROJECT_FOCUS_HISTORY_PAGE_LIMIT } from "@/components/workspace/project-operational-focus-section";
+import { ProjectEngineeringWorkProjectionSection } from "@/components/workspace/project-engineering-work-projection";
+import { ProjectOperationalFocusSection } from "@/components/workspace/project-operational-focus-section";
+import {
+  ProjectFocusHistoryTimeline,
+  PROJECT_FOCUS_HISTORY_PAGE_LIMIT,
+} from "@/components/workspace/project-focus-history-timeline";
+import { ProjectOperatingBrief } from "@/components/workspace/project-operating-brief";
 import {
   ProjectOverviewSection,
 } from "@/components/workspace/project-overview-section";
 import { ProjectNotesSection } from "@/components/workspace/project-notes-section";
-import {
-  ProjectStageBadge,
-  ProjectStatusBadge,
-} from "@/components/workspace/project-status-badge";
 import { getDb } from "@/lib/db";
 import {
   workspaceProjectMilestones,
@@ -27,7 +29,7 @@ import {
   workspaceProjects,
   workspaceEngineeringWork,
 } from "@/lib/db/schema";
-import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
+import { formatTimestamp } from "@/lib/workspace/format-date";
 import {
   getProjectDocuments,
   getProjectEngineeringWork,
@@ -52,11 +54,11 @@ function DetailField({
   value: ReactNode;
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       <dt className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
         {label}
       </dt>
-      <dd className="mt-1 text-sm">{value}</dd>
+      <dd className="mt-1 text-sm break-words">{value}</dd>
     </div>
   );
 }
@@ -171,12 +173,11 @@ export default async function WorkspaceProjectDetailPage({
 
   if (error) {
     return (
-      <div className="p-8">
+      <div className="px-4 py-6 sm:p-8">
         <Link
           href="/workspace/projects"
           className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
         >
-          <ArrowLeft className="size-3.5" />
           Project registry
         </Link>
         <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-6">
@@ -206,141 +207,152 @@ export default async function WorkspaceProjectDetailPage({
     : new Set<string>();
 
   return (
-    <div className="p-8">
-      <Link
-        href="/workspace/projects"
-        className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft className="size-3.5" />
-        Project registry
-      </Link>
-
-      <div className="mb-8">
-        <Eyebrow>Project Detail</Eyebrow>
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            {project.name}
-          </h1>
-          <ProjectStatusBadge status={project.status} />
-          <ProjectStageBadge stage={project.stage} />
-        </div>
-        {project.category ? (
-          <p className="mt-2 text-sm text-muted-foreground">
-            {project.category}
-          </p>
-        ) : null}
-      </div>
-
+    <div className="min-w-0 px-4 py-6 sm:p-8">
       <div className="space-y-4">
-        <ProjectEngineeringWorkSection
+        <ProjectOperatingBrief project={project}>
+          <ProjectOperationalFocusSection
+            projectSlug={project.slug}
+            focusVersion={focusProjection?.focusVersion ?? 0}
+            projection={
+              focusProjection ?? {
+                currentSelections: [],
+                operationalFocus: [],
+                mode: "none",
+                singletonNextStep: null,
+                pluralNextActions: [],
+                projectionSuppressed: false,
+              }
+            }
+            focusProjectionError={focusProjectionError}
+          />
+        </ProjectOperatingBrief>
+
+        <ProjectEngineeringWorkProjectionSection
           projectSlug={project.slug}
           workItems={engineeringWork}
           workItemsError={engineeringWorkError}
           focusedWorkIds={focusedIds}
         />
 
-        <ProjectOperationalFocusSection
-          projectSlug={project.slug}
-          focusVersion={focusProjection?.focusVersion ?? 0}
-          projection={
-            focusProjection ?? {
-              currentSelections: [],
-              operationalFocus: [],
-              mode: "none",
-              singletonNextStep: null,
-              pluralNextActions: [],
-              projectionSuppressed: false,
-            }
-          }
-          focusEvents={focusEvents}
-          focusEventsTotal={focusEventsTotal}
-          focusProjectionError={focusProjectionError}
-          focusEventsError={focusEventsError}
-        />
+        <Surface>
+          <ProjectFocusHistoryTimeline
+            projectSlug={project.slug}
+            initialEvents={focusEvents}
+            total={focusEventsTotal}
+            error={focusEventsError}
+          />
+        </Surface>
 
-        <ProjectOverviewSection project={project} />
+        <Disclosure
+          summary="Overview"
+          description="Legacy Project text fields and remaining operational metadata."
+        >
+          <ProjectOverviewSection project={project} />
+        </Disclosure>
 
-        <section className="rounded-lg border border-border bg-card p-6">
-          <h2 className="font-heading text-base font-semibold">
-            Registry record
-          </h2>
-          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
-            <DetailField label="Name" value={project.name} />
-            <DetailField label="Slug" value={project.slug} />
-            <DetailField
-              label="Repo URL"
-              value={
-                project.repoUrl ? (
-                  <Link
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
-                  >
-                    {project.repoUrl}
-                    <ExternalLink className="size-3.5" />
-                  </Link>
-                ) : (
-                  "—"
-                )
-              }
-            />
-            <DetailField
-              label="Public URL"
-              value={
-                project.publicUrl ? (
-                  <Link
-                    href={project.publicUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
-                  >
-                    {project.publicUrl}
-                    <ExternalLink className="size-3.5" />
-                  </Link>
-                ) : (
-                  "—"
-                )
-              }
-            />
-            <DetailField
-              label="Target date"
-              value={formatDate(project.targetDate)}
-            />
-            <DetailField
-              label="Created"
-              value={formatTimestamp(project.createdAt)}
-            />
-            <DetailField
-              label="Updated"
-              value={formatTimestamp(project.updatedAt)}
-            />
-          </dl>
-        </section>
+        <Surface>
+          <Disclosure
+            summary="Registry record"
+            description="Identifier, repository, public URL, and timestamps."
+          >
+            <dl className="mt-2 grid gap-4 sm:grid-cols-2">
+              <DetailField label="Name" value={project.name} />
+              <DetailField label="Slug" value={project.slug} />
+              <DetailField
+                label="Repo URL"
+                value={
+                  project.repoUrl ? (
+                    <Link
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 break-all text-primary underline-offset-4 hover:underline"
+                    >
+                      {project.repoUrl}
+                      <ExternalLink className="size-3.5 shrink-0" />
+                    </Link>
+                  ) : (
+                    "—"
+                  )
+                }
+              />
+              <DetailField
+                label="Public URL"
+                value={
+                  project.publicUrl ? (
+                    <Link
+                      href={project.publicUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 break-all text-primary underline-offset-4 hover:underline"
+                    >
+                      {project.publicUrl}
+                      <ExternalLink className="size-3.5 shrink-0" />
+                    </Link>
+                  ) : (
+                    "—"
+                  )
+                }
+              />
+              <DetailField
+                label="Created"
+                value={formatTimestamp(project.createdAt)}
+              />
+              <DetailField
+                label="Updated"
+                value={formatTimestamp(project.updatedAt)}
+              />
+            </dl>
+          </Disclosure>
+        </Surface>
 
-        <ProjectMilestonesSection
-          projectSlug={project.slug}
-          milestones={milestones}
-          milestonesError={milestonesError}
-        />
+        <Disclosure
+          summary="Milestones"
+          description="Project-authority delivery checkpoints."
+          count={milestonesError ? "Unavailable" : milestones.length}
+        >
+          <ProjectMilestonesSection
+            projectSlug={project.slug}
+            milestones={milestones}
+            milestonesError={milestonesError}
+          />
+        </Disclosure>
 
-        <ProjectDocumentsSection
-          projectSlug={project.slug}
-          documents={documents}
-          documentsError={documentsError}
-        />
+        <Disclosure
+          summary="Documents"
+          description="Project documents remain reachable from this Project."
+          count={documentsError ? "Unavailable" : documents.length}
+        >
+          <ProjectDocumentsSection
+            projectSlug={project.slug}
+            documents={documents}
+            documentsError={documentsError}
+          />
+        </Disclosure>
 
-        <ProjectPromptsSection
-          projectSlug={project.slug}
-          prompts={prompts}
-          promptsError={promptsError}
-        />
+        <Disclosure
+          summary="Prompts"
+          description="Project prompt records remain reachable from this Project."
+          count={promptsError ? "Unavailable" : prompts.length}
+        >
+          <ProjectPromptsSection
+            projectSlug={project.slug}
+            prompts={prompts}
+            promptsError={promptsError}
+          />
+        </Disclosure>
 
-        <ProjectNotesSection
-          projectSlug={project.slug}
-          notes={notes}
-          notesError={notesError}
-        />
+        <Disclosure
+          summary="Notes"
+          description="Project notes remain reachable from this Project."
+          count={notesError ? "Unavailable" : notes.length}
+        >
+          <ProjectNotesSection
+            projectSlug={project.slug}
+            notes={notes}
+            notesError={notesError}
+          />
+        </Disclosure>
       </div>
     </div>
   );

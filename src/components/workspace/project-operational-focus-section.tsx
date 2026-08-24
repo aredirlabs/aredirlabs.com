@@ -1,37 +1,23 @@
 import Link from "next/link";
 
 import { Inset } from "@/components/ui/inset";
-import { Surface } from "@/components/ui/surface";
 import { FailureState } from "@/components/ui/failure-state";
 import { OperationalFocusClearForm } from "@/components/workspace/operational-focus-forms";
-import {
-  PROJECT_FOCUS_HISTORY_PAGE_LIMIT,
-  ProjectFocusHistoryTimeline,
-} from "@/components/workspace/project-focus-history-timeline";
 import { OperationalFocusMarker } from "@/components/workspace/operational-focus-marker";
-import type { ProjectFocusEventRecord } from "@/lib/workspace/queries";
 import type { ProjectOperationalFocusProjection } from "@/lib/workspace/operational-focus";
-
-export { PROJECT_FOCUS_HISTORY_PAGE_LIMIT };
 
 type ProjectOperationalFocusSectionProps = {
   projectSlug: string;
   focusVersion: number;
   projection: ProjectOperationalFocusProjection;
-  focusEvents: ProjectFocusEventRecord[];
-  focusEventsTotal: number;
   focusProjectionError?: string | null;
-  focusEventsError?: string | null;
 };
 
 export function ProjectOperationalFocusSection({
   projectSlug,
   focusVersion,
   projection,
-  focusEvents,
-  focusEventsTotal,
   focusProjectionError,
-  focusEventsError,
 }: ProjectOperationalFocusSectionProps) {
   const {
     operationalFocus,
@@ -44,22 +30,32 @@ export function ProjectOperationalFocusSection({
 
   if (focusProjectionError) {
     return (
-      <Surface>
-        <h2 className="font-heading text-lg font-semibold">Operational focus</h2>
-        <FailureState
-          title="Could not load operational focus"
-          description={focusProjectionError}
-          failureClass="unknown"
-          className="mt-4"
-        />
-      </Surface>
+      <FailureState
+        title="Could not load operational focus"
+        description={focusProjectionError}
+        failureClass="unknown"
+      />
+    );
+  }
+
+  if (currentSelections.length === 0) {
+    return (
+      <div className="min-w-0" role="status">
+        <p className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
+          Operational focus
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          No current focus selected. Focus is shared Project emphasis, not
+          continuation, attention, priority, or navigation selection.
+        </p>
+      </div>
     );
   }
 
   return (
-    <Surface>
+    <div className="min-w-0">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
+        <div className="min-w-0">
           <p className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
             Projection
           </p>
@@ -69,9 +65,7 @@ export function ProjectOperationalFocusSection({
             continuation, attention, priority, or navigation selection.
           </p>
         </div>
-        {currentSelections.length > 0 ? (
-          <OperationalFocusClearForm projectSlug={projectSlug} focusVersion={focusVersion} />
-        ) : null}
+        <OperationalFocusClearForm projectSlug={projectSlug} focusVersion={focusVersion} />
       </div>
 
       {projectionSuppressed ? (
@@ -84,60 +78,52 @@ export function ProjectOperationalFocusSection({
         </Inset>
       ) : null}
 
-      {currentSelections.length === 0 ? (
-        <p className="mt-4 text-sm text-muted-foreground" role="status">
-          No current focus selected.
-        </p>
-      ) : (
-        <>
-          <p className="mt-4 font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
-            Current selection authority ({currentSelections.length})
-          </p>
-          <ul className="mt-3 space-y-3" aria-label="Current operational focus selections">
-            {currentSelections.map((item) => {
-              const isProjected = operationalFocus.some(
-                (focused) => focused.engineeringWorkId === item.engineeringWorkId,
-              );
-              return (
-                <li
-                  key={item.engineeringWorkId}
-                  className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4"
+      <p className="mt-4 font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
+        Current selection authority ({currentSelections.length})
+      </p>
+      <ul className="mt-3 space-y-3" aria-label="Current operational focus selections">
+        {currentSelections.map((item) => {
+          const isProjected = operationalFocus.some(
+            (focused) => focused.engineeringWorkId === item.engineeringWorkId,
+          );
+          return (
+            <li
+              key={item.engineeringWorkId}
+              className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4"
+            >
+              <div className="flex flex-wrap items-center gap-2">
+                <OperationalFocusMarker />
+                {!isProjected ? (
+                  <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
+                    Selection retained · projection suppressed
+                  </span>
+                ) : null}
+                {item.condition ? (
+                  <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-role-attention">
+                    Conditioned focus
+                  </span>
+                ) : null}
+              </div>
+              <h3 className="mt-2 font-medium">
+                <Link
+                  href={`/workspace/projects/${projectSlug}/engineering-work/${item.engineeringWorkId}`}
+                  className="underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <OperationalFocusMarker />
-                    {!isProjected ? (
-                      <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
-                        Selection retained · projection suppressed
-                      </span>
-                    ) : null}
-                    {item.condition ? (
-                      <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-role-attention">
-                        Conditioned focus
-                      </span>
-                    ) : null}
-                  </div>
-                  <h3 className="mt-2 font-medium">
-                    <Link
-                      href={`/workspace/projects/${projectSlug}/engineering-work/${item.engineeringWorkId}`}
-                      className="underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {item.title}
-                    </Link>
-                  </h3>
-                  {isProjected && item.currentNextAction ? (
-                    <p className="mt-2 text-sm">
-                      <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
-                        Work next action
-                      </span>
-                      <span className="mt-1 block font-medium">{item.currentNextAction}</span>
-                    </p>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        </>
-      )}
+                  {item.title}
+                </Link>
+              </h3>
+              {isProjected && item.currentNextAction ? (
+                <p className="mt-2 text-sm">
+                  <span className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
+                    Work next action
+                  </span>
+                  <span className="mt-1 block font-medium">{item.currentNextAction}</span>
+                </p>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
 
       {mode === "single" && singletonNextStep ? (
         <Inset className="mt-4">
@@ -170,13 +156,6 @@ export function ProjectOperationalFocusSection({
           </ul>
         </Inset>
       ) : null}
-
-      <ProjectFocusHistoryTimeline
-        projectSlug={projectSlug}
-        initialEvents={focusEvents}
-        total={focusEventsTotal}
-        error={focusEventsError}
-      />
-    </Surface>
+    </div>
   );
 }

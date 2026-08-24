@@ -39,6 +39,7 @@ function focusVersionFromForm(formData: FormData) {
 function revalidateOperationalFocus(projectSlug: string, workId?: string) {
   revalidatePath("/workspace");
   revalidatePath(`/workspace/projects/${projectSlug}`);
+  revalidatePath(`/workspace/projects/${projectSlug}/engineering-work`);
   if (workId) {
     revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}`);
   }

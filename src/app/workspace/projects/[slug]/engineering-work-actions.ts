@@ -103,6 +103,7 @@ function staleMutationError() {
 function revalidateEngineeringWork(projectSlug: string, workId: string) {
   revalidatePath("/workspace");
   revalidatePath(`/workspace/projects/${projectSlug}`);
+  revalidatePath(`/workspace/projects/${projectSlug}/engineering-work`);
   revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}`);
   revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}/edit`);
   revalidatePath(`/workspace/projects/${projectSlug}/engineering-work/${workId}/complete`);

@@ -65,7 +65,7 @@ export function ProjectFocusHistoryTimeline({
         : "Append-only provenance for shared Project operational focus. System invalidation is distinct from operator deselection.";
 
   return (
-    <div className="mt-6">
+    <div>
       <Timeline label="Focus selection history" description={description}>
         {loadError ? (
           <li className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-[var(--space-inset-y)] px-[var(--space-inset-x)] text-[var(--type-narrative)] text-muted-foreground">
