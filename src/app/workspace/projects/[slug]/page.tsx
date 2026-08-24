@@ -9,8 +9,8 @@ import { ProjectMilestonesSection } from "@/components/workspace/project-milesto
 import { ProjectDocumentsSection } from "@/components/workspace/project-documents-section";
 import { ProjectPromptsSection } from "@/components/workspace/project-prompts-section";
 import { ProjectEngineeringWorkSection } from "@/components/workspace/project-engineering-work-section";
+import { ProjectOperationalFocusSection, PROJECT_FOCUS_HISTORY_PAGE_LIMIT } from "@/components/workspace/project-operational-focus-section";
 import {
-  ProjectCurrentFocusSection,
   ProjectOverviewSection,
 } from "@/components/workspace/project-overview-section";
 import { ProjectNotesSection } from "@/components/workspace/project-notes-section";
@@ -31,8 +31,12 @@ import { formatDate, formatTimestamp } from "@/lib/workspace/format-date";
 import {
   getProjectDocuments,
   getProjectEngineeringWork,
+  getProjectFocusEvents,
+  getProjectOperationalFocusProjection,
   getProjectPrompts,
+  type ProjectFocusEventRecord,
 } from "@/lib/workspace/queries";
+import { focusedWorkIdSet } from "@/lib/workspace/operational-focus";
 
 export const dynamic = "force-dynamic";
 
@@ -78,6 +82,13 @@ export default async function WorkspaceProjectDetailPage({
   let documentsError: string | null = null;
   let promptsError: string | null = null;
   let engineeringWorkError: string | null = null;
+  let focusProjection = null as Awaited<
+    ReturnType<typeof getProjectOperationalFocusProjection>
+  > | null;
+  let focusEvents: ProjectFocusEventRecord[] = [];
+  let focusEventsTotal = 0;
+  let focusProjectionError: string | null = null;
+  let focusEventsError: string | null = null;
 
   try {
     const db = getDb();
@@ -131,6 +142,28 @@ export default async function WorkspaceProjectDetailPage({
         milestonesError =
           e instanceof Error ? e.message : "Failed to load milestones";
       }
+
+      try {
+        focusProjection = await getProjectOperationalFocusProjection({
+          projectId: project.id,
+          projectStatus: project.status,
+        });
+      } catch (e) {
+        focusProjectionError =
+          e instanceof Error ? e.message : "Failed to load operational focus";
+      }
+
+      try {
+        const focusHistory = await getProjectFocusEvents(project.id, {
+          limit: PROJECT_FOCUS_HISTORY_PAGE_LIMIT,
+          offset: 0,
+        });
+        focusEvents = focusHistory.events;
+        focusEventsTotal = focusHistory.total;
+      } catch (e) {
+        focusEventsError =
+          e instanceof Error ? e.message : "Failed to load focus selection history";
+      }
     }
   } catch (e) {
     error = e instanceof Error ? e.message : "Failed to load project";
@@ -168,6 +201,10 @@ export default async function WorkspaceProjectDetailPage({
     notFound();
   }
 
+  const focusedIds = focusProjection
+    ? focusedWorkIdSet(focusProjection)
+    : new Set<string>();
+
   return (
     <div className="p-8">
       <Link
@@ -199,9 +236,27 @@ export default async function WorkspaceProjectDetailPage({
           projectSlug={project.slug}
           workItems={engineeringWork}
           workItemsError={engineeringWorkError}
+          focusedWorkIds={focusedIds}
         />
 
-        <ProjectCurrentFocusSection project={project} />
+        <ProjectOperationalFocusSection
+          projectSlug={project.slug}
+          focusVersion={focusProjection?.focusVersion ?? 0}
+          projection={
+            focusProjection ?? {
+              currentSelections: [],
+              operationalFocus: [],
+              mode: "none",
+              singletonNextStep: null,
+              pluralNextActions: [],
+              projectionSuppressed: false,
+            }
+          }
+          focusEvents={focusEvents}
+          focusEventsTotal={focusEventsTotal}
+          focusProjectionError={focusProjectionError}
+          focusEventsError={focusEventsError}
+        />
 
         <ProjectOverviewSection project={project} />
 

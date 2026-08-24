@@ -50,6 +50,13 @@
       "when": 1787259600000,
       "tag": "0006_engineering_work_reference_review_check",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1787346000000,
+      "tag": "0007_operational_focus",
+      "breakpoints": true
     }
   ]
 }

@@ -266,7 +266,7 @@ export default async function WorkspacePage() {
                   >
                     <span className="font-medium">{project.name}</span>
                     <span className="mt-1 block text-sm text-muted-foreground line-clamp-2">
-                      {project.currentFocus ?? project.nextStep ?? "Open the Project for current context."}
+                      Open the Project for operational context and structured focus.
                     </span>
                   </Link>
                 ))

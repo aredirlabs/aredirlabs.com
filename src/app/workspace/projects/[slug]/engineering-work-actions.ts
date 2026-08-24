@@ -323,6 +323,7 @@ export async function completeEngineeringWork(
   const decisionActor = authenticatedHumanEngineeringWorkActor(session);
 
   try {
+    const historyEventId = `eng_work_history_${crypto.randomUUID()}`;
     const result = await persistEngineeringWorkCompletionAndHistory(sqlExecutor(), {
       engineeringWorkId: workId,
       projectSlug,
@@ -330,7 +331,9 @@ export async function completeEngineeringWork(
       expectedState: expectedState as "active" | "in_review",
       verifiedOutcome,
       finalDisposition,
-      historyEventId: `eng_work_history_${crypto.randomUUID()}`,
+      historyEventId,
+      focusInvalidationEventId: `focus_event_${crypto.randomUUID()}`,
+      focusInvalidationBatchId: `focus_batch_${crypto.randomUUID()}`,
       provenance: engineeringWorkDecisionProvenance({
         actionActor,
         decisionActor,

@@ -91,6 +91,8 @@ export type EngineeringWorkCompletionWithHistoryInput = {
   verifiedOutcome: string;
   finalDisposition: string;
   historyEventId: string;
+  focusInvalidationEventId: string;
+  focusInvalidationBatchId: string;
   provenance: EngineeringWorkDecisionProvenance;
 };
 
@@ -485,6 +487,11 @@ export async function persistEngineeringWorkCompletionAndHistory(
          AND work.state = $4::engineering_work_state
          AND work.state IN ('active', 'in_review')
        FOR UPDATE OF work
+     ), locked_project AS (
+       SELECT project.id AS project_id
+       FROM workspace_projects AS project
+       JOIN current_work ON current_work.project_id = project.id
+       FOR UPDATE OF project
      ), updated_work AS (
        UPDATE workspace_engineering_work AS work SET
          state = 'completed',
@@ -496,6 +503,7 @@ export async function persistEngineeringWorkCompletionAndHistory(
          version = work.version + 1,
          updated_at = statement_timestamp()
        FROM current_work AS previous
+       JOIN locked_project AS lp ON lp.project_id = previous.project_id
        WHERE work.id = previous.id AND work.version = previous.version
        RETURNING work.*
      ), inserted_history AS (
@@ -532,6 +540,40 @@ export async function persistEngineeringWorkCompletionAndHistory(
        FROM current_work AS previous
        JOIN updated_work AS updated ON updated.id = previous.id
        RETURNING id, engineering_work_id
+     ), deleted_focus AS (
+       DELETE FROM workspace_project_focus_selection AS selection
+       USING updated_work AS updated, locked_project AS lp
+       WHERE selection.engineering_work_id = updated.id
+         AND selection.project_id = lp.project_id
+       RETURNING selection.project_id, selection.engineering_work_id
+     ), inserted_focus_invalidation AS (
+       INSERT INTO workspace_project_focus_events (
+         id, project_id, engineering_work_id, effect, command_context, batch_id,
+         rationale,
+         action_actor_type, action_actor_identifier,
+         authority_type, authority_reference, authority_context,
+         based_on_event_id,
+         occurred_at
+       )
+       SELECT
+         $23, deleted_focus.project_id, deleted_focus.engineering_work_id, 'invalidated',
+         'lifecycle_invalidation', $24,
+         'Engineering Work completed; current operational focus selection ended by system rule.',
+         'system'::engineering_work_actor_type, 'operational-focus-system',
+         'system_rule'::engineering_work_authority_type, 'engineering-work-lifecycle:completed',
+         'Operational focus invalidated because Engineering Work reached completed state.',
+         $7,
+         statement_timestamp()
+       FROM deleted_focus
+       RETURNING project_id
+     ), incremented_focus_version AS (
+       UPDATE workspace_projects AS project
+       SET focus_version = project.focus_version + 1,
+           updated_at = statement_timestamp()
+       FROM inserted_focus_invalidation AS invalidation
+       JOIN locked_project AS lp ON lp.project_id = invalidation.project_id
+       WHERE project.id = lp.project_id
+       RETURNING project.id
      )
      SELECT updated.id AS engineering_work_id, updated.version,
        history.id AS history_event_id, NULL::text AS defect_revision_id
@@ -560,6 +602,8 @@ export async function persistEngineeringWorkCompletionAndHistory(
       provenance.authority?.context ?? null,
       provenance.basedOnEventId,
       JSON.stringify(provenance.metadata),
+      nonblank(input.focusInvalidationEventId, "Focus invalidation event ID"),
+      nonblank(input.focusInvalidationBatchId, "Focus invalidation batch ID"),
     ],
   );
   return persistenceResult(rows);

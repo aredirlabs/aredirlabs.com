@@ -382,6 +382,8 @@ test("completion atomically clears the current action and preserves it in histor
     verifiedOutcome: "The intended outcome was verified.",
     finalDisposition: "No further work is required.",
     historyEventId: "history-completion",
+    focusInvalidationEventId: "focus-invalidation-1",
+    focusInvalidationBatchId: "focus-batch-1",
     provenance: completion,
   });
 
@@ -390,6 +392,7 @@ test("completion atomically clears the current action and preserves it in histor
   assert.match(calls[0].query, /current_next_action = NULL/);
   assert.match(calls[0].query, /previous\.current_next_action, updated\.current_next_action/);
   assert.match(calls[0].query, /action_actor_type.+decision_actor_type/s);
+  assert.match(calls[0].query, /inserted_focus_invalidation/);
   assert.equal(calls[0].params?.[10], "human");
   assert.equal(calls[0].params?.[13], "human");
   assert.deepEqual(result, {
@@ -420,6 +423,8 @@ test("completion supports In Review and rejects stale versions without a history
     verifiedOutcome: "Verified review outcome.",
     finalDisposition: "Complete.",
     historyEventId: "history-stale-completion",
+    focusInvalidationEventId: "focus-invalidation-stale",
+    focusInvalidationBatchId: "focus-batch-stale",
     provenance: completion,
   });
   assert.deepEqual(result, { ok: false, reason: "not_found_or_stale" });
@@ -435,6 +440,8 @@ test("completion requires authorization provenance with a decision basis", async
       verifiedOutcome: "Verified.",
       finalDisposition: "Done.",
       historyEventId: "history-invalid-completion",
+      focusInvalidationEventId: "focus-invalidation-invalid",
+      focusInvalidationBatchId: "focus-batch-invalid",
       provenance: humanExecution,
     }),
     /Completion requires authorization/,

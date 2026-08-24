@@ -89,6 +89,12 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const projectFocusEventEffectEnum = pgEnum("project_focus_event_effect", [
+  "selected",
+  "deselected",
+  "invalidated",
+]);
+
 export const workspaceProjects = pgTable("workspace_projects", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -97,6 +103,7 @@ export const workspaceProjects = pgTable("workspace_projects", {
   stage: projectStageEnum("stage").notNull().default("concept"),
   currentFocus: text("current_focus"),
   nextStep: text("next_step"),
+  focusVersion: integer("focus_version").notNull().default(0),
   targetDate: timestamp("target_date"),
   category: text("category"),
   description: text("description"),
@@ -329,7 +336,12 @@ export const workspaceEngineeringWork = pgTable("workspace_engineering_work", {
   version: integer("version").notNull().default(1),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => [
+  uniqueIndex("workspace_engineering_work_project_id_id_idx").on(
+    table.projectId,
+    table.id,
+  ),
+]);
 
 export const workspaceEngineeringWorkHistory = pgTable(
   "workspace_engineering_work_history",
@@ -593,5 +605,172 @@ export const workspaceEngineeringWorkRepositoryReferenceRevisions = pgTable(
       "workspace_engineering_work_repo_revisions_schema_version",
       sql`${table.referenceSchemaVersion} > 0`,
     ),
+  ],
+);
+
+export const workspaceProjectFocusEvents = pgTable(
+  "workspace_project_focus_events",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+    engineeringWorkId: text("engineering_work_id")
+      .notNull()
+      .references(() => workspaceEngineeringWork.id, { onDelete: "restrict" }),
+    effect: projectFocusEventEffectEnum("effect").notNull(),
+    commandContext: text("command_context"),
+    batchId: text("batch_id").notNull(),
+    rationale: text("rationale"),
+    actionActorType: engineeringWorkActorTypeEnum("action_actor_type").notNull(),
+    actionActorIdentifier: text("action_actor_identifier").notNull(),
+    actionActorDisplayName: text("action_actor_display_name"),
+    decisionActorType: engineeringWorkActorTypeEnum("decision_actor_type"),
+    decisionActorIdentifier: text("decision_actor_identifier"),
+    decisionActorDisplayName: text("decision_actor_display_name"),
+    authorityType: engineeringWorkAuthorityTypeEnum("authority_type"),
+    authorityReference: text("authority_reference"),
+    authorityContext: text("authority_context"),
+    basedOnEventId: text("based_on_event_id"),
+    occurredAt: timestamp("occurred_at", { withTimezone: true })
+      .default(sql`statement_timestamp()`)
+      .notNull(),
+  },
+  (table) => [
+    uniqueIndex("workspace_project_focus_events_scope_idx").on(
+      table.id,
+      table.projectId,
+      table.engineeringWorkId,
+    ),
+    uniqueIndex("workspace_project_focus_events_selected_scope_idx")
+      .on(table.id, table.projectId, table.engineeringWorkId)
+      .where(sql`${table.effect} = 'selected'`),
+    index("workspace_project_focus_events_project_time_idx").on(
+      table.projectId,
+      table.occurredAt,
+      table.id,
+    ),
+    index("workspace_project_focus_events_work_idx").on(table.engineeringWorkId),
+    index("workspace_project_focus_events_lifecycle_cause_idx")
+      .on(table.basedOnEventId)
+      .where(sql`${table.basedOnEventId} is not null`),
+    foreignKey({
+      columns: [table.projectId, table.engineeringWorkId],
+      foreignColumns: [
+        workspaceEngineeringWork.projectId,
+        workspaceEngineeringWork.id,
+      ],
+      name: "workspace_project_focus_events_owned_work_fk",
+    }).onDelete("restrict"),
+    foreignKey({
+      columns: [table.engineeringWorkId, table.basedOnEventId],
+      foreignColumns: [
+        workspaceEngineeringWorkHistory.engineeringWorkId,
+        workspaceEngineeringWorkHistory.id,
+      ],
+      name: "workspace_project_focus_events_same_work_lifecycle_cause_fk",
+    }).onDelete("restrict"),
+    check(
+      "workspace_project_focus_events_action_actor_nonblank",
+      sql`${table.actionActorIdentifier} is not null and btrim(${table.actionActorIdentifier}) <> ''`,
+    ),
+    check(
+      "workspace_project_focus_events_batch_nonblank",
+      sql`${table.batchId} is not null and btrim(${table.batchId}) <> ''`,
+    ),
+    check(
+      "workspace_project_focus_events_decision_actor_coherent",
+      sql`(
+        (${table.decisionActorType} is null and ${table.decisionActorIdentifier} is null and ${table.decisionActorDisplayName} is null)
+        or
+        (${table.decisionActorType} is not null and ${table.decisionActorIdentifier} is not null and btrim(${table.decisionActorIdentifier}) <> '')
+      )`,
+    ),
+    check(
+      "workspace_project_focus_events_human_provenance",
+      sql`(
+        ${table.effect} not in ('selected', 'deselected')
+        or (
+          ${table.actionActorType} is not null
+          and ${table.actionActorType} = 'human'
+          and ${table.actionActorIdentifier} is not null
+          and btrim(${table.actionActorIdentifier}) <> ''
+          and ${table.decisionActorType} is not null
+          and ${table.decisionActorType} = 'human'
+          and ${table.decisionActorIdentifier} is not null
+          and btrim(${table.decisionActorIdentifier}) <> ''
+          and ${table.authorityType} is not null
+          and ${table.authorityType} = 'human_owner'
+        )
+      )`,
+    ),
+    check(
+      "workspace_project_focus_events_invalidation_provenance",
+      sql`(
+        ${table.effect} <> 'invalidated'
+        or (
+          ${table.authorityType} is not null
+          and ${table.authorityType} = 'system_rule'
+          and ${table.actionActorType} is not null
+          and ${table.actionActorType} = 'system'
+          and ${table.actionActorIdentifier} is not null
+          and btrim(${table.actionActorIdentifier}) <> ''
+          and ${table.authorityReference} is not null
+          and btrim(${table.authorityReference}) <> ''
+          and ${table.basedOnEventId} is not null
+          and btrim(${table.basedOnEventId}) <> ''
+          and ${table.rationale} is not null
+          and btrim(${table.rationale}) <> ''
+          and ${table.decisionActorType} is null
+          and ${table.decisionActorIdentifier} is null
+          and ${table.decisionActorDisplayName} is null
+        )
+      )`,
+    ),
+    check(
+      "workspace_project_focus_events_non_invalidation_no_lifecycle_cause",
+      sql`${table.effect} = 'invalidated' or ${table.basedOnEventId} is null`,
+    ),
+  ],
+);
+
+export const workspaceProjectFocusSelection = pgTable(
+  "workspace_project_focus_selection",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => workspaceProjects.id, { onDelete: "cascade" }),
+    engineeringWorkId: text("engineering_work_id")
+      .notNull()
+      .references(() => workspaceEngineeringWork.id, { onDelete: "cascade" }),
+    selectedAt: timestamp("selected_at", { withTimezone: true }).notNull(),
+    selectedByEventId: text("selected_by_event_id")
+      .notNull()
+      .references(() => workspaceProjectFocusEvents.id, { onDelete: "restrict" }),
+  },
+  (table) => [
+    uniqueIndex("workspace_project_focus_selection_project_work_idx").on(
+      table.projectId,
+      table.engineeringWorkId,
+    ),
+    index("workspace_project_focus_selection_project_idx").on(table.projectId),
+    foreignKey({
+      columns: [table.projectId, table.engineeringWorkId],
+      foreignColumns: [
+        workspaceEngineeringWork.projectId,
+        workspaceEngineeringWork.id,
+      ],
+      name: "workspace_project_focus_selection_owned_work_fk",
+    }).onDelete("cascade"),
+    foreignKey({
+      columns: [table.selectedByEventId, table.projectId, table.engineeringWorkId],
+      foreignColumns: [
+        workspaceProjectFocusEvents.id,
+        workspaceProjectFocusEvents.projectId,
+        workspaceProjectFocusEvents.engineeringWorkId,
+      ],
+      name: "workspace_project_focus_selection_selected_event_scope_fk",
+    }).onDelete("restrict"),
   ],
 );

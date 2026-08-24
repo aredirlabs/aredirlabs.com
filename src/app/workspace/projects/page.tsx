@@ -66,8 +66,6 @@ export default async function WorkspaceProjectsPage() {
                 <th className="px-4 py-3 font-medium">Name</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Stage</th>
-                <th className="px-4 py-3 font-medium">Current focus</th>
-                <th className="px-4 py-3 font-medium">Next step</th>
                 <th className="px-4 py-3 font-medium">Target</th>
                 <th className="px-4 py-3 font-medium">Repo</th>
               </tr>
@@ -96,16 +94,6 @@ export default async function WorkspaceProjectsPage() {
                   </td>
                   <td className="px-4 py-3">
                     <ProjectStageBadge stage={project.stage} />
-                  </td>
-                  <td className="max-w-[220px] px-4 py-3 text-muted-foreground">
-                    <span className="line-clamp-2">
-                      {project.currentFocus ?? "—"}
-                    </span>
-                  </td>
-                  <td className="max-w-[220px] px-4 py-3 text-muted-foreground">
-                    <span className="line-clamp-2">
-                      {project.nextStep ?? "—"}
-                    </span>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {formatDate(project.targetDate)}

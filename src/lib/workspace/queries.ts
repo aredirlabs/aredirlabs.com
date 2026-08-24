@@ -11,6 +11,8 @@ import {
   workspaceEngineeringWorkDefects,
   workspaceEngineeringWorkRepositoryReferences,
   workspaceEngineeringWorkRepositoryReferenceRevisions,
+  workspaceProjectFocusSelection,
+  workspaceProjectFocusEvents,
 } from "@/lib/db/schema";
 import {
   WORKSPACE_PROJECT_DOCUMENT_CATEGORIES,
@@ -34,6 +36,12 @@ import {
   type WorkspaceAttentionProjection,
   type WorkspaceContinuationProjection,
 } from "@/lib/workspace/workspace-operational";
+import {
+  isFocusSelectionEligible,
+  projectOperationalFocusProjection,
+  type FocusSelectionSource,
+  type ProjectOperationalFocusProjection,
+} from "@/lib/workspace/operational-focus";
 
 export type OperatingSnapshot = {
   activeCount: number;
@@ -342,6 +350,182 @@ export async function getProjectEngineeringWork(projectId: string) {
     .from(workspaceEngineeringWork)
     .where(eq(workspaceEngineeringWork.projectId, projectId))
     .orderBy(desc(workspaceEngineeringWork.updatedAt));
+}
+
+export async function getProjectOperationalFocusProjection(input: {
+  projectId: string;
+  projectStatus: string;
+}): Promise<ProjectOperationalFocusProjection & { focusVersion: number }> {
+  const db = getDb();
+  const [projectRow, selectionRows] = await Promise.all([
+    db
+      .select({ focusVersion: workspaceProjects.focusVersion })
+      .from(workspaceProjects)
+      .where(eq(workspaceProjects.id, input.projectId))
+      .limit(1),
+    db
+      .select({
+        engineeringWorkId: workspaceProjectFocusSelection.engineeringWorkId,
+        selectedAt: workspaceProjectFocusSelection.selectedAt,
+        title: workspaceEngineeringWork.title,
+        state: workspaceEngineeringWork.state,
+        currentNextAction: workspaceEngineeringWork.currentNextAction,
+        condition: workspaceEngineeringWork.condition,
+      })
+      .from(workspaceProjectFocusSelection)
+      .innerJoin(
+        workspaceEngineeringWork,
+        and(
+          eq(
+            workspaceProjectFocusSelection.engineeringWorkId,
+            workspaceEngineeringWork.id,
+          ),
+          eq(
+            workspaceProjectFocusSelection.projectId,
+            workspaceEngineeringWork.projectId,
+          ),
+        ),
+      )
+      .where(eq(workspaceProjectFocusSelection.projectId, input.projectId)),
+  ]);
+
+  const selections: FocusSelectionSource[] = selectionRows.map((row) => ({
+    engineeringWorkId: row.engineeringWorkId,
+    title: row.title,
+    state: row.state,
+    currentNextAction: row.currentNextAction,
+    condition: row.condition,
+    selectedAt: row.selectedAt,
+  }));
+
+  return {
+    ...projectOperationalFocusProjection({
+      projectStatus: input.projectStatus,
+      selections,
+    }),
+    focusVersion: projectRow[0]?.focusVersion ?? 0,
+  };
+}
+
+export type ProjectFocusEventRecord = {
+  id: string;
+  engineeringWorkId: string | null;
+  effect: "selected" | "deselected" | "invalidated";
+  commandContext: string | null;
+  batchId: string;
+  rationale: string | null;
+  actionActorType: string;
+  actionActorIdentifier: string;
+  actionActorDisplayName: string | null;
+  decisionActorType: string | null;
+  decisionActorIdentifier: string | null;
+  authorityType: string | null;
+  authorityReference: string | null;
+  basedOnEventId: string | null;
+  occurredAt: Date;
+  workTitle: string | null;
+};
+
+export async function getProjectFocusEvents(
+  projectId: string,
+  options: { limit?: number; offset?: number } = {},
+): Promise<{ total: number; events: ProjectFocusEventRecord[] }> {
+  const limit = options.limit ?? 20;
+  const offset = options.offset ?? 0;
+  const db = getDb();
+  const rows = await db
+    .select({
+      total: sql<number>`count(*) over()`,
+      id: workspaceProjectFocusEvents.id,
+      engineeringWorkId: workspaceProjectFocusEvents.engineeringWorkId,
+      effect: workspaceProjectFocusEvents.effect,
+      commandContext: workspaceProjectFocusEvents.commandContext,
+      batchId: workspaceProjectFocusEvents.batchId,
+      rationale: workspaceProjectFocusEvents.rationale,
+      actionActorType: workspaceProjectFocusEvents.actionActorType,
+      actionActorIdentifier: workspaceProjectFocusEvents.actionActorIdentifier,
+      actionActorDisplayName: workspaceProjectFocusEvents.actionActorDisplayName,
+      decisionActorType: workspaceProjectFocusEvents.decisionActorType,
+      decisionActorIdentifier: workspaceProjectFocusEvents.decisionActorIdentifier,
+      authorityType: workspaceProjectFocusEvents.authorityType,
+      authorityReference: workspaceProjectFocusEvents.authorityReference,
+      basedOnEventId: workspaceProjectFocusEvents.basedOnEventId,
+      occurredAt: workspaceProjectFocusEvents.occurredAt,
+      workTitle: workspaceEngineeringWork.title,
+    })
+    .from(workspaceProjectFocusEvents)
+    .leftJoin(
+      workspaceEngineeringWork,
+      and(
+        eq(workspaceProjectFocusEvents.engineeringWorkId, workspaceEngineeringWork.id),
+        eq(workspaceProjectFocusEvents.projectId, workspaceEngineeringWork.projectId),
+      ),
+    )
+    .where(eq(workspaceProjectFocusEvents.projectId, projectId))
+    .orderBy(desc(workspaceProjectFocusEvents.occurredAt), desc(workspaceProjectFocusEvents.id))
+    .limit(limit)
+    .offset(offset);
+
+  return {
+    total: Number(rows[0]?.total ?? 0),
+    events: rows.map((row) => {
+      const { total: _ignoredTotal, ...event } = row;
+      void _ignoredTotal;
+      return event;
+    }),
+  };
+}
+
+export async function getEngineeringWorkFocusContext(
+  projectSlug: string,
+  engineeringWorkId: string,
+) {
+  const db = getDb();
+  const rows = await db
+    .select({
+      projectId: workspaceProjects.id,
+      projectStatus: workspaceProjects.status,
+      focusVersion: workspaceProjects.focusVersion,
+      workState: workspaceEngineeringWork.state,
+      selectionId: workspaceProjectFocusSelection.id,
+    })
+    .from(workspaceEngineeringWork)
+    .innerJoin(
+      workspaceProjects,
+      eq(workspaceEngineeringWork.projectId, workspaceProjects.id),
+    )
+    .leftJoin(
+      workspaceProjectFocusSelection,
+      and(
+        eq(workspaceProjectFocusSelection.projectId, workspaceProjects.id),
+        eq(
+          workspaceProjectFocusSelection.engineeringWorkId,
+          workspaceEngineeringWork.id,
+        ),
+      ),
+    )
+    .where(
+      and(
+        eq(workspaceProjects.slug, projectSlug),
+        eq(workspaceEngineeringWork.id, engineeringWorkId),
+      ),
+    )
+    .limit(1);
+
+  const row = rows[0];
+  if (!row) return null;
+
+  const eligible = isFocusSelectionEligible(row.projectStatus, row.workState);
+  const isFocused = Boolean(row.selectionId);
+
+  return {
+    focusVersion: row.focusVersion,
+    projectStatus: row.projectStatus,
+    workState: row.workState,
+    isFocused,
+    canAddToFocus: eligible && !isFocused,
+    canRemoveFromFocus: isFocused,
+  };
 }
 
 export async function getProjectEngineeringWorkById(

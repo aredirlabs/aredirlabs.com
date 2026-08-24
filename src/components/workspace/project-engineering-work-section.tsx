@@ -7,6 +7,7 @@ import { Surface } from "@/components/ui/surface";
 import {
   EngineeringWorkMetadata,
 } from "@/components/workspace/engineering-work-badges";
+import { OperationalFocusMarker } from "@/components/workspace/operational-focus-marker";
 import type { workspaceEngineeringWork } from "@/lib/db/schema";
 
 type EngineeringWork = typeof workspaceEngineeringWork.$inferSelect;
@@ -15,12 +16,14 @@ type ProjectEngineeringWorkSectionProps = {
   projectSlug: string;
   workItems: EngineeringWork[];
   workItemsError: string | null;
+  focusedWorkIds?: Set<string>;
 };
 
 export function ProjectEngineeringWorkSection({
   projectSlug,
   workItems,
   workItemsError,
+  focusedWorkIds = new Set(),
 }: ProjectEngineeringWorkSectionProps) {
   const workStateRank = {
     active: 0,
@@ -72,6 +75,7 @@ export function ProjectEngineeringWorkSection({
                 workflow={primaryWork.workflow}
                 state={primaryWork.state}
               />
+              {focusedWorkIds.has(primaryWork.id) ? <OperationalFocusMarker /> : null}
             </div>
             <h3 className="mt-3 text-lg font-semibold tracking-tight">
               <Link
@@ -108,11 +112,14 @@ export function ProjectEngineeringWorkSection({
               <ul className="mt-3 space-y-3">
                 {supportingWork.map((work) => (
                   <li key={work.id} className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4">
-                    <EngineeringWorkMetadata
-                      type={work.type}
-                      workflow={work.workflow}
-                      state={work.state}
-                    />
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <EngineeringWorkMetadata
+                        type={work.type}
+                        workflow={work.workflow}
+                        state={work.state}
+                      />
+                      {focusedWorkIds.has(work.id) ? <OperationalFocusMarker /> : null}
+                    </div>
                     <h4 className="mt-2 font-medium">
                 <Link
                   href={`/workspace/projects/${projectSlug}/engineering-work/${work.id}`}

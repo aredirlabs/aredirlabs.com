@@ -123,6 +123,8 @@ async function main() {
     verifiedOutcome: `Verified ${expectedState} completion outcome.`,
     finalDisposition: "No further work is required.",
     historyEventId,
+    focusInvalidationEventId: `focus_event_${historyEventId}`,
+    focusInvalidationBatchId: `focus_batch_${historyEventId}`,
     provenance: completionProvenance,
   }));
 

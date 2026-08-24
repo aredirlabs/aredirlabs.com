@@ -41,10 +41,13 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
         <DetailField label="Status" value={<ProjectStatusBadge status={project.status} />} />
         <DetailField label="Stage" value={<ProjectStageBadge stage={project.stage} />} />
         <DetailField
-          label="Current focus"
+          label="Legacy focus text (deprecated)"
           value={project.currentFocus ?? "—"}
         />
-        <DetailField label="Next step" value={project.nextStep ?? "—"} />
+        <DetailField
+          label="Legacy next step text (deprecated)"
+          value={project.nextStep ?? "—"}
+        />
         <DetailField
           label="Target date"
           value={formatDate(project.targetDate)}
@@ -62,18 +65,20 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
 export function ProjectCurrentFocusSection({ project }: ProjectOverviewSectionProps) {
   return (
     <section className="rounded-lg border border-border bg-card p-6">
-      <h2 className="font-heading text-base font-semibold">Current Focus</h2>
+      <h2 className="font-heading text-base font-semibold">Legacy focus text</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Deprecated seed prose. Authoritative operational focus is structured selection
+        above, not this free-text field.
+      </p>
       {project.currentFocus ? (
         <p className="mt-2 text-sm">{project.currentFocus}</p>
       ) : (
-        <p className="mt-2 text-sm text-muted-foreground">
-          No current focus set for this project.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">No legacy focus text.</p>
       )}
       {project.nextStep ? (
         <div className="mt-4 rounded-md border border-border bg-muted/20 p-4">
           <p className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
-            Next step
+            Legacy next step text
           </p>
           <p className="mt-1 text-sm">{project.nextStep}</p>
         </div>

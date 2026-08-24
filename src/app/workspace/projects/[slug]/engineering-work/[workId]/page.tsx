@@ -12,8 +12,10 @@ import { Eyebrow } from "@/components/eyebrow";
 import {
   EngineeringWorkMetadata,
 } from "@/components/workspace/engineering-work-badges";
+import { EngineeringWorkOperationalFocusControl } from "@/components/workspace/engineering-work-operational-focus-control";
 import { formatTimestamp } from "@/lib/workspace/format-date";
 import {
+  getEngineeringWorkFocusContext,
   getProjectEngineeringWorkById,
   getProjectEngineeringWorkHistory,
   getProjectEngineeringWorkRepositoryReferences,
@@ -123,18 +125,20 @@ export default async function EngineeringWorkDetailPage({
   let relatedKnowledge: Awaited<ReturnType<typeof getRelatedKnowledgeForEngineeringWork>> = [];
   let defectContext: Awaited<ReturnType<typeof getProjectDefectContext>> = null;
   let history: Awaited<ReturnType<typeof getProjectEngineeringWorkHistory>> = [];
+  let focusContext: Awaited<ReturnType<typeof getEngineeringWorkFocusContext>> = null;
   let error: string | null = null;
 
   try {
     work = await getProjectEngineeringWorkById(slug, workId);
     if (work) {
-      [references, relatedKnowledge, defectContext, history] = await Promise.all([
+      [references, relatedKnowledge, defectContext, history, focusContext] = await Promise.all([
         getProjectEngineeringWorkRepositoryReferences(work.projectSlug, work.id),
         getRelatedKnowledgeForEngineeringWork(work),
         work.workflow === "defect"
           ? getProjectDefectContext(work.projectSlug, work.id)
           : Promise.resolve(null),
         getProjectEngineeringWorkHistory(work.projectSlug, work.id),
+        getEngineeringWorkFocusContext(work.projectSlug, work.id),
       ]);
     }
   } catch (e) {
@@ -401,6 +405,17 @@ export default async function EngineeringWorkDetailPage({
               </div>
             </section>
 
+            {focusContext ? (
+              <EngineeringWorkOperationalFocusControl
+                projectSlug={work.projectSlug}
+                workId={work.id}
+                workState={work.state}
+                focusVersion={focusContext.focusVersion}
+                projectStatus={focusContext.projectStatus}
+                isFocused={focusContext.isFocused}
+              />
+            ) : null}
+
             <EngineeringWorkHistory events={history} />
 
             <section aria-labelledby="record-reference-heading" className="border-t border-border pb-2 pt-8">
@@ -591,6 +606,17 @@ export default async function EngineeringWorkDetailPage({
             </Link>
           </div>
         </Surface>
+
+        {focusContext ? (
+          <EngineeringWorkOperationalFocusControl
+            projectSlug={work.projectSlug}
+            workId={work.id}
+            workState={work.state}
+            focusVersion={focusContext.focusVersion}
+            projectStatus={focusContext.projectStatus}
+            isFocused={focusContext.isFocused}
+          />
+        ) : null}
 
         <EngineeringWorkHistory events={history} />
 
