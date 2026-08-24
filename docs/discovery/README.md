@@ -25,6 +25,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | [PROJECT-UX-004](./PROJECT-UX-004_AUTHENTICATED_VISUAL_SYSTEM_AND_OPERATING_ENVIRONMENT_ARCHITECTURE.md) | Authenticated Visual System and Operating Environment Architecture | Complete (architecture only; ready with explicit deferrals) |
 | [PROJECT-UX-005](./PROJECT-UX-005_AUTHENTICATED_VISUAL_SYSTEM_FOUNDATION_IMPLEMENTATION.md) | Authenticated Visual-System Foundation Implementation | Complete |
 | [PROJECT-UX-006](./PROJECT-UX-006_OPERATIONAL_FOCUS_AUTHORITY_IMPLEMENTATION.md) | Operational Focus Authority Implementation (Package 2) | Complete |
+| [PROJECT-UX-007](./PROJECT-UX-007_PROJECT_OPERATING_CONTEXT_AND_WORK_INVENTORY_BOUNDARY.md) | Project Operating Context and Work Inventory Boundary (Package 3) | Authorized for implementation |
 
 ## Related canonical architecture
 
