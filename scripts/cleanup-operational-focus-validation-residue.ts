@@ -6,6 +6,8 @@ import assert from "node:assert/strict";
 
 import { neon } from "@neondatabase/serverless";
 
+import { asSqlExecutor, queryOne } from "./neon-sql-executor";
+
 const EXPECTED_DEV_ENDPOINT = "ep-green-sunset-a6w06qwf";
 const LEGITIMATE_PROJECT_IDS = ["proj_01", "proj_02", "proj_03", "proj_04"] as const;
 const LEGITIMATE_SLUGS = ["alignfit", "aredirlabs-com", "classforge", "leagueos"] as const;
@@ -29,6 +31,7 @@ if (!hostname.startsWith(EXPECTED_DEV_ENDPOINT)) {
 }
 
 const sql = neon(databaseUrl);
+const sqlExecutor = asSqlExecutor(sql);
 
 type ValidationCounts = {
   projects: number;
@@ -39,7 +42,7 @@ type ValidationCounts = {
 };
 
 async function countValidationScope() {
-  const [counts] = await sql.query(`
+  const counts = await queryOne(sqlExecutor, `
     WITH validation_projects AS (
       SELECT id
       FROM workspace_projects
@@ -72,7 +75,7 @@ async function countValidationScope() {
 }
 
 async function verifyScopeSafety() {
-  const legitimateOverlap = await sql.query(
+  const legitimateOverlap = await sqlExecutor.query(
     `SELECT id, slug, name
      FROM workspace_projects
      WHERE (id = ANY($1::text[]) OR slug = ANY($2::text[]))
@@ -85,7 +88,7 @@ async function verifyScopeSafety() {
     "Legitimate product Projects must not match validation identity predicates.",
   );
 
-  const strayWork = await sql.query(`
+  const strayWork = await sqlExecutor.query(`
     WITH validation_projects AS (
       SELECT id FROM workspace_projects
       WHERE id LIKE 'focus_val_%' OR slug LIKE 'focus-val-%'
@@ -97,7 +100,7 @@ async function verifyScopeSafety() {
   `);
   assert.equal(strayWork.length, 0, "All focus_val_% work must belong to a validation Project.");
 
-  const strayHistory = await sql.query(`
+  const strayHistory = await sqlExecutor.query(`
     WITH validation_projects AS (
       SELECT id FROM workspace_projects
       WHERE id LIKE 'focus_val_%' OR slug LIKE 'focus-val-%'
@@ -113,7 +116,7 @@ async function verifyScopeSafety() {
   `);
   assert.equal(strayHistory.length, 0, "All focus_val_% history must belong to validation work.");
 
-  const strayFocus = await sql.query(`
+  const strayFocus = await sqlExecutor.query(`
     WITH validation_projects AS (
       SELECT id FROM workspace_projects
       WHERE id LIKE 'focus_val_%' OR slug LIKE 'focus-val-%'
@@ -127,7 +130,7 @@ async function verifyScopeSafety() {
 }
 
 async function readLegitimateProjects() {
-  return sql.query(
+  return sqlExecutor.query(
     `SELECT id, name, slug, status, stage, created_at, updated_at
      FROM workspace_projects
      WHERE id = ANY($1::text[])
@@ -211,7 +214,7 @@ async function verifyAppendOnlyProtection() {
     /append-only/i,
   );
 
-  const [probeResidue] = await sql.query(
+  const probeResidue = await queryOne(sqlExecutor,
     `SELECT
        (SELECT count(*)::int FROM workspace_projects WHERE id = $1) AS projects,
        (SELECT count(*)::int FROM workspace_engineering_work WHERE id = $2) AS work_items,
@@ -228,7 +231,7 @@ async function verifyAppendOnlyProtection() {
 }
 
 async function activeTriggers(tableName: string, expected: readonly string[]) {
-  const rows = await sql.query(
+  const rows = await sqlExecutor.query(
     `SELECT tgname, tgenabled
      FROM pg_trigger
      JOIN pg_class ON pg_class.oid = pg_trigger.tgrelid
@@ -248,7 +251,7 @@ async function activeTriggers(tableName: string, expected: readonly string[]) {
 }
 
 async function main() {
-  const [identity] = await sql.query(`
+  const identity = await queryOne(sqlExecutor, `
     SELECT current_database() AS database_name,
            current_setting('neon.project_id', true) AS project_id,
            current_setting('neon.branch_id', true) AS branch_id

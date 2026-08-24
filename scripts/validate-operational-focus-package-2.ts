@@ -17,6 +17,7 @@ import {
   persistOperationalFocusSelectionRemove,
 } from "../src/lib/workspace/operational-focus-persistence";
 import { normalizeOperationalFocusTargetWorkIds } from "../src/lib/workspace/operational-focus-replace-plan";
+import { asSqlExecutor, queryOne, type NeonQueryClient } from "./neon-sql-executor";
 
 const EXPECTED_DEV_ENDPOINT = "ep-green-sunset-a6w06qwf";
 const CONCURRENCY_TIMEOUT_MS = 45_000;
@@ -33,6 +34,7 @@ if (!hostname.startsWith(EXPECTED_DEV_ENDPOINT)) {
 }
 
 const sql = neon(databaseUrl);
+const sqlExecutor = asSqlExecutor(sql);
 
 type ValidationResidueCounts = {
   projects: number;
@@ -42,8 +44,8 @@ type ValidationResidueCounts = {
   history: number;
 };
 
-async function countValidationResidue(client: ReturnType<typeof neon>): Promise<ValidationResidueCounts> {
-  const [counts] = await client.query(`
+async function countValidationResidue(client: EngineeringWorkSqlExecutor): Promise<ValidationResidueCounts> {
+  const counts = await queryOne(client, `
     WITH validation_projects AS (
       SELECT id
       FROM workspace_projects
@@ -193,12 +195,12 @@ async function withTimeout<T>(ms: number, fn: () => Promise<T>): Promise<T> {
 }
 
 async function runForcedRollbackTransaction(
-  statements: Array<ReturnType<typeof sql.query>>,
+  statements: CapturedQuery[],
   assertionSql: string,
 ) {
   await assert.rejects(
     sql.transaction([
-      ...statements,
+      ...statements.map((statement) => sql.query(statement.query, statement.params)),
       sql.query(`
         DO $focus_pkg2$
         BEGIN
@@ -213,7 +215,7 @@ async function runForcedRollbackTransaction(
 }
 
 async function residueFor(projectId: string, workIds: string[]) {
-  const [residue] = await sql.query(
+  const residue = await queryOne(sqlExecutor,
     `SELECT
        (SELECT count(*)::int FROM workspace_projects WHERE id = $1) AS projects,
        (SELECT count(*)::int FROM workspace_engineering_work WHERE id = ANY($2::text[])) AS work_items,
@@ -226,7 +228,7 @@ async function residueFor(projectId: string, workIds: string[]) {
 }
 
 async function main() {
-  const [identity] = await sql.query(`
+  const identity = await queryOne(sqlExecutor, `
     SELECT current_database() AS database_name,
            current_setting('neon.project_id', true) AS project_id,
            current_setting('neon.branch_id', true) AS branch_id
@@ -235,7 +237,7 @@ async function main() {
   assert.equal(identity.project_id, "plain-band-91202732");
   assert.equal(identity.branch_id, "br-wandering-snow-a60tz3pl");
 
-  const preflightResidue = await countValidationResidue(sql);
+  const preflightResidue = await countValidationResidue(sqlExecutor);
   if (preflightResidue.projects > 0) {
     throw new Error(
       `Preflight failed: normal dev DATABASE_URL contains ${preflightResidue.projects} validation Project(s). ` +
@@ -243,7 +245,7 @@ async function main() {
     );
   }
 
-  const [baseline] = await sql.query(`
+  const baseline = await queryOne(sqlExecutor, `
     SELECT
       (SELECT count(*)::int FROM drizzle.__drizzle_migrations) AS migrations,
       (SELECT count(*)::int FROM workspace_project_focus_events) AS focus_events,
@@ -252,7 +254,7 @@ async function main() {
   assert.ok(Number(baseline.migrations) >= 7);
 
   await runScenario("schema_baseline", async () => {
-    const [objects] = await sql.query(`
+    const objects = await queryOne(sqlExecutor, `
       SELECT
         (SELECT count(*)::int FROM information_schema.tables
           WHERE table_schema = 'public' AND table_name = 'workspace_project_focus_events') AS events_table,
@@ -547,21 +549,21 @@ async function main() {
 
     await runForcedRollbackTransaction(
       [
-        sql.query(
-          `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Matrix project', $2, 'active')`,
-          [matrixProjectId, matrixProjectSlug],
-        ),
-        sql.query(
-          `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Other project', $2, 'active')`,
-          [otherProjectId, otherProjectSlug],
-        ),
-        sql.query(
-          `INSERT INTO workspace_engineering_work (
+        {
+          query: `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Matrix project', $2, 'active')`,
+          params: [matrixProjectId, matrixProjectSlug],
+        },
+        {
+          query: `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Other project', $2, 'active')`,
+          params: [otherProjectId, otherProjectSlug],
+        },
+        {
+          query: `INSERT INTO workspace_engineering_work (
              id, project_id, title, summary, type, workflow, state, current_next_action, version
            ) VALUES ($1, $2, 'Other work', 'summary', 'task', 'delivery', 'active', 'next', 1)`,
-          [otherWorkId, otherProjectId],
-        ),
-        sql.query(crossAdd.query, crossAdd.params),
+          params: [otherWorkId, otherProjectId],
+        },
+        crossAdd,
       ],
       `
         IF (SELECT focus_version FROM workspace_projects WHERE id = '${matrixProjectId}') <> 0
@@ -610,7 +612,7 @@ async function main() {
       ]),
       /human_provenance|decision_actor_coherent|violates check constraint/i,
     );
-    const [residue] = await sql.query(
+    const residue = await queryOne(sqlExecutor,
       `SELECT count(*)::int AS projects FROM workspace_projects WHERE id = $1`,
       [rollbackProjectId],
     );
@@ -755,18 +757,18 @@ async function main() {
 
     await runForcedRollbackTransaction(
       [
-        sql.query(
-          `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Functional delete', $2, 'active')`,
-          [projectId, projectSlug],
-        ),
-        sql.query(
-          `INSERT INTO workspace_engineering_work (
+        {
+          query: `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Functional delete', $2, 'active')`,
+          params: [projectId, projectSlug],
+        },
+        {
+          query: `INSERT INTO workspace_engineering_work (
              id, project_id, title, summary, type, workflow, state, current_next_action, version
            ) VALUES ($1, $2, 'Functional work', 'summary', 'task', 'delivery', 'active', 'next', 1)`,
-          [workId, projectId],
-        ),
-        sql.query(add.query, add.params),
-        sql.query(remove.query, remove.params),
+          params: [workId, projectId],
+        },
+        add,
+        remove,
       ],
       `
         IF EXISTS (SELECT 1 FROM workspace_project_focus_selection WHERE project_id = '${projectId}')
@@ -851,16 +853,16 @@ async function main() {
   await runScenario("completion_invalidation_and_no_successor", async () => {
     await runForcedRollbackTransaction(
       [
-        sql.query(
-          `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Completion invalidation', $2, 'active')`,
-          [completionProjectId, completionProjectSlug],
-        ),
-        sql.query(completionCreate.query, completionCreate.params),
-        sql.query(completionActivate.query, completionActivate.params),
-        sql.query(completionPeerCreate.query, completionPeerCreate.params),
-        sql.query(completionPeerActivate.query, completionPeerActivate.params),
-        sql.query(completionFocusAdd.query, completionFocusAdd.params),
-        sql.query(completion.query, completion.params),
+        {
+          query: `INSERT INTO workspace_projects (id, name, slug, status) VALUES ($1, 'Completion invalidation', $2, 'active')`,
+          params: [completionProjectId, completionProjectSlug],
+        },
+        completionCreate,
+        completionActivate,
+        completionPeerCreate,
+        completionPeerActivate,
+        completionFocusAdd,
+        completion,
       ],
       `
         IF NOT EXISTS (
@@ -991,8 +993,9 @@ async function main() {
     provenance: completionProvenance,
   }));
 
-  async function ensureConcurrencyFixtureCommitted(branchSql: ReturnType<typeof neon>) {
-    const [existing] = await branchSql.query(
+  async function ensureConcurrencyFixtureCommitted(branchSql: NeonQueryClient) {
+    const branchExecutor = asSqlExecutor(branchSql);
+    const existing = await queryOne(branchExecutor,
       `SELECT count(*)::int AS count FROM workspace_projects WHERE id = $1`,
       [concProjectId],
     );
@@ -1073,7 +1076,8 @@ async function main() {
     skipScenario("concurrent_clear_vs_completion", concurrencySkipEvidence);
   } else {
     const validationSql = neon(concurrencyBranchUrl);
-    const [validationIdentity] = await validationSql.query(`
+    const validationExecutor = asSqlExecutor(validationSql);
+    const validationIdentity = await queryOne(validationExecutor, `
       SELECT current_setting('neon.branch_id', true) AS branch_id
     `);
 
@@ -1088,12 +1092,12 @@ async function main() {
         [concProjectId],
       );
       const outcomes = await runConcurrentRollbackPair(concurrencyBranchUrl, concAddPeer, concComplete);
-      const [work] = await validationSql.query(
+      const work = await queryOne(validationExecutor,
         `SELECT state FROM workspace_engineering_work WHERE id = $1`,
         [concFocusedWork],
       );
       assert.equal(work.state, "active", "completion must roll back; focused work stays active");
-      const [selections] = await validationSql.query(
+      const selections = await queryOne(validationExecutor,
         `SELECT count(*)::int AS count FROM workspace_project_focus_selection WHERE project_id = $1`,
         [concProjectId],
       );
@@ -1110,12 +1114,12 @@ async function main() {
     await runScenario("concurrent_replace_vs_completion", async () => {
       await ensureConcurrencyFixtureCommitted(validationSql);
       const outcomes = await runConcurrentRollbackPair(concurrencyBranchUrl, concReplace, concComplete);
-      const [work] = await validationSql.query(
+      const work = await queryOne(validationExecutor,
         `SELECT state FROM workspace_engineering_work WHERE id = $1`,
         [concFocusedWork],
       );
       assert.equal(work.state, "active");
-      const [selections] = await validationSql.query(
+      const selections = await queryOne(validationExecutor,
         `SELECT count(*)::int AS count FROM workspace_project_focus_selection WHERE project_id = $1`,
         [concProjectId],
       );
@@ -1132,12 +1136,12 @@ async function main() {
     await runScenario("concurrent_remove_vs_completion", async () => {
       await ensureConcurrencyFixtureCommitted(validationSql);
       const outcomes = await runConcurrentRollbackPair(concurrencyBranchUrl, concRemove, concComplete);
-      const [work] = await validationSql.query(
+      const work = await queryOne(validationExecutor,
         `SELECT state FROM workspace_engineering_work WHERE id = $1`,
         [concFocusedWork],
       );
       assert.equal(work.state, "active");
-      const [selections] = await validationSql.query(
+      const selections = await queryOne(validationExecutor,
         `SELECT count(*)::int AS count FROM workspace_project_focus_selection WHERE project_id = $1`,
         [concProjectId],
       );
@@ -1154,12 +1158,12 @@ async function main() {
     await runScenario("concurrent_clear_vs_completion", async () => {
       await ensureConcurrencyFixtureCommitted(validationSql);
       const outcomes = await runConcurrentRollbackPair(concurrencyBranchUrl, concClear, concComplete);
-      const [work] = await validationSql.query(
+      const work = await queryOne(validationExecutor,
         `SELECT state FROM workspace_engineering_work WHERE id = $1`,
         [concFocusedWork],
       );
       assert.equal(work.state, "active");
-      const [selections] = await validationSql.query(
+      const selections = await queryOne(validationExecutor,
         `SELECT count(*)::int AS count FROM workspace_project_focus_selection WHERE project_id = $1`,
         [concProjectId],
       );
@@ -1175,7 +1179,7 @@ async function main() {
   }
 
   await runScenario("no_residue_on_normal_dev", async () => {
-    const residue = await countValidationResidue(sql);
+    const residue = await countValidationResidue(sqlExecutor);
     assert.deepEqual(residue, {
       projects: 0,
       engineeringWork: 0,
@@ -1184,7 +1188,7 @@ async function main() {
       history: 0,
     });
 
-    const [globalCounts] = await sql.query(`
+    const globalCounts = await queryOne(sqlExecutor, `
       SELECT
         (SELECT count(*)::int FROM workspace_project_focus_events) AS focus_events,
         (SELECT count(*)::int FROM workspace_project_focus_selection) AS focus_selections,
