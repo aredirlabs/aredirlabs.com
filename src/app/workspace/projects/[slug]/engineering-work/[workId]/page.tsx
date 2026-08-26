@@ -457,14 +457,14 @@ export default async function EngineeringWorkDetailPage({
 
       <div className="space-y-4">
         <Surface variant="primary">
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+          <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
             <div>
               <p className="font-mono text-[var(--type-state)] font-medium uppercase tracking-[0.14em] text-role-actionable">
                 Engineering objective
               </p>
               <p className="mt-3 text-base leading-7 text-foreground/90">{work.summary}</p>
             </div>
-            <div className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4 lg:min-w-64">
+            <div className="rounded-[var(--radius-inset)] border border-border bg-surface-inset p-4 xl:min-w-64">
               <p className="font-mono text-[var(--type-state)] uppercase tracking-[0.1em] text-muted-foreground">
                 Current position
               </p>
