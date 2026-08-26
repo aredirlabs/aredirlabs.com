@@ -27,6 +27,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | [PROJECT-UX-006](./PROJECT-UX-006_OPERATIONAL_FOCUS_AUTHORITY_IMPLEMENTATION.md) | Operational Focus Authority Implementation (Package 2) | Complete |
 | [PROJECT-UX-007](./PROJECT-UX-007_PROJECT_OPERATING_CONTEXT_AND_WORK_INVENTORY_BOUNDARY.md) | Project Operating Context and Work Inventory Boundary (Package 3) | Complete (discovery + implementation closed) |
 | [PROJECT-UX-007 Package 3 implementation](./PROJECT-UX-007_PACKAGE_3_IMPLEMENTATION.md) | Project operating context and Work inventory boundary implementation | **COMPLETE** |
+| [PROJECT-UX-008 Package 4](./PROJECT-UX-008_PACKAGE_4_AUTHENTICATED_SHELL_AND_PERSISTENT_CROSS_ALTITUDE_CONTEXT.md) | Authenticated Shell and Persistent Cross-Altitude Context | **COMPLETE** |
 
 ## Related canonical architecture
 

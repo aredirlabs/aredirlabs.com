@@ -1,5 +1,5 @@
 import { AuthenticatedThemeProvider } from "@/components/authenticated-theme-provider";
-import { WorkspaceNav } from "@/components/workspace/workspace-nav";
+import { AuthenticatedShell } from "@/components/workspace/authenticated-shell";
 
 /**
  * Workspace layout.
@@ -17,10 +17,7 @@ export default function WorkspaceLayout({
 }) {
   return (
     <AuthenticatedThemeProvider>
-      <div className="flex min-h-screen flex-col bg-surface-environment text-foreground md:h-screen md:flex-row md:overflow-hidden">
-        <WorkspaceNav />
-        <main className="min-w-0 flex-1 overflow-auto">{children}</main>
-      </div>
+      <AuthenticatedShell>{children}</AuthenticatedShell>
     </AuthenticatedThemeProvider>
   );
 }
