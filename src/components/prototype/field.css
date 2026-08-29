@@ -1,0 +1,2299 @@
+/**
+ * EXPERIMENTAL PROTOTYPE — Aredir Operating Field visual language.
+ *
+ * Entirely scoped to `[data-aredir-field]` and declaring its own colour space,
+ * so it neither reads nor overrides the canonical authenticated theme. Deleting
+ * this file and the prototype directory removes the experiment completely.
+ *
+ * Two chromatic channels only — live (arcane blue, interaction and actionable)
+ * and attend (ember, attention) — over a neutral graphite ramp. Depth is
+ * carried by luminance, scale, and blur rather than drop shadows.
+ *
+ * ─────────────────────────────────────────────────────────────────────────
+ * SPATIAL COORDINATE SYSTEM
+ *
+ * Every plane in the Field is registered to a shared grid based on a single
+ * unit (`--f-unit` = 8px). The blueprint background is 4 units; content guides
+ * are measured in whole units from their governing boundary (a stratum edge,
+ * a column separator, or a boundary hairline). A plane never invents its own
+ * horizontal inset — it inherits one of the three guides below and stays on
+ * the register.
+ *
+ *   --f-guide-page (3u = 24px)    global Field planes spanning full width:
+ *                                 the Work identity header and the Provenance
+ *                                 well. These are altitude anchors; everything
+ *                                 else is nested between their guides.
+ *
+ *   --f-guide-work (3u = 24px)    Work-local planes inside the operating
+ *                                 region: the lifecycle mechanism, the
+ *                                 current-next-action plane, and the
+ *                                 objective/governing-context plane. All
+ *                                 measure from the operating region's own
+ *                                 left and right colonnade (the rail edge and
+ *                                 the authority boundary edge), not from the
+ *                                 field edge.
+ *
+ *   --f-guide-support (2u = 16px) supporting/context planes aligned to their
+ *                                 governing boundary: the sibling rail content
+ *                                 (governed by the field's left trame) and the
+ *                                 authority boundary content (governed by its
+ *                                 hairline, itself at 1u).
+ *
+ * The rail column and the authority boundary column are fixed registers
+ * (--f-rail-w, --f-boundary-w); the operating region is whatever remains
+ * between them. Guides are applied by the owning plane and inherited by every
+ * child — an Instrument placed inside the Work stratum inherits the page
+ * guide at its head and the work guide in its body without re-inventing them.
+ *
+ *  ─────────────────────────────────────────────────────────────────────────
+ *  ORTHOGONAL GRAMMAR
+ *  Vertical axis = altitude (WHERE I AM): Field → Portfolio → Project → Work
+ *  descends top to bottom; the compressed planes above the operating surface
+ *  stay spatially stable while deeper planes are revealed. No horizontal
+ *  motion represents altitude.
+ *  Horizontal axis = operation (WHAT I AM DOING HERE): actions at the current
+ *  altitude engage laterally. An instrument mounted inside Work is Work + an
+ *  engaged instrument, never a new altitude and never a replacement of Work.
+ *  Motion exists to explain these two relationships, not to decorate them.
+ *  ─────────────────────────────────────────────────────────────────────────
+ */
+
+[data-aredir-field] {
+  --f-void: oklch(0.145 0.008 264);
+  --f-deep: oklch(0.178 0.008 264);
+  --f-plate: oklch(0.212 0.008 264);
+  --f-raise: oklch(0.246 0.009 264);
+
+  --f-line: oklch(1 0 0 / 0.07);
+  --f-line-mid: oklch(1 0 0 / 0.12);
+  --f-line-hi: oklch(1 0 0 / 0.22);
+
+  --f-ink: oklch(0.96 0.004 264);
+  --f-ink-2: oklch(0.8 0.012 264);
+  --f-ink-3: oklch(0.66 0.012 264);
+  --f-ink-4: oklch(0.545 0.012 264);
+
+  --f-live: oklch(0.76 0.155 264);
+  --f-live-dim: oklch(0.76 0.155 264 / 0.16);
+  --f-live-line: oklch(0.76 0.155 264 / 0.42);
+
+  --f-attend: oklch(0.83 0.13 78);
+  --f-attend-dim: oklch(0.83 0.13 78 / 0.14);
+  --f-attend-line: oklch(0.83 0.13 78 / 0.4);
+
+  --f-settled: oklch(0.72 0.012 264);
+  --f-inert: oklch(0.5 0.01 264);
+
+  --f-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --f-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --f-text: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --f-ease: cubic-bezier(0.22, 0.78, 0.16, 1);
+
+  /* Spatial register — see the coordinate system note above. */
+  --f-unit: 8px;
+  --f-guide-page: calc(var(--f-unit) * 3);
+  --f-guide-work: calc(var(--f-unit) * 3);
+  --f-guide-support: calc(var(--f-unit) * 2);
+  --f-guide-authority: calc(var(--f-unit) * 1);
+  --f-rail-w: 216px;
+  --f-boundary-w: 296px;
+
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  background: var(--f-void);
+  color: var(--f-ink);
+  font-family: var(--f-text);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient field: blooms, blueprint grid, vignette. Purely environmental. */
+[data-aredir-field]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 18% 0%, oklch(0.45 0.12 264 / 0.16), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 88% 8%, oklch(0.42 0.1 300 / 0.1), transparent 72%),
+    radial-gradient(ellipse 120% 70% at 50% 108%, oklch(0.3 0.05 264 / 0.35), transparent 70%);
+  z-index: 0;
+}
+
+[data-aredir-field]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--f-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--f-line) 1px, transparent 1px);
+  background-size: calc(var(--f-unit) * 4) calc(var(--f-unit) * 4);
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 90%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 90%);
+}
+
+[data-aredir-field] > * {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+/* Ambient attention: the environment itself warms when a condition is present. */
+[data-aredir-field][data-attention="true"] .fld-ambient {
+  opacity: 1;
+}
+
+/*
+ * The perimeter is the attention channel. A recorded condition warms the edge
+ * of the whole environment, so the operator registers it peripherally without
+ * a badge competing for the centre of the field.
+ */
+.fld-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 900ms var(--f-ease);
+  box-shadow: inset 0 0 0 1px oklch(0.83 0.13 78 / 0.5);
+  background:
+    linear-gradient(to bottom, oklch(0.83 0.13 78 / 0.26), transparent 15%),
+    linear-gradient(to top, oklch(0.83 0.13 78 / 0.22), transparent 13%),
+    linear-gradient(to right, oklch(0.83 0.13 78 / 0.17), transparent 7%),
+    linear-gradient(to left, oklch(0.83 0.13 78 / 0.17), transparent 7%);
+  animation: fld-breathe 5.5s ease-in-out infinite;
+}
+
+@keyframes fld-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Typographic voices                                               */
+/* ---------------------------------------------------------------- */
+
+.fld-label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-ink-3);
+}
+
+.fld-label-dim {
+  color: var(--f-ink-4);
+}
+
+.fld-id {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--f-ink-2);
+}
+
+.fld-designator {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--f-ink);
+}
+
+.fld-statement {
+  font-family: var(--f-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
+  color: var(--f-ink);
+}
+
+.fld-narrative {
+  font-size: 12.5px;
+  line-height: 1.62;
+  color: var(--f-ink-2);
+}
+
+.fld-fine {
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--f-ink-3);
+}
+
+/* ---------------------------------------------------------------- */
+/* Ribbon and baseline                                              */
+/* ---------------------------------------------------------------- */
+
+.fld-ribbon,
+.fld-baseline {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 28px;
+  padding: 0 14px;
+  background: oklch(0.13 0.008 264 / 0.9);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/*
+ * The environment frame: one coherent horizontal band, modestly taller than
+ * the compressed altitude planes (7u vs the 4–6u planes below) so the Field
+ * keeps a clear vertical datum over them. Hierarchy lives inside the single
+ * band — primary identity type on the left, the secondary apparatus cluster
+ * (attribution / observation / exit) following behind a thin rule — not in
+ * split rows. The footer shares only the base rule above and is untouched.
+ */
+.fld-ribbon {
+  height: calc(var(--f-unit) * 7);
+  gap: 20px;
+  padding: 0 var(--f-guide-page);
+  border-bottom: 1px solid var(--f-line-mid);
+}
+
+.fld-ribbon-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+  flex: 1 1 auto;
+  padding-left: 19px;
+  border-left: 1px solid var(--f-line);
+}
+
+.fld-ribbon .fld-mark {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+
+.fld-baseline {
+  border-top: 1px solid var(--f-line-mid);
+}
+
+.fld-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--f-ink);
+}
+
+.fld-mark-sigil {
+  width: 7px;
+  height: 7px;
+  background: var(--f-live);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.fld-warn {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f-attend);
+  border: 1px solid var(--f-attend-line);
+  background: var(--f-attend-dim);
+  padding: 1px 7px;
+}
+
+.fld-ribbon-spacer {
+  flex: 1 1 auto;
+  min-width: 8px;
+  height: 1px;
+  background: linear-gradient(to right, var(--f-line-mid), transparent);
+}
+
+.fld-ctl {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--f-ink-3);
+  background: none;
+  border: 1px solid var(--f-line-mid);
+  padding: 2px 8px;
+  cursor: pointer;
+  transition:
+    color 160ms var(--f-ease),
+    border-color 160ms var(--f-ease),
+    background-color 160ms var(--f-ease);
+}
+
+.fld-ctl:hover {
+  color: var(--f-ink);
+  border-color: var(--f-line-hi);
+  background: oklch(1 0 0 / 0.04);
+}
+
+.fld-ctl:focus-visible,
+.fld-cell:focus-visible,
+.fld-region:focus-visible,
+.fld-plane:focus-visible,
+.fld-link:focus-visible {
+  outline: 1px solid var(--f-live);
+  outline-offset: 2px;
+}
+
+.fld-key {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--f-ink-4);
+  text-transform: uppercase;
+}
+
+.fld-key b {
+  color: var(--f-ink-2);
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------- */
+/* Strata: the altitude mechanism                                   */
+/* ---------------------------------------------------------------- */
+
+.fld-strata {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: 1fr 0px 0px;
+  transition: grid-template-rows 220ms var(--f-ease);
+}
+
+.fld-strata[data-altitude="project"] {
+  grid-template-rows: 38px 1fr 0px;
+}
+
+.fld-strata[data-altitude="work"] {
+  grid-template-rows: 34px 46px 1fr;
+}
+
+.fld-stratum {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fld-stratum + .fld-stratum {
+  border-top: 1px solid var(--f-line-mid);
+}
+
+/* Compressed strata become dense instrument bands rather than disappearing. */
+.fld-band {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 100%;
+  padding: 0 var(--f-guide-page);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.fld-band-up {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.fld-band-up .fld-ascend {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--f-ink-4);
+  transition: color 160ms var(--f-ease);
+}
+
+.fld-band-up:hover .fld-ascend {
+  color: var(--f-live);
+}
+
+.fld-band-name {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--f-ink);
+}
+
+/* The current-orientation band is forward: the position being operated. The
+   left live edge reuses the cells' "current / actionable" stripe grammar so
+   "where I am operating" reads against the receding situation band above. */
+.fld-band[data-role="orientation"] {
+  border-left: 2px solid var(--f-live);
+  background: linear-gradient(
+    to right,
+    oklch(0.76 0.155 264 / 0.07),
+    transparent 55%
+  );
+}
+
+/* ---------------------------------------------------------------- */
+/* Portfolio altitude                                               */
+/* ---------------------------------------------------------------- */
+
+/*
+ * The portfolio is the command band over the full-width lifecycle manifold.
+ * The manifold takes the remaining height at every altitude, so the canvas is
+ * occupied by actual records rather than by padding.
+ */
+.fld-portfolio {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+
+.fld-command {
+  display: grid;
+  grid-template-columns: minmax(0, 1.95fr) minmax(0, 1fr) minmax(0, 1.02fr);
+  border-bottom: 1px solid var(--f-line-mid);
+  max-height: 244px;
+}
+
+.fld-command > * + * {
+  border-left: 1px solid var(--f-line-mid);
+}
+
+.fld-cmd {
+  padding: 13px var(--f-guide-page) 15px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.fld-pane {
+  padding: 18px 22px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.fld-pane-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.fld-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--f-line-mid);
+}
+
+/* The continuation plate: the single most forward object in the field. */
+.fld-continuation {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: linear-gradient(
+    100deg,
+    oklch(0.76 0.155 264 / 0.11),
+    transparent 72%
+  );
+  border: none;
+  border-left: 2px solid var(--f-live);
+  padding: 2px 0 4px 15px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: background-color 200ms var(--f-ease);
+}
+
+.fld-continuation:hover {
+  background: linear-gradient(
+    100deg,
+    oklch(0.76 0.155 264 / 0.2),
+    transparent 78%
+  );
+}
+
+.fld-continuation-action {
+  font-family: var(--f-display);
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+  color: var(--f-ink);
+  margin: 10px 0 0;
+}
+
+.fld-vector {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 13px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f-live);
+}
+
+.fld-vector-line {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(to right, var(--f-live), transparent);
+}
+
+.fld-honest {
+  border: 1px dashed var(--f-line-hi);
+  padding: 15px 17px;
+  background: oklch(1 0 0 / 0.015);
+}
+
+/* ---------------------------------------------------------------- */
+/* Instrument readouts (permitted projections only)                 */
+/* ---------------------------------------------------------------- */
+
+.fld-readout + .fld-readout {
+  margin-top: 17px;
+}
+
+.fld-readout-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.fld-readout-value {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--f-ink);
+  letter-spacing: 0.04em;
+}
+
+/* Segmented rule: categorical counts, never a completion percentage. */
+.fld-segments {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+  margin-bottom: 8px;
+}
+
+.fld-segment {
+  min-width: 2px;
+  background: var(--f-inert);
+}
+
+.fld-segment[data-role="actionable"] {
+  background: var(--f-live);
+}
+
+.fld-segment[data-role="attention"] {
+  background: var(--f-attend);
+}
+
+.fld-segment[data-role="settled"] {
+  background: var(--f-settled);
+}
+
+.fld-segment[data-role="inert"] {
+  background: oklch(0.42 0.01 264);
+}
+
+.fld-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+
+.fld-legend-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+}
+
+.fld-legend-item b {
+  color: var(--f-ink-2);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.fld-legend-item[data-zero="true"] {
+  opacity: 0.42;
+}
+
+/* Coverage: filled ticks against total, so absence is countable. */
+.fld-ticks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.fld-tick {
+  width: 7px;
+  height: 12px;
+  background: oklch(1 0 0 / 0.07);
+}
+
+.fld-tick[data-filled="true"] {
+  background: var(--f-settled);
+}
+
+.fld-tick[data-filled="partial"] {
+  background: var(--f-live);
+}
+
+/* ---------------------------------------------------------------- */
+/* Project bands inside a lifecycle column                          */
+/* ---------------------------------------------------------------- */
+
+.fld-bandgroup + .fld-bandgroup {
+  margin-top: 9px;
+}
+
+.fld-bandgroup-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 0 1px 5px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+  transition: color 160ms var(--f-ease);
+}
+
+.fld-bandgroup-head:hover,
+.fld-bandgroup-head:focus-visible {
+  color: var(--f-live);
+}
+
+.fld-bandgroup-head:focus-visible {
+  outline: 1px solid var(--f-live);
+  outline-offset: 1px;
+}
+
+.fld-bandgroup-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--f-line);
+}
+
+.fld-bandgroup-head:hover .fld-bandgroup-rule {
+  background: var(--f-live-line);
+}
+
+.fld-bandgroup-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--f-ink-3);
+}
+
+/* ---------------------------------------------------------------- */
+/* Project altitude: channels + lifecycle manifold                  */
+/* ---------------------------------------------------------------- */
+
+.fld-project {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+
+.fld-project > * + * {
+  border-left: 1px solid var(--f-line-mid);
+}
+
+.fld-context {
+  padding: 18px var(--f-guide-page) 20px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.fld-context-name {
+  font-family: var(--f-display);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+}
+
+.fld-facts {
+  margin: 16px 0 0;
+  display: grid;
+  gap: 11px;
+}
+
+.fld-fact dt {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+}
+
+.fld-fact dd {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--f-ink);
+}
+
+.fld-fact dd.fld-mono {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.fld-manifold-wrap {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
+/* Inspect line: a resident readout instead of a floating tooltip. */
+.fld-inspect {
+  border-top: 1px solid var(--f-line-mid);
+  background: oklch(0 0 0 / 0.24);
+  padding: 10px 16px 12px;
+  min-height: 68px;
+}
+
+.fld-inspect[data-empty="true"] {
+  display: flex;
+  align-items: center;
+  color: var(--f-ink-4);
+}
+
+.fld-inspect-identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.fld-inspect-title {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--f-ink);
+}
+
+.fld-inspect-action {
+  margin: 7px 0 0;
+  padding-left: 10px;
+  border-left: 1px solid var(--f-live-line);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--f-ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Three independent channels, each with its own lane and connectors. */
+.fld-channels {
+  position: relative;
+  padding: 14px 16px 0;
+  border-bottom: 1px solid var(--f-line-mid);
+}
+
+.fld-channel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 26px;
+}
+
+.fld-channel-tag {
+  width: 128px;
+  flex: 0 0 auto;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-ink-3);
+}
+
+.fld-channel[data-empty="true"] .fld-channel-tag {
+  color: var(--f-ink-4);
+}
+
+.fld-channel-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 11.5px;
+  color: var(--f-ink-2);
+}
+
+.fld-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 2px 8px;
+  border: 1px solid var(--f-line-mid);
+  background: oklch(1 0 0 / 0.03);
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--f-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fld-chip[data-channel="focus"] {
+  border-color: var(--f-line-hi);
+}
+
+.fld-chip[data-channel="continuation"] {
+  border-color: var(--f-live-line);
+  background: var(--f-live-dim);
+  color: var(--f-ink);
+}
+
+.fld-chip[data-channel="attention"] {
+  border-color: var(--f-attend-line);
+  background: var(--f-attend-dim);
+}
+
+.fld-absent-note {
+  margin-top: 7px;
+  padding-left: 11px;
+  border-left: 1px solid var(--f-line);
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--f-ink-3);
+}
+
+.fld-absent {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+}
+
+.fld-channel-note {
+  font-size: 11px;
+  color: var(--f-ink-4);
+  padding: 8px 0 12px 140px;
+}
+
+/* The manifold: columns are lifecycle states, nothing else. The record canvas
+   is a full-width plane, so not even it escapes the environmental frame: it
+   registers to the page guide exactly like the identity head above it. */
+.fld-manifold {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 var(--f-guide-page);
+}
+
+.fld-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  border-left: 1px solid var(--f-line);
+}
+
+.fld-column:first-child {
+  border-left: none;
+}
+
+.fld-column[data-empty="true"] {
+  background: oklch(0 0 0 / 0.16);
+}
+
+.fld-column-head {
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid var(--f-line);
+}
+
+.fld-column-count {
+  font-family: var(--f-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--f-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.fld-column[data-empty="true"] .fld-column-count {
+  color: var(--f-ink-4);
+}
+
+.fld-column-body {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 6px;
+  display: grid;
+  gap: 3px;
+  align-content: start;
+}
+
+/* A work cell. Uniform size: size never encodes importance. */
+.fld-cell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 27px;
+  padding: 5px 7px 5px 9px;
+  text-align: left;
+  background: oklch(1 0 0 / 0.028);
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition:
+    background-color 170ms var(--f-ease),
+    border-color 170ms var(--f-ease);
+}
+
+.fld-cell::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--f-inert);
+}
+
+.fld-cell[data-role="actionable"]::before {
+  background: var(--f-live);
+}
+
+.fld-cell[data-role="attention"]::before {
+  background: var(--f-attend);
+}
+
+.fld-cell[data-role="settled"]::before {
+  background: var(--f-settled);
+}
+
+.fld-cell:hover,
+.fld-cell[data-hover="true"] {
+  background: oklch(1 0 0 / 0.075);
+  border-color: var(--f-line-hi);
+}
+
+.fld-cell[data-selected="true"] {
+  border-color: var(--f-live);
+  background: var(--f-live-dim);
+}
+
+.fld-cell-name {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.045em;
+  color: var(--f-ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fld-cell[data-role="actionable"] .fld-cell-name,
+.fld-cell[data-selected="true"] .fld-cell-name {
+  color: var(--f-ink);
+}
+
+/* Micro-marks: real facts, one glyph each. */
+.fld-marks {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: var(--f-ink-4);
+}
+
+.fld-mark-focus {
+  color: var(--f-ink);
+}
+
+.fld-mark-cont {
+  color: var(--f-live);
+}
+
+.fld-mark-attend {
+  color: var(--f-attend);
+}
+
+.fld-mark-ev {
+  color: var(--f-settled);
+}
+
+/* ---------------------------------------------------------------- */
+/* Engineering Work altitude: the operating instrument              */
+/* ---------------------------------------------------------------- */
+
+.fld-work {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) minmax(176px, auto);
+  height: 100%;
+  min-height: 0;
+}
+
+/* A historical plane is visibly not the present. The effect is scoped to the
+   Work planes themselves so an engaged instrument panel (mounted at the right
+   of the operating region) is never desaturated with them. */
+.fld-work[data-historical="true"] .fld-identity,
+.fld-work[data-historical="true"] .fld-rail,
+.fld-work[data-historical="true"] .fld-operate,
+.fld-work[data-historical="true"] .fld-boundary,
+.fld-work[data-historical="true"] .fld-well {
+  filter: saturate(0.28) brightness(0.9);
+  transition: filter 400ms var(--f-ease);
+}
+
+/* Global plane — aligned to the page register (full width). */
+.fld-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 15px var(--f-guide-page) 13px;
+  border-bottom: 1px solid var(--f-line-mid);
+}
+
+.fld-identity-main {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.fld-identity-title {
+  font-family: var(--f-display);
+  font-size: clamp(16px, 1.5vw, 21px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.24;
+  margin: 5px 0 0;
+}
+
+.fld-taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 9px;
+  margin-top: 9px;
+}
+
+.fld-tax {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f-ink-3);
+  border: 1px solid var(--f-line);
+  padding: 1px 6px;
+}
+
+.fld-tax[data-kind="focus"] {
+  color: var(--f-ink);
+  border-color: var(--f-line-hi);
+}
+
+/*
+ * The Work altitude body registers three columns from the spatial system:
+ *   1. `--f-rail-w`      — the sibling/inventory colonnade (supporting plane)
+ *   2. the operating region, whatever width remains (Work-local planes)
+ *   3. `--f-boundary-w`  — the authority boundary colonnade (supporting plane)
+ */
+.fld-work-body {
+  display: grid;
+  grid-template-columns: var(--f-rail-w) minmax(0, 1fr) var(--f-boundary-w);
+  min-height: 0;
+  position: relative;
+}
+
+/*
+ * Sibling rail: the Project population survives the descent, so lateral moves
+ * between records never cost the operator their altitude or their context.
+ */
+/*
+ * Sibling rail: a supporting plane. Its content aligns to the field's left
+ * trame at the support guide — shallower than the page guide by design, so
+ * context recedes while the operating region keeps the depth.
+ */
+.fld-rail {
+  padding: 13px 0 16px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.fld-rail-group + .fld-rail-group {
+  margin-top: 14px;
+}
+
+.fld-rail-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 var(--f-guide-page) 6px;
+}
+
+.fld-rail-head-count {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  color: var(--f-ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.fld-rail-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 4px var(--f-guide-page);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transition: background-color 150ms var(--f-ease);
+}
+
+.fld-rail-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  background: transparent;
+}
+
+.fld-rail-item:hover {
+  background: oklch(1 0 0 / 0.05);
+}
+
+.fld-rail-item[data-current="true"] {
+  background: var(--f-live-dim);
+}
+
+.fld-rail-item[data-current="true"]::before {
+  background: var(--f-live);
+}
+
+.fld-rail-name {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--f-ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fld-rail-item[data-current="true"] .fld-rail-name {
+  color: var(--f-ink);
+}
+
+.fld-work-body > * + * {
+  border-left: 1px solid var(--f-line-mid);
+}
+
+/*
+ * Operating region: the Work-local plane. Mechanism, now plane, and governing
+ * planes all inherit the work guide from this origin, so they stay registered
+ * to the operating region rather than to the field edge.
+ */
+.fld-operate {
+  padding: 16px var(--f-guide-work) 20px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The lifecycle mechanism: implemented edges lit, documented edges unlit. */
+.fld-mechanism {
+  margin-bottom: 20px;
+}
+
+.fld-mech-track {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 9px 0 8px;
+}
+
+.fld-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--f-line);
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+  background: oklch(0 0 0 / 0.2);
+}
+
+.fld-node-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.fld-node[data-current="true"] {
+  color: var(--f-live);
+  border-color: var(--f-live);
+  background: var(--f-live-dim);
+}
+
+.fld-node[data-current="true"] .fld-node-dot {
+  opacity: 1;
+  animation: fld-pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes fld-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.fld-node[data-reachable="true"] {
+  color: var(--f-ink-2);
+  border-color: var(--f-line-hi);
+}
+
+.fld-node[data-unimplemented="true"] {
+  color: var(--f-ink-4);
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+.fld-edge {
+  width: 22px;
+  height: 1px;
+  background: var(--f-line-mid);
+  position: relative;
+}
+
+.fld-edge[data-live="true"] {
+  background: var(--f-live-line);
+}
+
+.fld-edge[data-live="true"]::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -2px;
+  border-left: 4px solid var(--f-live-line);
+  border-top: 2.5px solid transparent;
+  border-bottom: 2.5px solid transparent;
+}
+
+.fld-edge[data-dashed="true"] {
+  background: repeating-linear-gradient(
+    to right,
+    var(--f-line) 0 3px,
+    transparent 3px 6px
+  );
+}
+
+/* The now plane: the single most authoritative statement in the field. */
+.fld-now {
+  border-top: 1px solid var(--f-live-line);
+  border-bottom: 1px solid var(--f-line-mid);
+  background: linear-gradient(
+    to bottom,
+    oklch(0.76 0.155 264 / 0.075),
+    transparent 75%
+  );
+  padding: 14px 0 16px;
+  margin-bottom: 20px;
+}
+
+.fld-work[data-historical="true"] .fld-now {
+  border-top-color: var(--f-line-hi);
+  background: none;
+}
+
+.fld-now-statement {
+  font-family: var(--f-display);
+  font-size: clamp(15px, 1.45vw, 21px);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: -0.016em;
+  color: var(--f-ink);
+  margin: 9px 0 0;
+}
+
+.fld-now-terminal {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--f-ink-2);
+  margin: 9px 0 0;
+}
+
+.fld-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-live);
+  border: 1px solid var(--f-live-line);
+  background: var(--f-live-dim);
+  padding: 6px 12px;
+  text-decoration: none;
+  transition:
+    background-color 180ms var(--f-ease),
+    border-color 180ms var(--f-ease);
+}
+
+.fld-link:hover {
+  background: oklch(0.76 0.155 264 / 0.24);
+  border-color: var(--f-live);
+}
+
+.fld-block {
+  margin-bottom: 19px;
+}
+
+.fld-block-body {
+  margin-top: 7px;
+}
+
+.fld-condition {
+  border-left: 2px solid var(--f-attend);
+  background: var(--f-attend-dim);
+  padding: 11px 14px;
+  margin-bottom: 19px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Authority boundary: evidence leaves the Workspace                */
+/* ---------------------------------------------------------------- */
+
+/*
+ * Authority boundary: a supporting plane governed by its boundary colonnade.
+ * The colonnade is the work region's right termination; the hairline marks
+ * the edge of Workspace authority at the authority guide (1u = 8px), and
+ * content is set back to the support guide from that hairline.
+ */
+.fld-boundary {
+  position: relative;
+  padding: 16px var(--f-guide-page) 20px calc(var(--f-guide-support) + var(--f-guide-authority));
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* The hairline is the edge of Workspace authority. */
+.fld-boundary::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: var(--f-guide-authority);
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--f-line-hi) 0 4px,
+    transparent 4px 9px
+  );
+}
+
+.fld-tether {
+  position: relative;
+  padding: 9px 0 10px 14px;
+  border-bottom: 1px solid var(--f-line);
+}
+
+/* Each tether crosses the boundary outward toward its owning repository. */
+.fld-tether::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--f-guide-support));
+  top: 17px;
+  width: 24px;
+  height: 1px;
+  background: var(--f-settled);
+}
+
+.fld-tether[data-status="expected"]::before {
+  background: repeating-linear-gradient(
+    to right,
+    var(--f-ink-4) 0 3px,
+    transparent 3px 6px
+  );
+}
+
+.fld-tether[data-status="stale"]::before,
+.fld-tether[data-status="missing"]::before {
+  background: repeating-linear-gradient(
+    to right,
+    var(--f-attend) 0 3px,
+    transparent 3px 7px
+  );
+}
+
+.fld-tether-repo {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  color: var(--f-ink);
+}
+
+.fld-tether-path {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  color: var(--f-ink-3);
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.fld-tether-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 5px;
+}
+
+.fld-status {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--f-settled);
+}
+
+.fld-status[data-status="expected"] {
+  color: var(--f-ink-4);
+}
+
+.fld-status[data-status="stale"],
+.fld-status[data-status="missing"] {
+  color: var(--f-attend);
+}
+
+/* ---------------------------------------------------------------- */
+/* Provenance well: history recedes; the present stays forward       */
+/* ---------------------------------------------------------------- */
+
+/*
+ * The well runs downward: the authoritative present sits at the top and each
+ * recorded event recedes beneath it. It is given real height so that a shallow
+ * well reads as a statement about what was captured rather than as a footnote.
+ * As a global plane it registers to the page guide, matching the identity head
+ * above it so the Work altitude shares one outer register.
+ */
+.fld-well {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border-top: 1px solid var(--f-line-mid);
+  background: linear-gradient(to bottom, oklch(0 0 0 / 0.34), transparent 70%);
+  padding: 10px var(--f-guide-page) 14px;
+  min-height: 0;
+}
+
+.fld-well-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.fld-planes {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 2px;
+}
+
+/* Depth is expressed by luminance, scale, and blur, not by shadow. */
+.fld-plane {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr) 130px;
+  align-items: center;
+  gap: 14px;
+  flex: 0 0 auto;
+  text-align: left;
+  padding: 6px 12px 7px;
+  background: oklch(1 0 0 / 0.03);
+  border: none;
+  border-left: 2px solid var(--f-line-mid);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  transform-origin: left center;
+  transition:
+    transform 320ms var(--f-ease),
+    opacity 320ms var(--f-ease),
+    filter 320ms var(--f-ease),
+    background-color 200ms var(--f-ease);
+}
+
+.fld-plane[data-now="true"] {
+  border-left-color: var(--f-live);
+  background: var(--f-live-dim);
+}
+
+.fld-plane[data-depth="1"] {
+  opacity: 0.86;
+  transform: scaleX(0.988);
+}
+
+.fld-plane[data-depth="2"] {
+  opacity: 0.72;
+  transform: scaleX(0.976);
+  filter: blur(0.2px);
+}
+
+.fld-plane[data-depth="3"] {
+  opacity: 0.58;
+  transform: scaleX(0.964);
+  filter: blur(0.4px);
+}
+
+.fld-plane[data-deep="true"] {
+  opacity: 0.44;
+  transform: scaleX(0.952);
+  filter: blur(0.6px);
+}
+
+.fld-plane[data-active="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  border-left-color: var(--f-line-hi);
+  background: oklch(1 0 0 / 0.085);
+}
+
+.fld-plane:hover {
+  opacity: 1;
+  filter: none;
+}
+
+.fld-plane-depth {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+}
+
+.fld-plane[data-now="true"] .fld-plane-depth {
+  color: var(--f-live);
+}
+
+.fld-plane-label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--f-ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fld-plane-time {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: var(--f-ink-4);
+  text-align: right;
+}
+
+/* Absent provenance is stated at full scale, not tucked into a caption. */
+.fld-well-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  border-left: 2px solid var(--f-line);
+  padding: 10px 0 10px 14px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--f-ink-3);
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(1 0 0 / 0.018) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* ---------------------------------------------------------------- */
+/* Descent sweep                                                    */
+/* ---------------------------------------------------------------- */
+
+.fld-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    oklch(0.76 0.155 264 / 0.09) 45%,
+    transparent
+  );
+  animation: fld-sweep 240ms var(--f-ease) forwards;
+}
+
+@keyframes fld-sweep {
+  from {
+    transform: translateY(-100%);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* A freshly entered plane settles into place along the altitude axis. Gated by
+   `data-entered` so the elevation persistent frame (ribbon, compressed bands,
+   baseline) never animates or flashes on a read refresh. */
+.fld-strata[data-entered="true"] > .fld-stratum > .fld-portfolio,
+.fld-strata[data-entered="true"] > .fld-stratum > .fld-project,
+.fld-strata[data-entered="true"] > .fld-stratum > .fld-work {
+  animation: fld-descend 210ms var(--f-ease);
+}
+
+@keyframes fld-descend {
+  from {
+    transform: translateY(7px);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Hover identity plate                                             */
+/* ---------------------------------------------------------------- */
+
+.fld-peek {
+  position: fixed;
+  z-index: 60;
+  max-width: 340px;
+  padding: 10px 13px 12px;
+  background: oklch(0.16 0.008 264 / 0.97);
+  border: 1px solid var(--f-line-hi);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.fld-peek-title {
+  font-family: var(--f-display);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.32;
+  margin: 5px 0 0;
+}
+
+.fld-peek-action {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--f-ink-2);
+  margin: 8px 0 0;
+  padding-left: 9px;
+  border-left: 1px solid var(--f-live-line);
+}
+
+/* ---------------------------------------------------------------- */
+/* Narrow viewports: the field is a desktop instrument               */
+/* ---------------------------------------------------------------- */
+
+@media (max-width: 1360px) {
+  .fld-work-body {
+    grid-template-columns: 176px minmax(0, 1fr) 260px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .fld-work-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fld-work-body > * + * {
+    border-left: none;
+    border-top: 1px solid var(--f-line-mid);
+  }
+
+  .fld-rail {
+    display: none;
+  }
+
+  .fld-work-body > .fld-room {
+    left: 0;
+    right: 0;
+    border-top: none;
+  }
+
+  .fld-project {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .fld-command {
+    grid-template-columns: minmax(0, 1fr);
+    max-height: none;
+  }
+
+  .fld-command > * + * {
+    border-left: none;
+    border-top: 1px solid var(--f-line-mid);
+  }
+
+  .fld-project {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fld-manifold {
+    overflow-x: auto;
+    grid-auto-columns: minmax(132px, 1fr);
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Reduced motion                                                   */
+/* ---------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-aredir-field] *,
+  [data-aredir-field]::before,
+  [data-aredir-field]::after {
+    animation: none !important;
+    transition-duration: 1ms !important;
+  }
+
+  .fld-sweep {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Instrument entry point                                            */
+/* ---------------------------------------------------------------- */
+
+.fld-invoke {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-live);
+  border: 1px solid var(--f-live-line);
+  background: var(--f-live-dim);
+  padding: 6px 12px;
+  margin-top: 14px;
+  cursor: pointer;
+  transition:
+    background-color 180ms var(--f-ease),
+    border-color 180ms var(--f-ease);
+}
+
+.fld-invoke:hover:not(:disabled) {
+  background: oklch(0.76 0.155 264 / 0.24);
+  border-color: var(--f-live);
+}
+
+.fld-invoke:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.fld-invoke-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* The row supplies the top spacing; both actions register to the same
+   baseline so the invoke button and the workspace link share one edge. */
+.fld-invoke-row .fld-invoke,
+.fld-invoke-row .fld-link {
+  margin-top: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Instrument: the Field operating the Proposed → Active decision    */
+/* ---------------------------------------------------------------- */
+
+.fld-room {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background:
+    linear-gradient(to bottom, oklch(0.76 0.155 264 / 0.05), transparent 34%),
+    radial-gradient(120% 90% at 50% -12%, oklch(0.76 0.155 264 / 0.09), transparent 62%),
+    oklch(0.16 0.012 264 / 0.94);
+}
+
+/* The instrument is *Work + an engaged instrument*, never a replacement of
+   Work or a new altitude. It mounts inside the operating region — between the
+   sibling rail and the authority boundary — and engages laterally from the
+   authority seam (right-to-left, the direction its governing boundary already
+   implies). The Work planes around it (identity head, rail, evidence boundary,
+   provenance well) stay mounted and visible, so the operator keeps the spatial
+   context of the Work being operated. Opening an instrument never changes the
+   altitude rows. */
+.fld-work-body > .fld-room {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--f-rail-w);
+  right: var(--f-boundary-w);
+  z-index: 6;
+  border-left: 1px solid var(--f-line-hi);
+  border-right: 1px solid var(--f-line-mid);
+  box-shadow: -28px 0 48px oklch(0 0 0 / 0.5);
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 210ms var(--f-ease),
+    opacity 160ms var(--f-ease),
+    visibility 0s 0s;
+}
+
+/* Idle: docked behind the authority seam without interacting. The panel stays
+   mounted so disengagement reverses the same lateral relationship. */
+.fld-work-body > .fld-room[data-engaged="false"] {
+  transform: translateX(105%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 210ms var(--f-ease),
+    opacity 160ms var(--f-ease),
+    visibility 0s 210ms;
+}
+
+/* Global plane — the instrument head inherits the page register. */
+.fld-room-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 13px var(--f-guide-page) 12px;
+  border-bottom: 1px solid var(--f-line-mid);
+}
+
+.fld-room-head-main {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.fld-room-identity-title {
+  font-family: var(--f-display);
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.24;
+  margin: 5px 0 0;
+  color: var(--f-ink);
+}
+
+/* Work-local plane — the instrument body inherits the work register. */
+.fld-room-body {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px var(--f-guide-work) 30px;
+}
+
+.fld-room-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Lifecycle axis: receding pole · traveling edge · reaching pole      */
+/* ------------------------------------------------------------------ */
+
+.fld-room-axis {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.fld-room-axis .fld-node {
+  margin-bottom: 12px;
+}
+
+.fld-room-pole-body {
+  border-left: 1px solid var(--f-line-hi);
+  padding: 2px 0 4px 14px;
+}
+
+.fld-room-pole-copy {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--f-ink-2);
+  margin: 8px 0 0;
+}
+
+.fld-room-facts {
+  margin: 12px 0 0;
+}
+
+.fld-room-fact + .fld-room-fact {
+  margin-top: 10px;
+}
+
+.fld-room-fact dt {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+  margin-bottom: 3px;
+}
+
+.fld-room-fact dd {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--f-ink-2);
+  white-space: pre-wrap;
+}
+
+/* ------------------------------------------------------------------ */
+/* The corridor: the authorization decision on the traveling edge      */
+/* ------------------------------------------------------------------ */
+
+.fld-room-corridor {
+  border: 1px solid var(--f-line-mid);
+  background:
+    linear-gradient(to bottom, oklch(0.76 0.155 264 / 0.07), transparent 44%),
+    oklch(0 0 0 / 0.22);
+  padding: 16px 18px;
+}
+
+.fld-room-edge-run {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 12px;
+}
+
+.fld-room-edge-seg {
+  flex: 1 1 0;
+  height: 1px;
+  background: var(--f-line-mid);
+}
+
+.fld-room-edge-seg[data-live="true"] {
+  background: var(--f-live-line);
+}
+
+.fld-room-edge-seg[data-live="true"]:last-child {
+  position: relative;
+}
+
+.fld-room-edge-seg[data-live="true"]:last-child::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -2px;
+  border-left: 4px solid var(--f-live-line);
+  border-top: 2.5px solid transparent;
+  border-bottom: 2.5px solid transparent;
+}
+
+.fld-room-edge-center {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--f-ink-4);
+  flex: 0 0 auto;
+}
+
+.fld-room-axis[data-armed="true"] .fld-room-edge-center {
+  color: var(--f-live);
+}
+
+.fld-room-corridor .fld-narrative {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+/* The authority gate: human authorization on the edge. */
+.fld-room-gate {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--f-live-line);
+  background: var(--f-live-dim);
+  padding: 12px 14px;
+  margin-top: 14px;
+  cursor: pointer;
+  transition:
+    border-color 180ms var(--f-ease),
+    box-shadow 180ms var(--f-ease);
+}
+
+.fld-room-gate[data-verified="true"] {
+  border-color: var(--f-live);
+  box-shadow: inset 2px 0 0 var(--f-live);
+}
+
+.fld-room-gate input {
+  margin-top: 3px;
+  accent-color: var(--f-live);
+}
+
+.fld-room-gate-title {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--f-ink);
+}
+
+.fld-room-gate-copy {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--f-ink-2);
+}
+
+.fld-room-commit-rail {
+  margin-top: 14px;
+}
+
+.fld-room-msg {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--f-ink-3);
+}
+
+.fld-room-msg-error {
+  border-left: 2px solid var(--f-attend);
+  background: var(--f-attend-dim);
+  color: var(--f-ink-2);
+  padding: 11px 14px;
+}
+
+.fld-room-msg-pending {
+  color: var(--f-live);
+}
+
+.fld-room-traverse {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.fld-room-commit {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--f-live);
+  border: 1px solid var(--f-live);
+  background: var(--f-live-dim);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition:
+    background-color 160ms var(--f-ease),
+    border-color 160ms var(--f-ease);
+}
+
+.fld-room-commit:hover:not(:disabled) {
+  background: oklch(0.76 0.155 264 / 0.24);
+}
+
+.fld-room-commit:disabled {
+  opacity: 0.42;
+  color: var(--f-ink-4);
+  border-color: var(--f-line);
+  background: transparent;
+  cursor: default;
+}
+
+.fld-room-commit:focus-visible,
+.fld-room-gate input:focus-visible {
+  outline: 1px solid var(--f-live);
+  outline-offset: 2px;
+}
+
+.fld-room-traverse .fld-link {
+  margin-top: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* The active working plane: the recorded decision                     */
+/* ------------------------------------------------------------------ */
+
+.fld-room-plane {
+  border-top: 1px solid var(--f-line-mid);
+  padding-top: 16px;
+}
+
+.fld-room-plane > .fld-label {
+  margin-bottom: 12px;
+}
+
+.fld-room-row {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.fld-room-row + .fld-room-row {
+  margin-top: 14px;
+}
+
+.fld-room-tag {
+  font-family: var(--f-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--f-ink-3);
+  padding-top: 9px;
+}
+
+.fld-room-control {
+  min-width: 0;
+}
+
+.fld-room-control textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: oklch(0 0 0 / 0.35);
+  border: 1px solid var(--f-line-mid);
+  color: var(--f-ink);
+  font-family: var(--f-text);
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  resize: vertical;
+  transition:
+    opacity 180ms var(--f-ease),
+    border-color 180ms var(--f-ease);
+}
+
+.fld-room-control textarea:focus-visible {
+  outline: 1px solid var(--f-live);
+  outline-offset: 2px;
+}
+
+.fld-room-row[data-locked="true"] .fld-room-control textarea {
+  opacity: 0.45;
+}
+
+.fld-room-locknote {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--f-ink-4);
+}
+
+.fld-room-locknote:empty {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* The provenance plane: persisted decision provenance                 */
+/* ------------------------------------------------------------------ */
+
+.fld-room-register {
+  border-left: 1px solid var(--f-line-hi);
+  padding: 2px 0 2px 12px;
+}
+
+.fld-room-register .fld-fine {
+  margin-top: 8px;
+}
+
+@media (max-width: 1020px) {
+  .fld-room-axis {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 860px) {
+  .fld-room-body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .fld-room-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .fld-room-tag {
+    padding-top: 0;
+  }
+}
