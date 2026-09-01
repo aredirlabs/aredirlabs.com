@@ -48,13 +48,24 @@ Set in Vercel → Project → Settings → Environment Variables → **Productio
 Do **not** use development secrets or the `aredirlabs-dev` database URL in Production.
 Do **not** expose `WORKSPACE_ALLOWED_EMAILS` with a `NEXT_PUBLIC_` prefix.
 
-Optional: configure Preview environment with a separate database or dev instance if preview workspace testing is required.
+### Preview
+
+Preview is not currently part of the supported Aredir operating model. No active Preview deployments exist, and no guaranteed Preview database mapping exists. Do not configure Preview for workspace use, and do not imply that Preview is available for authenticated workspace testing. If Preview is introduced later, authenticated workspace functionality must not be enabled until Preview has an explicitly non-Production database target and appropriate environment/auth configuration.
 
 ---
 
-## 4. Production database setup (one-time)
+## 4. Production database setup
 
 Apply schema and seed data to `aredirlabs-prod` before or immediately after first production deploy.
+
+Tracked migrations are the **sole Production schema authority**. Production schema changes follow the governed path:
+
+1. Rehearse against a verification database using tracked migrations.
+2. Validate tracked migration authority (journal, SQL files, hash records).
+3. Apply through the governed Production migration path.
+4. Verify Production read-only after apply.
+
+`db:push` is **prohibited** for Production. It infers live schema state and is unsafe for governed migrations; it remains available only for local disposable prototyping.
 
 ### Local `.env.production.local` (gitignored)
 
@@ -64,16 +75,18 @@ Apply schema and seed data to `aredirlabs-prod` before or immediately after firs
 4. Set a production `BETTER_AUTH_SECRET` (can match Vercel Production value)
 5. Set `WORKSPACE_ALLOWED_EMAILS` to the approved internal account emails
 
-### Safe prod commands
+### Governed prod commands
 
 Production scripts load **only** `.env.production.local` and require explicit confirmation:
 
 ```bash
-CONFIRM_PROD_DB=true npm run db:push:prod
+CONFIRM_PROD_DB=true npm run db:migrate:prod
 CONFIRM_PROD_DB=true npm run db:seed:prod
 ```
 
 If `CONFIRM_PROD_DB=true` is missing, commands fail with a warning and exit without touching the database.
+
+Do **not** run `db:push:prod`. `db:push` infers live schema state and is unsafe for governed migrations; Production schema authority is tracked migrations only.
 
 ### Custom domain and auth
 
@@ -97,7 +110,7 @@ To add an approved workspace user:
 
 ### Expected prod tables
 
-After push/seed, verify these tables exist:
+After migrate/seed, verify these tables exist:
 
 - Better Auth: `user`, `session`, `account`, `verification`
 - Workspace: `workspace_projects`, `workspace_settings`, `workspace_project_notes`, `workspace_project_milestones`
@@ -111,15 +124,17 @@ Seed baseline:
 - 4 sample project notes
 - 9 project milestones (idempotent on fixed `id`; second seed run inserts 0)
 
-### 006 production migration
+### 006 production migration (historical record)
 
-`db:push:prod` runs `scripts/migrate-workspace-006.mjs` before Drizzle push to map legacy `project_status` values on existing databases. On first prod apply (2026-06), migration converted the old enum (`Active Build`, `In Development`, `Concept`) to text, updated row values, dropped the old type, then Drizzle applied the new schema.
+The 2026-06 first-prod apply used `db:push:prod` (running `scripts/migrate-workspace-006.mjs` before Drizzle push to map legacy `project_status` values on existing databases). That push converted the old enum (`Active Build`, `In Development`, `Concept`) to text, updated row values, dropped the old type, then Drizzle applied the new schema.
+
+**This is a historical record.** Production policy has since moved to tracked migrations only. New schema changes must be applied through `db:migrate:prod`; `db:push:prod` must not be used.
 
 Verify locally without exposing secrets:
 
 ```bash
 node --env-file=.env.production.local scripts/verify-prod-env.mjs
-CONFIRM_PROD_DB=true npm run db:push:prod
+CONFIRM_PROD_DB=true npm run db:migrate:prod
 CONFIRM_PROD_DB=true npm run db:seed:prod
 node --env-file=.env.production.local scripts/verify-prod-006.mjs
 ```

@@ -6,7 +6,7 @@ Company marketing site and **standard template repository** for Aredir Labs Next
 
 - **Purpose:** Public company presence and shared engineering standards
 - **Stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui
-- **Hosting:** Vercel (preview deployments on PRs, production on `main`)
+- **Hosting:** Vercel (production on `main`; Preview is not currently part of the supported Aredir operating model)
 
 ### Site (v1)
 
@@ -34,13 +34,15 @@ Brand tokens and copy live in `src/app/globals.css` and `src/lib/site-config.ts`
 1. Create a free Neon project at [neon.tech](https://neon.tech)
 2. Copy your connection string from the Neon dashboard
 3. Configure your environment (see [Environment variables](#environment-variables) below)
-4. Push the schema and seed the database:
+4. Run the tracked migrations and seed the database:
 
 ```bash
-npm run db:push
+npm run db:migrate
 npm run db:seed
 ```
 
+> Tracked migrations are the sole Production schema authority. `db:push` infers live schema state and is only for local disposable prototyping; use `db:migrate` for the governed migration path.
+>
 > `npm run db:seed` is idempotent — running it multiple times will not duplicate seeded workspace settings or projects.
 
 ### Environment variables
@@ -69,7 +71,7 @@ Never commit real secrets. These files are gitignored: `.env`, `.env.local`, `.e
 
 #### One-time production database setup (local)
 
-For applying schema/seed to `aredirlabs-prod` from your machine:
+For applying schema/seed to `aredirlabs-prod` from your machine, use the governed tracked-migration path (`db:migrate:prod`), not `db:push:prod`:
 
 1. Copy `.env.example` to `.env.production.local`
 2. Set `DATABASE_URL` to the **aredirlabs-prod** connection string
@@ -77,9 +79,11 @@ For applying schema/seed to `aredirlabs-prod` from your machine:
 4. Run with explicit confirmation:
 
 ```bash
-CONFIRM_PROD_DB=true npm run db:push:prod
+CONFIRM_PROD_DB=true npm run db:migrate:prod
 CONFIRM_PROD_DB=true npm run db:seed:prod
 ```
+
+Production schema changes follow the governed path: rehearse against a verification database with tracked migrations, validate tracked migration authority, then apply via `db:migrate:prod` and verify Production read-only after apply. `db:push:prod` is prohibited for Production.
 
 Without `CONFIRM_PROD_DB=true`, production DB scripts fail immediately. See [Vercel production deployment checklist](plan/docs/VERCEL-PRODUCTION-DEPLOYMENT.md).
 
@@ -91,11 +95,11 @@ Without `CONFIRM_PROD_DB=true`, production DB scripts fail immediately. See [Ver
 | `npm run build` | Production build |
 | `npm run start` | Serve production build locally |
 | `npm run lint` | Run ESLint |
-| `npm run db:push` | Push Drizzle schema to the database |
-| `npm run db:migrate` | Run Drizzle migrations |
+| `npm run db:push` | Push Drizzle schema to the database (local prototyping only; not for governed/Production use) |
+| `npm run db:migrate` | Run tracked Drizzle migrations (governed path) |
 | `npm run db:generate` | Generate Drizzle migrations |
 | `npm run db:seed` | Seed workspace settings, projects, and notes (dev) |
-| `npm run db:push:prod` | Push schema to production DB (requires `CONFIRM_PROD_DB=true`, loads `.env.production.local`) |
+| `npm run db:migrate:prod` | Run tracked migrations on production DB (requires `CONFIRM_PROD_DB=true`, loads `.env.production.local`) |
 | `npm run db:seed:prod` | Seed production DB (requires `CONFIRM_PROD_DB=true`, loads `.env.production.local`) |
 
 ### Authentication
@@ -117,14 +121,16 @@ This project uses [Better Auth](https://www.better-auth.com/) with email/passwor
 ## Workflow
 
 ```
-Local → Feature Branch → PR → Preview Deployment → Manual QA → Merge → Production
+Local → Feature Branch → PR → Manual QA → Merge → Production
 ```
 
 1. Branch from `main` (`feature/*`, `fix/*`, `docs/*`).
 2. Follow [coding agent operating standard](docs/agent/coding-agent-operating-standard.md) for all implementation work.
 3. Run `npm run lint` and `npm run build` before opening a PR.
-4. Complete [manual QA](docs/qa/manual-qa-checklist.md) on the Vercel preview URL.
+4. Complete [manual QA](docs/qa/manual-qa-checklist.md) locally or on a disposable verification environment.
 5. Merge after review; validate production per [release checklist](docs/qa/release-checklist.md).
+
+> Preview is not currently part of the supported Aredir operating model. No active Preview deployments exist, and no guaranteed Preview database mapping exists. Do not use Preview for authenticated workspace testing. If Preview is introduced later, authenticated workspace functionality must not be enabled until Preview has an explicitly non-Production database target and appropriate environment/auth configuration.
 
 ## Agent-driven development
 

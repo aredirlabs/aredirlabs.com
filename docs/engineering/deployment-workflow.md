@@ -2,6 +2,12 @@
 
 Standard deployment path for Aredir Labs Next.js projects on Vercel.
 
+## Environment model
+
+Production is the only persistent operational environment and the sole authority for Aredir company, project, and work state. Local/Development is a verification environment used for engineering verification and migration rehearsal — it is not a parallel operational environment and is not expected to mirror Production data.
+
+Preview is not currently part of the supported Aredir operating model. No active Preview deployments exist. If Preview is introduced later, authenticated workspace functionality must not be enabled until Preview has an explicitly non-Production database target and appropriate environment/auth configuration.
+
 ## Pipeline overview
 
 ```
@@ -11,9 +17,7 @@ Feature branch
        ↓
 Pull request
        ↓
-Preview deployment (Vercel)
-       ↓
-Manual QA on preview URL
+Manual QA (local / disposable verification environment)
        ↓
 Merge to main
        ↓
@@ -32,19 +36,21 @@ Post-deploy validation
 
 - Fill out `.github/PULL_REQUEST_TEMPLATE.md`.
 - Link related GitHub issues.
-- Ensure Vercel preview deployment succeeds.
+- Ensure CI checks pass.
 
-## Preview deployment
+## Verification before merge
 
-- Every PR should receive a Vercel preview URL.
-- QA validates critical paths on preview (see `docs/qa/manual-qa-checklist.md`).
+- Verify changed behavior locally or on a disposable verification environment (see `docs/qa/manual-qa-checklist.md`).
 - Do not merge with failing checks or unresolved Blocker/High bugs.
+- Preview is not currently a supported verification environment and must not be used for authenticated workspace testing.
+- Unverified local code must never operate directly against the Production database.
 
 ## Production
 
 - Merging to `main` triggers production deploy on Vercel.
 - Run `docs/qa/release-checklist.md` for release-bound merges.
 - Verify production URL, analytics (if configured), and key flows.
+- Authenticated human runtime acceptance against Production remains part of the accepted delivery model.
 
 ## Rollback
 

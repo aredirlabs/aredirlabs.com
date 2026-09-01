@@ -5,7 +5,7 @@ Pre-production and post-production validation for aredirlabs.com releases.
 ## Pre-merge (PR)
 
 - [ ] All PR checks green (lint, build)
-- [ ] [Manual QA checklist](./manual-qa-checklist.md) completed on preview
+- [ ] [Manual QA checklist](./manual-qa-checklist.md) completed on a verification environment
 - [ ] No open **Blocker** or **High** bugs for this release
 - [ ] UAT sign-off if milestone release ([uat-checklist.md](./uat-checklist.md))
 - [ ] Environment variables verified in Vercel for production
@@ -24,6 +24,7 @@ Pre-production and post-production validation for aredirlabs.com releases.
 - [ ] Metadata (title, description, OG image) correct on key pages
 - [ ] Analytics / monitoring receiving events (if configured)
 - [ ] No new errors in Vercel/runtime logs (spot check)
+- [ ] Authenticated human runtime acceptance of key flows completed against Production
 
 ## Communication
 
@@ -39,7 +40,7 @@ Pre-production and post-production validation for aredirlabs.com releases.
 ## Pipeline reference
 
 ```
-Local → Feature Branch → PR → Preview → Manual QA → Merge → Production → Post-deploy validation
+Local → Feature Branch → PR → Manual QA → Merge → Production → Post-deploy validation
 ```
 
 ## Related

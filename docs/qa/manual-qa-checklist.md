@@ -1,10 +1,12 @@
 # Manual QA Checklist
 
-Run on **local** or **Vercel preview** before approving a PR. Check items that apply to the change.
+Run on **local** or a **disposable verification environment** before approving a PR. Check items that apply to the change.
+
+> Preview is not currently part of the supported Aredir operating model and must not be used for authenticated workspace testing.
 
 ## Setup
 
-- [ ] Correct branch / preview URL noted in PR
+- [ ] Correct branch noted in PR
 - [ ] Build succeeded (`npm run build` or CI)
 - [ ] No console errors on initial load (browser devtools)
 
@@ -44,7 +46,7 @@ Run on **local** or **Vercel preview** before approving a PR. Check items that a
 
 | Reviewer | Date | Environment | PR / branch |
 |----------|------|-------------|-------------|
-| | | Local / Preview | |
+| | | Local / Verification | |
 
 ## Related
 
