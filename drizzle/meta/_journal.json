@@ -5,57 +5,71 @@
     {
       "idx": 0,
       "version": "7",
+      "when": 1781049600000,
+      "tag": "0000_workspace_foundation_baseline",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
       "when": 1785974400000,
       "tag": "0000_engineering_work_002",
       "breakpoints": true
     },
     {
-      "idx": 1,
+      "idx": 2,
       "version": "7",
       "when": 1786035940000,
       "tag": "0001_engineering_work_012",
       "breakpoints": true
     },
     {
-      "idx": 2,
+      "idx": 3,
       "version": "7",
       "when": 1786037000000,
       "tag": "0002_defect_context_validation_target",
       "breakpoints": true
     },
     {
-      "idx": 3,
+      "idx": 4,
       "version": "7",
       "when": 1787240606914,
       "tag": "0003_engineering_work_lifecycle_history",
       "breakpoints": true
     },
     {
-      "idx": 4,
+      "idx": 5,
       "version": "7",
       "when": 1787240606915,
       "tag": "0004_engineering_work_history_chain_integrity",
       "breakpoints": true
     },
     {
-      "idx": 5,
+      "idx": 6,
       "version": "7",
       "when": 1787259294895,
       "tag": "0005_engineering_work_repository_evidence",
       "breakpoints": true
     },
     {
-      "idx": 6,
+      "idx": 7,
       "version": "7",
       "when": 1787259600000,
       "tag": "0006_engineering_work_reference_review_check",
       "breakpoints": true
     },
     {
-      "idx": 7,
+      "idx": 8,
       "version": "7",
       "when": 1787346000000,
       "tag": "0007_operational_focus",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1788235827614,
+      "tag": "0008_workspace_project_prompt_reconciliation",
       "breakpoints": true
     }
   ]

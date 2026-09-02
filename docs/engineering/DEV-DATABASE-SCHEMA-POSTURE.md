@@ -21,6 +21,18 @@ The confirmed Neon Dev connection was inspected through a read-only `information
 
 The existing Dev database retains the approved Engineering Work schema and now contains the one validated Hydration Operational State Representation record under AlignFit. AREDIR-DB-003 proved the canonical seed repeatable: no Repository Reference exists, the record remains singular and project-scoped, and a repeat is an expected upsert with an `updated_at` refresh only. The first seed also completed the pre-existing canonical project-memory baseline from 9 to 13 milestones and 6 to 7 prompts; the repeat introduced no additional drift.
 
+## Prompt Library tracked coverage
+
+At the time this record was written, `workspace_project_prompts` existed in Dev only because `drizzle-kit push` created
+it — it was outside tracked-migration authority and therefore absent in Production (BUG-001). The tracked migration
+authority package brings the prompt table and its two enums onto the canonical migration path via
+`drizzle/0008_workspace_project_prompt_reconciliation.sql` — a reconciliation placement that re-projects the pre-authority,
+Production-absent table into governed authority (it does not imply prompts was historically designed after `0007`),
+closing BUG-001's recurrence risk without relying on `db:push`. The common materialized workspace foundation is captured
+by `drizzle/0000_workspace_foundation_baseline.sql`.
+
 ## Protection record
 
-The approved additive DDL migration and canonical seed were performed only against confirmed Dev. No `db:push`, manual SQL, reset, or Production database access occurred.
+The approved additive DDL migration and canonical seed were performed only against confirmed Dev. No `db:push`, manual
+SQL, reset, or Production database access occurred. Verification for the tracked migration authority package was run
+only on operator-provided disposable Neon targets; confirmed Neon Dev and Production were not mutated or contacted.

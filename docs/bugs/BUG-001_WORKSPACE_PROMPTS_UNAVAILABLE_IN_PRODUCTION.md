@@ -7,6 +7,11 @@ Filed from observation during `PROJECT-UX-003` (authenticated visual system eval
 > performed while producing it. Remediation requires a separately authorized database package per
 > `docs/engineering/TRACKED-MIGRATION-PATH-REPORT.md`.
 
+> **Status update (2026-08-31).** A separately authorized repository remediation package addresses the schema gap
+> (but not the failure-surface UI defects); see "Remediation package status" below. Repository remediation package
+> authored and verified on disposable environments; Production adoption and schema reconciliation remain pending
+> separate human authorization.
+
 ---
 
 ## Summary
@@ -171,6 +176,26 @@ Not authorized by this record; stated so the next package has a starting point.
 
 Sequencing note: item 2 restores the feature; item 4 ensures the next such gap reports itself accurately instead of
 advising a prohibited command.
+
+## Remediation package status
+
+The tracked migration authority package (AREDIR-DB-002 revision) addresses the schema-gap remediation item 2. It adds:
+
+- `drizzle/0000_workspace_foundation_baseline.sql` — historical pre-authority baseline for the workspace foundation, so a
+  fresh `db:migrate` from empty reproduces the full foundation (notes, milestones, documents included), eliminating the
+  recurrence risk for all four project-memory tables.
+- `drizzle/0008_workspace_project_prompt_reconciliation.sql` — forward reconciliation that creates
+  `workspace_project_prompts` and its two enums on the canonical path (closes the Prompts symptom).
+- `scripts/reconcile-legacy-migration-journal.mjs` (`db:adopt:legacy`) — governed adoption of a pre-authority live
+  database (verifies materialized identity, then writes missing journal rows without re-running DDL).
+- `scripts/verify-adoption-disposable.mjs` — disposable-target verification (fresh, legacy, equivalence, negative guards).
+
+Verification ran only on operator-provided disposable Neon targets and all checks passed. The original 0000–0007 SQL
+files are unchanged. Failure-surface defects (items 1–4) are **not** addressed by this package and remain outstanding.
+
+Adopting Production is outside this package's surface and is not authorized here; it requires a separately authorized
+Production database action. Production schema reconciliation therefore remains pending: this record must not be described
+as Closed or resolved in Production.
 
 ---
 
