@@ -21,7 +21,8 @@
     "db:push:prod": "node scripts/db-prod.mjs push",
     "db:migrate:prod": "node scripts/db-prod.mjs migrate",
     "db:seed:prod": "node scripts/db-prod.mjs seed",
-    "db:adopt:legacy": "node scripts/reconcile-legacy-migration-journal.mjs"
+    "db:adopt:legacy": "node scripts/reconcile-legacy-migration-journal.mjs",
+    "db:adopt:prod": "node scripts/adopt-production-migration-journal.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
