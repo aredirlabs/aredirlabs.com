@@ -196,6 +196,7 @@ export default async function EngineeringWorkEvidencePage({
                       </p>
                       <div className="mt-4">
                         <MaintainRepositoryReferenceForm
+                          key={reference.referenceStatus}
                           projectSlug={work.projectSlug}
                           workId={work.id}
                           version={work.version}
