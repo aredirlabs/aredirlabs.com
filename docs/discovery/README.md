@@ -21,6 +21,8 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 | [AREDIR-DISCOVERY-011](./AREDIR-DISCOVERY-011_ENGINEERING_WORK_PRIORITIZATION_AND_OPERATIONAL_SELECTION_SEMANTICS.md) | Engineering Work Prioritization and Operational Selection Semantics | Complete |
 | [AREDIR-DISCOVERY-012](./AREDIR-DISCOVERY-012_OPERATIONAL_FOCUS_PERSISTENCE_AND_LIFECYCLE_ARCHITECTURE.md) | Operational Focus Persistence and Lifecycle Architecture | Complete |
 | [AREDIR-DISCOVERY-013](./AREDIR-DISCOVERY-013_AI_LABORATORY_CAPABILITY_AND_LOCAL_INFERENCE_ARCHITECTURE.md) | AI Laboratory Capability and Local Inference Architecture | Complete (discovery only; no implementation or purchase authorized) |
+| [AREDIR-DISCOVERY-014](./AREDIR-DISCOVERY-014_OPERATIONAL_CONTROL_ENVIRONMENT_AND_WORK_VISUALIZATION_PRINCIPLES.md) | Operational Control Environment and Work Visualization Principles | Complete (visual/expression evaluation; complements PRODUCT-ARCHITECTURE-001; no implementation authorized) |
+| [AREDIR-DISCOVERY-015](./AREDIR-DISCOVERY-015_HUMAN_GOVERNANCE_WITHOUT_HUMAN_BOOKKEEPING.md) | Human Governance Without Human Bookkeeping | Complete (governance/capture boundary; complements PRODUCT-ARCHITECTURE-001; no implementation authorized) |
 | [PROJECT-UX-002](./PROJECT-UX-002_EXISTING_AREDIR_EXPERIENCE_DISCOVERY.md) | Phase 0: Existing Aredir Experience Discovery | Complete (discovery inventory) |
 | [PROJECT-UX-003](./PROJECT-UX-003_AUTHENTICATED_OPERATIONAL_VISUAL_SYSTEM_EVALUATION.md) | Authenticated Operational Visual System Evaluation | Complete (evaluation only) |
 | [PROJECT-UX-004](./PROJECT-UX-004_AUTHENTICATED_VISUAL_SYSTEM_AND_OPERATING_ENVIRONMENT_ARCHITECTURE.md) | Authenticated Visual System and Operating Environment Architecture | Complete (architecture only; ready with explicit deferrals) |
@@ -34,6 +36,7 @@ Architectural and artifact discovery records for Aredir Labs. These are **not** 
 
 - [Capability Distribution Architecture](../company/framework/CAPABILITY_DISTRIBUTION_ARCHITECTURE.md) — AREDIR-ARCHITECTURE-007 (Company Standard; reference hub)
 - [FOUNDATION-RELEASE-001](../releases/FOUNDATION-RELEASE-001.md) — Aredir Foundation v1.0 architectural baseline
+- [PRODUCT-ARCHITECTURE-001](./PRODUCT-ARCHITECTURE-001_PRODUCT_OPERATIONAL_ARCHITECTURE_DIRECTION_SYNTHESIS.md) — **Primary** product operational architecture synthesis hub; see DISCOVERY-014 (visual expression) and DISCOVERY-015 (governance/capture boundary)
 
 ## Related operationalization
 
